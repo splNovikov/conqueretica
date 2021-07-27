@@ -1,0 +1,1 @@
+ - Set up ESLint, Prettier auto-format in your IDE on save
