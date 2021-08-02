@@ -22,12 +22,13 @@
     "start": "PORT=6198 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test"
+      "pre-commit": "yarn coverage",
+      "pre-push": "npm test"
     }
   },
   "eslintConfig": {
