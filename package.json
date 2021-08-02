@@ -22,6 +22,7 @@
     "start": "PORT=6198 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -55,5 +56,23 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
     "prettier": "^2.3.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/index.tsx",
+      "!**/reportWebVitals.ts",
+      "!**/react-app-env.d.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
   }
 }
