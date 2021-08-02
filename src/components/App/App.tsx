@@ -3,7 +3,7 @@ import './App.scss';
 
 const App = () => (
   <div className="app">
-    <header className="app-header">hi ther5e</header>
+    <header className="app-header">hi there!</header>
   </div>
 );
 
