@@ -23,14 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "applypatch-msg": "echo \"[Husky] applypatch-msg\"",
-      "pre-commit": "echo \"[Husky] pre-commit\""
-    }
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
