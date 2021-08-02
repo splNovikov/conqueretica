@@ -29,7 +29,7 @@
     "hooks": {
       "applypatch-msg": "echo \"[Husky] applypatch-msg\"",
       "pre-commit": "echo \"[Husky] pre-commit\""
-  }
+    }
   },
   "eslintConfig": {
     "extends": [
