@@ -27,8 +27,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn coverage",
-      "pre-push": "npm test"
+      "pre-commit": "yarn coverage"
     }
   },
   "eslintConfig": {
