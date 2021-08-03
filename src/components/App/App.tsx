@@ -5,11 +5,11 @@ import './App.scss';
 
 const caseStudy = (a: number) => (a > 0 ? 'plus' : 'minus');
 
-interface AppProps {
+type Props = {
   a: number;
-}
+};
 
-const App: FC<AppProps> = ({ a }) => (
+const App: FC<Props> = ({ a }) => (
   <div className="app">
     <header className="app-header">hi there {caseStudy(a)}</header>
   </div>
