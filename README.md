@@ -1,12 +1,12 @@
 #### todo:
 - update index.html - favicon
-- test coverage and on-push strategy
 - unit tests + test components
-- try set up from the scratch (git clone, etc)
 - storybook
+- try set up from the scratch (git clone, etc)
 - styled components?
 - storage - MobX?
 - api
+- Update git description, topic, website
 
 ###### How to set up your IDE:
 - Run command `yarn` to install node_modules
