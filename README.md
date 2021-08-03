@@ -1,6 +1,7 @@
 #### todo:
 - update index.html - favicon
-- unit tests + test components
+- typescript cheatset
+  - https://github.com/typescript-cheatsheets/react
 - storybook
 - try set up from the scratch (git clone, etc)
 - styled components?
