@@ -8,7 +8,7 @@
 - storage - MobX?
 - api
 
-How to set up your IDE:
-- Run command Yarn to install node_modules
+###### How to set up your IDE:
+- Run command `yarn` to install node_modules
 - Set up ESLint, Prettier auto-format in your IDE on save 
-- Run script husky install - to be able to push code to branch
+- Run script `[husky install]()` - to be able to push code to branch
