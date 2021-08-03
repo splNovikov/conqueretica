@@ -1,6 +1,4 @@
- - Set up ESLint, Prettier auto-format in your IDE on save
-
- #### todo:
+#### todo:
 - update index.html - favicon
 - test coverage and on-push strategy
 - unit tests + test components
@@ -9,3 +7,8 @@
 - styled components?
 - storage - MobX?
 - api
+
+How to set up your IDE:
+- Run command Yarn to install node_modules
+- Set up ESLint, Prettier auto-format in your IDE on save 
+- Run script husky install - to be able to push code to branch
