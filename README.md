@@ -1,7 +1,7 @@
 #### todo:
 - update index.html - favicon
 - typescript cheatset
-  - https://github.com/typescript-cheatsheets/react
+  - https://react-typescript-cheatsheet.netlify.app/
 - storybook
 - try set up from the scratch (git clone, etc)
 - styled components?

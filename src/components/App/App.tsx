@@ -1,21 +1,14 @@
 import React, { FC } from 'react';
-import PropTypes from 'prop-types';
 
 import './App.scss';
+import Button from '../Button';
 
-const caseStudy = (a: number) => (a > 0 ? 'plus' : 'minus');
-
-type Props = {
-  a: number;
-};
-
-const App: FC<Props> = ({ a }) => (
+const App: FC = () => (
   <div className="app">
-    <header className="app-header">hi there {caseStudy(a)}</header>
+    <header className="app-header">
+      hi there <Button aaa={1} htmlType="submit" />
+    </header>
   </div>
 );
-App.propTypes = {
-  a: PropTypes.number.isRequired,
-};
 
 export default App;
