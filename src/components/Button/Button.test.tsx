@@ -4,12 +4,12 @@ import Button from './Button';
 
 test('renders learn react link', () => {
   render(<Button aaa={1} />);
-  const linkElement = screen.getByText(/hi there plus/i);
+  const linkElement = screen.getByText(/Button plus/i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test('renders learn react link - minus', () => {
   render(<Button aaa={-1} />);
-  const linkElement = screen.getByText(/hi there minus/i);
+  const linkElement = screen.getByText(/Button minus/i);
   expect(linkElement).toBeInTheDocument();
 });
