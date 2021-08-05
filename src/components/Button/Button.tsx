@@ -47,7 +47,7 @@ const Button: FC<ButtonProps> = (props) => {
 
   return (
     // eslint-disable-next-line react/button-has-type
-    <button className="button" type={htmlType}>
+    <button className="btn" type={htmlType}>
       Button {caseStudy(aaa)}
     </button>
   );

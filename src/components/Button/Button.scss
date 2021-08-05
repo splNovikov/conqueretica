@@ -1,0 +1,201 @@
+$borderColor: red;
+$hoveredTextColor: blue;
+$pressedTextColor: green;
+$selectedTextColor: white;
+$labeledIconBorder: yellow;
+
+$verticalAlign: 1em;
+$background: brown;
+$textColor: black;
+$fontFamily: Arial;
+$horizontalMargin: 1em;
+$verticalMargin: 0.5em;
+$textTransform: capitalize;
+$textShadow: orange;
+$fontWeight: bold;
+$lineHeight: 1em;
+$borderRadius: 0.5em;
+
+/*******************************
+            Button
+*******************************/
+
+/*-------------------
+       Element
+--------------------*/
+
+/* Shadow */
+$shadowDistance: 0em;
+$shadowOffset: $shadowDistance; // math.div($shadowDistance, 2);
+$shadowBoxShadow: 0 -$shadowDistance 0 0 $borderColor inset;
+$backgroundColor: #fafafa;
+$backgroundImage: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.09));
+$boxShadow: 0px 0px 0px 1px $borderColor inset, $shadowBoxShadow;
+
+/* Padding */
+$verticalPadding: 0.8em;
+$horizontalPadding: 1.5em;
+
+/*-------------------
+        Group
+--------------------*/
+
+$groupBoxShadow: none;
+$groupButtonBoxShadow: 0px 0px 0px 1px $borderColor inset, $shadowBoxShadow;
+$verticalBoxShadow: 0px 0px 0px 1px $borderColor inset;
+$groupButtonOffset: 0px 0px 0px -1px;
+$verticalGroupOffset: 0px 0px -1px 0px;
+
+/*-------------------
+        States
+--------------------*/
+
+/* Hovered */
+$hoverBackgroundColor: '';
+$hoverBackgroundImage: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.13));
+$hoverBoxShadow: '';
+$hoverColor: $hoveredTextColor;
+$iconHoverOpacity: 0.85;
+
+/* Focused */
+$focusBackgroundColor: '';
+$focusBackgroundImage: '';
+$focusBoxShadow: 0px 0px 1px rgba(81, 167, 232, 0.8) inset,
+  0px 0px 3px 2px rgba(81, 167, 232, 0.8);
+$focusColor: $hoveredTextColor;
+$iconFocusOpacity: 0.85;
+
+/* Pressed Down */
+$downBackgroundColor: #f1f1f1;
+$downBackgroundImage: '';
+$downBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset,
+  0px 1px 4px 0px rgba(0, 0, 0, 0.1) inset !important;
+$downColor: $pressedTextColor;
+
+/* Active */
+$activeBackgroundColor: #dadada;
+$activeBackgroundImage: none;
+$activeColor: $selectedTextColor;
+$activeBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset,
+  0px 1px 4px 0px rgba(0, 0, 0, 0.1) inset !important;
+
+/* Active + Hovered */
+$activeHoverBackgroundColor: #dadada;
+$activeHoverBackgroundImage: none;
+$activeHoverBoxShadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset,
+  0px 1px 4px 0px rgba(0, 0, 0, 0.1) inset !important;
+$activeHoverColor: $selectedTextColor;
+
+/* Loading */
+$loadingBackgroundColor: #ffffff;
+
+/*-------------------
+        Types
+--------------------*/
+
+/* Labeled Icon */
+$labeledIconBackgroundColor: rgba(0, 0, 0, 0.05);
+$labeledIconLeftShadow: -1px 0px 0px 0px $labeledIconBorder inset;
+$labeledIconRightShadow: 1px 0px 0px 0px $labeledIconBorder inset;
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+
+  min-height: 1em;
+
+  outline: none;
+  border: none;
+  vertical-align: $verticalAlign;
+  background: $background;
+  color: $textColor;
+
+  font-family: $fontFamily;
+
+  margin: 0 $horizontalMargin $verticalMargin 0;
+  padding: $verticalPadding $horizontalPadding
+    ($verticalPadding + $shadowOffset);
+
+  text-transform: $textTransform;
+  text-shadow: $textShadow;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  font-style: normal;
+  text-align: center;
+  text-decoration: none;
+
+  border-radius: $borderRadius;
+  box-shadow: $boxShadow;
+
+  user-select: none;
+  //transition: $transition;
+  //will-change: $willChange;
+
+  //-webkit-tap-highlight-color: $tapColor;
+}
+
+/*******************************
+            States
+*******************************/
+
+/*--------------
+      Hover
+---------------*/
+
+.btn:hover {
+  background-color: $hoverBackgroundColor;
+  background-image: $hoverBackgroundImage;
+  box-shadow: $hoverBoxShadow;
+  color: $hoverColor;
+}
+
+.btn:hover .icon {
+  opacity: $iconHoverOpacity;
+}
+
+/*--------------
+      Focus
+---------------*/
+
+.btn:focus {
+  background-color: $focusBackgroundColor;
+  color: $focusColor;
+  background-image: $focusBackgroundImage !important;
+  box-shadow: $focusBoxShadow !important;
+}
+
+.btn:focus .icon {
+  opacity: $iconFocusOpacity;
+}
+
+/*--------------
+      Down
+---------------*/
+
+.btn:active,
+.btn:active {
+  background-color: $downBackgroundColor;
+  background-image: $downBackgroundImage;
+  color: $downColor;
+  box-shadow: $downBoxShadow;
+}
+
+/*--------------
+     Active
+---------------*/
+
+.active.btn {
+  background-color: $activeBackgroundColor;
+  background-image: $activeBackgroundImage;
+  box-shadow: $activeBoxShadow;
+  color: $activeColor;
+}
+.active.btn:hover {
+  background-color: $activeHoverBackgroundColor;
+  background-image: $activeHoverBackgroundImage;
+  color: $activeHoverColor;
+}
+.active.btn:active {
+  background-color: $activeBackgroundColor;
+  background-image: $activeBackgroundImage;
+}
