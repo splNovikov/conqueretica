@@ -8,3 +8,22 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.app-wrapper {
+  display: flex;
+
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.app-side-bar {
+  flex: 1 1 400px;
+  background: #d8eacc;
+}
+
+.app-dashboard {
+  flex: 1 1 90%;
+}
