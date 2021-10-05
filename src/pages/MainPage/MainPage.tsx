@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 
-import './App.scss';
-import SideBar from '../SideBar';
-import Dashboard from './Dashboard/Dashboard';
+import './MainPage.scss';
+import SideBar from '../../components/SideBar';
+import Dashboard from '../../components/Dashboard';
 
-const App = () => {
+const MainPage = () => {
   return (
     <div className="app-wrapper">
       <div className="app-side-bar">
@@ -17,4 +17,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default MainPage;

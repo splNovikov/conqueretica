@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import MainPage from './MainPage';
 
-test('App is rendering', () => {
-  const { container } = render(<App />);
+test('MainPage is rendering', () => {
+  const { container } = render(<MainPage />);
   expect(container.firstChild).toHaveClass('app');
 });
