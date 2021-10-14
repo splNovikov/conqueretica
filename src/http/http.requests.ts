@@ -1,3 +1,4 @@
+// todo: let's create a fake service to get auth and use .env in it for a while
 const HABITICA_ID = '';
 const HABITICA_TOKEN = '';
 const headers = {
@@ -5,6 +6,7 @@ const headers = {
   'x-api-key': HABITICA_TOKEN,
   'Content-Type': 'application/json',
 };
+// todo: let's use api prefix variable for https://habitica.com/api/v3/
 const HABITICA_API_DAILYS =
   'https://habitica.com/api/v3/tasks/user?type=dailys';
 

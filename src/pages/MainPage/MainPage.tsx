@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 
-import './MainPage.scss';
 import SideBar from '../../components/SideBar';
 import Dashboard from '../../components/Dashboard';
+
+import './MainPage.scss';
 
 const MainPage = () => {
   return (

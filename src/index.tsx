@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// todo: I assume we will use Router in future - I think correct name of MainPage should be App
 import MainPage from './pages/MainPage';
 import reportWebVitals from './reportWebVitals';
 
