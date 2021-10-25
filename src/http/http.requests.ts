@@ -1,8 +1,8 @@
 const HABITICA_ID = '';
 const HABITICA_TOKEN = '';
 
-const HABITICA_API_DAILYS =
-  'https://habitica.com/api/v3/tasks/user?type=dailys';
+const BASE_URL = 'https://habitica.com/api/v3/';
+const HABITICA_API_DAILYS = `${BASE_URL}/tasks/user?type=dailys`;
 
 export const fetchDailies = async () => {
   const response = await fetch(HABITICA_API_DAILYS, {
