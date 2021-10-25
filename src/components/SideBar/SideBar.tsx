@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Profile from '../Profile';
+
 // Styles
 import './SideBar.scss';
 

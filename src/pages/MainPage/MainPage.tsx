@@ -1,8 +1,11 @@
 import React from 'react';
 
-import './MainPage.scss';
+// Components
 import SideBar from '../../components/SideBar';
 import Dashboard from '../../components/Dashboard';
+
+// Styles
+import './MainPage.scss';
 
 const MainPage = () => {
   return (
