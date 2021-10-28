@@ -1,23 +1,26 @@
-.app-header {
-  background-color: #282c34;
+@import '../../assets/colors.scss';
+
+.main-page-header {
+  background-color: $shark;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #ffffff;
+  color: $white;
 }
 
-.app-wrapper {
+.main-page-wrapper {
   display: flex;
+  width: 100%;
 }
 
-.app-side-bar {
+.main-page-side-bar {
   flex: 1 1 100px;
-  background: #d8eacc;
+  background: $zanah;
 }
 
-.app-dashboard {
+.main-page-dashboard {
   flex: 1 1 90%;
 }

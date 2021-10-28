@@ -9,11 +9,11 @@ import './MainPage.scss';
 
 const MainPage = () => {
   return (
-    <div className="app-wrapper">
-      <div className="app-side-bar">
+    <div className="main-page-wrapper">
+      <div className="main-page-side-bar">
         <SideBar />
       </div>
-      <div className="app-dashboard">
+      <div className="main-page-dashboard">
         <Dashboard />
       </div>
     </div>

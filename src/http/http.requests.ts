@@ -1,3 +1,4 @@
+// todo: let's create a fake service to get auth and use .env in it for a while
 const HABITICA_ID = '';
 const HABITICA_TOKEN = '';
 
