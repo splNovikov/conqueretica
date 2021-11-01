@@ -6,7 +6,7 @@ import './DailyCard.scss';
 const DailyCard = ({ daily }: any) => {
   return (
     <div>
-      <div className="dayly-card-title">{daily.text}</div>
+      <div className="daily-card-title">{daily.text}</div>
       <div>Created At: {moment(daily.createdAt).format('DD/MM/YYYY')}</div>
       <div>Notes: {daily.notes}</div>
       <div>Start Date: {moment(daily.startDate).format('DD/MM/YYYY')}</div>
