@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import MainPage from './MainPage';
 
-// todo: fix tests!!!
+// todo: add tests!!!
 
 test('MainPage is rendering', () => {
   const { container } = render(<MainPage />);
