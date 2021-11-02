@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-// Requests
 import { fetchDailies } from '../../http/http.requests';
-// Components
 
 import ProgressBar from '../Progress/Progress';
 import DailyCard from '../DailyCard/DailyCard';

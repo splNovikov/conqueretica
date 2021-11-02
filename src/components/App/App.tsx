@@ -1,7 +1,8 @@
 import React from 'react';
-// Components
-import MainPage from './pages/MainPage';
-// Styles
+
+// todo: routes
+import MainPage from '../../pages/MainPage';
+
 import './App.scss';
 
 const App = () => {

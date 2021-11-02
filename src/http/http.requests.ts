@@ -1,25 +1,27 @@
-// todo: let's create a fake service to get auth and use .env in it for a while
-const HABITICA_ID = '';
-const HABITICA_TOKEN = '';
+import api from '../constants/apiRoutes';
+import { HABITICA_ID, HABITICA_TOKEN } from '../constants/credentials';
 
-const BASE_URL = 'https://habitica.com/api/v3/';
-const HABITICA_API_DAILYS = `${BASE_URL}/tasks/user?type=dailys`;
+// todo: let's create a fake service to get auth and use .env in it for a while
+// todo - wrap async request to try catch? axious?
 
 export const fetchDailies = async () => {
-  const response = await fetch(HABITICA_API_DAILYS, {
+  const params = {
     method: 'get',
     headers: {
       'x-api-user': HABITICA_ID,
       'x-api-key': HABITICA_TOKEN,
     },
-  });
-  let dailies = [];
+  };
+
+  const response = await fetch(api.habiticaDailys, params);
+
   if (response.ok) {
     const responseData = await response.json();
-    dailies = responseData.data;
-  } else {
-    console.error('FETCH DAILIES ERROR');
+
+    return responseData.data;
   }
 
-  return dailies;
+  console.error('FETCH DAILIES ERROR');
+
+  return [];
 };
