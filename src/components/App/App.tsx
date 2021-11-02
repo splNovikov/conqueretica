@@ -1,11 +1,17 @@
-import React, { FC } from 'react';
+import React from 'react';
+
+// todo: routes
+import MainPage from '../../pages/MainPage';
 
 import './App.scss';
 
-const App: FC = () => (
-  <div className="app">
-    <header className="app-header">hi there</header>
-  </div>
-);
+// todo: fix COVERAGE
+const App = () => {
+  return (
+    <div className="app-wrapper">
+      <MainPage />
+    </div>
+  );
+};
 
 export default App;
