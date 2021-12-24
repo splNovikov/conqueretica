@@ -1,26 +1,33 @@
-@import '../../styles/colors.scss';
+.linky {
+  font-size: small;
 
-.main-page-header {
-  background-color: $shark;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: $white;
+  &.big {
+    padding: 1em 2em;
+    display: inline-block;
+  }
+
+  &.colored {
+    &:nth-child(2n) {
+      background-color: #fff4c2;
+    }
+    &:nth-child(2n + 1) {
+      background-color: #fce1e5;
+    }
+  }
+
+  &.ellipsed {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .main-page-wrapper {
-  display: flex;
-  width: 100%;
-}
-
-.main-page-side-bar {
-  flex: 1 1 100px;
-  background: $zanah;
-}
-
-.main-page-dashboard {
-  flex: 1 1 90%;
+  .linky-wrapper {
+    display: flex;
+  }
 }
