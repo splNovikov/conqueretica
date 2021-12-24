@@ -18,6 +18,7 @@ const style = {
   border: '1px solid #0092ff',
 };
 
+// todo: add tests
 const MainPage = () => {
   return (
     <div className="main-page-wrapper">
