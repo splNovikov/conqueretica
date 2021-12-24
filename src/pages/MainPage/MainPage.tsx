@@ -1,9 +1,11 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import classNames from 'classnames';
 
 // Interfaces
 import { IColumn, ICategory, ILink } from '../../interfaces';
+
+// Components
+import Linky from '../../components/Linky';
 
 // tmp data
 import { columns, importantLinks } from './linksTmp';
@@ -15,29 +17,6 @@ import './MainPage.scss';
 const style = {
   border: '1px solid #0092ff',
 };
-
-// todo: own component folder
-const Linky = ({
-  link,
-  big,
-  colored,
-  ellipsed,
-}: {
-  link: ILink;
-  /* eslint-disable react/require-default-props */
-  big?: boolean;
-  colored?: boolean;
-  ellipsed?: boolean;
-  /* eslint-enable */
-}) => (
-  <a
-    className={classNames('linky', { colored, big, ellipsed })}
-    aria-label={link.title}
-    href={link.href}
-  >
-    {link.title || link.href}
-  </a>
-);
 
 const MainPage = () => {
   return (

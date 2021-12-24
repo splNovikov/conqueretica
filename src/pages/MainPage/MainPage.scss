@@ -1,31 +1,3 @@
-.linky {
-  font-size: small;
-
-  &.big {
-    padding: 1em 2em;
-    display: inline-block;
-  }
-
-  &.colored {
-    &:nth-child(2n) {
-      background-color: #fff4c2;
-    }
-    &:nth-child(2n + 1) {
-      background-color: #fce1e5;
-    }
-  }
-
-  &.ellipsed {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 .main-page-wrapper {
   .linky-wrapper {
     display: flex;
