@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow } from 'enzyme';
 
 import Linky from './Linky';
 
@@ -12,24 +12,24 @@ const link1: ILink = {
 };
 
 it('Linky is rendering', () => {
-  const { container } = render(<Linky link={link1} />);
-  expect(container.firstChild).toHaveClass('linky');
+  const wrapper = shallow(<Linky link={link1} />);
+  expect(wrapper.hasClass('linky')).toEqual(true);
 });
 
 describe('Linky should has correct classes', () => {
   it('Should have "colored" class', () => {
-    const { container } = render(<Linky link={link1} colored />);
-    expect(container.firstChild).toHaveClass('colored');
+    const wrapper = shallow(<Linky link={link1} colored />);
+    expect(wrapper.hasClass('colored')).toEqual(true);
   });
 
   it('Should have "big" class', () => {
-    const { container } = render(<Linky link={link1} big />);
-    expect(container.firstChild).toHaveClass('big');
+    const wrapper = shallow(<Linky link={link1} big />);
+    expect(wrapper.hasClass('big')).toEqual(true);
   });
 
   it('Should have "ellipsed" class', () => {
-    const { container } = render(<Linky link={link1} ellipsed />);
-    expect(container.firstChild).toHaveClass('ellipsed');
+    const wrapper = shallow(<Linky link={link1} ellipsed />);
+    expect(wrapper.hasClass('ellipsed')).toEqual(true);
   });
 });
 
@@ -37,14 +37,14 @@ describe('Linky should has correct title', () => {
   it('Should have "predefined" title', () => {
     link1.title = 'predefined';
 
-    const { container } = render(<Linky link={link1} />);
-    expect(container.firstChild).toHaveTextContent('predefined');
+    const wrapper = shallow(<Linky link={link1} />);
+    expect(wrapper.text()).toEqual('predefined');
   });
 
   it('Should have "https://" title', () => {
     link1.title = '';
 
-    const { container } = render(<Linky link={link1} />);
-    expect(container.firstChild).toHaveTextContent('https://');
+    const wrapper = shallow(<Linky link={link1} />);
+    expect(wrapper.text()).toEqual('https://');
   });
 });

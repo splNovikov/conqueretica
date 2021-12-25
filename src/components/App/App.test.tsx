@@ -5,5 +5,5 @@ import App from './App';
 
 it('App is rendering', () => {
   const wrapper = shallow(<App />);
-  expect(wrapper.find('h1').text()).toEqual('Hello world React!');
+  expect(wrapper.hasClass('app-wrapper')).toEqual(true);
 });

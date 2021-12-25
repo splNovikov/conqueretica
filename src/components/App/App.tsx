@@ -9,7 +9,6 @@ import './App.scss';
 const App = () => {
   return (
     <div className="app-wrapper">
-      <h1>Hello world React!</h1>
       <MainPage />
     </div>
   );
