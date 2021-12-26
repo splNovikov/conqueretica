@@ -27,6 +27,3 @@ src/**/*.css
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# env variables
-.env
