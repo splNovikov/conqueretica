@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import {
-  getFirestore,
   collection,
   query,
   serverTimestamp,
@@ -11,40 +8,31 @@ import {
 } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-
-import { FIREBASE } from '../../constants/credentials';
+// todo: we should operate User entity only.
+import { auth, firestoreDB, signInWithGoogle, signOut } from '../../firebase';
 
 // todo: routes
 import MainPage from '../../pages/MainPage';
 
 import './App.scss';
 
-const app = initializeApp(FIREBASE);
-
-const auth = getAuth(app);
-const firestore = getFirestore(app);
-
 const App = () => {
+  // todo: pass somehow user in store? useContext? mobx?
   const [user] = useAuthState(auth);
 
   return (
     <div className="app">
       <MainPage />
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+      <section>{user ? <ChatRoom /> : <Login />}</section>
       <SignOut />
     </div>
   );
 };
 
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
-  };
-
+function Login() {
   return (
-    <button type="button" className="sign-in" onClick={signInWithGoogle}>
-      Sign in with Google
+    <button type="button" onClick={signInWithGoogle}>
+      Login with Google
     </button>
   );
 }
@@ -52,7 +40,7 @@ function SignIn() {
 function SignOut() {
   return (
     auth.currentUser && (
-      <button type="button" className="sign-out" onClick={() => auth.signOut()}>
+      <button type="button" className="sign-out" onClick={signOut}>
         Sign Out
       </button>
     )
@@ -60,7 +48,7 @@ function SignOut() {
 }
 
 function ChatRoom() {
-  const messagesRef = collection(firestore, 'messages');
+  const messagesRef = collection(firestoreDB, 'messages');
   const q = query(
     messagesRef,
     where('ownerId', '==', auth.currentUser?.uid),
