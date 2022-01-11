@@ -16,7 +16,6 @@ import {
 } from 'firebase/firestore';
 
 import { FIREBASE } from './constants/credentials';
-import { IUser } from './interfaces';
 
 const app = initializeApp(FIREBASE);
 const auth = getAuth(app);
