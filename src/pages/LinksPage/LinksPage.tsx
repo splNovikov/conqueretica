@@ -11,7 +11,7 @@ import Linky from '../../components/Linky';
 import { columns, importantLinks } from './linksTmp';
 
 // Styles
-import './MainPage.scss';
+import './LinksPage.scss';
 
 // todo: remove this:
 const style = {
@@ -19,9 +19,9 @@ const style = {
 };
 
 // todo: add tests
-const MainPage = () => {
+const LinksPage = () => {
   return (
-    <div className="main-page-wrapper">
+    <div className="links-page">
       <Row>
         <Col style={style} span={24}>
           {importantLinks.map((l: ILink) => (
@@ -50,4 +50,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default LinksPage;

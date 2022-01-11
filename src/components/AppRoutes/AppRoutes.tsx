@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import MainPage from '../../pages/MainPage';
+import LinksPage from '../../pages/LinksPage';
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<LinksPage />} />
     </Routes>
   );
 };
