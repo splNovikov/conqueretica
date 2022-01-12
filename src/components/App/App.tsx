@@ -5,7 +5,13 @@ import { collection, serverTimestamp, addDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 // todo: we should operate User entity only.
 
-import { auth, firestoreDB, signInWithGoogle, signOut } from '../../firebase';
+import {
+  auth,
+  firestoreDB,
+  signInWithGoogle,
+  signOut,
+  // todo: firebase - index.ts
+} from '../../firebase/firebase';
 
 import AppRoutes from '../AppRoutes';
 
