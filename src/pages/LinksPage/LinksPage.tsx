@@ -32,7 +32,7 @@ const LinksPage = () => {
 
   useEffect(() => {
     if (user) {
-      firebase.fetchMessages(auth.currentUser).then((msgs: IMessage[]) => {
+      firebase.fetchMessages(user).then((msgs: IMessage[]) => {
         setMessages(msgs);
       });
     }
