@@ -5,6 +5,7 @@ import { Row, Col } from 'antd';
 import { IColumn, ICategory, ILink } from '../../interfaces';
 
 // Components
+import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
 
 // tmp data
@@ -22,13 +23,7 @@ const style = {
 const LinksPage = () => {
   return (
     <div className="links-page">
-      <Row>
-        <Col style={style} span={24}>
-          {importantLinks.map((l: ILink) => (
-            <Linky key={l.id} link={l} big colored />
-          ))}
-        </Col>
-      </Row>
+      <ImportantLinks links={importantLinks} />
 
       <Row>
         {columns.map((column: IColumn) => (

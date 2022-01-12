@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   collection,
   query,
@@ -10,6 +11,7 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 // todo: we should operate User entity only.
+
 import { auth, firestoreDB, signInWithGoogle, signOut } from '../../firebase';
 
 import AppRoutes from '../AppRoutes';
@@ -24,6 +26,10 @@ const App = () => {
     <div className="app">
       <section>{user ? <ChatRoom /> : <Login />}</section>
       <SignOut />
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
       <AppRoutes />
     </div>
   );
