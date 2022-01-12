@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  collection,
-  query,
-  serverTimestamp,
-  addDoc,
-  where,
-} from 'firebase/firestore';
+import { collection, serverTimestamp, addDoc } from 'firebase/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 // todo: we should operate User entity only.
 
 import { auth, firestoreDB, signInWithGoogle, signOut } from '../../firebase';
@@ -55,13 +48,6 @@ function SignOut() {
 
 function ChatRoom() {
   const messagesRef = collection(firestoreDB, 'messages');
-  const q = query(
-    messagesRef,
-    where('ownerId', '==', auth.currentUser?.uid),
-    // orderBy('createdAt', 'desc'),
-  );
-
-  const [messages] = useCollectionData(q, { idField: 'id' });
 
   const [formValue, setFormValue] = useState('');
 
@@ -78,32 +64,18 @@ function ChatRoom() {
   };
 
   return (
-    <>
-      <main>
-        {messages &&
-          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-      </main>
+    <form onSubmit={sendMessage}>
+      <input
+        value={formValue}
+        onChange={(e) => setFormValue(e.target.value)}
+        placeholder="say something nice"
+      />
 
-      <form onSubmit={sendMessage}>
-        <input
-          value={formValue}
-          onChange={(e) => setFormValue(e.target.value)}
-          placeholder="say something nice"
-        />
-
-        <button type="submit" disabled={!formValue}>
-          Send
-        </button>
-      </form>
-    </>
+      <button type="submit" disabled={!formValue}>
+        Send
+      </button>
+    </form>
   );
-}
-
-function ChatMessage(props: any) {
-  // eslint-disable-next-line react/destructuring-assignment
-  const { text } = props.message;
-
-  return <div>{text}</div>;
 }
 
 export default App;

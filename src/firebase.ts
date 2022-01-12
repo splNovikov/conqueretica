@@ -27,6 +27,7 @@ const signInWithGoogle = async () => {
 
   const usersRef = collection(firestoreDB, 'users');
   const q = query(usersRef, where('uid', '==', user.uid));
+  // todo: getDoc instead of getDocs
   const users = await getDocs(q);
 
   if (users?.size === 0) {
