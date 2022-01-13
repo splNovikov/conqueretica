@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { collection, serverTimestamp, addDoc } from 'firebase/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -51,22 +50,19 @@ function SignOut() {
 }
 
 function ChatRoom() {
-  const messagesRef = collection(firebase.firestoreDB, 'messages');
-
   const [formValue, setFormValue] = useState('');
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
 
-    await addDoc(messagesRef, {
-      // todo text as param
-      text: formValue,
-      createdAt: serverTimestamp(),
-      // todo: user as param
-      ownerId: firebase.auth.currentUser?.uid,
-    });
-
-    setFormValue('');
+    if (firebase.auth.currentUser) {
+      await firebase.sendMessage(formValue, firebase.auth.currentUser);
+      setFormValue('');
+    } else {
+      // todo [after release]: error handling
+      // eslint-disable-next-line no-console
+      console.error('No User');
+    }
   };
 
   return (

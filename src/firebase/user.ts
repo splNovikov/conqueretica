@@ -17,9 +17,8 @@ const createUser = async (
     // todo [after release]: error handling
     // eslint-disable-next-line no-console
     console.error(e);
+    return null;
   }
-
-  return null;
 };
 
 export { createUser };

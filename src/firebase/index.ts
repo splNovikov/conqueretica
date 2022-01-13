@@ -5,7 +5,7 @@ import { getFirestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
-import { fetchMessages } from './messages';
+import { fetchMessages, sendMessage } from './messages';
 
 const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
@@ -16,6 +16,7 @@ export default {
   signOut,
   createUser,
   fetchMessages,
+  sendMessage,
   auth,
   firestoreDB,
 };
