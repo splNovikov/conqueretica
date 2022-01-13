@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-// todo: firebase - index.ts
-import { auth } from '../../firebase/firebase';
 import firebase from '../../firebase';
 
 // Interfaces
@@ -26,8 +24,7 @@ const style = {
 
 // todo: add tests
 const LinksPage = () => {
-  // todo: pass somehow user in store? useContext?
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(firebase.auth);
   const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {

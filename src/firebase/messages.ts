@@ -1,8 +1,7 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { User } from '@firebase/auth';
+import { User } from 'firebase/auth';
 
-import { firestoreDB } from './firebase';
+import firebase from './index';
 
 import { IMessage } from '../interfaces';
 
@@ -10,7 +9,7 @@ export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
   const res: IMessage[] = [];
 
   try {
-    const messagesRef = collection(firestoreDB, 'messages');
+    const messagesRef = collection(firebase.firestoreDB, 'messages');
     const q = query(messagesRef, where('ownerId', '==', user?.uid));
     const querySnapshot = await getDocs(q);
 

@@ -3,28 +3,28 @@ import { Link } from 'react-router-dom';
 import { collection, serverTimestamp, addDoc } from 'firebase/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
-// todo: we should operate User entity only.
 
-import {
-  auth,
-  firestoreDB,
-  signInWithGoogle,
-  signOut,
-  // todo: firebase - index.ts
-} from '../../firebase/firebase';
+import firebase from '../../firebase';
 
 import AppRoutes from '../AppRoutes';
 
 import './App.scss';
 
 const App = () => {
-  // todo: pass somehow user in store? useContext?
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(firebase.auth);
 
   return (
     <div className="app">
-      <section>{user ? <ChatRoom /> : <Login />}</section>
-      <SignOut />
+      <section>
+        {user ? (
+          <>
+            <ChatRoom />
+            <SignOut />
+          </>
+        ) : (
+          <Login />
+        )}
+      </section>
       <nav>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
@@ -36,7 +36,7 @@ const App = () => {
 
 function Login() {
   return (
-    <button type="button" onClick={signInWithGoogle}>
+    <button type="button" onClick={firebase.signInWithGoogle}>
       Login with Google
     </button>
   );
@@ -44,16 +44,14 @@ function Login() {
 
 function SignOut() {
   return (
-    auth.currentUser && (
-      <button type="button" className="sign-out" onClick={signOut}>
-        Sign Out
-      </button>
-    )
+    <button type="button" className="sign-out" onClick={firebase.signOut}>
+      Sign Out
+    </button>
   );
 }
 
 function ChatRoom() {
-  const messagesRef = collection(firestoreDB, 'messages');
+  const messagesRef = collection(firebase.firestoreDB, 'messages');
 
   const [formValue, setFormValue] = useState('');
 
@@ -61,9 +59,11 @@ function ChatRoom() {
     e.preventDefault();
 
     await addDoc(messagesRef, {
+      // todo text as param
       text: formValue,
       createdAt: serverTimestamp(),
-      ownerId: auth.currentUser?.uid,
+      // todo: user as param
+      ownerId: firebase.auth.currentUser?.uid,
     });
 
     setFormValue('');
