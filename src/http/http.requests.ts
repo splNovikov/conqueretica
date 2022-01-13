@@ -1,6 +1,8 @@
 import api from '../constants/apiRoutes';
 import { HABITICA_ID, HABITICA_TOKEN } from '../constants/credentials';
 
+// todo: the filename "http.requests" is not in cameCase naming - it should be called "habiticaDailies.ts"
+
 // todo: let's create a fake service to get auth and use .env in it for a while
 // todo - wrap async request to try catch? axious?
 
