@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+// Firebase
 import firebase from '../../firebase';
-
 // Interfaces
 import { IColumn, ICategory, ILink, IMessage } from '../../interfaces';
-
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
-
+// Utils
+// ...
 // tmp data
 import { columns, importantLinks } from './linksTmp';
-
 // Styles
 import './LinksPage.scss';
 

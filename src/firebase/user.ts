@@ -1,6 +1,8 @@
 import { User } from 'firebase/auth';
 import { addDoc, CollectionReference } from 'firebase/firestore';
 
+import { firebaseErrorHandler } from '../utils';
+
 const createUser = async (
   usersRef: CollectionReference,
   user: User,
@@ -14,9 +16,7 @@ const createUser = async (
     });
     return user;
   } catch (e) {
-    // todo [after release]: error handling
-    // eslint-disable-next-line no-console
-    console.error(e);
+    firebaseErrorHandler(e);
     return null;
   }
 };

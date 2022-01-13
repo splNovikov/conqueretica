@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+// Firebase
 import firebase from '../../firebase';
-
+// Components
 import AppRoutes from '../AppRoutes';
-
+// Utils
+import { defaultErrorHandler } from '../../utils';
+// Styles
 import './App.scss';
 
 const App = () => {
@@ -59,9 +61,7 @@ function ChatRoom() {
       await firebase.sendMessage(formValue, firebase.auth.currentUser);
       setFormValue('');
     } else {
-      // todo [after release]: error handling
-      // eslint-disable-next-line no-console
-      console.error('No User');
+      defaultErrorHandler('No User');
     }
   };
 

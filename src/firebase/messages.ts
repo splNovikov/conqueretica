@@ -9,9 +9,12 @@ import {
 import { User } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 
+// Firebase
 import firebase from './index';
-
+// Interfaces
 import { IMessage } from '../interfaces';
+// Utils
+import { firebaseErrorHandler } from '../utils';
 
 // todo [after release] - investigate queries on firestore side. "shallow queries"
 export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
@@ -26,9 +29,7 @@ export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
       return [...acc, { ownerId, id, text, createdAt }];
     }, []);
   } catch (e) {
-    // todo [after release]: error handling
-    // eslint-disable-next-line no-console
-    console.error(e);
+    firebaseErrorHandler(e);
     return [];
   }
 };
@@ -50,10 +51,7 @@ export const sendMessage = async (
 
     return message;
   } catch (e) {
-    // todo [after release]: error handling
-    // eslint-disable-next-line no-console
-    console.error(e);
-
+    firebaseErrorHandler(e);
     return null;
   }
 };
