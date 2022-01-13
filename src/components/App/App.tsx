@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -6,64 +6,25 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from '../../firebase';
 // Components
 import AppRoutes from '../AppRoutes';
-import Login from '../Login';
-import SignOut from '../SignOut';
-// Utils
-import { defaultErrorHandler } from '../../utils';
 // Styles
 import './App.scss';
+import Header from '../Header';
 
 const App = () => {
   const [user] = useAuthState(firebase.auth);
 
   return (
     <div className="app">
-      <section>
-        {user ? (
-          <>
-            <ChatRoom />
-            <SignOut />
-          </>
-        ) : (
-          <Login />
-        )}
-      </section>
+      <Header user={user} />
+      <br />
       <nav>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
       </nav>
+      <br />
       <AppRoutes />
     </div>
   );
 };
-
-function ChatRoom() {
-  const [formValue, setFormValue] = useState('');
-
-  const sendMessage = async (e: any) => {
-    e.preventDefault();
-
-    if (firebase.auth.currentUser) {
-      await firebase.sendMessage(formValue, firebase.auth.currentUser);
-      setFormValue('');
-    } else {
-      defaultErrorHandler('No User');
-    }
-  };
-
-  return (
-    <form onSubmit={sendMessage}>
-      <input
-        value={formValue}
-        onChange={(e) => setFormValue(e.target.value)}
-        placeholder="say something nice"
-      />
-
-      <button type="submit" disabled={!formValue}>
-        Send
-      </button>
-    </form>
-  );
-}
 
 export default App;

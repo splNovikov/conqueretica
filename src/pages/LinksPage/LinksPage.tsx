@@ -9,6 +9,7 @@ import { IColumn, ICategory, ILink, IMessage } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
+import SendForm from '../../components/SendForm';
 // Utils
 // ...
 // tmp data
@@ -43,6 +44,10 @@ const LinksPage = () => {
               messages.map((msg) => <div key={msg.id}>{msg.text}</div>)}
           </main>
         )}
+      </section>
+
+      <section>
+        <SendForm />
       </section>
 
       <ImportantLinks links={importantLinks} />
