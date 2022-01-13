@@ -6,6 +6,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from '../../firebase';
 // Components
 import AppRoutes from '../AppRoutes';
+import Login from '../Login';
+import SignOut from '../SignOut';
 // Utils
 import { defaultErrorHandler } from '../../utils';
 // Styles
@@ -34,22 +36,6 @@ const App = () => {
     </div>
   );
 };
-
-function Login() {
-  return (
-    <button type="button" onClick={firebase.signInWithGoogle}>
-      Login with Google
-    </button>
-  );
-}
-
-function SignOut() {
-  return (
-    <button type="button" className="sign-out" onClick={firebase.signOut}>
-      Sign Out
-    </button>
-  );
-}
 
 function ChatRoom() {
   const [formValue, setFormValue] = useState('');
