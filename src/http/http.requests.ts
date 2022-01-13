@@ -1,5 +1,6 @@
 import api from '../constants/apiRoutes';
 import { HABITICA_ID, HABITICA_TOKEN } from '../constants/credentials';
+import { httpErrorHandler } from '../utils';
 
 // todo: the filename "http.requests" is not in cameCase naming - it should be called "habiticaDailies.ts"
 
@@ -23,7 +24,7 @@ export const fetchDailies = async () => {
     return responseData.data;
   }
 
-  console.error('FETCH DAILIES ERROR');
+  httpErrorHandler('FETCH DAILIES ERROR');
 
   return [];
 };

@@ -1,3 +1,7 @@
-import { firebaseErrorHandler, defaultErrorHandler } from './errorHandler';
+import {
+  firebaseErrorHandler,
+  httpErrorHandler,
+  defaultErrorHandler,
+} from './errorHandler';
 
-export { firebaseErrorHandler, defaultErrorHandler };
+export { firebaseErrorHandler, httpErrorHandler, defaultErrorHandler };
