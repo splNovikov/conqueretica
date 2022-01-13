@@ -5,6 +5,7 @@ import firebase from './index';
 
 import { IMessage } from '../interfaces';
 
+// todo [after release] - investigate queries on firestore side. "shallow queries"
 export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
   const res: IMessage[] = [];
 
@@ -13,6 +14,7 @@ export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
     const q = query(messagesRef, where('ownerId', '==', user?.uid));
     const querySnapshot = await getDocs(q);
 
+    // todo convert to map - querySnapshot.docs
     querySnapshot.forEach((doc) => {
       const { ownerId, id, text } = doc.data();
 
