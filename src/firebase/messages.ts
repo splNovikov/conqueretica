@@ -41,7 +41,7 @@ export const sendMessage = async (
   const message: IMessage = {
     id: uuidv4(),
     text,
-    createdAt: `${serverTimestamp()}`,
+    createdAt: serverTimestamp(),
     ownerId: user.uid,
   };
   try {

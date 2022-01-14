@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'antd';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
 // Firebase
 import firebase from '../../firebase';
 // Interfaces
-import { IColumn, ICategory, ILink, IMessage } from '../../interfaces';
+import { IColumn, ICategory, ILink } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
 import SendForm from '../../components/SendForm';
+import Messages from '../../components/Messages';
 // Utils
 // ...
 // tmp data
@@ -25,30 +25,12 @@ const style = {
 // todo: add tests
 const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);
-  const [messages, setMessages] = useState<IMessage[]>([]);
-
-  useEffect(() => {
-    if (user) {
-      firebase.fetchMessages(user).then((msgs: IMessage[]) => {
-        setMessages(msgs);
-      });
-    }
-  }, [user]);
 
   return (
     <div className="links-page">
-      <section>
-        {user && (
-          <main>
-            {messages &&
-              messages.map((msg) => <div key={msg.id}>{msg.text}</div>)}
-          </main>
-        )}
-      </section>
+      {user && <Messages user={user} />}
 
-      <section>
-        <SendForm />
-      </section>
+      <SendForm />
 
       <ImportantLinks links={importantLinks} />
 
