@@ -10,7 +10,7 @@ const signInWithGoogle = async (): Promise<User | null> => {
 
   const usersRef = collection(firebase.firestoreDB, 'users');
   const q = query(usersRef, where('uid', '==', user.uid));
-  // todo: getDoc instead of getDocs
+  // todo [after release] - getDoc instead of getDocs
   // const userRef = doc(firebase.firestoreDB, 'users', user.uid);
   // const userSnap = await getDoc(userRef);
   const users = await getDocs(q);

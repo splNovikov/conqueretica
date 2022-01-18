@@ -4,19 +4,26 @@ import { collection, orderBy, query, where } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 // Firebase
 import firebase from '../../firebase';
+// Utils
+import { firebaseErrorHandler } from '../../utils';
 
 const Messages: FC<{ user: User }> = ({ user }) => {
   const messagesRef = collection(firebase.firestoreDB, 'messages');
   const q = query(
     messagesRef,
     where('ownerId', '==', user.uid),
-    // orderBy('createdBy', 'desc'),
+    orderBy('createdAt', 'desc'),
   );
 
-  const [messages] = useCollectionData(q, { idField: 'id' });
+  const [messages, loading, error] = useCollectionData(q, { idField: 'id' });
+
+  if (error?.message) {
+    firebaseErrorHandler(error);
+  }
 
   return (
     <div>
+      {!loading ? 'not' : ''} loading messages
       {messages && messages.map((msg) => <div key={msg.id}>{msg.text}</div>)}
     </div>
   );
