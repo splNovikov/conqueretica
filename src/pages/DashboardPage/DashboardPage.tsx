@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { IDaily } from '../../interfaces';
 // Components
 import DailyCard from '../../components/DailyCard';
-import { fetchDailies } from '../../http/http.requests';
+import { fetchHabiticaDailies } from '../../http';
 
 // todo: add tests
 const DashboardPage = () => {
   const [dailiesData, setDailiesData] = useState<IDaily[]>([]);
   useEffect(() => {
     // todo: fetchDailies update api
-    fetchDailies().then((dailies) => {
+    fetchHabiticaDailies().then((dailies) => {
       setDailiesData(dailies);
     });
   }, []);
