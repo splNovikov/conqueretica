@@ -23,7 +23,7 @@ const Messages: FC<{ user: User }> = ({ user }) => {
 
   return (
     <div>
-      {!loading ? 'not' : ''} loading messages
+      {loading && 'loading messages progress...'}
       {messages && messages.map((msg) => <div key={msg.id}>{msg.text}</div>)}
     </div>
   );
