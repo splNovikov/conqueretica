@@ -14,7 +14,7 @@ import firebase from './index';
 // Interfaces
 import { IMessage } from '../interfaces';
 // Utils
-import { firebaseErrorHandler } from '../utils';
+import { httpErrorHandler } from '../utils';
 
 // todo [after release] - investigate queries on firestore side. "shallow queries"
 export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
@@ -29,7 +29,7 @@ export const fetchMessages = async (user: User | null): Promise<IMessage[]> => {
       return [...acc, { ownerId, id, text, createdAt }];
     }, []);
   } catch (e) {
-    firebaseErrorHandler(e);
+    httpErrorHandler(e);
     return [];
   }
 };
@@ -51,7 +51,7 @@ export const sendMessage = async (
 
     return message;
   } catch (e) {
-    firebaseErrorHandler(e);
+    httpErrorHandler(e);
     return null;
   }
 };

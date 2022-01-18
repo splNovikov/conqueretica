@@ -9,7 +9,6 @@ import { fetchHabiticaDailies } from '../../http';
 const DashboardPage = () => {
   const [dailiesData, setDailiesData] = useState<IDaily[]>([]);
   useEffect(() => {
-    // todo: fetchDailies update api
     fetchHabiticaDailies().then((dailies) => {
       setDailiesData(dailies);
     });

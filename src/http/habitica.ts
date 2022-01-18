@@ -1,10 +1,11 @@
-import { HABITICA_ID, HABITICA_TOKEN } from '../constants/credentials';
+import { HABITICA_ID, HABITICA_TOKEN } from './credentials';
 import api from '../constants/apiRoutes';
+// Interfaces
+import { IDaily } from '../interfaces';
+// Utils
 import { httpErrorHandler } from '../utils';
 
-// todo - wrap async request to try catch?
-
-export const fetchDailies = async () => {
+export const fetchDailies = async (): Promise<IDaily[]> => {
   const params = {
     method: 'get',
     headers: {
@@ -12,7 +13,6 @@ export const fetchDailies = async () => {
       'x-api-key': HABITICA_TOKEN,
     },
   };
-
   const response = await fetch(api.habiticaDailys, params);
 
   if (response.ok) {
@@ -21,7 +21,6 @@ export const fetchDailies = async () => {
     return responseData.data;
   }
 
-  httpErrorHandler('FETCH DAILIES ERROR');
-
+  httpErrorHandler(response);
   return [];
 };

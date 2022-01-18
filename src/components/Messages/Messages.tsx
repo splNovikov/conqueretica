@@ -5,7 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 // Firebase
 import firebase from '../../firebase';
 // Utils
-import { firebaseErrorHandler } from '../../utils';
+import { httpErrorHandler } from '../../utils';
 
 const Messages: FC<{ user: User }> = ({ user }) => {
   const messagesRef = collection(firebase.firestoreDB, 'messages');
@@ -18,7 +18,7 @@ const Messages: FC<{ user: User }> = ({ user }) => {
   const [messages, loading, error] = useCollectionData(q, { idField: 'id' });
 
   if (error?.message) {
-    firebaseErrorHandler(error);
+    httpErrorHandler(error);
   }
 
   return (

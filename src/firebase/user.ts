@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import { addDoc, CollectionReference } from 'firebase/firestore';
 
-import { firebaseErrorHandler } from '../utils';
+import { httpErrorHandler } from '../utils';
 
 const createUser = async (
   usersRef: CollectionReference,
@@ -16,7 +16,7 @@ const createUser = async (
     });
     return user;
   } catch (e) {
-    firebaseErrorHandler(e);
+    httpErrorHandler(e);
     return null;
   }
 };
