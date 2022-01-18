@@ -9,10 +9,10 @@ const Header: FC<{
 }> = ({ user }) => (
   <div className="header">
     {user ? (
-      <>
-        {user.displayName}
+      <div className="user-wrapper">
+        <span className="user-name">{user.displayName}</span>
         <SignOut />
-      </>
+      </div>
     ) : (
       <Login />
     )}

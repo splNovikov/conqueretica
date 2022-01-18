@@ -13,4 +13,15 @@ it('Header is rendering', () => {
   expect(wrapper.hasClass('header')).toEqual(true);
 });
 
-// todo add tests for displayName
+describe('User', () => {
+  it('User is passed', () => {
+    const wrapper = shallow(<Header user={user as User} />);
+    expect(wrapper.text().includes('Pavel Novikov')).toBe(true);
+  });
+
+  it('User is not passed', () => {
+    const wrapper = shallow(<Header user={null} />);
+    const userWrapper = wrapper.find('.user-wrapper');
+    expect(userWrapper.exists()).toBe(false);
+  });
+});
