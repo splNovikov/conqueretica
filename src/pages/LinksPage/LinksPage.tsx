@@ -22,7 +22,6 @@ const style = {
   border: '1px solid #0092ff',
 };
 
-// todo: add tests
 const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);
 
