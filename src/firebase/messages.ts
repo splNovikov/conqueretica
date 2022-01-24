@@ -2,6 +2,8 @@ import {
   addDoc,
   collection,
   getDocs,
+  orderBy,
+  Query,
   query,
   serverTimestamp,
   where,
@@ -54,4 +56,13 @@ export const sendMessage = async (
     httpErrorHandler(e);
     return null;
   }
+};
+
+export const getMessagesQuery = (userId: string): Query => {
+  const messagesRef = collection(firebase.firestoreDB, 'messages');
+  return query(
+    messagesRef,
+    where('ownerId', '==', userId),
+    orderBy('createdAt', 'desc'),
+  );
 };

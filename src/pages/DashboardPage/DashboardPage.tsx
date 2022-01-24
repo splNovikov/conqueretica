@@ -5,7 +5,6 @@ import { IDaily } from '../../interfaces';
 import DailyCard from '../../components/DailyCard';
 import { fetchHabiticaDailies } from '../../http';
 
-// todo: add tests
 const DashboardPage = () => {
   const [dailiesData, setDailiesData] = useState<IDaily[]>([]);
   useEffect(() => {
@@ -15,11 +14,11 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="dashboard-page">
       {dailiesData.map((daily: IDaily) => {
         return <DailyCard daily={daily} key={daily.id} />;
       })}
-    </>
+    </div>
   );
 };
 
