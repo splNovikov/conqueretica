@@ -16,6 +16,11 @@ const Header: FC<{
     ) : (
       <Login />
     )}
+    <div>
+      <a href="https://docs.google.com/spreadsheets">Sheets</a>
+      &nbsp;
+      <a href="https://docs.google.com/document">Docs</a>
+    </div>
   </div>
 );
 
