@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
+import Icon from '@ant-design/icons';
 import classNames from 'classnames';
 
 import { ILink } from '../../interfaces';
 
 import './Linky.scss';
+import { getIconByLink } from '../../utils';
 
 const Linky: FC<{
   link: ILink;
@@ -12,14 +14,19 @@ const Linky: FC<{
   colored?: boolean;
   ellipsed?: boolean;
   /* eslint-enable */
-}> = ({ link, big, colored, ellipsed }) => (
-  <a
-    className={classNames('linky', { colored, big, ellipsed })}
-    aria-label={link.title}
-    href={link.href}
-  >
-    {link.title || link.href}
-  </a>
-);
+}> = ({ link, big, colored, ellipsed }) => {
+  const icon = getIconByLink(link.href);
+
+  return (
+    <a
+      className={classNames('linky', { colored, big, ellipsed })}
+      aria-label={link.title}
+      href={link.href}
+    >
+      <Icon component={icon} />
+      {link.title || link.href}
+    </a>
+  );
+};
 
 export default Linky;

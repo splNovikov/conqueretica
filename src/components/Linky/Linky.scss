@@ -1,9 +1,15 @@
 .linky {
   font-size: small;
+  display: inline-flex;
+  align-items: center;
+
+  .anticon {
+    // todo: move paddings to variables? check ant design
+    padding-right: 0.2em;
+  }
 
   &.big {
     padding: 1em 2em;
-    display: inline-block;
   }
 
   &.colored {
