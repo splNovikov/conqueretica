@@ -11,7 +11,6 @@ const rules = {
   slides: 'https://docs.google.com/presentation',
 };
 
-// todo: fix any
 const iconMap: {
   [key: string]: ComponentType;
 } = {
