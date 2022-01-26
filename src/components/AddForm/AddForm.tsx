@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
 
 const AddForm: FC<{
   formSubmitHandler: (value: string) => void;
@@ -12,12 +12,13 @@ const AddForm: FC<{
     await formSubmitHandler(formValue);
   };
 
-  const handleInputChange = (e: FormEvent<HTMLInputElement>) =>
-    setFormValue(e.currentTarget.value);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setFormValue(e.target.value);
 
   return (
     <form onSubmit={handleFormSubmit} className="send-form">
       <input
+        type="text"
         value={formValue}
         onChange={handleInputChange}
         placeholder="say something nice"
