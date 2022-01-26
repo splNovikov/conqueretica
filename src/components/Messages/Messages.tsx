@@ -13,12 +13,19 @@ const Messages: FC<{ user: UserInfo }> = ({ user }) => {
 
   if (error?.message) {
     httpErrorHandler(error);
+
+    return null;
   }
 
   return (
     <div className="messages">
       {loading && 'loading messages progress...'}
-      {messages && messages.map((msg) => <div key={msg.id}>{msg.text}</div>)}
+      {messages &&
+        messages.map((msg) => (
+          <div className="message" key={msg.id}>
+            {msg.text}
+          </div>
+        ))}
     </div>
   );
 };
