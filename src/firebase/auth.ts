@@ -1,11 +1,11 @@
-import { User, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { UserInfo, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import firebase from './index';
 
 const googleProvider = new GoogleAuthProvider();
 
-const signInWithGoogle = async (): Promise<User | null> => {
+const signInWithGoogle = async (): Promise<UserInfo | null> => {
   const { user } = await signInWithPopup(firebase.auth, googleProvider);
 
   const usersRef = collection(firebase.firestoreDB, 'users');

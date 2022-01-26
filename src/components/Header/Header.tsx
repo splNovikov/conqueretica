@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { User } from 'firebase/auth';
+import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { ILink } from '../../interfaces';
 // Components
@@ -28,7 +28,7 @@ const googleLinks: ILink[] = [
 ];
 
 const Header: FC<{
-  user: User | null | undefined;
+  user: UserInfo | null | undefined;
 }> = ({ user }) => (
   <div className="header">
     <div>

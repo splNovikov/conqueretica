@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 // Interfaces
 import { IDaily } from '../../interfaces';
 // Components
-import DailyCard from '../../components/DailyCard';
+import DashboardPageView from './DashboardPageView';
+// Getting data
 import { fetchHabiticaDailies } from '../../http';
 
 const DashboardPage = () => {
@@ -13,13 +14,7 @@ const DashboardPage = () => {
     });
   }, []);
 
-  return (
-    <div className="dashboard-page">
-      {dailiesData.map((daily: IDaily) => {
-        return <DailyCard daily={daily} key={daily.id} />;
-      })}
-    </div>
-  );
+  return <DashboardPageView dailies={dailiesData} />;
 };
 
 export default DashboardPage;

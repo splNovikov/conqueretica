@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
 import { Row, Col } from 'antd';
-import { User } from 'firebase/auth';
-// Firebase
-import firebase from '../../firebase';
+import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { IColumn, ICategory, ILink } from '../../interfaces';
 // Components
@@ -20,7 +18,7 @@ const style = {
 };
 
 const LinksPage: FC<{
-  user: User | null | undefined;
+  user: UserInfo | null | undefined;
   importantLinks: ILink[];
   columns: IColumn[];
 }> = ({ user, importantLinks, columns }) => (
