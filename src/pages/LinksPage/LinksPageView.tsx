@@ -6,9 +6,8 @@ import { IColumn, ICategory, ILink } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
-import SendForm from '../../components/SendForm';
+import AddForm from '../../components/AddForm';
 import Messages from '../../components/Messages';
-
 // Styles
 import './LinksPageView.scss';
 
@@ -21,11 +20,12 @@ const LinksPage: FC<{
   user: UserInfo | null | undefined;
   importantLinks: ILink[];
   columns: IColumn[];
-}> = ({ user, importantLinks, columns }) => (
+  formSubmitHandler: (val: string) => void;
+}> = ({ user, importantLinks, columns, formSubmitHandler }) => (
   <div className="links-page">
     {user && <Messages user={user} />}
 
-    <SendForm />
+    <AddForm formSubmitHandler={formSubmitHandler} />
 
     <ImportantLinks links={importantLinks} />
 
