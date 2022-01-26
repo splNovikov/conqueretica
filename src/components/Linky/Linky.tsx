@@ -23,7 +23,7 @@ const Linky: FC<{
       aria-label={link.title}
       href={link.href}
     >
-      <Icon component={icon} />
+      {icon && <Icon component={icon} />}
       {link.title || link.href}
     </a>
   );

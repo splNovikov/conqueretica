@@ -5,27 +5,29 @@ import {
 } from '@ant-design/icons';
 
 import { getIconByLink, identifyLink } from './identifyLink';
+// Test Data:
+import { links } from '../__test_data__';
 
-const sheets =
-  'https://docs.google.com/spreadsheets/d/1x_S2AgTQTz5MRFseuZtM65HEPbDxMY-VT3eP5bglIB4/edit#gid=0';
-const docs =
-  'https://docs.google.com/document/d/1XLCAJj05ttZ6YV0VJ7p21FXYGqA8boXzycL9n5Vll48/edit';
-const slides =
-  'https://docs.google.com/presentation/d/1KMAophpPr3LP_oG5WQOmLewzmAa7g1WTIyP9IgcsDMc/edit#slide=id.gcfcf1c7cfc_0_185';
+const blablaHref = 'http://test.com/blablabla';
 
 describe('Identify Links', () => {
+  it('Should return "empty string"', () => {
+    const res = identifyLink(blablaHref);
+    expect(res).toBe('');
+  });
+
   it('Should return "sheets"', () => {
-    const res = identifyLink(sheets);
+    const res = identifyLink(links.sheets.href);
     expect(res).toBe('sheets');
   });
 
   it('Should return "docs"', () => {
-    const res = identifyLink(docs);
+    const res = identifyLink(links.docs.href);
     expect(res).toBe('docs');
   });
 
   it('Should return "slides"', () => {
-    const res = identifyLink(slides);
+    const res = identifyLink(links.slides.href);
     expect(res).toBe('slides');
   });
 
@@ -37,22 +39,22 @@ describe('Identify Links', () => {
 
 describe('Get Icon By Link', () => {
   it('Should return "SheetsIcon"', () => {
-    const res = getIconByLink(sheets);
+    const res = getIconByLink(links.sheets.href);
     expect(res).toBe(TableOutlined);
   });
 
   it('Should return "DocsIcon"', () => {
-    const res = getIconByLink(docs);
+    const res = getIconByLink(links.docs.href);
     expect(res).toBe(FileOutlined);
   });
 
   it('Should return "SlidesIcon"', () => {
-    const res = getIconByLink(slides);
+    const res = getIconByLink(links.slides.href);
     expect(res).toBe(DesktopOutlined);
   });
 
   it('Should return "undefined"', () => {
-    const res = getIconByLink('http://test.com/blablabla');
+    const res = getIconByLink(blablaHref);
     expect(res).toBeUndefined();
   });
 });
