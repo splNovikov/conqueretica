@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from '../../firebase';
 // Components
 import LinksPageView from './LinksPageView';
-// test data (should be fetched from BE)
+// Test Data (should be fetched from BE)
 import { columns, importantLinks } from '../../__test_data__';
 
 const LinksPage = () => {

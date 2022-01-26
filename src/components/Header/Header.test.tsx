@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 // Components
 import Header from './Header';
-// Test Data:
+// Test Data
 import { user } from '../../__test_data__';
 
 it('Header is rendering', () => {

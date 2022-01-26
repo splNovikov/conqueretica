@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 // Components
 import DashboardPage from './DashboardPage';
 import DashboardPageView from './DashboardPageView';
-// Test Data:
+// Test Data
 import { dailies } from '../../__test_data__';
 
 it('DashboardPage is rendering', () => {
