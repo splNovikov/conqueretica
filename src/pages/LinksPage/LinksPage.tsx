@@ -5,7 +5,7 @@ import firebase from '../../firebase';
 // Components
 import LinksPageView from './LinksPageView';
 // test data (should be fetched from BE)
-import { columns, importantLinks } from './testDataLinks';
+import { columns, importantLinks } from '../../__test_data__';
 
 const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);

@@ -4,8 +4,7 @@ import { shallow } from 'enzyme';
 import LinksPage from './LinksPage';
 import LinksPageView from './LinksPageView';
 // Test Data
-import { columns, importantLinks } from './testDataLinks';
-import { user } from '../../__test_data__';
+import { columns, importantLinks, user } from '../../__test_data__';
 
 it('LinksPage is rendering', () => {
   shallow(<LinksPage />);
