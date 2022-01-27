@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import * as hooks from 'react-firebase-hooks/auth';
 // Components
 import LinksPage from './LinksPage';
@@ -14,6 +14,17 @@ it('LinksPage is rendering', () => {
   shallow(<LinksPage />);
 });
 
+describe('LinksPage - Messages should be rendered', () => {
+  it('Messages should be rendered when user is in state', () => {
+    // @ts-ignore
+    jest.spyOn(hooks, 'useAuthState').mockImplementation(() => [user]);
+
+    const wrapper = mount(<LinksPage />);
+    const messagesElement = wrapper.find('Messages');
+    expect(messagesElement.exists()).toEqual(true);
+  });
+});
+
 describe('LinksPageView - Messages should be rendered', () => {
   it('Messages should be rendered when user is in state', () => {
     const wrapper = shallow(
@@ -24,6 +35,7 @@ describe('LinksPageView - Messages should be rendered', () => {
         formSubmitHandler={() => ''}
       />,
     );
+
     const messagesElement = wrapper.find('Messages');
     expect(messagesElement.exists()).toEqual(true);
   });

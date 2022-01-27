@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Row, Col } from 'antd';
+import { Col } from 'antd';
 import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { IColumn, ICategory, ILink } from '../../interfaces';
@@ -29,7 +29,8 @@ const LinksPage: FC<{
 
     <ImportantLinks links={importantLinks} />
 
-    <Row>
+    {/* // "ant-row" class instead of Row component because Row component is failing tests */}
+    <div className="ant-row">
       {columns.map((column: IColumn) => (
         <Col key={column.id} span={6} style={style}>
           {column.categories.map((category: ICategory) => (
@@ -44,7 +45,7 @@ const LinksPage: FC<{
           ))}
         </Col>
       ))}
-    </Row>
+    </div>
   </div>
 );
 
