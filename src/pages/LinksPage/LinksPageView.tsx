@@ -2,12 +2,13 @@ import React, { FC } from 'react';
 import { Col } from 'antd';
 import { UserInfo } from 'firebase/auth';
 // Interfaces
-import { IColumn, ICategory, ILink } from '../../interfaces';
+import { IColumn, ICategory, ILink, ITab } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
 import AddForm from '../../components/AddForm';
 import Messages from '../../components/Messages';
+import Tabs from '../../components/Tabs';
 // Styles
 import './LinksPageView.scss';
 
@@ -18,16 +19,31 @@ const style = {
 
 const LinksPage: FC<{
   user: UserInfo | null | undefined;
+  tabs: ITab[];
+  loadingTabs: boolean;
   importantLinks: ILink[];
   columns: IColumn[];
-  formSubmitHandler: (val: string) => void;
-}> = ({ user, importantLinks, columns, formSubmitHandler }) => (
+  messagesFormSubmitHandler: (val: string) => void;
+  tabsFormSubmitHandler: (val: string) => void;
+}> = ({
+  user,
+  tabs,
+  loadingTabs,
+  importantLinks,
+  columns,
+  messagesFormSubmitHandler,
+  tabsFormSubmitHandler,
+}) => (
   <div className="links-page">
     {user && <Messages user={user} />}
 
-    <AddForm formSubmitHandler={formSubmitHandler} />
+    <AddForm formSubmitHandler={messagesFormSubmitHandler} />
 
     <ImportantLinks links={importantLinks} />
+
+    {loadingTabs && 'loading tabs progress...'}
+    {tabs.length ? <Tabs tabs={tabs} /> : null}
+    <AddForm formSubmitHandler={tabsFormSubmitHandler} />
 
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}
     <div className="ant-row">
