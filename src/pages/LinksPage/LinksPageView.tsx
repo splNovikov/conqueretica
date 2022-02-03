@@ -42,7 +42,7 @@ const LinksPage: FC<{
     <ImportantLinks links={importantLinks} />
 
     {loadingTabs && 'loading tabs progress...'}
-    {tabs.length ? <Tabs tabs={tabs} /> : null}
+    {tabs && tabs.length ? <Tabs tabs={tabs} /> : null}
     <AddForm formSubmitHandler={tabsFormSubmitHandler} />
 
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}

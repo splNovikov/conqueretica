@@ -30,9 +30,12 @@ describe('LinksPageView - Messages should be rendered', () => {
     const wrapper = shallow(
       <LinksPageView
         user={user}
+        tabs={[]}
+        loadingTabs={false}
         importantLinks={importantLinks}
         columns={columns}
-        formSubmitHandler={() => ''}
+        messagesFormSubmitHandler={() => ''}
+        tabsFormSubmitHandler={() => ''}
       />,
     );
 
