@@ -3,30 +3,31 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 // Firebase
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from '../../firebase';
+// Interfaces
+import { ITab } from '../../interfaces';
 // Components
 import LinksPageView from './LinksPageView';
+// Utils
+import { httpErrorHandler } from '../../utils';
 // Test Data (should be fetched from BE)
 import { columns, importantLinks } from '../../__test_data__';
-import { httpErrorHandler } from '../../utils';
 
 // todo: after release multi-rerendering!!!
 const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);
-  const [selectedTab, selectTab] = useState({});
+  const [selectedTab, selectTab] = useState({} as ITab);
 
   let q;
   if (user) {
     q = firebase.getTabsQuery(user);
   }
-  const [tabs = [], loadingTabs, tabsError] = useCollectionData(q, {
-    idField: 'id',
-  });
+  const [tabs = [], loadingTabs, tabsError] = useCollectionData<ITab>(q);
 
   if (tabsError?.message) {
     httpErrorHandler(tabsError);
   }
 
-  if (tabs.length && !selectedTab) {
+  if (tabs.length && !selectedTab?.id) {
     selectTab(tabs[0]);
   }
 
@@ -37,14 +38,13 @@ const LinksPage = () => {
   return (
     <LinksPageView
       user={user}
-      // todo:
-      // @ts-ignore
       tabs={tabs}
       loadingTabs={loadingTabs}
       importantLinks={importantLinks}
       columns={columns}
       messagesFormSubmitHandler={sendMessage}
       tabsFormSubmitHandler={addTab}
+      selectedTab={selectedTab}
     />
   );
 };

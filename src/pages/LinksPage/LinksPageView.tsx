@@ -25,6 +25,7 @@ const LinksPage: FC<{
   columns: IColumn[];
   messagesFormSubmitHandler: (val: string) => void;
   tabsFormSubmitHandler: (val: string) => void;
+  selectedTab: ITab;
 }> = ({
   user,
   tabs,
@@ -33,6 +34,7 @@ const LinksPage: FC<{
   columns,
   messagesFormSubmitHandler,
   tabsFormSubmitHandler,
+  selectedTab,
 }) => (
   <div className="links-page">
     {user && <Messages user={user} />}
@@ -42,7 +44,9 @@ const LinksPage: FC<{
     <ImportantLinks links={importantLinks} />
 
     {loadingTabs && 'loading tabs progress...'}
-    {tabs && tabs.length ? <Tabs tabs={tabs} /> : null}
+    {tabs && tabs.length ? (
+      <Tabs tabs={tabs} selectedTab={selectedTab} />
+    ) : null}
     <AddForm formSubmitHandler={tabsFormSubmitHandler} />
 
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}

@@ -10,7 +10,6 @@ import {
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
-
 // Firebase
 import firebase from './index';
 // Interfaces
@@ -46,14 +45,16 @@ export const addTab = async (
 };
 
 const tabsConverter = {
-  toFirestore: (data: ITab[]) => data,
-  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab[],
+  toFirestore: (data: ITab) => data,
+  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab,
 };
 
-export const getTabsQuery = (user: UserInfo): Query<ITab[]> => {
-  const messagesRef = collection(firebase.firestoreDB, 'tabs').withConverter(
-    tabsConverter,
-  );
+export const getTabsQuery = (user: UserInfo): Query<ITab> => {
+  const messagesRef = collection(
+    firebase.firestoreDB,
+    'tabs',
+  ).withConverter<ITab>(tabsConverter);
+
   return query(
     messagesRef,
     where('ownerId', '==', user.uid),

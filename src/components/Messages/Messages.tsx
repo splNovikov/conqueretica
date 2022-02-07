@@ -9,7 +9,7 @@ import { httpErrorHandler } from '../../utils';
 
 const Messages: FC<{ user: UserInfo }> = ({ user }) => {
   const q: Query = firebase.getMessagesQuery(user.uid);
-  const [messages, loading, error] = useCollectionData(q, { idField: 'id' });
+  const [messages, loading, error] = useCollectionData(q);
 
   if (error?.message) {
     httpErrorHandler(error);
