@@ -10,6 +10,7 @@ describe('Messages', () => {
   it('Messages Component is rendering', () => {
     jest
       .spyOn(hooks, 'useCollectionData')
+      // @ts-ignore
       .mockImplementation(() => [[], false, undefined]);
 
     mount(<Messages user={user} />);
@@ -29,6 +30,7 @@ describe('Messages', () => {
   it('Messages is rendering "Loading message"', () => {
     jest
       .spyOn(hooks, 'useCollectionData')
+      // @ts-ignore
       .mockImplementation(() => [[], true, undefined]);
 
     const wrapper = mount(<Messages user={user} />);

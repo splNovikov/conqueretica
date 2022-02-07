@@ -19,20 +19,20 @@ const style = {
 
 const LinksPage: FC<{
   user: UserInfo | null | undefined;
-  tabs: ITab[];
   loadingTabs: boolean;
   importantLinks: ILink[];
   columns: IColumn[];
   messagesFormSubmitHandler: (val: string) => void;
+  tabs: ITab[];
   tabsFormSubmitHandler: (val: string) => void;
   selectedTab: ITab;
 }> = ({
   user,
-  tabs,
   loadingTabs,
   importantLinks,
   columns,
   messagesFormSubmitHandler,
+  tabs,
   tabsFormSubmitHandler,
   selectedTab,
 }) => (
