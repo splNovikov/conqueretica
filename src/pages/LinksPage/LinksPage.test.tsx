@@ -7,7 +7,8 @@ import LinksPage from './LinksPage';
 import LinksPageView from './LinksPageView';
 // Test Data
 import { columns, importantLinks, user, tabs } from '../../__test_data__';
-import { act } from '@testing-library/react';
+
+// todo: add beforeach and cover the code WITH SENSE
 
 it('LinksPage is rendering', () => {
   // @ts-ignore
@@ -16,7 +17,16 @@ it('LinksPage is rendering', () => {
   shallow(<LinksPage />);
 });
 
-describe('LinksPage - Messages should be rendered', () => {
+describe('LinksPage - Auth Hooks', () => {
+  it('No user - no Tabs', () => {
+    // @ts-ignore
+    jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => []);
+    const wrapper = mount(<LinksPage />);
+
+    const tabsElement = wrapper.find('Tabs');
+    expect(tabsElement.exists()).toBe(false);
+  });
+
   it('Messages should be rendered when user is in state', () => {
     // @ts-ignore
     jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
