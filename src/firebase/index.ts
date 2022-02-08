@@ -6,6 +6,7 @@ import { FIREBASE_CONFIG } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { getTabsQuery, addTab } from './tabs';
+import { getColumnsQuery } from './columns';
 
 const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
@@ -18,6 +19,8 @@ export default {
 
   getTabsQuery,
   addTab,
+
+  getColumnsQuery,
 
   auth,
   firestoreDB,

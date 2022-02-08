@@ -4,24 +4,25 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from '../../firebase';
 // Interfaces
-import { ITab } from '../../interfaces';
+import { IColumn, ITab } from '../../interfaces';
 // Components
 import LinksPageView from './LinksPageView';
 // Utils
 import { httpErrorHandler } from '../../utils';
 // Test Data (should be fetched from BE)
-import { columns, importantLinks } from '../../__test_data__';
+import { importantLinks } from '../../__test_data__';
 
 // todo: after release multi-rerendering!!!
 const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);
   const [selectedTab, selectTab] = useState({} as ITab);
 
-  let q;
+  // region Tabs
+  let qTabs;
   if (user) {
-    q = firebase.getTabsQuery(user);
+    qTabs = firebase.getTabsQuery(user);
   }
-  const [tabs = [], loadingTabs, tabsError] = useCollectionData<ITab>(q);
+  const [tabs = [], loadingTabs, tabsError] = useCollectionData<ITab>(qTabs);
 
   if (tabsError?.message) {
     httpErrorHandler(tabsError);
@@ -32,15 +33,29 @@ const LinksPage = () => {
   }
 
   const addTab = (value: string) => firebase.addTab(value, user);
+  // endregion Tabs
+
+  // region Columns
+  let qColumns;
+  if (selectedTab?.id) {
+    qColumns = firebase.getColumnsQuery(selectedTab);
+  }
+  const [columns = [], loadingColumns, columnsError] =
+    useCollectionData<IColumn>(qColumns);
+
+  if (columnsError?.message) {
+    httpErrorHandler(columnsError);
+  }
+  // endregion Columns
 
   return (
     <LinksPageView
       tabs={tabs}
       loadingTabs={loadingTabs}
-      importantLinks={importantLinks}
-      columns={columns}
-      tabsFormSubmitHandler={addTab}
       selectedTab={selectedTab}
+      tabsFormSubmitHandler={addTab}
+      columns={columns}
+      importantLinks={importantLinks}
     />
   );
 };
