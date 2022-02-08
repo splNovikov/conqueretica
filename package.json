@@ -26,7 +26,8 @@
     "build extension": "INLINE_RUNTIME_CHUNK=false REACT_APP_WEBSITE_NAME='New Tab' yarn run build",
     "test": "react-scripts test",
     "coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "husky install"
   },
   "eslintConfig": {
     "extends": [

@@ -47,7 +47,7 @@ describe('LinksPage component', () => {
       expect(tabsEl.length).toBe(3);
     });
 
-    it('Tabs are rendering "Loading tabs"', () => {
+    it('Tabs are rendering "Loading tabs progress..."', () => {
       // @ts-ignore
       jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
       jest
