@@ -3,4 +3,4 @@
 
 export PATH=/usr/local/bin:$PATH
 
-yarn coverage
+yarn run coverage
