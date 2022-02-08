@@ -50,13 +50,12 @@ const tabsConverter = {
 };
 
 export const getTabsQuery = (user: UserInfo): Query<ITab> => {
-  const messagesRef = collection(
-    firebase.firestoreDB,
-    'tabs',
-  ).withConverter<ITab>(tabsConverter);
+  const tabsRef = collection(firebase.firestoreDB, 'tabs').withConverter<ITab>(
+    tabsConverter,
+  );
 
   return query(
-    messagesRef,
+    tabsRef,
     where('ownerId', '==', user.uid),
     orderBy('createdAt', 'desc'),
   );

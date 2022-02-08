@@ -31,18 +31,14 @@ const LinksPage = () => {
     selectTab(tabs[0]);
   }
 
-  const sendMessage = (value: string) => firebase.sendMessage(value, user);
-
   const addTab = (value: string) => firebase.addTab(value, user);
 
   return (
     <LinksPageView
-      user={user}
       tabs={tabs}
       loadingTabs={loadingTabs}
       importantLinks={importantLinks}
       columns={columns}
-      messagesFormSubmitHandler={sendMessage}
       tabsFormSubmitHandler={addTab}
       selectedTab={selectedTab}
     />

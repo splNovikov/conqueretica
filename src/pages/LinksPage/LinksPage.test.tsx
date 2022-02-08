@@ -26,15 +26,6 @@ describe('LinksPage - Auth Hooks', () => {
     const tabsElement = wrapper.find('Tabs');
     expect(tabsElement.exists()).toBe(false);
   });
-
-  it('Messages should be rendered when user is in state', () => {
-    // @ts-ignore
-    jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
-
-    const wrapper = mount(<LinksPage />);
-    const messagesElement = wrapper.find('Messages');
-    expect(messagesElement.exists()).toEqual(true);
-  });
 });
 
 describe('LinksPage FireStoreHooks', () => {
@@ -51,7 +42,7 @@ describe('LinksPage FireStoreHooks', () => {
     expect(tabsEl.length).toBe(3);
   });
 
-  it('Tabs are rendering "Loading message"', () => {
+  it('Tabs are rendering "Loading tabs"', () => {
     // @ts-ignore
     jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
     jest
@@ -80,23 +71,18 @@ describe('LinksPage FireStoreHooks', () => {
   });
 });
 
-describe('LinksPageView - Messages should be rendered', () => {
-  it('Messages should be rendered when user is in state', () => {
+describe('LinksPageView - Tabs should be rendered', () => {
+  it('Tabs should be rendered when user is in state', () => {
     const wrapper = shallow(
       <LinksPageView
-        user={user}
         loadingTabs={false}
         importantLinks={importantLinks}
         columns={columns}
-        messagesFormSubmitHandler={() => ''}
         tabs={tabs}
         tabsFormSubmitHandler={() => ''}
         selectedTab={tabs[0]}
       />,
     );
-
-    const messagesElement = wrapper.find('Messages');
-    expect(messagesElement.exists()).toEqual(true);
 
     const tabsElement = wrapper.find('Tabs');
     expect(tabsElement.exists()).toEqual(true);

@@ -1,13 +1,11 @@
 import React, { FC } from 'react';
 import { Col } from 'antd';
-import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { IColumn, ICategory, ILink, ITab } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Linky from '../../components/Linky';
 import AddForm from '../../components/AddForm';
-import Messages from '../../components/Messages';
 import Tabs from '../../components/Tabs';
 // Styles
 import './LinksPageView.scss';
@@ -18,29 +16,21 @@ const style = {
 };
 
 const LinksPage: FC<{
-  user: UserInfo | null | undefined;
   loadingTabs: boolean;
   importantLinks: ILink[];
   columns: IColumn[];
-  messagesFormSubmitHandler: (val: string) => void;
   tabs: ITab[];
   tabsFormSubmitHandler: (val: string) => void;
   selectedTab: ITab;
 }> = ({
-  user,
   loadingTabs,
   importantLinks,
   columns,
-  messagesFormSubmitHandler,
   tabs,
   tabsFormSubmitHandler,
   selectedTab,
 }) => (
   <div className="links-page">
-    {user && <Messages user={user} />}
-
-    <AddForm formSubmitHandler={messagesFormSubmitHandler} />
-
     <ImportantLinks links={importantLinks} />
 
     {loadingTabs && 'loading tabs progress...'}
