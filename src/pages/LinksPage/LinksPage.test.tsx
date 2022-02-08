@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper, shallow } from 'enzyme';
 import * as authHooks from 'react-firebase-hooks/auth';
 import * as firestoreHooks from 'react-firebase-hooks/firestore';
 // Components
@@ -8,83 +8,71 @@ import LinksPageView from './LinksPageView';
 // Test Data
 import { columns, importantLinks, user, tabs } from '../../__test_data__';
 
-// todo: add beforeach and cover the code WITH SENSE
+describe('LinksPage component', () => {
+  let wrapper: ReactWrapper;
 
-it('LinksPage is rendering', () => {
-  // @ts-ignore
-  jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
-
-  shallow(<LinksPage />);
-});
-
-describe('LinksPage - Auth Hooks', () => {
-  it('No user - no Tabs', () => {
-    // @ts-ignore
-    jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => []);
-    const wrapper = mount(<LinksPage />);
-
-    const tabsElement = wrapper.find('Tabs');
-    expect(tabsElement.exists()).toBe(false);
+  afterEach(() => {
+    wrapper.unmount();
   });
-});
 
-describe('LinksPage FireStoreHooks', () => {
-  it('Tabs are rendering', () => {
+  it('LinksPage is rendering', () => {
     // @ts-ignore
     jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
-    jest
-      .spyOn(firestoreHooks, 'useCollectionData')
-      // @ts-ignore
-      .mockImplementation(() => [tabs, false, undefined]);
 
-    const wrapper = mount(<LinksPage />);
-    const tabsEl = wrapper.find('.tab');
-    expect(tabsEl.length).toBe(3);
+    wrapper = mount(<LinksPage />);
   });
 
-  it('Tabs are rendering "Loading tabs"', () => {
-    // @ts-ignore
-    jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
-    jest
-      .spyOn(firestoreHooks, 'useCollectionData')
+  describe('LinksPage - Auth Hooks', () => {
+    it('No user - no Tabs', () => {
       // @ts-ignore
-      .mockImplementation(() => [[], true, undefined]);
+      jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => []);
+      wrapper = mount(<LinksPage />);
 
-    const wrapper = mount(<LinksPage />);
-    expect(wrapper.text()).toContain('loading tabs progress...');
-
-    const tabsEl = wrapper.find('.tab');
-    expect(tabsEl.length).toBe(0);
+      const tabsElement = wrapper.find('Tabs');
+      expect(tabsElement.exists()).toBe(false);
+    });
   });
 
-  it('Error handling Error correctly"', () => {
-    // @ts-ignore
-    jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
-    console.error = jest.fn();
-    jest
-      .spyOn(firestoreHooks, 'useCollectionData')
+  describe('LinksPage FireStoreHooks', () => {
+    it('Tabs are rendering', () => {
       // @ts-ignore
-      .mockImplementation(() => [[], false, { message: 'err' }]);
+      jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
+      jest
+        .spyOn(firestoreHooks, 'useCollectionData')
+        // @ts-ignore
+        .mockImplementation(() => [tabs, false, undefined]);
 
-    mount(<LinksPage />);
-    expect(console.error).toHaveBeenCalledWith({ message: 'err' });
-  });
-});
+      wrapper = mount(<LinksPage />);
+      const tabsEl = wrapper.find('.tab');
+      expect(tabsEl.length).toBe(3);
+    });
 
-describe('LinksPageView - Tabs should be rendered', () => {
-  it('Tabs should be rendered when user is in state', () => {
-    const wrapper = shallow(
-      <LinksPageView
-        loadingTabs={false}
-        importantLinks={importantLinks}
-        columns={columns}
-        tabs={tabs}
-        tabsFormSubmitHandler={() => ''}
-        selectedTab={tabs[0]}
-      />,
-    );
+    it('Tabs are rendering "Loading tabs"', () => {
+      // @ts-ignore
+      jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
+      jest
+        .spyOn(firestoreHooks, 'useCollectionData')
+        // @ts-ignore
+        .mockImplementation(() => [[], true, undefined]);
 
-    const tabsElement = wrapper.find('Tabs');
-    expect(tabsElement.exists()).toEqual(true);
+      wrapper = mount(<LinksPage />);
+      expect(wrapper.text()).toContain('loading tabs progress...');
+
+      const tabsEl = wrapper.find('.tab');
+      expect(tabsEl.length).toBe(0);
+    });
+
+    it('Error handling Error correctly"', () => {
+      // @ts-ignore
+      jest.spyOn(authHooks, 'useAuthState').mockImplementation(() => [user]);
+      console.error = jest.fn();
+      jest
+        .spyOn(firestoreHooks, 'useCollectionData')
+        // @ts-ignore
+        .mockImplementation(() => [[], false, { message: 'err' }]);
+
+      wrapper = mount(<LinksPage />);
+      expect(console.error).toHaveBeenCalledWith({ message: 'err' });
+    });
   });
 });
