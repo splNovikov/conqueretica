@@ -1,17 +1,44 @@
 import {
+  addDoc,
   collection,
   orderBy,
   query,
   Query,
   QueryDocumentSnapshot,
+  serverTimestamp,
   where,
 } from 'firebase/firestore';
-import { UserInfo } from 'firebase/auth';
+import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
+import { defaultErrorHandler, httpErrorHandler } from '../utils';
+
+export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
+  if (!tab) {
+    defaultErrorHandler('No Tab');
+    return null;
+  }
+
+  const column: IColumn = {
+    id: uuidv4(),
+    createdAt: serverTimestamp(),
+    tabId: tab.id,
+    categories: [],
+  };
+  try {
+    const columnsRef = collection(firebase.firestoreDB, 'columns');
+
+    await addDoc(columnsRef, column);
+
+    return column;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
 
 const columnsConverter = {
   toFirestore: (data: IColumn) => data,

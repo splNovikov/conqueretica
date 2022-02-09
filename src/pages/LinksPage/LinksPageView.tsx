@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { Col } from 'antd';
 // Interfaces
 import { IColumn, ICategory, ILink, ITab } from '../../interfaces';
@@ -16,19 +16,23 @@ const style = {
 };
 
 const LinksPage: FC<{
-  loadingTabs: boolean;
-  importantLinks: ILink[];
-  columns: IColumn[];
   tabs: ITab[];
-  tabsFormSubmitHandler: (val: string) => void;
+  loadingTabs: boolean;
   selectedTab: ITab;
+  tabsFormSubmitHandler: (val: string) => void;
+  columns: IColumn[];
+  loadingColumns: boolean;
+  createColumnHandler: MouseEventHandler<HTMLButtonElement>;
+  importantLinks: ILink[];
 }> = ({
-  loadingTabs,
-  importantLinks,
-  columns,
   tabs,
-  tabsFormSubmitHandler,
+  loadingTabs,
   selectedTab,
+  tabsFormSubmitHandler,
+  columns,
+  loadingColumns,
+  createColumnHandler,
+  importantLinks,
 }) => (
   <div className="links-page">
     <ImportantLinks links={importantLinks} />
@@ -39,10 +43,12 @@ const LinksPage: FC<{
     ) : null}
     <AddForm formSubmitHandler={tabsFormSubmitHandler} />
 
+    {loadingColumns && 'loading columns progress...'}
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}
     <div className="ant-row">
       {columns.map((column: IColumn) => (
         <Col key={column.id} span={6} style={style}>
+          <div>Col</div>
           {column.categories.map((category: ICategory) => (
             <div key={category.id}>
               <div>{category.title}</div>
@@ -55,6 +61,11 @@ const LinksPage: FC<{
           ))}
         </Col>
       ))}
+      <Col span={6} style={style}>
+        <button type="button" onClick={createColumnHandler}>
+          Create
+        </button>
+      </Col>
     </div>
   </div>
 );

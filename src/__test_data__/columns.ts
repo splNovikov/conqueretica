@@ -5,6 +5,8 @@ export const columns: IColumn[] = [
   {
     id: 'column-1',
     tabId: 'tab-id-1',
+    // @ts-ignore
+    createdAt: '2021-10-01T13:13:45.115Z',
     categories: [
       // cat-1
       {
@@ -46,6 +48,8 @@ export const columns: IColumn[] = [
   {
     id: 'column-2',
     tabId: 'tab-id-1',
+    // @ts-ignore
+    createdAt: '2021-10-01T13:13:45.115Z',
     categories: [
       // cat-1
       {

@@ -46,6 +46,8 @@ const LinksPage = () => {
   if (columnsError?.message) {
     httpErrorHandler(columnsError);
   }
+
+  const addColumn = () => firebase.addColumn(selectedTab);
   // endregion Columns
 
   return (
@@ -55,6 +57,8 @@ const LinksPage = () => {
       selectedTab={selectedTab}
       tabsFormSubmitHandler={addTab}
       columns={columns}
+      loadingColumns={loadingColumns}
+      createColumnHandler={addColumn}
       importantLinks={importantLinks}
     />
   );
