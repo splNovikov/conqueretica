@@ -2,22 +2,41 @@ import React, { FC } from 'react';
 // Interfaces
 import { ITab } from '../../interfaces';
 // Styles
-import './Tab.scss';
+import './Tabs.scss';
 
-const Tabs: FC<{ tabs: ITab[]; selectedTab: ITab }> = ({
-  tabs,
-  selectedTab,
-}) => {
+const Tabs: FC<{
+  tabs: ITab[];
+  selectedTab: ITab;
+  selectTabHandler: (val: ITab) => void;
+}> = ({ tabs, selectedTab, selectTabHandler }) => {
   return (
     <div className="tabs">
       {tabs &&
         tabs.map((tab) => (
-          <span className="tab" key={tab.id}>
-            {tab.title}
-            {selectedTab.id === tab.id && '[Selected]'}
-          </span>
+          <Tab
+            tab={tab}
+            selectedTab={selectedTab}
+            selectTabHandler={selectTabHandler}
+            key={tab.id}
+          />
         ))}
     </div>
+  );
+};
+
+// todo: separate component
+const Tab: FC<{
+  tab: ITab;
+  selectedTab: ITab;
+  selectTabHandler: (val: ITab) => void;
+}> = ({ tab, selectedTab, selectTabHandler }) => {
+  const handleTabSelect = () => selectTabHandler(tab);
+
+  return (
+    <span role="none" className="tab" onClick={handleTabSelect}>
+      {tab.title}
+      {selectedTab.id === tab.id && '[Selected]'}
+    </span>
   );
 };
 

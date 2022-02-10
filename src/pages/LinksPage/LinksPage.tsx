@@ -57,6 +57,7 @@ const LinksPage = () => {
       tabs={tabs}
       loadingTabs={loadingTabs}
       selectedTab={selectedTab}
+      selectTabHandler={selectTab}
       tabsFormSubmitHandler={addTab}
       columns={columns}
       loadingColumns={loadingColumns}

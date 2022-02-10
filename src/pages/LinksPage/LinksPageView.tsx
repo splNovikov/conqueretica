@@ -19,6 +19,7 @@ const LinksPage: FC<{
   tabs: ITab[];
   loadingTabs: boolean;
   selectedTab: ITab;
+  selectTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
   columns: IColumn[];
   loadingColumns: boolean;
@@ -29,6 +30,7 @@ const LinksPage: FC<{
   tabs,
   loadingTabs,
   selectedTab,
+  selectTabHandler,
   tabsFormSubmitHandler,
   columns,
   loadingColumns,
@@ -41,7 +43,11 @@ const LinksPage: FC<{
 
     {loadingTabs && 'loading tabs progress...'}
     {tabs && tabs.length ? (
-      <Tabs tabs={tabs} selectedTab={selectedTab} />
+      <Tabs
+        tabs={tabs}
+        selectedTab={selectedTab}
+        selectTabHandler={selectTabHandler}
+      />
     ) : null}
     <AddForm formSubmitHandler={tabsFormSubmitHandler} />
 
@@ -68,13 +74,13 @@ const Column: FC<{
   column: IColumn;
   deleteColumnHandler: (val: IColumn) => void;
 }> = ({ column, deleteColumnHandler }) => {
-  const handleDelete = () => deleteColumnHandler(column);
+  const handleColumnDelete = () => deleteColumnHandler(column);
 
   return (
     <Col span={6} style={style}>
       <div>Col</div>
-      <button type="button" onClick={handleDelete}>
-        Delete
+      <button type="button" onClick={handleColumnDelete}>
+        Delete Column
       </button>
       {column.categories.map((category: ICategory) => (
         <div key={category.id}>
