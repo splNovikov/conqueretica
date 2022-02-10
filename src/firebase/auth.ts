@@ -1,5 +1,5 @@
 import { UserInfo, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDoc, doc } from 'firebase/firestore';
 
 import firebase from './index';
 
@@ -9,13 +9,11 @@ const signInWithGoogle = async (): Promise<UserInfo | null> => {
   const { user } = await signInWithPopup(firebase.auth, googleProvider);
 
   const usersRef = collection(firebase.firestoreDB, 'users');
-  const q = query(usersRef, where('uid', '==', user.uid));
-  // todo [after release] - getDoc instead of getDocs
-  // const userRef = doc(firebase.firestoreDB, 'users', user.uid);
-  // const userSnap = await getDoc(userRef);
-  const users = await getDocs(q);
 
-  if (users?.size === 0) {
+  const userRef = await doc(usersRef, user.uid);
+  const userDoc = await getDoc(userRef);
+
+  if (!userDoc.exists()) {
     return firebase.createUser(usersRef, user);
   }
 
