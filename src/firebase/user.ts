@@ -1,15 +1,14 @@
-import { User } from 'firebase/auth';
-import { addDoc, CollectionReference } from 'firebase/firestore';
+import { UserInfo } from 'firebase/auth';
+import { CollectionReference, doc, setDoc } from 'firebase/firestore';
 
 import { httpErrorHandler } from '../utils';
 
 const createUser = async (
   usersRef: CollectionReference,
-  user: User,
-): Promise<User | null> => {
-  // todo: change to setDoc
+  user: UserInfo,
+): Promise<UserInfo | null> => {
   try {
-    await addDoc(usersRef, {
+    await setDoc(doc(usersRef, user.uid), {
       uid: user.uid,
       name: user.displayName,
       authProvider: 'google',
