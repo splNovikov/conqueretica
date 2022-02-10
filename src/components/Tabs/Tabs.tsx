@@ -30,7 +30,8 @@ const Tab: FC<{
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
 }> = ({ tab, selectedTab, selectTabHandler }) => {
-  const handleTabSelect = () => selectTabHandler(tab);
+  const handleTabSelect = () =>
+    tab.id !== selectedTab.id && selectTabHandler(tab);
 
   return (
     <span role="none" className="tab" onClick={handleTabSelect}>
