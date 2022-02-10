@@ -1,5 +1,7 @@
 import {
-  addDoc,
+  setDoc,
+  deleteDoc,
+  doc,
   collection,
   orderBy,
   query,
@@ -31,7 +33,25 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   try {
     const columnsRef = collection(firebase.firestoreDB, 'columns');
 
-    await addDoc(columnsRef, column);
+    await setDoc(doc(columnsRef, column.id), column);
+
+    return column;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const deleteColumn = async (
+  column: IColumn,
+): Promise<IColumn | null> => {
+  if (!column) {
+    defaultErrorHandler('No Column');
+    return null;
+  }
+
+  try {
+    await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));
 
     return column;
   } catch (e) {

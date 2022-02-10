@@ -23,6 +23,7 @@ const LinksPage: FC<{
   columns: IColumn[];
   loadingColumns: boolean;
   createColumnHandler: MouseEventHandler<HTMLButtonElement>;
+  deleteColumnHandler: (val: IColumn) => void;
   importantLinks: ILink[];
 }> = ({
   tabs,
@@ -32,6 +33,7 @@ const LinksPage: FC<{
   columns,
   loadingColumns,
   createColumnHandler,
+  deleteColumnHandler,
   importantLinks,
 }) => (
   <div className="links-page">
@@ -47,19 +49,11 @@ const LinksPage: FC<{
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}
     <div className="ant-row">
       {columns.map((column: IColumn) => (
-        <Col key={column.id} span={6} style={style}>
-          <div>Col</div>
-          {column.categories.map((category: ICategory) => (
-            <div key={category.id}>
-              <div>{category.title}</div>
-              {category.links.map((l: ILink) => (
-                <div key={l.id} className="linky-wrapper">
-                  <Linky link={l} ellipsed />
-                </div>
-              ))}
-            </div>
-          ))}
-        </Col>
+        <Column
+          key={column.id}
+          column={column}
+          deleteColumnHandler={deleteColumnHandler}
+        />
       ))}
       <Col span={6} style={style}>
         <button type="button" onClick={createColumnHandler}>
@@ -69,5 +63,31 @@ const LinksPage: FC<{
     </div>
   </div>
 );
+
+const Column: FC<{
+  column: IColumn;
+  deleteColumnHandler: (val: IColumn) => void;
+}> = ({ column, deleteColumnHandler }) => {
+  const handleDelete = () => deleteColumnHandler(column);
+
+  return (
+    <Col span={6} style={style}>
+      <div>Col</div>
+      <button type="button" onClick={handleDelete}>
+        Delete
+      </button>
+      {column.categories.map((category: ICategory) => (
+        <div key={category.id}>
+          <div>{category.title}</div>
+          {category.links.map((l: ILink) => (
+            <div key={l.id} className="linky-wrapper">
+              <Linky link={l} ellipsed />
+            </div>
+          ))}
+        </div>
+      ))}
+    </Col>
+  );
+};
 
 export default LinksPage;

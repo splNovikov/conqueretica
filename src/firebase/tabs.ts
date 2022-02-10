@@ -35,6 +35,7 @@ export const addTab = async (
   try {
     const tabsRef = collection(firebase.firestoreDB, 'tabs');
 
+    // todo: change to setDoc!!!
     await addDoc(tabsRef, tab);
 
     return tab;

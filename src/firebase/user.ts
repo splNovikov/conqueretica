@@ -7,6 +7,7 @@ const createUser = async (
   usersRef: CollectionReference,
   user: User,
 ): Promise<User | null> => {
+  // todo: change to setDoc
   try {
     await addDoc(usersRef, {
       uid: user.uid,

@@ -48,6 +48,8 @@ const LinksPage = () => {
   }
 
   const addColumn = () => firebase.addColumn(selectedTab);
+
+  const deleteColumn = (column: IColumn) => firebase.deleteColumn(column);
   // endregion Columns
 
   return (
@@ -59,6 +61,7 @@ const LinksPage = () => {
       columns={columns}
       loadingColumns={loadingColumns}
       createColumnHandler={addColumn}
+      deleteColumnHandler={deleteColumn}
       importantLinks={importantLinks}
     />
   );
