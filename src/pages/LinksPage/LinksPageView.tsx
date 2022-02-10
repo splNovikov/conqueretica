@@ -1,12 +1,12 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { Col } from 'antd';
 // Interfaces
-import { IColumn, ICategory, ILink, ITab } from '../../interfaces';
+import { IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
-import Linky from '../../components/Linky';
 import AddForm from '../../components/AddForm';
 import Tabs from '../../components/Tabs';
+import Column from '../../components/Сolumn';
 // Styles
 import './LinksPageView.scss';
 
@@ -69,31 +69,5 @@ const LinksPage: FC<{
     </div>
   </div>
 );
-
-const Column: FC<{
-  column: IColumn;
-  deleteColumnHandler: (val: IColumn) => void;
-}> = ({ column, deleteColumnHandler }) => {
-  const handleColumnDelete = () => deleteColumnHandler(column);
-
-  return (
-    <Col span={6} style={style}>
-      <div>Col</div>
-      <button type="button" onClick={handleColumnDelete}>
-        Delete Column
-      </button>
-      {column.categories.map((category: ICategory) => (
-        <div key={category.id}>
-          <div>{category.title}</div>
-          {category.links.map((l: ILink) => (
-            <div key={l.id} className="linky-wrapper">
-              <Linky link={l} ellipsed />
-            </div>
-          ))}
-        </div>
-      ))}
-    </Col>
-  );
-};
 
 export default LinksPage;
