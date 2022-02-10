@@ -1,12 +1,13 @@
 import React from 'react';
-import { mount, ReactWrapper, shallow } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import * as authHooks from 'react-firebase-hooks/auth';
 import * as firestoreHooks from 'react-firebase-hooks/firestore';
 // Components
 import LinksPage from './LinksPage';
-import LinksPageView from './LinksPageView';
 // Test Data
-import { columns, importantLinks, user, tabs } from '../../__test_data__';
+import { user, tabs } from '../../__test_data__';
+
+// todo: add tests when we add and delete all entities through real DB
 
 describe('LinksPage component', () => {
   let wrapper: ReactWrapper;
