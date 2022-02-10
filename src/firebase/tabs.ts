@@ -1,11 +1,12 @@
 import {
-  addDoc,
   collection,
+  doc,
   orderBy,
   query,
   Query,
   QueryDocumentSnapshot,
   serverTimestamp,
+  setDoc,
   where,
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
@@ -35,8 +36,7 @@ export const addTab = async (
   try {
     const tabsRef = collection(firebase.firestoreDB, 'tabs');
 
-    // todo: change to setDoc!!!
-    await addDoc(tabsRef, tab);
+    await setDoc(doc(tabsRef, tab.id), tab);
 
     return tab;
   } catch (e) {
