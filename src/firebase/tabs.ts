@@ -58,6 +58,6 @@ export const getTabsQuery = (user: UserInfo): Query<ITab> => {
   return query(
     tabsRef,
     where('ownerId', '==', user.uid),
-    orderBy('createdAt', 'desc'),
+    orderBy('createdAt', 'asc'),
   );
 };

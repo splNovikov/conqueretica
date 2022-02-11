@@ -1,4 +1,7 @@
 .tabs {
+  display: flex;
+  align-items: center;
+
   .tab {
     cursor: pointer;
     // todo: move paddings to variables? check ant design

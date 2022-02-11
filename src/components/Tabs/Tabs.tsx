@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { ITab } from '../../interfaces';
 // Components
 import Tab from '../Tab';
+import AddForm from '../AddForm';
 // Styles
 import './Tabs.scss';
 
@@ -10,7 +11,8 @@ const Tabs: FC<{
   tabs: ITab[];
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
-}> = ({ tabs, selectedTab, selectTabHandler }) => {
+  tabsFormSubmitHandler: (val: string) => void;
+}> = ({ tabs, selectedTab, selectTabHandler, tabsFormSubmitHandler }) => {
   return (
     <div className="tabs">
       {tabs &&
@@ -22,6 +24,10 @@ const Tabs: FC<{
             key={tab.id}
           />
         ))}
+      <AddForm
+        formSubmitHandler={tabsFormSubmitHandler}
+        placeholder="create a new tab"
+      />
     </div>
   );
 };

@@ -4,7 +4,6 @@ import { Col } from 'antd';
 import { IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
-import AddForm from '../../components/AddForm';
 import Tabs from '../../components/Tabs';
 import Column from '../../components/Сolumn';
 // Styles
@@ -42,12 +41,9 @@ const LinksPage: FC<{
         tabs={tabs}
         selectedTab={selectedTab}
         selectTabHandler={selectTabHandler}
+        tabsFormSubmitHandler={tabsFormSubmitHandler}
       />
     ) : null}
-    <AddForm
-      formSubmitHandler={tabsFormSubmitHandler}
-      placeholder="create a new tab"
-    />
 
     {loadingColumns && 'loading columns progress...'}
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}
