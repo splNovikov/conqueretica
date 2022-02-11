@@ -10,11 +10,6 @@ import Column from '../../components/Сolumn';
 // Styles
 import './LinksPageView.scss';
 
-// todo: remove this:
-const style = {
-  border: '1px solid #0092ff',
-};
-
 const LinksPage: FC<{
   tabs: ITab[];
   loadingTabs: boolean;
@@ -61,9 +56,9 @@ const LinksPage: FC<{
           deleteColumnHandler={deleteColumnHandler}
         />
       ))}
-      <Col span={6} style={style}>
+      <Col span={6} className="create-column-wrapper">
         <button type="button" onClick={createColumnHandler}>
-          Create
+          Create Col
         </button>
       </Col>
     </div>
