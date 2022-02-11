@@ -7,6 +7,7 @@ import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { getTabsQuery, addTab } from './tabs';
 import { getColumnsQuery, addColumn, deleteColumn } from './columns';
+import { addCategory } from './categories';
 
 const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
@@ -23,6 +24,8 @@ export default {
   getColumnsQuery,
   addColumn,
   deleteColumn,
+
+  addCategory,
 
   auth,
   firestoreDB,
