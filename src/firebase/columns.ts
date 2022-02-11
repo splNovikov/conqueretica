@@ -74,6 +74,6 @@ export const getColumnsQuery = (tab: ITab): Query<IColumn> => {
   return query(
     columnsRef,
     where('tabId', '==', tab.id),
-    orderBy('createdAt', 'desc'),
+    orderBy('createdAt', 'asc'),
   );
 };
