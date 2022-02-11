@@ -6,11 +6,14 @@ import AddForm from './AddForm';
 const inputLocator = 'input[type="text"]';
 const buttonLocator = 'button[type="submit"]';
 
+// todo add tests for placeholder="placeholder"
 describe('AddForm Elements Presence', () => {
   let wrapper: ShallowWrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<AddForm formSubmitHandler={() => 1} />);
+    wrapper = shallow(
+      <AddForm formSubmitHandler={() => 1} placeholder="placeholder" />,
+    );
   });
 
   afterEach(() => {
@@ -45,7 +48,9 @@ describe('AddForm Element Events', () => {
   let wrapper: ShallowWrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<AddForm formSubmitHandler={() => 1} />);
+    wrapper = shallow(
+      <AddForm formSubmitHandler={() => 1} placeholder="placeholder" />,
+    );
   });
 
   afterEach(() => {
@@ -75,7 +80,9 @@ describe('AddForm Handlers', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
-    wrapper = mount(<AddForm formSubmitHandler={handleSubmit} />);
+    wrapper = mount(
+      <AddForm formSubmitHandler={handleSubmit} placeholder="placeholder" />,
+    );
   });
 
   afterEach(() => {
