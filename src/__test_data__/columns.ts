@@ -12,6 +12,8 @@ export const columns: IColumn[] = [
       {
         id: 'cat-1',
         title: 'NuORDER reports',
+        // @ts-ignore
+        createdAt: '2021-10-01T13:13:45.115Z',
         links: [
           {
             id: 'link-1',
@@ -34,6 +36,8 @@ export const columns: IColumn[] = [
       {
         id: 'cat-2',
         title: 'Weekly Reporting',
+        // @ts-ignore
+        createdAt: '2021-10-01T13:13:45.115Z',
         links: [
           {
             id: 'link-1',
@@ -55,6 +59,8 @@ export const columns: IColumn[] = [
       {
         id: 'cat-1',
         title: 'Money',
+        // @ts-ignore
+        createdAt: '2021-10-01T13:13:45.115Z',
         links: [
           {
             id: 'link-1',
