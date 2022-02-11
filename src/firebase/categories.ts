@@ -1,5 +1,6 @@
 import {
   arrayUnion,
+  arrayRemove,
   collection,
   doc,
   updateDoc,
@@ -33,6 +34,28 @@ export const addCategory = async (
     const columnDoc = doc(columnsRef, column.id);
 
     await updateDoc(columnDoc, { categories: arrayUnion(category) });
+    return category;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const deleteCategory = async (
+  column: IColumn,
+  category: ICategory,
+): Promise<ICategory | null> => {
+  if (!column || !category) {
+    defaultErrorHandler('No Column || Category');
+    return null;
+  }
+
+  try {
+    const columnsRef = collection(firebase.firestoreDB, 'columns');
+    const columnDoc = doc(columnsRef, column.id);
+
+    await updateDoc(columnDoc, { categories: arrayRemove(category) });
+
     return category;
   } catch (e) {
     httpErrorHandler(e);

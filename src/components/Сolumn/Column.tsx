@@ -19,6 +19,9 @@ const Column: FC<{
   const categoryFormSubmitHandler = (value: string) =>
     firebase.addCategory(value, column);
 
+  const deleteCategoryHandler = (category: ICategory) =>
+    firebase.deleteCategory(column, category);
+
   return (
     <Col span={6} className="column">
       <div>Col</div>
@@ -32,7 +35,7 @@ const Column: FC<{
       {column.categories.map((category: ICategory) => (
         <Category
           category={category}
-          deleteCategoryHandler={() => 1}
+          deleteCategoryHandler={deleteCategoryHandler}
           key={category.id}
         />
       ))}
