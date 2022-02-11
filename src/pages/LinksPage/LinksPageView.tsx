@@ -33,15 +33,14 @@ const LinksPage: FC<{
 }) => (
   <div className="links-page">
     <ImportantLinks links={importantLinks} />
+
     {loadingTabs && 'loading tabs progress...'}
-    {tabs && tabs.length ? (
-      <Tabs
-        tabs={tabs}
-        selectedTab={selectedTab}
-        selectTabHandler={selectTabHandler}
-        tabsFormSubmitHandler={tabsFormSubmitHandler}
-      />
-    ) : null}
+    <Tabs
+      tabs={tabs}
+      selectedTab={selectedTab}
+      selectTabHandler={selectTabHandler}
+      tabsFormSubmitHandler={tabsFormSubmitHandler}
+    />
     {loadingColumns && 'loading columns progress...'}
     <Columns
       columns={columns}
