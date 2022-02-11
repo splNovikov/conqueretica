@@ -25,7 +25,10 @@ const Column: FC<{
       <button type="button" onClick={handleColumnDelete}>
         Delete Column
       </button>
-      <AddForm formSubmitHandler={categoryFormSubmitHandler} />
+      <AddForm
+        formSubmitHandler={categoryFormSubmitHandler}
+        placeholder="create a new category"
+      />
       {column.categories.map((category: ICategory) => (
         <Category
           category={category}

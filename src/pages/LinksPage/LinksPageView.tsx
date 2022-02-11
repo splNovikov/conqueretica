@@ -44,7 +44,10 @@ const LinksPage: FC<{
         selectTabHandler={selectTabHandler}
       />
     ) : null}
-    <AddForm formSubmitHandler={tabsFormSubmitHandler} />
+    <AddForm
+      formSubmitHandler={tabsFormSubmitHandler}
+      placeholder="create a new tab"
+    />
 
     {loadingColumns && 'loading columns progress...'}
     {/* // "ant-row" class instead of Row component because Row component is failing tests */}
