@@ -1,11 +1,10 @@
-import React, { FC, MouseEventHandler } from 'react';
-import { Col } from 'antd';
+import React, { FC } from 'react';
 // Interfaces
 import { IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Tabs from '../../components/Tabs';
-import Column from '../../components/Сolumn';
+import Columns from '../../components/Columns';
 // Styles
 import './LinksPageView.scss';
 
@@ -17,7 +16,7 @@ const LinksPage: FC<{
   tabsFormSubmitHandler: (val: string) => void;
   columns: IColumn[];
   loadingColumns: boolean;
-  createColumnHandler: MouseEventHandler<HTMLButtonElement>;
+  createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
   importantLinks: ILink[];
 }> = ({
@@ -34,7 +33,6 @@ const LinksPage: FC<{
 }) => (
   <div className="links-page">
     <ImportantLinks links={importantLinks} />
-
     {loadingTabs && 'loading tabs progress...'}
     {tabs && tabs.length ? (
       <Tabs
@@ -44,23 +42,12 @@ const LinksPage: FC<{
         tabsFormSubmitHandler={tabsFormSubmitHandler}
       />
     ) : null}
-
     {loadingColumns && 'loading columns progress...'}
-    {/* // "ant-row" class instead of Row component because Row component is failing tests */}
-    <div className="ant-row">
-      {columns.map((column: IColumn) => (
-        <Column
-          key={column.id}
-          column={column}
-          deleteColumnHandler={deleteColumnHandler}
-        />
-      ))}
-      <Col span={6} className="create-column-wrapper">
-        <button type="button" onClick={createColumnHandler}>
-          Create Col
-        </button>
-      </Col>
-    </div>
+    <Columns
+      columns={columns}
+      createColumnHandler={createColumnHandler}
+      deleteColumnHandler={deleteColumnHandler}
+    />
   </div>
 );
 
