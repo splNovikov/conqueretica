@@ -7,7 +7,7 @@ import LinksPage from './LinksPage';
 // Test Data
 import { user, tabs } from '../../__test_data__';
 
-// todo: add tests when we add and delete all entities through real DB
+// todo: add tests no user - no tabs, no columns, no Add Tab, no Add Column
 
 describe('LinksPage component', () => {
   let wrapper: ReactWrapper;

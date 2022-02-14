@@ -54,6 +54,7 @@ const LinksPage = () => {
 
   return (
     <LinksPageView
+      user={user}
       tabs={tabs}
       loadingTabs={loadingTabs}
       selectedTab={selectedTab}

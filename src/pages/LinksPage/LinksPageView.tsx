@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { IColumn, ILink, ITab } from '../../interfaces';
 // Components
@@ -9,6 +10,7 @@ import Columns from '../../components/Columns';
 import './LinksPageView.scss';
 
 const LinksPage: FC<{
+  user: UserInfo | undefined | null;
   tabs: ITab[];
   loadingTabs: boolean;
   selectedTab: ITab;
@@ -20,6 +22,7 @@ const LinksPage: FC<{
   deleteColumnHandler: (val: IColumn) => void;
   importantLinks: ILink[];
 }> = ({
+  user,
   tabs,
   loadingTabs,
   selectedTab,
@@ -34,19 +37,23 @@ const LinksPage: FC<{
   <div className="links-page">
     <ImportantLinks links={importantLinks} />
 
-    {loadingTabs && 'loading tabs progress...'}
-    <Tabs
-      tabs={tabs}
-      selectedTab={selectedTab}
-      selectTabHandler={selectTabHandler}
-      tabsFormSubmitHandler={tabsFormSubmitHandler}
-    />
-    {loadingColumns && 'loading columns progress...'}
-    <Columns
-      columns={columns}
-      createColumnHandler={createColumnHandler}
-      deleteColumnHandler={deleteColumnHandler}
-    />
+    {user ? (
+      <>
+        {loadingTabs && 'loading tabs progress...'}
+        <Tabs
+          tabs={tabs}
+          selectedTab={selectedTab}
+          selectTabHandler={selectTabHandler}
+          tabsFormSubmitHandler={tabsFormSubmitHandler}
+        />
+        {loadingColumns && 'loading columns progress...'}
+        <Columns
+          columns={columns}
+          createColumnHandler={createColumnHandler}
+          deleteColumnHandler={deleteColumnHandler}
+        />
+      </>
+    ) : null}
   </div>
 );
 
