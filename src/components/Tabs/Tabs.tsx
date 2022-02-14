@@ -11,8 +11,15 @@ const Tabs: FC<{
   tabs: ITab[];
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
+  deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
-}> = ({ tabs, selectedTab, selectTabHandler, tabsFormSubmitHandler }) => {
+}> = ({
+  tabs,
+  selectedTab,
+  selectTabHandler,
+  deleteTabHandler,
+  tabsFormSubmitHandler,
+}) => {
   return (
     <div className="tabs">
       {tabs &&
@@ -21,6 +28,7 @@ const Tabs: FC<{
             tab={tab}
             selectedTab={selectedTab}
             selectTabHandler={selectTabHandler}
+            deleteTabHandler={deleteTabHandler}
             key={tab.id}
           />
         ))}

@@ -45,6 +45,11 @@ export const addTab = async (
   }
 };
 
+export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
+  console.error(`Method not implemented yet: ${tab.title}`);
+  return null;
+};
+
 const tabsConverter = {
   toFirestore: (data: ITab) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab,

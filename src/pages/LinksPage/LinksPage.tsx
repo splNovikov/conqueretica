@@ -33,6 +33,14 @@ const LinksPage = () => {
   }
 
   const addTab = (value: string) => firebase.addTab(value, user);
+
+  const deleteTab = (tab: ITab) => {
+    if (tab.id === selectedTab.id) {
+      // todo: figure out if we are deleting selected tab
+    }
+
+    firebase.deleteTab(tab);
+  };
   // endregion Tabs
 
   // region Columns
@@ -59,6 +67,7 @@ const LinksPage = () => {
       loadingTabs={loadingTabs}
       selectedTab={selectedTab}
       selectTabHandler={selectTab}
+      deleteTabHandler={deleteTab}
       tabsFormSubmitHandler={addTab}
       columns={columns}
       loadingColumns={loadingColumns}
