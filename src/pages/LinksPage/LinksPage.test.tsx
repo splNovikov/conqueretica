@@ -8,6 +8,7 @@ import LinksPage from './LinksPage';
 import { user, tabs } from '../../__test_data__';
 
 // todo: add tests no user - no tabs, no columns, no Add Tab, no Add Column
+// todo: very important to figure out - how can we test -  test somehow behaviour of adding tabs with columns removing it and removing selected tab
 
 describe('LinksPage component', () => {
   let wrapper: ReactWrapper;

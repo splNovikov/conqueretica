@@ -8,7 +8,7 @@ import { IColumn, ITab } from '../../interfaces';
 // Components
 import LinksPageView from './LinksPageView';
 // Utils
-import { httpErrorHandler } from '../../utils';
+import { getNextSibling, httpErrorHandler } from '../../utils';
 // Test Data (should be fetched from BE)
 import { importantLinks } from '../../__test_data__';
 
@@ -28,18 +28,27 @@ const LinksPage = () => {
     httpErrorHandler(tabsError);
   }
 
+  // set first tab as selected by default
   if (tabs.length && !selectedTab?.id) {
     selectTab(tabs[0]);
   }
 
-  const addTab = (value: string) => firebase.addTab(value, user);
+  const addTab = async (value: string) => {
+    const tab = await firebase.addTab(value, user);
 
-  const deleteTab = (tab: ITab) => {
-    if (tab.id === selectedTab.id) {
-      // todo: figure out if we are deleting selected tab
+    if (tab) {
+      selectTab(tab);
     }
+  };
 
-    firebase.deleteTab(tab);
+  const deleteTab = async (tab: ITab) => {
+    await firebase.deleteTab(tab);
+
+    if (tab.id === selectedTab.id) {
+      const next = getNextSibling(tabs, selectedTab, 'id');
+
+      selectTab(next);
+    }
   };
   // endregion Tabs
 

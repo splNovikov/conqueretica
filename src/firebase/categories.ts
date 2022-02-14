@@ -18,7 +18,7 @@ export const addCategory = async (
   title: string,
   column: IColumn,
 ): Promise<ICategory | null> => {
-  if (!column) {
+  if (!column?.id) {
     defaultErrorHandler('No Column');
     return null;
   }
@@ -45,7 +45,7 @@ export const deleteCategory = async (
   column: IColumn,
   category: ICategory,
 ): Promise<ICategory | null> => {
-  if (!column || !category) {
+  if (!column?.id || !category?.id) {
     defaultErrorHandler('No Column || Category');
     return null;
   }

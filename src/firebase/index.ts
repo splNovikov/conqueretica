@@ -6,7 +6,12 @@ import { FIREBASE_CONFIG } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { getTabsQuery, addTab, deleteTab } from './tabs';
-import { getColumnsQuery, addColumn, deleteColumn } from './columns';
+import {
+  getColumnsQuery,
+  addColumn,
+  deleteColumn,
+  deleteColumns,
+} from './columns';
 import { addCategory, deleteCategory } from './categories';
 
 const app = initializeApp(FIREBASE_CONFIG);
@@ -25,6 +30,7 @@ export default {
   getColumnsQuery,
   addColumn,
   deleteColumn,
+  deleteColumns,
 
   addCategory,
   deleteCategory,

@@ -50,11 +50,13 @@ const LinksPage: FC<{
           tabsFormSubmitHandler={tabsFormSubmitHandler}
         />
         {loadingColumns && 'loading columns progress...'}
-        <Columns
-          columns={columns}
-          createColumnHandler={createColumnHandler}
-          deleteColumnHandler={deleteColumnHandler}
-        />
+        {tabs.length && selectedTab ? (
+          <Columns
+            columns={columns}
+            createColumnHandler={createColumnHandler}
+            deleteColumnHandler={deleteColumnHandler}
+          />
+        ) : null}
       </>
     ) : null}
   </div>

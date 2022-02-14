@@ -6,6 +6,7 @@ import {
   orderBy,
   query,
   Query,
+  QuerySnapshot,
   QueryDocumentSnapshot,
   serverTimestamp,
   where,
@@ -19,7 +20,7 @@ import { IColumn, ITab } from '../interfaces';
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
 export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
-  if (!tab) {
+  if (!tab?.id) {
     defaultErrorHandler('No Tab');
     return null;
   }
@@ -42,10 +43,19 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   }
 };
 
+export const deleteColumns = async (
+  columns: QuerySnapshot<IColumn>,
+): Promise<void> => {
+  // todo: delete with async?
+  await columns.forEach((column) => {
+    deleteColumn(column.data());
+  });
+};
+
 export const deleteColumn = async (
   column: IColumn,
 ): Promise<IColumn | null> => {
-  if (!column) {
+  if (!column?.id) {
     defaultErrorHandler('No Column');
     return null;
   }

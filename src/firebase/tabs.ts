@@ -1,10 +1,13 @@
 import {
   collection,
+  deleteDoc,
   doc,
+  getDocs,
   orderBy,
   query,
   Query,
   QueryDocumentSnapshot,
+  QuerySnapshot,
   serverTimestamp,
   setDoc,
   where,
@@ -14,7 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
 // Interfaces
-import { ITab } from '../interfaces';
+import { IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
@@ -22,7 +25,7 @@ export const addTab = async (
   title: string,
   user: UserInfo | null | undefined,
 ): Promise<ITab | null> => {
-  if (!user) {
+  if (!user?.uid) {
     defaultErrorHandler('No User');
     return null;
   }
@@ -46,8 +49,27 @@ export const addTab = async (
 };
 
 export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
-  console.error(`Method not implemented yet: ${tab.title}`);
-  return null;
+  if (!tab?.id) {
+    defaultErrorHandler('No Tab');
+    return null;
+  }
+
+  // 1. get all columns
+  const columnsQ = firebase.getColumnsQuery(tab);
+  const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
+
+  // 2. delete all columns
+  await firebase.deleteColumns(columns);
+
+  // 3. delete Tab
+  try {
+    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
+
+    return tab;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
 };
 
 const tabsConverter = {
