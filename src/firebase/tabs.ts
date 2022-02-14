@@ -21,6 +21,7 @@ import { IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
+// todo: check if I am able to create entities in DB without login???
 export const addTab = async (
   title: string,
   user: UserInfo | null | undefined,

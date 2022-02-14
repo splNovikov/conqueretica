@@ -8,16 +8,14 @@ import LinksPage from './LinksPage';
 import { user, tabs, columns } from '../../__test_data__';
 
 describe('LinksPage component', () => {
-  let authSpy: any;
-  let collectionSpy: any;
   let wrapper: any;
 
   beforeEach(() => {
-    authSpy = jest
+    jest
       .spyOn(authHooks, 'useAuthState')
       // @ts-ignore
       .mockImplementation(() => [user]);
-    collectionSpy = jest
+    jest
       .spyOn(firestoreHooks, 'useCollectionData')
       // @ts-ignore
       .mockImplementation((query) => {
@@ -42,8 +40,7 @@ describe('LinksPage component', () => {
   });
 
   afterEach(() => {
-    authSpy.mockReset();
-    collectionSpy.mockReset();
+    jest.resetAllMocks();
     wrapper.unmount();
   });
 
@@ -53,8 +50,7 @@ describe('LinksPage component', () => {
 
   // todo: add tests no user - no tabs, no columns, no Add Tab, no Add Column
   it('No user - no Tabs', () => {
-    authSpy.mockReset();
-    authSpy = jest
+    jest
       .spyOn(authHooks, 'useAuthState')
       // @ts-ignore
       .mockImplementation(() => []);
@@ -72,8 +68,7 @@ describe('LinksPage component', () => {
   });
 
   it('Tabs are rendering "Loading tabs progress..."', () => {
-    collectionSpy.mockReset();
-    collectionSpy = jest
+    jest
       .spyOn(firestoreHooks, 'useCollectionData')
       // @ts-ignore
       .mockImplementation(() => [[], true, undefined]);
@@ -87,8 +82,7 @@ describe('LinksPage component', () => {
 
   it('Error handling Error correctly"', () => {
     console.error = jest.fn();
-    collectionSpy.mockReset();
-    collectionSpy = jest
+    jest
       .spyOn(firestoreHooks, 'useCollectionData')
       // @ts-ignore
       .mockImplementation(() => [[], false, { message: 'err' }]);
@@ -97,5 +91,3 @@ describe('LinksPage component', () => {
     expect(console.error).toHaveBeenCalledWith({ message: 'err' });
   });
 });
-
-// todo: test somehow behaviour of adding tabs with columns removing it and removing selected tab
