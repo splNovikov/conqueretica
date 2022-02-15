@@ -23,6 +23,11 @@ export const addCategory = async (
     return null;
   }
 
+  if (!title) {
+    defaultErrorHandler('No Title');
+    return null;
+  }
+
   const category: ICategory = {
     id: uuidv4(),
     title,

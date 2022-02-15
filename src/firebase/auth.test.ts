@@ -5,7 +5,7 @@ import firebase from './index';
 // Test Data
 import { user } from '../__test_data__';
 
-describe('Auth Test', () => {
+describe('Firebase Auth Test', () => {
   const collectionRef = { colRef: 'test' };
 
   beforeEach(() => {

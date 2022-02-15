@@ -1,4 +1,5 @@
 // todo [after release]: error handling
+// todo throw(error)
 // eslint-disable-next-line no-console
 export const httpErrorHandler = (e: unknown) => console.error(e);
 
