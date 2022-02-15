@@ -1,5 +1,7 @@
 import * as firestore from '@firebase/firestore';
 import { addCategory, deleteCategory } from './categories';
+// Interfaces
+import { ICategory, IColumn } from '../interfaces';
 // Test Data
 import { columns } from '../__test_data__';
 
@@ -65,8 +67,7 @@ describe('Firebase Categories Test', () => {
 
     it('Should Return Null when column passed as empty object', async () => {
       console.error = jest.fn();
-      // @ts-ignore
-      const res = await addCategory('title', {});
+      const res = await addCategory('title', {} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
     });
@@ -77,6 +78,69 @@ describe('Firebase Categories Test', () => {
       const res = await addCategory(undefined, { id: '123' });
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title');
+    });
+  });
+
+  describe('Delete Category', () => {
+    it('Should Delete Category', async () => {
+      // @ts-ignore
+      firestore.updateDoc = jest.fn();
+
+      // @ts-ignore
+      const arrayRemoveRes = [];
+      // @ts-ignore
+      jest.spyOn(firestore, 'arrayRemove').mockReturnValue(arrayRemoveRes);
+
+      const res = await deleteCategory(columns[0], columns[0].categories[0]);
+      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
+        // @ts-ignore
+        categories: arrayRemoveRes,
+      });
+      expect(res?.title).toBe(columns[0].categories[0].title);
+      expect(res?.links.length).toBe(columns[0].categories[0].links.length);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+      console.error = jest.fn();
+      // @ts-ignore
+      firestore.updateDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await deleteCategory(columns[0], columns[0].categories[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when column not passed', async () => {
+      console.error = jest.fn();
+      // @ts-ignore
+      const res = await deleteCategory(undefined, columns[0].categories[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column || Category');
+    });
+
+    it('Should Return Null when column passed as empty object', async () => {
+      console.error = jest.fn();
+      const res = await deleteCategory({} as IColumn, columns[0].categories[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column || Category');
+    });
+
+    it('Should Return Null when category not passed', async () => {
+      console.error = jest.fn();
+      // @ts-ignore
+      const res = await deleteCategory(columns[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column || Category');
+    });
+
+    it('Should Return Null when category passed as empty object', async () => {
+      console.error = jest.fn();
+      const res = await deleteCategory(columns[0], {} as ICategory);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column || Category');
     });
   });
 });
