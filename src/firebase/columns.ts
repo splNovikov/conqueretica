@@ -33,8 +33,9 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   };
   try {
     const columnsRef = collection(firebase.firestoreDB, 'columns');
+    const columnDoc = doc(columnsRef, column.id);
 
-    await setDoc(doc(columnsRef, column.id), column);
+    await setDoc(columnDoc, column);
 
     return column;
   } catch (e) {
@@ -48,7 +49,8 @@ export const deleteColumns = async (
 ): Promise<void> => {
   // todo: delete with async?
   await columns.forEach((column) => {
-    deleteColumn(column.data());
+    // added exports. for testing ability
+    exports.deleteColumn(column.data());
   });
 };
 
