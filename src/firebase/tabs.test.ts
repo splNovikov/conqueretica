@@ -109,7 +109,6 @@ describe('Firebase Tabs Test', () => {
       const res = await deleteTab(tab);
 
       expect(firestore.deleteDoc).toHaveBeenCalledWith(tabDoc);
-      // todo: fix for every delete - it should not return Null!!!
       expect(res).toBe(tab);
     });
 

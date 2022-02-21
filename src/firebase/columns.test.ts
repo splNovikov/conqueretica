@@ -12,10 +12,9 @@ describe('Firebase Columns Test', () => {
   const origConsoleError = console.error;
 
   beforeEach(() => {
-    // @ts-ignore
     jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    // @ts-ignore
     jest.spyOn(firestore, 'doc').mockReturnValue(columnDoc);
+    console.error = jest.fn();
   });
 
   afterEach(() => {
@@ -26,15 +25,15 @@ describe('Firebase Columns Test', () => {
   describe('Add Column', () => {
     const origSetDoc = firestore.setDoc;
 
+    beforeEach(() => {
+      firestore.setDoc = jest.fn();
+    });
+
     afterEach(() => {
-      // @ts-ignore
       firestore.setDoc = origSetDoc;
     });
 
     it('Should Add Column', async () => {
-      // @ts-ignore
-      firestore.setDoc = jest.fn();
-
       const tab = tabs[0];
       const res = await addColumn(tab);
 
@@ -51,8 +50,7 @@ describe('Firebase Columns Test', () => {
 
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
-      console.error = jest.fn();
-      // @ts-ignore
+
       firestore.setDoc = jest.fn(() => {
         throw err;
       });
@@ -64,15 +62,12 @@ describe('Firebase Columns Test', () => {
     });
 
     it('Should Return Null when tab not passed', async () => {
-      console.error = jest.fn();
-      // @ts-ignore
       const res = await addColumn();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
     });
 
     it('Should Return Null when tab passed as empty object', async () => {
-      console.error = jest.fn();
       const res = await addColumn({} as ITab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
@@ -82,19 +77,18 @@ describe('Firebase Columns Test', () => {
   describe('Delete Columns', () => {
     const originalDelete = firebaseColumns.deleteColumn;
 
+    beforeEach(() => {
+      firebaseColumns.deleteColumn = jest.fn();
+    });
+
     afterEach(() => {
-      // @ts-ignore
       firebaseColumns.deleteColumn = originalDelete;
     });
 
     it('Should delete columns', async () => {
-      // @ts-ignore
-      firebaseColumns.deleteColumn = jest.fn();
-
       const data = () => columns[0];
       const toDelete = [{ data }, { data }, { data }];
 
-      // @ts-ignore
       await firebaseColumns.deleteColumns(toDelete);
       expect(firebaseColumns.deleteColumn).toBeCalledTimes(3);
     });
@@ -103,26 +97,24 @@ describe('Firebase Columns Test', () => {
   describe('Delete Column', () => {
     const origDelete = firestore.deleteDoc;
 
+    beforeEach(() => {
+      firestore.deleteDoc = jest.fn();
+    });
+
     afterEach(() => {
-      // @ts-ignore
       firestore.deleteDoc = origDelete;
     });
 
     it('Should Delete Column', async () => {
-      // @ts-ignore
-      firestore.deleteDoc = jest.fn();
-
       const column = columns[0];
       const res = await deleteColumn(column);
 
       expect(firestore.deleteDoc).toHaveBeenCalledWith(columnDoc);
-      expect(res).toBeNull();
+      expect(res).toBe(column);
     });
 
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
-      console.error = jest.fn();
-      // @ts-ignore
       firestore.deleteDoc = jest.fn(() => {
         throw err;
       });
@@ -134,15 +126,12 @@ describe('Firebase Columns Test', () => {
     });
 
     it('Should Return Null when column not passed', async () => {
-      console.error = jest.fn();
-      // @ts-ignore
       const res = await deleteColumn();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
     });
 
     it('Should Return Null when column passed as empty object', async () => {
-      console.error = jest.fn();
       const res = await deleteColumn({} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');

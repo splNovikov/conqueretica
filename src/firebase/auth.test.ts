@@ -11,11 +11,8 @@ describe('Firebase Auth Test', () => {
   beforeEach(() => {
     jest
       .spyOn(auth, 'signInWithPopup')
-      // @ts-ignore
       .mockReturnValue(new Promise((resolve) => resolve({ user })));
-    // @ts-ignore
     jest.spyOn(firestore, 'doc').mockReturnValue({});
-    // @ts-ignore
     jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
   });
 
@@ -24,7 +21,6 @@ describe('Firebase Auth Test', () => {
   });
 
   it('Should Return User when user exist', async () => {
-    // @ts-ignore
     jest.spyOn(firestore, 'getDoc').mockReturnValue({ exists: () => true });
 
     const res = await signInWithGoogle();
@@ -32,7 +28,6 @@ describe('Firebase Auth Test', () => {
   });
 
   it('Should Return User when user not exist', async () => {
-    // @ts-ignore
     jest.spyOn(firestore, 'getDoc').mockReturnValue({ exists: () => false });
 
     firebase.createUser = jest.fn();
