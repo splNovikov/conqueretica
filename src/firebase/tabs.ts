@@ -21,13 +21,12 @@ import { IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
-// todo: check if I am able to create entities in DB without login???
 export const addTab = async (
   title: string,
   user: UserInfo | null | undefined,
 ): Promise<ITab | null> => {
-  if (!user?.uid) {
-    defaultErrorHandler('No User');
+  if (!title || !user?.uid) {
+    defaultErrorHandler('No Title | User');
     return null;
   }
 
@@ -39,8 +38,9 @@ export const addTab = async (
   };
   try {
     const tabsRef = collection(firebase.firestoreDB, 'tabs');
+    const tabDoc = doc(tabsRef, tab.id);
 
-    await setDoc(doc(tabsRef, tab.id), tab);
+    await setDoc(tabDoc, tab);
 
     return tab;
   } catch (e) {
