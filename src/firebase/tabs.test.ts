@@ -1,11 +1,13 @@
+// @ts-nocheck
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
-import { addTab } from './tabs';
+import * as firebaseColumns from './columns';
+import { addTab, deleteTab } from './tabs';
 // Interfaces
 // Test Data
-import { user } from '../__test_data__';
+import { tabs, user } from '../__test_data__';
 
-describe('Firebase Columns Test', () => {
+describe('Firebase Tabs Test', () => {
   const tabDoc = { tabDoc: 'test_tabDoc' };
   const collectionRef = { colRef: 'test_collectionRef' };
   const origConsoleError = console.error;
@@ -83,6 +85,34 @@ describe('Firebase Columns Test', () => {
       const res = await addTab('title', {} as UserInfo);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
+    });
+  });
+
+  describe('Delete Tab', () => {
+    const origGetColumnsQuery = firebaseColumns.getColumnsQuery;
+    const origGetDocs = firestore.getDocs;
+    const origDeleteColumns = firebaseColumns.deleteColumns;
+    const origDelete = firestore.deleteDoc;
+
+    afterEach(() => {
+      firebaseColumns.getColumnsQuery = origGetColumnsQuery;
+      firestore.getDocs = origGetDocs;
+      firebaseColumns.deleteColumns = origDeleteColumns;
+      firestore.deleteDoc = origDelete;
+    });
+
+    it('Should Delete Tab', async () => {
+      firebaseColumns.getColumnsQuery = jest.fn();
+      firestore.getDocs = jest.fn();
+      firebaseColumns.deleteColumns = jest.fn();
+      firestore.deleteDoc = jest.fn();
+
+      const tab = tabs[0];
+      const res = await deleteTab(tab);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(tabDoc);
+      // todo: fix for every delete - it should not return Null!!!
+      expect(res).toBe(tab);
     });
   });
 });
