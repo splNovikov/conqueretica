@@ -65,7 +65,7 @@ export const deleteColumn = async (
   try {
     await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));
 
-    return column;
+    return null;
   } catch (e) {
     httpErrorHandler(e);
     return null;

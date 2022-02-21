@@ -1,8 +1,8 @@
 import * as firestore from '@firebase/firestore';
 import * as firebaseColumns from './columns';
-import { addColumn } from './columns';
+import { addColumn, deleteColumn } from './columns';
 // Interfaces
-import { ITab } from '../interfaces';
+import { IColumn, ITab } from '../interfaces';
 // Test Data
 import { tabs, columns } from '../__test_data__';
 
@@ -72,6 +72,7 @@ describe('Firebase Columns Test', () => {
 
   describe('Delete Columns', () => {
     it('Should delete columns', async () => {
+      const originalDelete = firebaseColumns.deleteColumn;
       // @ts-ignore
       firebaseColumns.deleteColumn = jest.fn();
 
@@ -81,6 +82,51 @@ describe('Firebase Columns Test', () => {
       // @ts-ignore
       await firebaseColumns.deleteColumns(toDelete);
       expect(firebaseColumns.deleteColumn).toBeCalledTimes(3);
+
+      // @ts-ignore
+      firebaseColumns.deleteColumn = originalDelete;
+    });
+  });
+
+  describe('Delete Column', () => {
+    it('Should Delete Column', async () => {
+      // @ts-ignore
+      firestore.deleteDoc = jest.fn();
+
+      const column = columns[0];
+      const res = await deleteColumn(column);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(columnDoc);
+      expect(res).toBeNull();
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+      console.error = jest.fn();
+      // @ts-ignore
+      firestore.deleteDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const column = columns[0];
+      const res = await deleteColumn(column);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when column not passed', async () => {
+      console.error = jest.fn();
+      // @ts-ignore
+      const res = await deleteColumn();
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column');
+    });
+
+    it('Should Return Null when column passed as empty object', async () => {
+      console.error = jest.fn();
+      const res = await deleteColumn({} as IColumn);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column');
     });
   });
 });
