@@ -1,9 +1,9 @@
-// @ts-nocheck
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import * as firebaseColumns from './columns';
 import { addTab, deleteTab } from './tabs';
 // Interfaces
+import { ITab } from '../interfaces';
 // Test Data
 import { tabs, user } from '../__test_data__';
 
@@ -13,9 +13,7 @@ describe('Firebase Tabs Test', () => {
   const origConsoleError = console.error;
 
   beforeEach(() => {
-    // @ts-ignore
     jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    // @ts-ignore
     jest.spyOn(firestore, 'doc').mockReturnValue(tabDoc);
   });
 
@@ -28,12 +26,10 @@ describe('Firebase Tabs Test', () => {
     const origSetDoc = firestore.setDoc;
 
     afterEach(() => {
-      // @ts-ignore
       firestore.setDoc = origSetDoc;
     });
 
     it('Should Add Tab', async () => {
-      // @ts-ignore
       firestore.setDoc = jest.fn();
 
       const tab = { title: 'tab_title' };
@@ -53,7 +49,7 @@ describe('Firebase Tabs Test', () => {
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
       console.error = jest.fn();
-      // @ts-ignore
+
       firestore.setDoc = jest.fn(() => {
         throw err;
       });
@@ -66,7 +62,7 @@ describe('Firebase Tabs Test', () => {
 
     it('Should Return Null when title not passed', async () => {
       console.error = jest.fn();
-      // @ts-ignore
+
       const res = await addTab();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
@@ -74,7 +70,7 @@ describe('Firebase Tabs Test', () => {
 
     it('Should Return Null when user not passed', async () => {
       console.error = jest.fn();
-      // @ts-ignore
+
       const res = await addTab('title');
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
@@ -94,6 +90,13 @@ describe('Firebase Tabs Test', () => {
     const origDeleteColumns = firebaseColumns.deleteColumns;
     const origDelete = firestore.deleteDoc;
 
+    beforeEach(() => {
+      firebaseColumns.getColumnsQuery = jest.fn();
+      firestore.getDocs = jest.fn();
+      firebaseColumns.deleteColumns = jest.fn();
+      firestore.deleteDoc = jest.fn();
+    });
+
     afterEach(() => {
       firebaseColumns.getColumnsQuery = origGetColumnsQuery;
       firestore.getDocs = origGetDocs;
@@ -102,17 +105,41 @@ describe('Firebase Tabs Test', () => {
     });
 
     it('Should Delete Tab', async () => {
-      firebaseColumns.getColumnsQuery = jest.fn();
-      firestore.getDocs = jest.fn();
-      firebaseColumns.deleteColumns = jest.fn();
-      firestore.deleteDoc = jest.fn();
-
       const tab = tabs[0];
       const res = await deleteTab(tab);
 
       expect(firestore.deleteDoc).toHaveBeenCalledWith(tabDoc);
       // todo: fix for every delete - it should not return Null!!!
       expect(res).toBe(tab);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+      console.error = jest.fn();
+      firestore.deleteDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const tab = tabs[0];
+      const res = await deleteTab(tab);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when tab not passed', async () => {
+      console.error = jest.fn();
+
+      const res = await deleteTab();
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
+    });
+
+    it('Should Return Null when tab passed as empty object', async () => {
+      console.error = jest.fn();
+
+      const res = await deleteTab({} as ITab);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
     });
   });
 });
