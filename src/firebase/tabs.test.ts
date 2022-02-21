@@ -15,6 +15,7 @@ describe('Firebase Tabs Test', () => {
   beforeEach(() => {
     jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
     jest.spyOn(firestore, 'doc').mockReturnValue(tabDoc);
+    console.error = jest.fn();
   });
 
   afterEach(() => {
@@ -25,13 +26,15 @@ describe('Firebase Tabs Test', () => {
   describe('Add Tab', () => {
     const origSetDoc = firestore.setDoc;
 
+    beforeEach(() => {
+      firestore.setDoc = jest.fn();
+    });
+
     afterEach(() => {
       firestore.setDoc = origSetDoc;
     });
 
     it('Should Add Tab', async () => {
-      firestore.setDoc = jest.fn();
-
       const tab = { title: 'tab_title' };
       const res = await addTab(tab.title, user);
 
@@ -48,7 +51,6 @@ describe('Firebase Tabs Test', () => {
 
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
-      console.error = jest.fn();
 
       firestore.setDoc = jest.fn(() => {
         throw err;
@@ -61,23 +63,18 @@ describe('Firebase Tabs Test', () => {
     });
 
     it('Should Return Null when title not passed', async () => {
-      console.error = jest.fn();
-
       const res = await addTab();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
     });
 
     it('Should Return Null when user not passed', async () => {
-      console.error = jest.fn();
-
       const res = await addTab('title');
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
     });
 
     it('Should Return Null when user passed as empty object', async () => {
-      console.error = jest.fn();
       const res = await addTab('title', {} as UserInfo);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
@@ -114,7 +111,6 @@ describe('Firebase Tabs Test', () => {
 
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
-      console.error = jest.fn();
       firestore.deleteDoc = jest.fn(() => {
         throw err;
       });
@@ -126,16 +122,12 @@ describe('Firebase Tabs Test', () => {
     });
 
     it('Should Return Null when tab not passed', async () => {
-      console.error = jest.fn();
-
       const res = await deleteTab();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
     });
 
     it('Should Return Null when tab passed as empty object', async () => {
-      console.error = jest.fn();
-
       const res = await deleteTab({} as ITab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
