@@ -8,6 +8,7 @@ import { columns } from '../__test_data__';
 describe('Firebase Categories Test', () => {
   const columnDoc = { columnDoc: 'test_columnDoc' };
   const collectionRef = { colRef: 'test_collectionRef' };
+  const origConsoleError = console.error;
 
   beforeEach(() => {
     // @ts-ignore
@@ -18,9 +19,17 @@ describe('Firebase Categories Test', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+    console.error = origConsoleError;
   });
 
   describe('Add Category', () => {
+    const origUpdateDoc = firestore.updateDoc;
+
+    afterEach(() => {
+      // @ts-ignore
+      firestore.updateDoc = origUpdateDoc;
+    });
+
     it('Should Add Category', async () => {
       // @ts-ignore
       firestore.updateDoc = jest.fn();
@@ -82,6 +91,13 @@ describe('Firebase Categories Test', () => {
   });
 
   describe('Delete Category', () => {
+    const origUpdateDoc = firestore.updateDoc;
+
+    afterEach(() => {
+      // @ts-ignore
+      firestore.updateDoc = origUpdateDoc;
+    });
+
     it('Should Delete Category', async () => {
       // @ts-ignore
       firestore.updateDoc = jest.fn();

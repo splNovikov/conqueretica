@@ -9,6 +9,7 @@ import { tabs, columns } from '../__test_data__';
 describe('Firebase Columns Test', () => {
   const columnDoc = { columnDoc: 'test_columnDoc' };
   const collectionRef = { colRef: 'test_collectionRef' };
+  const origConsoleError = console.error;
 
   beforeEach(() => {
     // @ts-ignore
@@ -19,9 +20,17 @@ describe('Firebase Columns Test', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+    console.error = origConsoleError;
   });
 
   describe('Add Column', () => {
+    const origSetDoc = firestore.setDoc;
+
+    afterEach(() => {
+      // @ts-ignore
+      firestore.setDoc = origSetDoc;
+    });
+
     it('Should Add Column', async () => {
       // @ts-ignore
       firestore.setDoc = jest.fn();
@@ -71,8 +80,14 @@ describe('Firebase Columns Test', () => {
   });
 
   describe('Delete Columns', () => {
+    const originalDelete = firebaseColumns.deleteColumn;
+
+    afterEach(() => {
+      // @ts-ignore
+      firebaseColumns.deleteColumn = originalDelete;
+    });
+
     it('Should delete columns', async () => {
-      const originalDelete = firebaseColumns.deleteColumn;
       // @ts-ignore
       firebaseColumns.deleteColumn = jest.fn();
 
@@ -82,13 +97,17 @@ describe('Firebase Columns Test', () => {
       // @ts-ignore
       await firebaseColumns.deleteColumns(toDelete);
       expect(firebaseColumns.deleteColumn).toBeCalledTimes(3);
-
-      // @ts-ignore
-      firebaseColumns.deleteColumn = originalDelete;
     });
   });
 
   describe('Delete Column', () => {
+    const origDelete = firestore.deleteDoc;
+
+    afterEach(() => {
+      // @ts-ignore
+      firestore.deleteDoc = origDelete;
+    });
+
     it('Should Delete Column', async () => {
       // @ts-ignore
       firestore.deleteDoc = jest.fn();
