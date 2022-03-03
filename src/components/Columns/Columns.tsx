@@ -20,7 +20,7 @@ const Columns: FC<{
 }) => {
   return (
     // "ant-row" class instead of Row component because Row component is failing tests
-    <div className="ant-row">
+    <div className="columns ant-row">
       {columns.map((column: IColumn) => (
         <Column
           key={column.id}
