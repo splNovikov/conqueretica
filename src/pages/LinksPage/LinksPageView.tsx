@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { UserInfo } from 'firebase/auth';
 // Interfaces
-import { IColumn, ILink, ITab } from '../../interfaces';
+import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import ImportantLinks from '../../components/ImportantLinks';
 import Tabs from '../../components/Tabs';
@@ -10,17 +10,24 @@ import Columns from '../../components/Columns';
 import './LinksPageView.scss';
 
 const LinksPage: FC<{
+  // user
   user: UserInfo | undefined | null;
+  // tabs
   tabs: ITab[];
   loadingTabs: boolean;
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
+  // columns
   columns: IColumn[];
   loadingColumns: boolean;
   createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
+  // categories
+  categoryFormSubmitHandler: (value: string, column: IColumn) => void;
+  deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
+  // other stuff
   importantLinks: ILink[];
 }> = ({
   user,
@@ -34,6 +41,8 @@ const LinksPage: FC<{
   loadingColumns,
   createColumnHandler,
   deleteColumnHandler,
+  categoryFormSubmitHandler,
+  deleteCategoryHandler,
   importantLinks,
 }) => (
   <div className="links-page">
@@ -55,6 +64,8 @@ const LinksPage: FC<{
             columns={columns}
             createColumnHandler={createColumnHandler}
             deleteColumnHandler={deleteColumnHandler}
+            categoryFormSubmitHandler={categoryFormSubmitHandler}
+            deleteCategoryHandler={deleteCategoryHandler}
           />
         ) : null}
       </>

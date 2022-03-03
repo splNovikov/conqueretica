@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
 import { Col } from 'antd';
-// Firebase
-import firebase from '../../firebase';
 // Interfaces
 import { ICategory, IColumn } from '../../interfaces';
 // Components
@@ -13,16 +11,21 @@ import './Column.scss';
 const Column: FC<{
   column: IColumn;
   deleteColumnHandler: (val: IColumn) => void;
-}> = ({ column, deleteColumnHandler }) => {
+  categoryFormSubmitHandler: (value: string, column: IColumn) => void;
+  deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
+}> = ({
+  column,
+  deleteColumnHandler,
+  categoryFormSubmitHandler,
+  deleteCategoryHandler,
+}) => {
   const handleColumnDelete = () => deleteColumnHandler(column);
 
-  // todo: should be moved out from dump component
-  const categoryFormSubmitHandler = (value: string) =>
-    firebase.addCategory(value, column);
+  const handleCategoryFormSubmit = (value: string) =>
+    categoryFormSubmitHandler(value, column);
 
-  // todo: should be moved out from dump component
-  const deleteCategoryHandler = (category: ICategory) =>
-    firebase.deleteCategory(column, category);
+  const handleCategoryDelete = (category: ICategory) =>
+    deleteCategoryHandler(category, column);
 
   return (
     <Col span={6} className="column">
@@ -30,13 +33,13 @@ const Column: FC<{
         Delete Column
       </button>
       <AddForm
-        formSubmitHandler={categoryFormSubmitHandler}
+        formSubmitHandler={handleCategoryFormSubmit}
         placeholder="create a new category"
       />
       {column.categories.map((category: ICategory) => (
         <Category
           category={category}
-          deleteCategoryHandler={deleteCategoryHandler}
+          deleteCategoryHandler={handleCategoryDelete}
           key={category.id}
         />
       ))}
