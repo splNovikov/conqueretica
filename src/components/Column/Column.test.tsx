@@ -7,7 +7,52 @@ import { columns } from '../../__test_data__';
 
 describe('Column', () => {
   it('Column Component is rendering', () => {
-    shallow(<Column column={columns[0]} deleteColumnHandler={() => {}} />);
+    const wrapper = shallow(
+      <Column
+        column={columns[0]}
+        deleteColumnHandler={() => {}}
+        categoryFormSubmitHandler={() => {}}
+        deleteCategoryHandler={() => {}}
+      />,
+    );
+    expect(wrapper.hasClass('column')).toEqual(true);
   });
-  // todo: more tests
+
+  it('Column Component is rendering necessary elements', () => {
+    const wrapper = shallow(
+      <Column
+        column={columns[0]}
+        deleteColumnHandler={() => {}}
+        categoryFormSubmitHandler={() => {}}
+        deleteCategoryHandler={() => {}}
+      />,
+    );
+
+    const buttonEl = wrapper.find('button');
+    expect(buttonEl.exists()).toBeTruthy();
+
+    const addFormEl = wrapper.find('AddForm');
+    expect(addFormEl.exists()).toBeTruthy();
+
+    const categoriesEl = wrapper.find('Category');
+    expect(categoriesEl.length).toBe(2);
+  });
+
+  it('Column Component "Delete Column" button should invoke "Delete Column" method', () => {
+    const handleDeleteColumn = jest.fn();
+    const wrapper = shallow(
+      <Column
+        column={columns[0]}
+        deleteColumnHandler={handleDeleteColumn}
+        categoryFormSubmitHandler={() => {}}
+        deleteCategoryHandler={() => {}}
+      />,
+    );
+
+    const buttonEl = wrapper.find('button');
+
+    buttonEl.simulate('click');
+
+    expect(handleDeleteColumn).toHaveBeenCalledWith(columns[0]);
+  });
 });
