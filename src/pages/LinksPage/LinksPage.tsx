@@ -77,6 +77,14 @@ const LinksPage = () => {
     firebase.deleteCategory(column, category);
   // endregion Categories
 
+  // region Links
+  const createLinkHandler = (
+    title: string,
+    href: string,
+    category: ICategory,
+  ) => console.log(category.title + title + href);
+  // endregion Links
+
   return (
     <LinksPageView
       // user
@@ -96,6 +104,8 @@ const LinksPage = () => {
       // categories
       categoryFormSubmitHandler={categoryFormSubmitHandler}
       deleteCategoryHandler={deleteCategoryHandler}
+      // links
+      createLinkHandler={createLinkHandler}
       // other stuff
       importantLinks={importantLinks}
     />

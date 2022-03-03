@@ -27,6 +27,8 @@ const LinksPage: FC<{
   // categories
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
   deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
+  // links
+  createLinkHandler: (title: string, href: string, category: ICategory) => void;
   // other stuff
   importantLinks: ILink[];
 }> = ({
@@ -43,6 +45,7 @@ const LinksPage: FC<{
   deleteColumnHandler,
   categoryFormSubmitHandler,
   deleteCategoryHandler,
+  createLinkHandler,
   importantLinks,
 }) => (
   <div className="links-page">
@@ -66,6 +69,7 @@ const LinksPage: FC<{
             deleteColumnHandler={deleteColumnHandler}
             categoryFormSubmitHandler={categoryFormSubmitHandler}
             deleteCategoryHandler={deleteCategoryHandler}
+            createLinkHandler={createLinkHandler}
           />
         ) : null}
       </>
