@@ -2,9 +2,9 @@ import { UserInfo } from 'firebase/auth';
 
 export const user: UserInfo = {
   displayName: 'Pavel Novikov',
-  email: '',
-  phoneNumber: '',
+  email: 'email@email.com',
+  phoneNumber: 'phone',
   photoURL: '',
   providerId: '',
-  uid: '',
+  uid: 'user_uid',
 };

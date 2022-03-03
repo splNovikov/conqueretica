@@ -1,19 +1,24 @@
 import {
-  addDoc,
   collection,
+  deleteDoc,
+  doc,
+  getDocs,
   orderBy,
   query,
   Query,
   QueryDocumentSnapshot,
+  QuerySnapshot,
   serverTimestamp,
+  setDoc,
   where,
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
+import { getColumnsQuery, deleteColumns } from './columns';
 // Interfaces
-import { ITab } from '../interfaces';
+import { IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
@@ -21,8 +26,8 @@ export const addTab = async (
   title: string,
   user: UserInfo | null | undefined,
 ): Promise<ITab | null> => {
-  if (!user) {
-    defaultErrorHandler('No User');
+  if (!title || !user?.uid) {
+    defaultErrorHandler('No Title | User');
     return null;
   }
 
@@ -34,8 +39,33 @@ export const addTab = async (
   };
   try {
     const tabsRef = collection(firebase.firestoreDB, 'tabs');
+    const tabDoc = doc(tabsRef, tab.id);
 
-    await addDoc(tabsRef, tab);
+    await setDoc(tabDoc, tab);
+
+    return tab;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
+  if (!tab?.id) {
+    defaultErrorHandler('No Tab');
+    return null;
+  }
+
+  // 1. get all columns
+  const columnsQ = getColumnsQuery(tab);
+  const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
+
+  // 2. delete all columns
+  await deleteColumns(columns);
+
+  // 3. delete Tab
+  try {
+    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
 
     return tab;
   } catch (e) {
@@ -57,6 +87,6 @@ export const getTabsQuery = (user: UserInfo): Query<ITab> => {
   return query(
     tabsRef,
     where('ownerId', '==', user.uid),
-    orderBy('createdAt', 'desc'),
+    orderBy('createdAt', 'asc'),
   );
 };
