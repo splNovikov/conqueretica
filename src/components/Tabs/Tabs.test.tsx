@@ -28,7 +28,7 @@ describe('Tabs', () => {
     const wrapper = mount(
       <Tabs tabs={tabs} selectedTab={tabs[0]} {...mockedFunctions} />,
     );
-    const tabsEl = wrapper.find('.tab');
+    const tabsEl = wrapper.find('.tab-title');
     expect(tabsEl.at(0).text()).toBe('test_tab_1[Selected]');
   });
 });

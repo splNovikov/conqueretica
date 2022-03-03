@@ -14,15 +14,15 @@ const Tab: FC<{
   const handleTabDelete = () => deleteTabHandler(tab);
 
   return (
-    <>
-      <span role="none" className="tab" onClick={handleTabSelect}>
+    <div className="tab">
+      <span role="none" onClick={handleTabSelect} className="tab-title">
         {tab.title}
         {selectedTab.id === tab.id && '[Selected]'}
       </span>
       <button type="button" onClick={handleTabDelete}>
         Delete Tab
       </button>
-    </>
+    </div>
   );
 };
 
