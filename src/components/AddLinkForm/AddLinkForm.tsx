@@ -37,7 +37,7 @@ const AddLinkForm: FC<{
   return !displayForm ? (
     <button
       type="button"
-      className="submit-form-button"
+      className="toggle-form-display-button"
       onClick={toggleDisplayForm}
     >
       Add Link
