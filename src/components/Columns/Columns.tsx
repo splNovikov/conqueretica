@@ -11,7 +11,12 @@ const Columns: FC<{
   deleteColumnHandler: (val: IColumn) => void;
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
   deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
-  createLinkHandler: (title: string, href: string, category: ICategory) => void;
+  createLinkHandler: (
+    title: string,
+    href: string,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   columns,
   createColumnHandler,

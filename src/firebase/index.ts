@@ -13,6 +13,7 @@ import {
   deleteColumns,
 } from './columns';
 import { addCategory, deleteCategory } from './categories';
+import { addLink } from './links';
 
 const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
@@ -34,6 +35,8 @@ export default {
 
   addCategory,
   deleteCategory,
+
+  addLink,
 
   auth,
   firestoreDB,

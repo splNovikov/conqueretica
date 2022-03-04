@@ -82,7 +82,8 @@ const LinksPage = () => {
     title: string,
     href: string,
     category: ICategory,
-  ) => console.log(category.title + title + href);
+    column: IColumn,
+  ) => firebase.addLink(title, href, category, column);
   // endregion Links
 
   return (

@@ -13,7 +13,12 @@ const Column: FC<{
   deleteColumnHandler: (val: IColumn) => void;
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
   deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
-  createLinkHandler: (title: string, href: string, category: ICategory) => void;
+  createLinkHandler: (
+    title: string,
+    href: string,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   column,
   deleteColumnHandler,
@@ -29,6 +34,9 @@ const Column: FC<{
   const handleCategoryDelete = (category: ICategory) =>
     deleteCategoryHandler(category, column);
 
+  const handleLinkCreate = (title: string, href: string, category: ICategory) =>
+    createLinkHandler(title, href, category, column);
+
   return (
     <Col span={6} className="column">
       <button type="button" onClick={handleColumnDelete}>
@@ -43,7 +51,7 @@ const Column: FC<{
           category={category}
           deleteCategoryHandler={handleCategoryDelete}
           key={category.id}
-          createLinkHandler={createLinkHandler}
+          createLinkHandler={handleLinkCreate}
         />
       ))}
     </Col>

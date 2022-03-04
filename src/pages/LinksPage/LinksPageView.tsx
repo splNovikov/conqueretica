@@ -28,7 +28,12 @@ const LinksPage: FC<{
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
   deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
   // links
-  createLinkHandler: (title: string, href: string, category: ICategory) => void;
+  createLinkHandler: (
+    title: string,
+    href: string,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
   // other stuff
   importantLinks: ILink[];
 }> = ({

@@ -14,16 +14,22 @@ const googleLinks: ILink[] = [
     id: '1',
     href: 'https://docs.google.com/spreadsheets',
     title: 'Sheets',
+    // @ts-ignore
+    createdAt: '',
   },
   {
     id: '2',
     href: 'https://docs.google.com/document',
     title: 'Docs',
+    // @ts-ignore
+    createdAt: '',
   },
   {
     id: '3',
     href: 'https://docs.google.com/presentation',
     title: 'Slides',
+    // @ts-ignore
+    createdAt: '',
   },
 ];
 
