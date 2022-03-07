@@ -1,4 +1,7 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
+import classNames from 'classnames';
+// Utils
+import { urlValidation } from '../../utils';
 
 // Styles
 import './AddLinkForm.scss';
@@ -9,12 +12,18 @@ const AddLinkForm: FC<{
   const [displayForm, setDisplayForm] = useState(false);
   const [title, setTitle] = useState('');
   const [href, setHref] = useState('');
+  const [hrefIsValid, setHrefIsValid] = useState(false);
 
   const handleTitleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
     setTitle(e.target.value);
 
-  const handleHrefInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setHref(e.target.value);
+  const handleHrefInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = e;
+    setHref(value);
+    setHrefIsValid(urlValidation(value));
+  };
 
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -51,7 +60,10 @@ const AddLinkForm: FC<{
         placeholder="Title"
       />
       <input
-        type="text"
+        className={classNames('href-input', {
+          'href-is-invalid': !hrefIsValid,
+        })}
+        type="url"
         value={href}
         onChange={handleHrefInputChange}
         placeholder="Href"
@@ -59,7 +71,7 @@ const AddLinkForm: FC<{
 
       <button
         type="submit"
-        disabled={!title || !href}
+        disabled={!title || !hrefIsValid}
         className="submit-form-button"
       >
         Create

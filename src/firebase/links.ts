@@ -33,7 +33,7 @@ export const addLink = async (
 
     const updatedCategories = categories.reduce((acc, cat) => {
       return cat.id === category.id
-        ? [...acc, { ...cat, links: [link, ...cat.links] }]
+        ? [...acc, { ...cat, links: [...cat.links, link] }]
         : [...acc, cat];
     }, [] as ICategory[]);
 

@@ -11,6 +11,7 @@ describe('Column', () => {
       <Category
         category={columns[0].categories[0]}
         deleteCategoryHandler={() => {}}
+        createLinkHandler={() => {}}
       />,
     );
   });
