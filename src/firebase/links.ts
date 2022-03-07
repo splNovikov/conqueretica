@@ -8,14 +8,13 @@ import { ICategory, IColumn, ILink } from '../interfaces';
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 import { getCategoriesByColumnDoc } from './categories';
 
-// todo: add tests
 export const addLink = async (
   title: string,
   href: string,
   category: ICategory,
   column: IColumn,
-): Promise<ICategory | null> => {
-  if (!title || !href || !category?.id) {
+): Promise<ILink | null> => {
+  if (!title || !href || !category?.id || !column?.id) {
     defaultErrorHandler('Invalid Parameters Passed to Create new link');
     return null;
   }
@@ -31,6 +30,11 @@ export const addLink = async (
     const columnDoc = doc(columnsRef, column.id);
     const categories = await getCategoriesByColumnDoc(columnDoc);
 
+    if (!categories) {
+      defaultErrorHandler(`Categories not found for this Column: ${column.id}`);
+      return null;
+    }
+
     const updatedCategories = categories.reduce((acc, cat) => {
       return cat.id === category.id
         ? [...acc, { ...cat, links: [...cat.links, link] }]
@@ -38,7 +42,7 @@ export const addLink = async (
     }, [] as ICategory[]);
 
     await updateDoc(columnDoc, { categories: updatedCategories });
-    return category;
+    return link;
   } catch (e) {
     httpErrorHandler(e);
     return null;
