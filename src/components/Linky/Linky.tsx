@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import Icon from '@ant-design/icons';
 import classNames from 'classnames';
 
 import { ILink } from '../../interfaces';
 
 import './Linky.scss';
-import { getIconByLink } from '../../utils';
+import { identifyLink } from '../../utils';
+import GoogleIcon from '../GoogleIcon';
 
 const Linky: FC<{
   link: ILink;
@@ -15,7 +15,7 @@ const Linky: FC<{
   ellipsed?: boolean;
   /* eslint-enable */
 }> = ({ link, big, colored, ellipsed }) => {
-  const icon = getIconByLink(link.href);
+  const iconType = identifyLink(link.href);
 
   return (
     <a
@@ -23,7 +23,7 @@ const Linky: FC<{
       aria-label={link.title}
       href={link.href}
     >
-      {icon && <Icon component={icon} />}
+      {iconType && <GoogleIcon icon={iconType} size="x-small" />}
       {link.title || link.href}
     </a>
   );

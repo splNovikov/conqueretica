@@ -1,0 +1,56 @@
+
+
+.google-icon {
+  background-image: url('./icons_set_2022_03.png');
+  background-repeat: no-repeat;
+  height: 128px;
+  width: 128px;
+  display: inline-flex;
+  background-size: 100% auto;
+
+  &.docs {
+    background-position: 0 -2484px;
+  }
+
+  &.sheets {
+    background-position: 0 -4416px;
+  }
+
+  &.slides {
+    background-position: 0 -4554px;
+  }
+
+  &.small {
+    height: 64px;
+    width: 64px;
+
+    &.docs {
+      background-position: 0 -1242px;
+    }
+
+    &.sheets {
+      background-position: 0 -2208px;
+    }
+
+    &.slides {
+      background-position: 0 -2277px;
+    }
+  }
+
+  &.x-small {
+    height: 32px;
+    width: 32px;
+
+    &.docs {
+      background-position: 0 -621px;
+    }
+
+    &.sheets {
+      background-position: 0 -1104px;
+    }
+
+    &.slides {
+      background-position: 0 -1138px;
+    }
+  }
+}

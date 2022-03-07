@@ -1,12 +1,12 @@
 import { httpErrorHandler, defaultErrorHandler } from './errorHandler';
-import { getIconByLink } from './identifyLink';
+import { identifyLink } from './identifyLink';
 import { getNextSibling } from './getNextSibling';
 import { urlValidation } from './urlValidation';
 
 export {
   httpErrorHandler,
   defaultErrorHandler,
-  getIconByLink,
+  identifyLink,
   getNextSibling,
   urlValidation,
 };

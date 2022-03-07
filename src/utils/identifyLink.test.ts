@@ -1,10 +1,5 @@
-import {
-  DesktopOutlined,
-  FileOutlined,
-  TableOutlined,
-} from '@ant-design/icons';
-
-import { getIconByLink, identifyLink } from './identifyLink';
+// Utils
+import { identifyLink } from './identifyLink';
 // Test Data:
 import { links } from '../__test_data__';
 
@@ -34,27 +29,5 @@ describe('Identify Links', () => {
   it('Should return "undefined"', () => {
     const res = identifyLink('http://test.com/blablabla');
     expect(res).toBe('');
-  });
-});
-
-describe('Get Icon By Link', () => {
-  it('Should return "SheetsIcon"', () => {
-    const res = getIconByLink(links.sheets.href);
-    expect(res).toBe(TableOutlined);
-  });
-
-  it('Should return "DocsIcon"', () => {
-    const res = getIconByLink(links.docs.href);
-    expect(res).toBe(FileOutlined);
-  });
-
-  it('Should return "SlidesIcon"', () => {
-    const res = getIconByLink(links.slides.href);
-    expect(res).toBe(DesktopOutlined);
-  });
-
-  it('Should return "undefined"', () => {
-    const res = getIconByLink(blablaHref);
-    expect(res).toBeUndefined();
   });
 });
