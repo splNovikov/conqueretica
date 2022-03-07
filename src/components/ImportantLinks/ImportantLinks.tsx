@@ -11,7 +11,7 @@ const ImportantLinks: FC<{
 }> = ({ links }) => (
   <div className="important-links">
     {links.map((l: ILink) => (
-      <Linky key={l.id} link={l} colored />
+      <Linky key={l.id} link={l} colored iconSize="x-small" />
     ))}
   </div>
 );

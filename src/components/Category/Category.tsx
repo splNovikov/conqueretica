@@ -27,7 +27,7 @@ const Category: FC<{
       </div>
       {category.links.map((l: ILink) => (
         <div key={l.id} className="linky-wrapper">
-          <Linky link={l} ellipsed />
+          <Linky link={l} ellipsed iconSize="xx-small" />
         </div>
       ))}
       <AddLinkForm createLinkHandler={handleLinkCreate} />

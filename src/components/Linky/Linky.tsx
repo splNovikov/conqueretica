@@ -10,11 +10,12 @@ import GoogleIcon from '../GoogleIcon';
 const Linky: FC<{
   link: ILink;
   /* eslint-disable react/require-default-props */
+  iconSize?: string;
   big?: boolean;
   colored?: boolean;
   ellipsed?: boolean;
   /* eslint-enable */
-}> = ({ link, big, colored, ellipsed }) => {
+}> = ({ link, iconSize, big, colored, ellipsed }) => {
   const iconType = identifyLink(link.href);
 
   return (
@@ -23,7 +24,7 @@ const Linky: FC<{
       aria-label={link.title}
       href={link.href}
     >
-      {iconType && <GoogleIcon icon={iconType} size="x-small" />}
+      {iconType && <GoogleIcon icon={iconType} size={iconSize} />}
       {link.title || link.href}
     </a>
   );

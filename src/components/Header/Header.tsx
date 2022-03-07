@@ -49,7 +49,7 @@ const Header: FC<{
     </div>
     <div>
       {googleLinks.map((l) => (
-        <Linky link={l} colored key={l.id} />
+        <Linky link={l} colored key={l.id} iconSize="x-small" />
       ))}
     </div>
   </div>

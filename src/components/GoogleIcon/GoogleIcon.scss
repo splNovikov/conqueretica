@@ -53,4 +53,21 @@
       background-position: 0 -1138px;
     }
   }
+
+  &.xx-small {
+    height: 16px;
+    width: 16px;
+
+    &.docs {
+      background-position: 0 -310px;
+    }
+
+    &.sheets {
+      background-position: 0 -552px;
+    }
+
+    &.slides {
+      background-position: 0 -569px;
+    }
+  }
 }
