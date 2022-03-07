@@ -30,7 +30,7 @@ const AddLinkForm: FC<{
 
     clearForm();
 
-    await createLinkHandler(title, href);
+    await createLinkHandler(title || href, href);
   };
 
   const toggleDisplayForm = () => {
@@ -71,7 +71,7 @@ const AddLinkForm: FC<{
 
       <button
         type="submit"
-        disabled={!title || !hrefIsValid}
+        disabled={!hrefIsValid}
         className="submit-form-button"
       >
         Create
