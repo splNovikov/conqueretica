@@ -71,7 +71,7 @@ describe('Tabs', () => {
           tabsFormSubmitHandler={() => 1}
         />,
       );
-      const addTabTriggerEl = wrapper.find('.add-tab-icon');
+      const addTabTriggerEl = wrapper.find('.show-add-tab-form-icon');
       expect(addTabTriggerEl.exists()).toBeTruthy();
     });
 
@@ -85,12 +85,37 @@ describe('Tabs', () => {
           tabsFormSubmitHandler={() => 1}
         />,
       );
-      const addTabTriggerEl = wrapper.find('span.add-tab-icon');
+      const addTabTriggerEl = wrapper.find('span.show-add-tab-form-icon');
 
       addTabTriggerEl.simulate('click');
 
-      const addFormEl = wrapper.find('.send-form');
+      const addFormEl = wrapper.find('.add-tab-form-wrapper');
       expect(addFormEl.exists()).toBeTruthy();
+
+      const closeFormEl = wrapper.find('.hide-add-tab-form-icon');
+      expect(closeFormEl.exists()).toBeTruthy();
+    });
+
+    it('Tabs Add Form should be displayed OFF after clicking on trigger', () => {
+      const wrapper = mount(
+        <Tabs
+          tabs={tabs}
+          selectedTab={tabs[0]}
+          selectTabHandler={() => 1}
+          deleteTabHandler={() => 1}
+          tabsFormSubmitHandler={() => 1}
+        />,
+      );
+      const addTabTriggerEl = wrapper.find('span.show-add-tab-form-icon');
+      addTabTriggerEl.simulate('click');
+
+      const closeFormEl = wrapper.find('span.hide-add-tab-form-icon');
+      closeFormEl.simulate('click');
+
+      const addTabTriggerEl2 = wrapper.find('span.show-add-tab-form-icon');
+      const closeFormEl2 = wrapper.find('span.hide-add-tab-form-icon');
+      expect(addTabTriggerEl2.exists()).toBeTruthy();
+      expect(closeFormEl2.exists()).toBeFalsy();
     });
   });
 });

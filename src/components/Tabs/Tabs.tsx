@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ITab } from '../../interfaces';
 // Components
@@ -38,14 +38,20 @@ const Tabs: FC<{
         ))}
       {!displayForm ? (
         <PlusCircleOutlined
-          className="add-tab-icon"
+          className="show-add-tab-form-icon"
           onClick={toggleDisplayForm}
         />
       ) : (
-        <AddForm
-          formSubmitHandler={tabsFormSubmitHandler}
-          placeholder="create a new tab"
-        />
+        <div className="add-tab-form-wrapper">
+          <AddForm
+            formSubmitHandler={tabsFormSubmitHandler}
+            placeholder="create a new tab"
+          />
+          <CloseCircleOutlined
+            className="hide-add-tab-form-icon"
+            onClick={toggleDisplayForm}
+          />
+        </div>
       )}
     </div>
   );
