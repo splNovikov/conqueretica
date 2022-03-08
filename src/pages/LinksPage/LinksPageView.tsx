@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { UserInfo } from 'firebase/auth';
 // Interfaces
-import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
+import { ICategory, IColumn, ITab } from '../../interfaces';
 // Components
-import ImportantLinks from '../../components/ImportantLinks';
 import Tabs from '../../components/Tabs';
 import Columns from '../../components/Columns';
 // Styles
@@ -34,8 +33,6 @@ const LinksPage: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
-  // other stuff
-  importantLinks: ILink[];
 }> = ({
   user,
   tabs,
@@ -51,11 +48,8 @@ const LinksPage: FC<{
   categoryFormSubmitHandler,
   deleteCategoryHandler,
   createLinkHandler,
-  importantLinks,
 }) => (
   <div className="links-page">
-    <ImportantLinks links={importantLinks} />
-
     {user ? (
       <>
         {loadingTabs && 'loading tabs progress...'}

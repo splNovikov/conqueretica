@@ -9,8 +9,6 @@ import { ICategory, IColumn, ITab } from '../../interfaces';
 import LinksPageView from './LinksPageView';
 // Utils
 import { getNextSibling, httpErrorHandler } from '../../utils';
-// Test Data (should be fetched from BE)
-import { importantLinks } from '../../__test_data__';
 
 // todo: after release multi-rerendering!!!
 const LinksPage = () => {
@@ -107,8 +105,6 @@ const LinksPage = () => {
       deleteCategoryHandler={deleteCategoryHandler}
       // links
       createLinkHandler={createLinkHandler}
-      // other stuff
-      importantLinks={importantLinks}
     />
   );
 };
