@@ -29,6 +29,6 @@ describe('Tabs', () => {
       <Tabs tabs={tabs} selectedTab={tabs[0]} {...mockedFunctions} />,
     );
     const tabsEl = wrapper.find('.tab-title');
-    expect(tabsEl.at(0).text()).toBe('test_tab_1[Selected]');
+    expect(tabsEl.at(0).hasClass('selected')).toBeTruthy();
   });
 });
