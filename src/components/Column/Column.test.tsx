@@ -10,9 +10,10 @@ describe('Column', () => {
     const wrapper = shallow(
       <Column
         column={columns[0]}
-        deleteColumnHandler={() => {}}
-        categoryFormSubmitHandler={() => {}}
-        deleteCategoryHandler={() => {}}
+        deleteColumnHandler={() => 1}
+        categoryFormSubmitHandler={() => 1}
+        deleteCategoryHandler={() => 1}
+        createLinkHandler={() => 1}
       />,
     );
     expect(wrapper.hasClass('column')).toEqual(true);
@@ -22,9 +23,10 @@ describe('Column', () => {
     const wrapper = shallow(
       <Column
         column={columns[0]}
-        deleteColumnHandler={() => {}}
-        categoryFormSubmitHandler={() => {}}
-        deleteCategoryHandler={() => {}}
+        deleteColumnHandler={() => 1}
+        categoryFormSubmitHandler={() => 1}
+        deleteCategoryHandler={() => 1}
+        createLinkHandler={() => 1}
       />,
     );
 
@@ -44,8 +46,9 @@ describe('Column', () => {
       <Column
         column={columns[0]}
         deleteColumnHandler={handleDeleteColumn}
-        categoryFormSubmitHandler={() => {}}
-        deleteCategoryHandler={() => {}}
+        categoryFormSubmitHandler={() => 1}
+        deleteCategoryHandler={() => 1}
+        createLinkHandler={() => 1}
       />,
     );
 
