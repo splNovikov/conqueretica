@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
+import { PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ITab } from '../../interfaces';
 // Components
@@ -20,6 +21,9 @@ const Tabs: FC<{
   deleteTabHandler,
   tabsFormSubmitHandler,
 }) => {
+  const [displayForm, setDisplayForm] = useState(false);
+  const toggleDisplayForm = () => setDisplayForm(!displayForm);
+
   return (
     <div className="tabs">
       {tabs &&
@@ -32,10 +36,17 @@ const Tabs: FC<{
             key={tab.id}
           />
         ))}
-      <AddForm
-        formSubmitHandler={tabsFormSubmitHandler}
-        placeholder="create a new tab"
-      />
+      {!displayForm ? (
+        <PlusCircleOutlined
+          className="add-tab-icon"
+          onClick={toggleDisplayForm}
+        />
+      ) : (
+        <AddForm
+          formSubmitHandler={tabsFormSubmitHandler}
+          placeholder="create a new tab"
+        />
+      )}
     </div>
   );
 };

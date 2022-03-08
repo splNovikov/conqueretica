@@ -1,4 +1,14 @@
 .tabs {
   display: flex;
   align-items: center;
+
+  .add-tab-icon {
+    // todo: move paddings to variables? check ant design
+    padding: 0 0.2em;
+
+    &:hover {
+      // todo: move to colors
+      color: green;
+    }
+  }
 }
