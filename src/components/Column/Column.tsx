@@ -42,18 +42,20 @@ const Column: FC<{
       <button type="button" onClick={handleColumnDelete}>
         Delete Column
       </button>
+      <div className="column-categories">
+        {column.categories.map((category: ICategory) => (
+          <Category
+            category={category}
+            deleteCategoryHandler={handleCategoryDelete}
+            key={category.id}
+            createLinkHandler={handleLinkCreate}
+          />
+        ))}
+      </div>
       <AddForm
         formSubmitHandler={handleCategoryFormSubmit}
         placeholder="create a new category"
       />
-      {column.categories.map((category: ICategory) => (
-        <Category
-          category={category}
-          deleteCategoryHandler={handleCategoryDelete}
-          key={category.id}
-          createLinkHandler={handleLinkCreate}
-        />
-      ))}
     </Col>
   );
 };
