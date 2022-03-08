@@ -2,4 +2,19 @@
   .linky-wrapper {
     display: flex;
   }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .delete-category-icon {
+    // todo: move paddings to variables? check ant design
+    padding: 0 0.2em;
+
+    &:hover {
+      // todo: move to colors
+      color: red;
+    }
+  }
 }

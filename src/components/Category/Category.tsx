@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { DeleteOutlined } from '@ant-design/icons';
 // Interfaces
 import { ICategory, ILink } from '../../interfaces';
 // Components
@@ -19,17 +20,20 @@ const Category: FC<{
 
   return (
     <div className="category">
-      <div>
-        {category.title}
-        <button type="button" onClick={handleCategoryDelete}>
-          Delete Category
-        </button>
+      <div className="category-header">
+        <span className="category-title">{category.title}</span>
+        <DeleteOutlined
+          className="delete-category-icon"
+          onClick={handleCategoryDelete}
+        />
       </div>
-      {category.links.map((l: ILink) => (
-        <div key={l.id} className="linky-wrapper">
-          <Linky link={l} ellipsed iconSize="xx-small" />
-        </div>
-      ))}
+      <div className="category-links">
+        {category.links.map((l: ILink) => (
+          <div key={l.id} className="linky-wrapper">
+            <Linky link={l} ellipsed iconSize="xx-small" />
+          </div>
+        ))}
+      </div>
       <AddLinkForm createLinkHandler={handleLinkCreate} />
     </div>
   );

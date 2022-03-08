@@ -10,8 +10,8 @@ describe('Column', () => {
     shallow(
       <Category
         category={columns[0].categories[0]}
-        deleteCategoryHandler={() => {}}
-        createLinkHandler={() => {}}
+        deleteCategoryHandler={() => 1}
+        createLinkHandler={() => 1}
       />,
     );
   });
