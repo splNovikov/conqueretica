@@ -52,4 +52,40 @@ describe('Tab', () => {
 
     expect(handleDeleteTab).toHaveBeenCalledWith(tabs[0]);
   });
+
+  it('Tab Component "Select Tab" button should invoke "Select Tab" method', () => {
+    const handleSelectTab = jest.fn();
+    const wrapper = shallow(
+      <Tab
+        tab={tabs[0]}
+        selectedTab={tabs[1]}
+        selectTabHandler={handleSelectTab}
+        deleteTabHandler={() => {}}
+      />,
+    );
+
+    const tabTitleEl = wrapper.find('.tab-title');
+
+    tabTitleEl.simulate('click');
+
+    expect(handleSelectTab).toHaveBeenCalledWith(tabs[0]);
+  });
+
+  it('Tab Component "Select Tab" button should NOT invoke "Select Tab" method on clicking the same tab', () => {
+    const handleSelectTab = jest.fn();
+    const wrapper = shallow(
+      <Tab
+        tab={tabs[0]}
+        selectedTab={tabs[0]}
+        selectTabHandler={handleSelectTab}
+        deleteTabHandler={() => {}}
+      />,
+    );
+
+    const tabTitleEl = wrapper.find('.tab-title');
+
+    tabTitleEl.simulate('click');
+
+    expect(handleSelectTab).toHaveBeenCalledTimes(0);
+  });
 });
