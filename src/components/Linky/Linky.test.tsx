@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Icon from '@ant-design/icons';
+import { mount, shallow } from 'enzyme';
 // Components
 import Linky from './Linky';
+import GoogleIcon from '../GoogleIcon';
 // Test Data
 import { links } from '../../__test_data__';
 
@@ -35,7 +35,7 @@ describe('Linky should has correct title', () => {
       title: 'predefined',
     };
 
-    const wrapper = shallow(<Linky link={link} />);
+    const wrapper = mount(<Linky link={link} />);
     expect(wrapper.text()).toEqual('predefined');
   });
 
@@ -55,7 +55,7 @@ describe('Linky - Icon', () => {
   it('Icon should be displayed', () => {
     const wrapper = shallow(<Linky link={links.sheets} />);
 
-    expect(wrapper.find(Icon).exists()).toBe(true);
+    expect(wrapper.find(GoogleIcon).exists()).toBe(true);
   });
 
   it('Icon should not be displayed', () => {
@@ -65,6 +65,6 @@ describe('Linky - Icon', () => {
     };
     const wrapper = shallow(<Linky link={link} />);
 
-    expect(wrapper.find(Icon).exists()).toBe(false);
+    expect(wrapper.find(GoogleIcon).exists()).toBe(false);
   });
 });

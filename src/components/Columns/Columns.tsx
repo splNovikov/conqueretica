@@ -11,12 +11,19 @@ const Columns: FC<{
   deleteColumnHandler: (val: IColumn) => void;
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
   deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
+  createLinkHandler: (
+    title: string,
+    href: string,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   columns,
   createColumnHandler,
   deleteColumnHandler,
   categoryFormSubmitHandler,
   deleteCategoryHandler,
+  createLinkHandler,
 }) => {
   return (
     // "ant-row" class instead of Row component because Row component is failing tests
@@ -28,6 +35,7 @@ const Columns: FC<{
           deleteColumnHandler={deleteColumnHandler}
           categoryFormSubmitHandler={categoryFormSubmitHandler}
           deleteCategoryHandler={deleteCategoryHandler}
+          createLinkHandler={createLinkHandler}
         />
       ))}
       <Col span={6} className="create-column-wrapper">

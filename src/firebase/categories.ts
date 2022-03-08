@@ -5,6 +5,8 @@ import {
   doc,
   updateDoc,
   Timestamp,
+  DocumentReference,
+  getDoc,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -66,4 +68,13 @@ export const deleteCategory = async (
     httpErrorHandler(e);
     return null;
   }
+};
+
+export const getCategoriesByColumnDoc = async (
+  columnDoc: DocumentReference,
+): Promise<ICategory[]> => {
+  const columnDocumentSnapshot = await getDoc(columnDoc);
+  const columnData = columnDocumentSnapshot.data();
+
+  return columnData ? columnData.categories : [];
 };
