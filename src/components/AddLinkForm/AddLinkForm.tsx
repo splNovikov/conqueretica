@@ -33,9 +33,7 @@ const AddLinkForm: FC<{
     await createLinkHandler(title || href, href);
   };
 
-  const toggleDisplayForm = () => {
-    setDisplayForm(!displayForm);
-  };
+  const toggleDisplayForm = () => setDisplayForm(!displayForm);
 
   const clearForm = () => {
     setTitle('');
@@ -58,6 +56,7 @@ const AddLinkForm: FC<{
         value={title}
         onChange={handleTitleInputChange}
         placeholder="Title"
+        className="title-input"
       />
       <input
         className={classNames('href-input', {
