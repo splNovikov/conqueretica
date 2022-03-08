@@ -1,0 +1,20 @@
+.tab {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  // todo: move paddings to variables? check ant design
+  padding: 0.2em;
+
+  .tab-title {
+    &.selected {
+      text-decoration: underline;
+    }
+  }
+
+  .delete-icon {
+    &:hover {
+      // todo: move to colors
+      color: red;
+    }
+  }
+}

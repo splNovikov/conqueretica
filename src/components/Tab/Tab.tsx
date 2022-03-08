@@ -1,6 +1,10 @@
 import React, { FC } from 'react';
+import { DeleteOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
 // Interfaces
 import { ITab } from '../../interfaces';
+// Styles
+import './Tab.scss';
 
 const Tab: FC<{
   tab: ITab;
@@ -15,13 +19,16 @@ const Tab: FC<{
 
   return (
     <div className="tab">
-      <span role="none" onClick={handleTabSelect} className="tab-title">
+      <span
+        role="none"
+        onClick={handleTabSelect}
+        className={classNames('tab-title', {
+          selected: selectedTab.id === tab.id,
+        })}
+      >
         {tab.title}
-        {selectedTab.id === tab.id && '[Selected]'}
       </span>
-      <button type="button" onClick={handleTabDelete}>
-        Delete Tab
-      </button>
+      <DeleteOutlined onClick={handleTabDelete} className="delete-icon" />
     </div>
   );
 };

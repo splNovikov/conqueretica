@@ -11,8 +11,8 @@ describe('Tab', () => {
       <Tab
         tab={tabs[0]}
         selectedTab={tabs[0]}
-        selectTabHandler={() => {}}
-        deleteTabHandler={() => {}}
+        selectTabHandler={() => 1}
+        deleteTabHandler={() => 1}
       />,
     );
     expect(wrapper.hasClass('tab')).toEqual(true);
@@ -23,16 +23,17 @@ describe('Tab', () => {
       <Tab
         tab={tabs[0]}
         selectedTab={tabs[0]}
-        selectTabHandler={() => {}}
-        deleteTabHandler={() => {}}
+        selectTabHandler={() => 1}
+        deleteTabHandler={() => 1}
       />,
     );
 
     const tabTitleEl = wrapper.find('.tab-title');
-    expect(tabTitleEl.text()).toBe('test_tab_1[Selected]');
+    expect(tabTitleEl.text()).toBe('test_tab_1');
+    expect(tabTitleEl.hasClass('selected')).toBeTruthy();
 
-    const buttonEl = wrapper.find('button');
-    expect(buttonEl.exists()).toBeTruthy();
+    const deleteEl = wrapper.find('.delete-icon');
+    expect(deleteEl.exists()).toBeTruthy();
   });
 
   it('Tab Component "Delete Tab" button should invoke "Delete Tab" method', () => {
@@ -41,12 +42,12 @@ describe('Tab', () => {
       <Tab
         tab={tabs[0]}
         selectedTab={tabs[0]}
-        selectTabHandler={() => {}}
+        selectTabHandler={() => 1}
         deleteTabHandler={handleDeleteTab}
       />,
     );
 
-    const buttonEl = wrapper.find('button');
+    const buttonEl = wrapper.find('.delete-icon');
 
     buttonEl.simulate('click');
 
@@ -60,7 +61,7 @@ describe('Tab', () => {
         tab={tabs[0]}
         selectedTab={tabs[1]}
         selectTabHandler={handleSelectTab}
-        deleteTabHandler={() => {}}
+        deleteTabHandler={() => 1}
       />,
     );
 
@@ -78,7 +79,7 @@ describe('Tab', () => {
         tab={tabs[0]}
         selectedTab={tabs[0]}
         selectTabHandler={handleSelectTab}
-        deleteTabHandler={() => {}}
+        deleteTabHandler={() => 1}
       />,
     );
 
