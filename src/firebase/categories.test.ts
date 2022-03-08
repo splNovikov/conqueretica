@@ -1,5 +1,9 @@
 import * as firestore from '@firebase/firestore';
-import { addCategory, deleteCategory } from './categories';
+import {
+  addCategory,
+  deleteCategory,
+  getCategoriesByColumnDoc,
+} from './categories';
 // Interfaces
 import { ICategory, IColumn } from '../interfaces';
 // Test Data
@@ -122,6 +126,26 @@ describe('Firebase Categories Test', () => {
       const res = await deleteCategory(columns[0], {} as ICategory);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column || Category');
+    });
+  });
+
+  describe('Get Categories By Column Doc', () => {
+    it('Should return categories', async () => {
+      jest
+        .spyOn(firestore, 'getDoc')
+        .mockReturnValue({ data: () => columns[0] });
+
+      const res = await getCategoriesByColumnDoc({});
+      expect(res).toBe(columns[0].categories);
+    });
+
+    it('Should return empty array when categories are undefined', async () => {
+      jest
+        .spyOn(firestore, 'getDoc')
+        .mockReturnValue({ data: () => undefined });
+
+      const res = await getCategoriesByColumnDoc({});
+      expect(res).toEqual([]);
     });
   });
 });

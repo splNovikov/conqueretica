@@ -70,7 +70,6 @@ export const deleteCategory = async (
   }
 };
 
-// todo: cover with tests
 export const getCategoriesByColumnDoc = async (
   columnDoc: DocumentReference,
 ): Promise<ICategory[]> => {
