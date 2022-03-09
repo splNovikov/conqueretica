@@ -1,4 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { Button } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 // Utils
 import { urlValidation } from '../../utils';
@@ -42,13 +44,14 @@ const AddLinkForm: FC<{
   };
 
   return !displayForm ? (
-    <button
-      type="button"
+    <Button
+      icon={<PlusCircleOutlined />}
+      type="link"
       className="toggle-form-display-button"
       onClick={toggleDisplayForm}
     >
       Add Link
-    </button>
+    </Button>
   ) : (
     <form onSubmit={handleFormSubmit} className="add-link-form">
       <input
