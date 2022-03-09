@@ -51,7 +51,7 @@ const AddLinkForm: FC<{
       className="toggle-form-display-button"
       onClick={toggleDisplayForm}
     >
-      Add Link
+      Add New Link
     </Button>
   ) : (
     <form onSubmit={handleFormSubmit} className="add-link-form">

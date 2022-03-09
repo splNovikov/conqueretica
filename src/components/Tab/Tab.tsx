@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Button, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 // Interfaces
@@ -28,7 +29,15 @@ const Tab: FC<{
       >
         {tab.title}
       </span>
-      <DeleteOutlined onClick={handleTabDelete} className="delete-icon" />
+      <Tooltip title={`Delete Tab "${tab.title}"`}>
+        <Button
+          size="small"
+          type="link"
+          icon={<DeleteOutlined />}
+          onClick={handleTabDelete}
+          className="btn-delete-tab"
+        />
+      </Tooltip>
     </div>
   );
 };

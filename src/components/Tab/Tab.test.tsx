@@ -32,7 +32,7 @@ describe('Tab', () => {
     expect(tabTitleEl.text()).toBe('test_tab_1');
     expect(tabTitleEl.hasClass('selected')).toBeTruthy();
 
-    const deleteEl = wrapper.find('.delete-icon');
+    const deleteEl = wrapper.find('.btn-delete-tab');
     expect(deleteEl.exists()).toBeTruthy();
   });
 
@@ -47,9 +47,9 @@ describe('Tab', () => {
       />,
     );
 
-    const buttonEl = wrapper.find('.delete-icon');
+    const deleteEl = wrapper.find('.btn-delete-tab');
 
-    buttonEl.simulate('click');
+    deleteEl.simulate('click');
 
     expect(handleDeleteTab).toHaveBeenCalledWith(tabs[0]);
   });

@@ -10,14 +10,4 @@
       text-decoration: underline;
     }
   }
-
-  .delete-icon {
-    // todo: move paddings to variables? check ant design
-    padding: 0 0.2em;
-
-    &:hover {
-      // todo: move to colors
-      color: red;
-    }
-  }
 }
