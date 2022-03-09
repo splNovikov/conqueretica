@@ -1,19 +1,11 @@
 .column {
-  // todo: colors
-  border: 1px solid blueviolet;
-
   .column-header {
     display: flex;
     justify-content: flex-end;
   }
 
-  .delete-column-icon {
+  .btn {
     // todo: move paddings to variables? check ant design
     padding: 0.2em;
-
-    &:hover {
-      // todo: move to colors
-      color: red;
-    }
   }
 }

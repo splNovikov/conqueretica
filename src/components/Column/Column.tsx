@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Col, Modal } from 'antd';
+import { Button, Col, Modal, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 // Interfaces
 import { ICategory, IColumn } from '../../interfaces';
@@ -66,10 +66,14 @@ const Column: FC<{
       </Modal>
 
       <div className="column-header">
-        <DeleteOutlined
-          onClick={handleColumnDelete}
-          className="delete-column-icon"
-        />
+        <Tooltip title="Delete Column">
+          <Button
+            shape="circle"
+            icon={<DeleteOutlined />}
+            onClick={handleColumnDelete}
+            className="btn-delete-column"
+          />
+        </Tooltip>
       </div>
       <div className="column-categories">
         {column.categories.map((category: ICategory) => (

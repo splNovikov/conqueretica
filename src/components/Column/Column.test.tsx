@@ -30,7 +30,7 @@ describe('Column', () => {
       />,
     );
 
-    const deleteColEl = wrapper.find('span.delete-column-icon');
+    const deleteColEl = wrapper.find('button.btn-delete-column');
     expect(deleteColEl.exists()).toBeTruthy();
 
     const addFormEl = wrapper.find('AddForm');
@@ -57,7 +57,7 @@ describe('Column', () => {
     expect(modalEl.exists()).toBe(false);
 
     // trigger delete icon to show modal
-    const deleteColEl = wrapper.find('span.delete-column-icon');
+    const deleteColEl = wrapper.find('button.btn-delete-column');
     deleteColEl.simulate('click');
 
     // modal appeared
@@ -101,7 +101,7 @@ describe('Column', () => {
     expect(modalEl.exists()).toBe(false);
 
     // trigger delete icon to show modal
-    const deleteColEl = wrapper.find('span.delete-column-icon');
+    const deleteColEl = wrapper.find('button.btn-delete-column');
     deleteColEl.simulate('click');
 
     // modal appeared
