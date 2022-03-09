@@ -46,6 +46,7 @@ const AddLinkForm: FC<{
   return !displayForm ? (
     <Button
       icon={<PlusCircleOutlined />}
+      size="small"
       type="link"
       className="toggle-form-display-button"
       onClick={toggleDisplayForm}

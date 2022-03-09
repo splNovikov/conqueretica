@@ -69,6 +69,7 @@ const Column: FC<{
         <Tooltip title="Delete Column">
           <Button
             shape="circle"
+            size="small"
             icon={<DeleteOutlined />}
             onClick={handleColumnDelete}
             className="btn-delete-column"
