@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
-import { Col } from 'antd';
+import React, { FC, useState } from 'react';
+import { Col, Modal } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 // Interfaces
 import { ICategory, IColumn } from '../../interfaces';
 // Components
@@ -26,7 +27,23 @@ const Column: FC<{
   deleteCategoryHandler,
   createLinkHandler,
 }) => {
-  const handleColumnDelete = () => deleteColumnHandler(column);
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+
+  const showConfirmModal = () => {
+    setIsConfirmModalVisible(true);
+  };
+
+  const handleConfirmModalOk = () => {
+    setIsConfirmModalVisible(false);
+    deleteColumnHandler(column);
+  };
+
+  const handleConfirmModalCancel = () => {
+    setIsConfirmModalVisible(false);
+  };
+  const handleColumnDelete = () => {
+    showConfirmModal();
+  };
 
   const handleCategoryFormSubmit = (value: string) =>
     categoryFormSubmitHandler(value, column);
@@ -39,9 +56,21 @@ const Column: FC<{
 
   return (
     <Col span={6} className="column">
-      <button type="button" onClick={handleColumnDelete}>
-        Delete Column
-      </button>
+      <Modal
+        title="Delete Column Confirmation"
+        visible={isConfirmModalVisible}
+        onOk={handleConfirmModalOk}
+        onCancel={handleConfirmModalCancel}
+      >
+        <p>Are you sure you want to delete this column?</p>
+      </Modal>
+
+      <div className="column-header">
+        <DeleteOutlined
+          onClick={handleColumnDelete}
+          className="delete-column-icon"
+        />
+      </div>
       <div className="column-categories">
         {column.categories.map((category: ICategory) => (
           <Category
