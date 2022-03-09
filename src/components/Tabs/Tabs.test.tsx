@@ -71,7 +71,7 @@ describe('Tabs', () => {
           tabsFormSubmitHandler={() => 1}
         />,
       );
-      const addTabTriggerEl = wrapper.find('.show-add-tab-form-icon');
+      const addTabTriggerEl = wrapper.find('.btn-show-add-tab-form');
       expect(addTabTriggerEl.exists()).toBeTruthy();
     });
 
@@ -85,14 +85,14 @@ describe('Tabs', () => {
           tabsFormSubmitHandler={() => 1}
         />,
       );
-      const addTabTriggerEl = wrapper.find('span.show-add-tab-form-icon');
+      const addTabTriggerEl = wrapper.find('button.btn-show-add-tab-form');
 
       addTabTriggerEl.simulate('click');
 
       const addFormEl = wrapper.find('.add-tab-form-wrapper');
       expect(addFormEl.exists()).toBeTruthy();
 
-      const closeFormEl = wrapper.find('.hide-add-tab-form-icon');
+      const closeFormEl = wrapper.find('.btn-hide-add-tab-form');
       expect(closeFormEl.exists()).toBeTruthy();
     });
 
@@ -106,14 +106,14 @@ describe('Tabs', () => {
           tabsFormSubmitHandler={() => 1}
         />,
       );
-      const addTabTriggerEl = wrapper.find('span.show-add-tab-form-icon');
+      const addTabTriggerEl = wrapper.find('button.btn-show-add-tab-form');
       addTabTriggerEl.simulate('click');
 
-      const closeFormEl = wrapper.find('span.hide-add-tab-form-icon');
+      const closeFormEl = wrapper.find('button.btn-hide-add-tab-form');
       closeFormEl.simulate('click');
 
-      const addTabTriggerEl2 = wrapper.find('span.show-add-tab-form-icon');
-      const closeFormEl2 = wrapper.find('span.hide-add-tab-form-icon');
+      const addTabTriggerEl2 = wrapper.find('button.btn-show-add-tab-form');
+      const closeFormEl2 = wrapper.find('button.btn-hide-add-tab-form');
       expect(addTabTriggerEl2.exists()).toBeTruthy();
       expect(closeFormEl2.exists()).toBeFalsy();
     });

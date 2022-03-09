@@ -2,24 +2,6 @@
   display: flex;
   align-items: center;
 
-  .show-add-tab-form-icon,
-  .hide-add-tab-form-icon {
-    &:hover {
-      // todo: move to colors
-      color: grey;
-    }
-  }
-
-  .show-add-tab-form-icon {
-    // todo: move paddings to variables? check ant design
-    padding: 0 0.2em;
-  }
-
-  .hide-add-tab-form-icon {
-    // todo: move paddings to variables? check ant design
-    padding: 0 0.6em;
-  }
-
   .add-tab-form-wrapper{
     display: flex;
     align-items: center;

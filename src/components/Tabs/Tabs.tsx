@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { Button, Tooltip } from 'antd';
 import { CloseCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ITab } from '../../interfaces';
@@ -37,20 +38,30 @@ const Tabs: FC<{
           />
         ))}
       {!displayForm ? (
-        <PlusCircleOutlined
-          className="show-add-tab-form-icon"
-          onClick={toggleDisplayForm}
-        />
+        <Tooltip title="Add New Tab">
+          <Button
+            shape="circle"
+            size="small"
+            icon={<PlusCircleOutlined />}
+            onClick={toggleDisplayForm}
+            className="btn-show-add-tab-form"
+          />
+        </Tooltip>
       ) : (
         <div className="add-tab-form-wrapper">
           <AddForm
             formSubmitHandler={tabsFormSubmitHandler}
             placeholder="create a new tab"
           />
-          <CloseCircleOutlined
-            className="hide-add-tab-form-icon"
-            onClick={toggleDisplayForm}
-          />
+          <Tooltip title="Cancel Adding New Tab">
+            <Button
+              shape="circle"
+              size="small"
+              icon={<CloseCircleOutlined />}
+              onClick={toggleDisplayForm}
+              className="btn-hide-add-tab-form"
+            />
+          </Tooltip>
         </div>
       )}
     </div>
