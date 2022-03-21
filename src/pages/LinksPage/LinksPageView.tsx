@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { UserInfo } from 'firebase/auth';
+import { Skeleton } from 'antd';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../../interfaces';
 // Components
@@ -52,16 +53,27 @@ const LinksPage: FC<{
   <div className="links-page">
     {user ? (
       <>
-        {loadingTabs && 'loading tabs progress...'}
-        <Tabs
-          tabs={tabs}
-          selectedTab={selectedTab}
-          selectTabHandler={selectTabHandler}
-          deleteTabHandler={deleteTabHandler}
-          tabsFormSubmitHandler={tabsFormSubmitHandler}
-        />
-        {loadingColumns && 'loading columns progress...'}
-        {tabs.length && selectedTab ? (
+        <Skeleton
+          loading={loadingTabs}
+          active
+          round
+          className="tabs-skeleton"
+          paragraph={false}
+        >
+          <Tabs
+            tabs={tabs}
+            selectedTab={selectedTab}
+            selectTabHandler={selectTabHandler}
+            deleteTabHandler={deleteTabHandler}
+            tabsFormSubmitHandler={tabsFormSubmitHandler}
+          />
+        </Skeleton>
+        <Skeleton
+          loading={loadingColumns}
+          active
+          round
+          className="columns-skeleton"
+        >
           <Columns
             columns={columns}
             createColumnHandler={createColumnHandler}
@@ -70,7 +82,7 @@ const LinksPage: FC<{
             deleteCategoryHandler={deleteCategoryHandler}
             createLinkHandler={createLinkHandler}
           />
-        ) : null}
+        </Skeleton>
       </>
     ) : null}
   </div>
