@@ -1,4 +1,6 @@
 import React, { FC } from 'react';
+import { Button, Dropdown, Menu, PageHeader, Typography } from 'antd';
+import { AppstoreOutlined } from '@ant-design/icons';
 import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { ILink } from '../../interfaces';
@@ -8,6 +10,8 @@ import Login from '../Login';
 import Linky from '../Linky';
 // Styles
 import './Header.scss';
+
+const { Text } = Typography;
 
 const googleLinks: ILink[] = [
   {
@@ -33,26 +37,43 @@ const googleLinks: ILink[] = [
   },
 ];
 
+const googleLinksMenu = (
+  <Menu>
+    {googleLinks.map((l) => (
+      <Menu.Item key={l.id}>
+        <Linky link={l} iconSize="x-small" />
+      </Menu.Item>
+    ))}
+  </Menu>
+);
+
+const GoogleLinksDropdownMenu = () => (
+  <Dropdown key="more" overlay={googleLinksMenu} placement="bottomRight">
+    <Button type="text" icon={<AppstoreOutlined />} />
+  </Dropdown>
+);
+
 const Header: FC<{
   user: UserInfo | null | undefined;
-}> = ({ user }) => (
-  <div className="header">
-    <div>
-      {user ? (
-        <div className="user-wrapper">
-          <span className="user-name">{user.displayName}</span>
-          <SignOut />
-        </div>
-      ) : (
-        <Login />
-      )}
-    </div>
-    <div>
-      {googleLinks.map((l) => (
-        <Linky link={l} colored key={l.id} iconSize="x-small" />
-      ))}
-    </div>
-  </div>
-);
+}> = ({ user }) => {
+  return (
+    <PageHeader
+      className="site-page-header"
+      extra={[
+        <GoogleLinksDropdownMenu key="more" />,
+        user ? (
+          [
+            <Text className="user-name" key="user-name">
+              {user.displayName}
+            </Text>,
+            <SignOut key="sign-out" />,
+          ]
+        ) : (
+          <Login key="login" />
+        ),
+      ]}
+    />
+  );
+};
 
 export default Header;

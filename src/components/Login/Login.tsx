@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-
+import { Button } from 'antd';
+// Firebase
 import firebase from '../../firebase';
 
 const Login: FC = () => (
-  <button type="button" onClick={firebase.signInWithGoogle} className="login">
+  <Button className="login" onClick={firebase.signInWithGoogle} type="primary">
     Login with Google
-  </button>
+  </Button>
 );
 
 export default Login;

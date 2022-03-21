@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
-
+import { Button } from 'antd';
+// Firebase
 import firebase from '../../firebase';
 
 const SignOut: FC = () => (
-  <button type="button" className="sign-out" onClick={firebase.signOut}>
+  <Button className="sign-out" onClick={firebase.signOut}>
     Sign Out
-  </button>
+  </Button>
 );
 
 export default SignOut;
