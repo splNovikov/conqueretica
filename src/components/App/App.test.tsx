@@ -1,9 +1,16 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { shallow } from 'enzyme';
 
 import App from './App';
 
-it('App is rendering', () => {
-  const wrapper = shallow(<App />);
-  expect(wrapper.hasClass('app')).toEqual(true);
+describe('App Component', () => {
+  it('App is rendering', () => {
+    const wrapper = shallow(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+    );
+    expect(wrapper.exists()).toEqual(true);
+  });
 });

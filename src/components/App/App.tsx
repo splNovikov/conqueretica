@@ -20,7 +20,7 @@ const App = () => {
     <div className="app">
       <Header user={user} />
       <Menu selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/" icon={<HomeOutlined />}>
+        <Menu.Item key="/links" icon={<HomeOutlined />}>
           <Link to="/">Home</Link>
         </Menu.Item>
         <Menu.Item key="/dashboard" icon={<DashboardOutlined />}>
