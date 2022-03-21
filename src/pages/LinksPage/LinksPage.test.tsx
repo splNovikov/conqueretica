@@ -48,7 +48,6 @@ describe('LinksPage component', () => {
     wrapper = mount(<LinksPage />);
   });
 
-  // todo: add tests no user - no tabs, no columns, no Add Tab, no Add Column
   it('No user - no Tabs', () => {
     jest
       .spyOn(authHooks, 'useAuthState')
@@ -74,7 +73,9 @@ describe('LinksPage component', () => {
       .mockImplementation(() => [[], true, undefined]);
 
     wrapper = mount(<LinksPage />);
-    expect(wrapper.text()).toContain('loading tabs progress...');
+
+    const skeleton = wrapper.find('.tabs-skeleton');
+    expect(skeleton.exists()).toBe(true);
 
     const tabsEl = wrapper.find('.tab');
     expect(tabsEl.length).toBe(0);
