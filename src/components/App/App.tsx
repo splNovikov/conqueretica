@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu } from 'antd';
+import { HomeOutlined, DashboardOutlined } from '@ant-design/icons';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 // Firebase
@@ -12,16 +14,20 @@ import Header from '../Header';
 
 const App = () => {
   const [user] = useAuthState(firebase.auth);
+  const location = useLocation();
 
   return (
     <div className="app">
       <Header user={user} />
-      <br />
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="dashboard">Dashboard</Link>
-      </nav>
-      <br />
+      <Menu selectedKeys={[location.pathname]} mode="horizontal">
+        <Menu.Item key="/" icon={<HomeOutlined />}>
+          <Link to="/">Home</Link>
+        </Menu.Item>
+        <Menu.Item key="/dashboard" icon={<DashboardOutlined />}>
+          <Link to="dashboard">Dashboard</Link>
+        </Menu.Item>
+      </Menu>
+
       <AppRoutes />
     </div>
   );
