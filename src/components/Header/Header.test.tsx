@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 // Components
 import Header from './Header';
 // Test Data
@@ -12,7 +12,7 @@ it('Header is rendering', () => {
 
 describe('User', () => {
   it('User is passed', () => {
-    const wrapper = shallow(<Header user={user} />);
+    const wrapper = mount(<Header user={user} />);
     expect(wrapper.text().includes('Pavel Novikov')).toBe(true);
   });
 

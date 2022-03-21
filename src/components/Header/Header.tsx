@@ -58,7 +58,7 @@ const Header: FC<{
 }> = ({ user }) => {
   return (
     <PageHeader
-      className="site-page-header"
+      className="header"
       extra={[
         <GoogleLinksDropdownMenu key="more" />,
         user ? (
