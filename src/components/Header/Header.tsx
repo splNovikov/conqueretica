@@ -1,6 +1,11 @@
 import React, { FC } from 'react';
-import { Button, Dropdown, Menu, PageHeader, Typography } from 'antd';
-import { AppstoreOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Layout, Menu, Typography } from 'antd';
+import {
+  AppstoreOutlined,
+  DashboardOutlined,
+  HomeOutlined,
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 import { UserInfo } from 'firebase/auth';
 // Interfaces
 import { ILink } from '../../interfaces';
@@ -12,6 +17,7 @@ import Linky from '../Linky';
 import './Header.scss';
 
 const { Text } = Typography;
+const { Header } = Layout;
 
 const googleLinks: ILink[] = [
   {
@@ -53,27 +59,40 @@ const GoogleLinksDropdownMenu = () => (
   </Dropdown>
 );
 
-const Header: FC<{
+const AppHeader: FC<{
   user: UserInfo | null | undefined;
-}> = ({ user }) => {
+  pathname: string;
+}> = ({ user, pathname }) => {
   return (
-    <PageHeader
-      className="header"
-      extra={[
-        <GoogleLinksDropdownMenu key="more" />,
-        user ? (
-          [
-            <Text className="user-name" key="user-name">
-              {user.displayName}
-            </Text>,
-            <SignOut key="sign-out" />,
-          ]
+    <Header className="header">
+      <div className="left-wrapper">
+        <Menu
+          selectedKeys={[pathname]}
+          mode="horizontal"
+          className="navigation"
+        >
+          <Menu.Item key="/links" icon={<HomeOutlined />}>
+            <Link to="/">Links</Link>
+          </Menu.Item>
+          <Menu.Item key="/dashboard" icon={<DashboardOutlined />}>
+            <Link to="dashboard">Dashboard</Link>
+          </Menu.Item>
+        </Menu>
+      </div>
+      <div className="right-wrapper">
+        <GoogleLinksDropdownMenu />
+        {user ? (
+          <>
+            <Text className="user-name">{user.displayName}</Text>
+            <SignOut key="sign-out" />
+          </>
         ) : (
           <Login key="login" />
-        ),
-      ]}
-    />
+        )}
+      </div>
+    </Header>
   );
 };
 
-export default Header;
+// todo: rename file?
+export default AppHeader;
