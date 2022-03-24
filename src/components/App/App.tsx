@@ -6,7 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from '../../firebase';
 // Components
 import AppRoutes from '../AppRoutes';
-import Header from '../Header';
+import AppHeader from '../AppHeader';
 // Styles
 import './App.scss';
 
@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <Layout className="app">
-      <Header user={user} pathname={location.pathname} />
+      <AppHeader user={user} pathname={location.pathname} />
       <Content>
         <AppRoutes />
       </Content>

@@ -1,0 +1,24 @@
+// node_modules/antd/lib/style/themes/default.less
+
+// -------- Color Names (do not use it directly in components!) -----------
+$white: #fff;
+$athens-grey: #f0f2f5;
+$claret: #951f40;
+
+// -------- Colors -----------
+// >>> Primary
+$primary-color: $claret;
+$primary-1: lighten($primary-color, 40%);
+$primary-2: lighten($primary-color, 32%);
+$primary-3: lighten($primary-color, 24%);
+$primary-4: lighten($primary-color, 16%);
+$primary-5: lighten($primary-color, 8%);
+$primary-6: $primary-color;
+$primary-7: darken($primary-color, 8%);
+
+// Layout
+$layout-body-background: $white;
+$layout-header-background: $white;
+$layout-header-height: 50px;
+$layout-header-padding: 0 50px;
+$layout-footer-background: $layout-body-background;
