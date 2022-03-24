@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
 // Interfaces
 import { ICategory, IColumn } from '../../interfaces';
 // Components
@@ -26,8 +26,7 @@ const Columns: FC<{
   createLinkHandler,
 }) => {
   return (
-    // "ant-row" class instead of Row component because Row component is failing tests
-    <div className="columns ant-row">
+    <Row className="columns">
       {columns.map((column: IColumn) => (
         <Column
           key={column.id}
@@ -43,7 +42,7 @@ const Columns: FC<{
           Create Column
         </button>
       </Col>
-    </div>
+    </Row>
   );
 };
 

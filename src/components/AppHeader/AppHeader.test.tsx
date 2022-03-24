@@ -18,7 +18,9 @@ describe('User', () => {
         <AppHeader user={user} pathname="/links" />
       </BrowserRouter>,
     );
-    expect(wrapper.text().includes('Pavel Novikov')).toBe(true);
+    const userNameEl = wrapper.find('span.user-name');
+
+    expect(userNameEl.text()).toBe('P');
   });
 
   it('User is not passed', () => {

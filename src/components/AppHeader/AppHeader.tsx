@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Dropdown, Layout, Menu, Typography } from 'antd';
+import { Avatar, Button, Dropdown, Layout, Menu } from 'antd';
 import {
   AppstoreOutlined,
   DashboardOutlined,
@@ -16,7 +16,6 @@ import Linky from '../Linky';
 // Styles
 import './AppHeader.scss';
 
-const { Text } = Typography;
 const { Header } = Layout;
 
 const googleLinks: ILink[] = [
@@ -54,8 +53,26 @@ const googleLinksMenu = (
 );
 
 const GoogleLinksDropdownMenu = () => (
-  <Dropdown key="more" overlay={googleLinksMenu} placement="bottomRight">
+  <Dropdown key="more" overlay={googleLinksMenu} placement="bottomRight" arrow>
     <Button type="text" icon={<AppstoreOutlined />} />
+  </Dropdown>
+);
+
+const userMenu = (
+  <Menu>
+    <Menu.Item key="sign-out">
+      <SignOut />
+    </Menu.Item>
+  </Menu>
+);
+
+const UserDropdownMenu: FC<{
+  user: UserInfo;
+}> = ({ user: { displayName } }) => (
+  <Dropdown key="user-menu" overlay={userMenu} placement="bottomRight" arrow>
+    <Avatar className="user-name" gap={1}>
+      {displayName?.charAt(0)}
+    </Avatar>
   </Dropdown>
 );
 
@@ -81,14 +98,7 @@ const AppHeader: FC<{
       </div>
       <div className="right-wrapper">
         <GoogleLinksDropdownMenu />
-        {user ? (
-          <>
-            <Text className="user-name">{user.displayName}</Text>
-            <SignOut key="sign-out" />
-          </>
-        ) : (
-          <Login key="login" />
-        )}
+        {user ? <UserDropdownMenu user={user} /> : <Login key="login" />}
       </div>
     </Header>
   );
