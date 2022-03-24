@@ -1,0 +1,16 @@
+@import '../theme.scss';
+
+.ant-layout {
+  background: $layout-body-background;
+
+  .ant-layout-header {
+    background: $layout-header-background;
+    line-height: $layout-header-height;
+    height: $layout-header-height;
+    padding: $layout-header-padding;
+  }
+
+  .ant-layout-footer {
+    background: $layout-footer-background;
+  }
+}

@@ -1,0 +1,12 @@
+.header.ant-layout-header {
+  display: flex;
+
+  .left-wrapper {
+    flex: 1 0 auto;
+  }
+
+  .right-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}
