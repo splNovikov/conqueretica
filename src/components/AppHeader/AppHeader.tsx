@@ -15,6 +15,7 @@ import Login from '../Login';
 import Linky from '../Linky';
 // Styles
 import './AppHeader.scss';
+import { acronym } from '../../utils';
 
 const { Header } = Layout;
 
@@ -71,7 +72,7 @@ const UserDropdownMenu: FC<{
 }> = ({ user: { displayName } }) => (
   <Dropdown key="user-menu" overlay={userMenu} placement="bottomRight" arrow>
     <Avatar className="user-name" gap={1}>
-      {displayName?.charAt(0)}
+      {acronym(displayName)}
     </Avatar>
   </Dropdown>
 );

@@ -20,7 +20,7 @@ describe('User', () => {
     );
     const userNameEl = wrapper.find('span.user-name');
 
-    expect(userNameEl.text()).toBe('P');
+    expect(userNameEl.text()).toBe('PN');
   });
 
   it('User is not passed', () => {
