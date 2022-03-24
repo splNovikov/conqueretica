@@ -1,5 +1,8 @@
+@import "../../styles/theme.scss";
+
 .header.ant-layout-header {
   display: flex;
+  box-shadow: 0 2px 8px $app-header-shadow;
 
   .left-wrapper {
     flex: 1 0 auto;
@@ -8,5 +11,9 @@
   .right-wrapper {
     display: flex;
     align-items: center;
+  }
+
+  .navigation {
+    border: none;
   }
 }

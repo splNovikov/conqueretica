@@ -16,9 +16,15 @@ $primary-5: lighten($primary-color, 8%);
 $primary-6: $primary-color;
 $primary-7: darken($primary-color, 8%);
 
-// Layout
+// Ant Layout
 $layout-body-background: $white;
 $layout-header-background: $white;
 $layout-header-height: 50px;
 $layout-header-padding: 0 50px;
 $layout-footer-background: $layout-body-background;
+
+// App
+$app-content-wrapper-padding: 20px 0 0;
+
+// AppHeader
+$app-header-shadow: $athens-grey;

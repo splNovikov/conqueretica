@@ -19,7 +19,7 @@ const App = () => {
   return (
     <Layout className="app">
       <AppHeader user={user} pathname={location.pathname} />
-      <Content>
+      <Content className="content-wrapper">
         <AppRoutes />
       </Content>
       <Footer>footer</Footer>

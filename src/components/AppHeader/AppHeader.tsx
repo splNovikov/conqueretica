@@ -74,7 +74,7 @@ const AppHeader: FC<{
           <Menu.Item key="/links" icon={<HomeOutlined />}>
             <Link to="/">Links</Link>
           </Menu.Item>
-          <Menu.Item key="/dashboard" icon={<DashboardOutlined />}>
+          <Menu.Item key="/dashboard" icon={<DashboardOutlined />} disabled>
             <Link to="dashboard">Dashboard</Link>
           </Menu.Item>
         </Menu>
