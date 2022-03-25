@@ -1,21 +1,7 @@
+@import '../../styles/theme.scss';
+
 .links-page {
-
-  .columns-skeleton,
-  .tabs-skeleton {
-    .ant-skeleton-title,
-    .ant-skeleton-paragraph > li {
-      height: 10px;
-    }
-  }
-
-  .columns-skeleton  {
-    .ant-skeleton-paragraph > li,
-    .ant-skeleton-paragraph > li:last-child:not(:first-child):not(:nth-child(2)) {
-      width: 33% !important;
-    }
-
-    .ant-skeleton-paragraph > li + li {
-      margin-top: 10px;
-    }
+  &-columns-wrapper {
+    padding: $links-page-columns-wrapper-padding;
   }
 }

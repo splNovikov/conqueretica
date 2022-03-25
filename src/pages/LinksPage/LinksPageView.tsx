@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { UserInfo } from 'firebase/auth';
-import { Skeleton } from 'antd';
+import { Layout, Skeleton } from 'antd';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../../interfaces';
 // Components
@@ -8,6 +8,8 @@ import Tabs from '../../components/Tabs';
 import Columns from '../../components/Columns';
 // Styles
 import './LinksPageView.scss';
+
+const { Content } = Layout;
 
 const LinksPage: FC<{
   // user
@@ -49,25 +51,25 @@ const LinksPage: FC<{
   categoryFormSubmitHandler,
   deleteCategoryHandler,
   createLinkHandler,
-}) => (
-  <div className="links-page">
-    {user ? (
-      <>
-        <Skeleton
-          loading={loadingTabs}
-          active
-          round
-          className="tabs-skeleton"
-          paragraph={false}
-        >
-          <Tabs
-            tabs={tabs}
-            selectedTab={selectedTab}
-            selectTabHandler={selectTabHandler}
-            deleteTabHandler={deleteTabHandler}
-            tabsFormSubmitHandler={tabsFormSubmitHandler}
-          />
-        </Skeleton>
+}) =>
+  user ? (
+    <Layout className="links-page">
+      <Skeleton
+        loading={loadingTabs}
+        active
+        round
+        className="tabs-skeleton"
+        paragraph={false}
+      >
+        <Tabs
+          tabs={tabs}
+          selectedTab={selectedTab}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          tabsFormSubmitHandler={tabsFormSubmitHandler}
+        />
+      </Skeleton>
+      <Content className="links-page-columns-wrapper">
         <Skeleton
           loading={loadingColumns}
           active
@@ -83,9 +85,8 @@ const LinksPage: FC<{
             createLinkHandler={createLinkHandler}
           />
         </Skeleton>
-      </>
-    ) : null}
-  </div>
-);
+      </Content>
+    </Layout>
+  ) : null;
 
 export default LinksPage;

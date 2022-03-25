@@ -1,7 +1,7 @@
 @import "../../styles/theme.scss";
 
 .app {
-  .content-wrapper {
+  &-content-wrapper {
     padding: $app-content-wrapper-padding;
   }
 }
