@@ -11,6 +11,8 @@ import LinksPageView from './LinksPageView';
 import { getNextSibling, httpErrorHandler } from '../../utils';
 
 // todo: after release multi-rerendering!!!
+// todo: login and logout should be there as well
+// todo: when logout - we should reset everything - selectedTab
 const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);
   const [selectedTab, selectTab] = useState({} as ITab);
@@ -52,7 +54,7 @@ const LinksPage = () => {
 
   // region Columns
   let qColumns;
-  if (selectedTab?.id) {
+  if (user && selectedTab?.id) {
     qColumns = firebase.getColumnsQuery(selectedTab);
   }
   const [columns = [], loadingColumns, columnsError] =
