@@ -24,7 +24,7 @@ const Tab: FC<{
         'tab-selected': selectedTab.id === tab.id,
       })}
     >
-      <span role="none" onClick={handleTabSelect}>
+      <span role="none" onClick={handleTabSelect} className="tab-title">
         {tab.title}
       </span>
       <Tooltip title={`Delete Tab "${tab.title}"`}>

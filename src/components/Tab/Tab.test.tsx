@@ -28,9 +28,8 @@ describe('Tab', () => {
       />,
     );
 
-    const tabTitleEl = wrapper.find('.tab-title');
-    expect(tabTitleEl.text()).toBe('test_tab_1');
-    expect(tabTitleEl.hasClass('selected')).toBeTruthy();
+    expect(wrapper.text()).toBe('test_tab_1');
+    expect(wrapper.hasClass('tab-selected')).toBeTruthy();
 
     const deleteEl = wrapper.find('.btn-delete-tab');
     expect(deleteEl.exists()).toBeTruthy();

@@ -42,8 +42,8 @@ describe('Tabs', () => {
         tabsFormSubmitHandler={() => 1}
       />,
     );
-    const tabsEl = wrapper.find('.tab-title');
-    expect(tabsEl.at(0).hasClass('selected')).toBeTruthy();
+    const tabsEl = wrapper.find('.tab');
+    expect(tabsEl.at(0).hasClass('tab-selected')).toBe(true);
   });
 
   describe('Tabs Add Form', () => {
