@@ -1,13 +1,23 @@
+@import "../../styles/theme";
+
 .tab {
+  position: relative;
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  // todo: move paddings to variables? check ant design
-  padding: 0.2em;
+  padding: $tab-padding;
 
-  .tab-title {
-    &.selected {
-      text-decoration: underline;
+  &-selected {
+    color: $tab-highlight-color;
+
+    &::after {
+      position: absolute;
+      right: $tab-padding-horizontal;
+      bottom: 0;
+      left: $tab-padding-horizontal;
+      border-bottom: $tab-active-border-width solid $tab-highlight-color;
+      transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      content: "";
     }
   }
 }

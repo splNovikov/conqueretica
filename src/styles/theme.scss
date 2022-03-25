@@ -32,3 +32,12 @@ $app-header-user-bg: $primary-color;
 
 // Links Page
 $links-page-columns-wrapper-padding: 20px 0 0;
+
+// Tabs
+$tabs-padding: 0 20px;
+
+// Tab
+$tab-padding-horizontal: 20px;
+$tab-padding: 5px $tab-padding-horizontal;
+$tab-active-border-width: 2px;
+$tab-highlight-color: $primary-color;

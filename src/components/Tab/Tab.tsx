@@ -19,14 +19,12 @@ const Tab: FC<{
   const handleTabDelete = () => deleteTabHandler(tab);
 
   return (
-    <div className="tab">
-      <span
-        role="none"
-        onClick={handleTabSelect}
-        className={classNames('tab-title', {
-          selected: selectedTab.id === tab.id,
-        })}
-      >
+    <div
+      className={classNames('tab', {
+        'tab-selected': selectedTab.id === tab.id,
+      })}
+    >
+      <span role="none" onClick={handleTabSelect}>
         {tab.title}
       </span>
       <Tooltip title={`Delete Tab "${tab.title}"`}>
