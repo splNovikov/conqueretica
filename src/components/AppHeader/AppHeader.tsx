@@ -106,7 +106,7 @@ const AppHeader: FC<{
       <div className="right-wrapper">
         <GoogleLinksDropdownMenu />
         <Skeleton
-          loading={!authInProgress}
+          loading={authInProgress}
           active
           round
           paragraph={false}
