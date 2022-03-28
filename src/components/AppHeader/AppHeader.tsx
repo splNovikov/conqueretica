@@ -54,7 +54,12 @@ const googleLinksMenu = (
 );
 
 const GoogleLinksDropdownMenu = () => (
-  <Dropdown key="more" overlay={googleLinksMenu} placement="bottomRight" arrow>
+  <Dropdown
+    key="google-links"
+    overlay={googleLinksMenu}
+    placement="bottomRight"
+    arrow
+  >
     <Button type="text" icon={<AppstoreOutlined />} />
   </Dropdown>
 );

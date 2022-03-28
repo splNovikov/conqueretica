@@ -24,6 +24,8 @@ const Tabs: FC<{
 }) => {
   const [displayForm, setDisplayForm] = useState(false);
   const toggleDisplayForm = () => setDisplayForm(!displayForm);
+  // todo: edit handler
+  const editTabHandler = selectTabHandler;
 
   return (
     <div className="tabs">
@@ -33,6 +35,7 @@ const Tabs: FC<{
             tab={tab}
             selectedTab={selectedTab}
             selectTabHandler={selectTabHandler}
+            editTabHandler={editTabHandler}
             deleteTabHandler={deleteTabHandler}
             key={tab.id}
           />

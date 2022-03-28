@@ -1,22 +1,46 @@
 import React, { FC } from 'react';
-import { Button, Tooltip } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
+import { MoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 // Interfaces
 import { ITab } from '../../interfaces';
 // Styles
 import './Tab.scss';
 
+const actionsMenu = (
+  tab: ITab,
+  handleTabDelete: () => void,
+  handleTabEdit: () => void,
+) => (
+  <Menu>
+    <Menu.Item key="edit" onClick={handleTabEdit} className="edit-tab">
+      <EditOutlined /> Edit Tab
+    </Menu.Item>
+    <Menu.Item key="delete" onClick={handleTabDelete} className="delete-tab">
+      <DeleteOutlined /> Delete Tab
+    </Menu.Item>
+  </Menu>
+);
+
 const Tab: FC<{
   tab: ITab;
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
   deleteTabHandler: (val: ITab) => void;
-}> = ({ tab, selectedTab, selectTabHandler, deleteTabHandler }) => {
+  editTabHandler: (val: ITab) => void;
+}> = ({
+  tab,
+  selectedTab,
+  selectTabHandler,
+  deleteTabHandler,
+  editTabHandler,
+}) => {
   const handleTabSelect = () =>
     tab.id !== selectedTab.id && selectTabHandler(tab);
 
   const handleTabDelete = () => deleteTabHandler(tab);
+
+  const handleTabEdit = () => editTabHandler(tab);
 
   return (
     <div
@@ -27,15 +51,18 @@ const Tab: FC<{
       <span role="none" onClick={handleTabSelect} className="tab-title">
         {tab.title}
       </span>
-      <Tooltip title={`Delete Tab "${tab.title}"`}>
+      <Dropdown
+        key="actions"
+        overlay={actionsMenu(tab, handleTabDelete, handleTabEdit)}
+        placement="bottomRight"
+        arrow
+      >
         <Button
-          size="small"
-          type="link"
-          icon={<DeleteOutlined />}
-          onClick={handleTabDelete}
-          className="btn-delete-tab"
+          type="text"
+          icon={<MoreOutlined />}
+          className="actions-menu-trigger"
         />
-      </Tooltip>
+      </Dropdown>
     </div>
   );
 };
