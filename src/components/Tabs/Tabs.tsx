@@ -13,6 +13,7 @@ const Tabs: FC<{
   tabs: ITab[];
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
+  updateTabHandler: (tab: ITab, newTitle: string) => void;
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
 }> = ({
@@ -20,12 +21,11 @@ const Tabs: FC<{
   selectedTab,
   selectTabHandler,
   deleteTabHandler,
+  updateTabHandler,
   tabsFormSubmitHandler,
 }) => {
   const [displayForm, setDisplayForm] = useState(false);
   const toggleDisplayForm = () => setDisplayForm(!displayForm);
-  const updateTabHandler = (tab: ITab, newTitle: string) =>
-    alert(`updated tab ${tab.title} to ${newTitle}`);
 
   return (
     <div className="tabs">

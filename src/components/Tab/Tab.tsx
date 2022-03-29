@@ -41,7 +41,7 @@ const Tab: FC<{
   const handleTabSelect = () =>
     tab.id !== selectedTab.id && selectTabHandler(tab);
 
-  const handleTabDelete = () => deleteTabHandler(tab);
+  const handleTabDelete = async () => deleteTabHandler(tab);
 
   const handleTabUpdate = async (v: string) => {
     disableEditMode();
