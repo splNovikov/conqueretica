@@ -1,7 +1,7 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import * as firebaseColumns from './columns';
-import { addTab, deleteTab } from './tabs';
+import { addTab, deleteTab, updateTab } from './tabs';
 // Interfaces
 import { ITab } from '../interfaces';
 // Test Data
@@ -78,6 +78,59 @@ describe('Firebase Tabs Test', () => {
       const res = await addTab('title', {} as UserInfo);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title | User');
+    });
+  });
+
+  describe('Update Tab', () => {
+    const origUpdDoc = firestore.updateDoc;
+
+    beforeEach(() => {
+      firestore.updateDoc = jest.fn();
+    });
+
+    afterEach(() => {
+      firestore.updateDoc = origUpdDoc;
+    });
+
+    it('Should Update Tab', async () => {
+      const title = 'new_title';
+      const res = await updateTab(tabs[0], title);
+
+      const newTab = { ...tabs[0], title };
+
+      expect(firestore.updateDoc).toHaveBeenCalledWith(tabDoc, newTab);
+      expect(res?.title).toBe(title);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.updateDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const title = 'new_title';
+      const res = await updateTab(tabs[0], title);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when title not passed', async () => {
+      const res = await updateTab(tabs[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('Tab Title is absent');
+    });
+
+    it('Should Return Null when tab not passed', async () => {
+      const res = await updateTab(undefined, 'str');
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
+    });
+
+    it('Should Return Null when tab passed as empty object', async () => {
+      const res = await updateTab({}, 'str');
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
     });
   });
 

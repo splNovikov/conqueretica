@@ -41,8 +41,8 @@ const LinksPage = () => {
     }
   };
 
-  const handleTabUpdate = (tab: ITab, newTitle: string) =>
-    alert(`updated tab ${tab.title} to ${newTitle}`);
+  const handleTabUpdate = async (tab: ITab, newTitle: string) =>
+    firebase.updateTab(tab, newTitle);
 
   const deleteTab = async (tab: ITab) => {
     await firebase.deleteTab(tab);

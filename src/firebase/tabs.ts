@@ -10,6 +10,7 @@ import {
   QuerySnapshot,
   serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
@@ -44,6 +45,34 @@ export const addTab = async (
     await setDoc(tabDoc, tab);
 
     return tab;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const updateTab = async (
+  tab: ITab,
+  newTitle: string,
+): Promise<ITab | null> => {
+  if (!tab?.id) {
+    defaultErrorHandler('No Tab');
+    return null;
+  }
+
+  if (!newTitle) {
+    defaultErrorHandler('Tab Title is absent');
+    return null;
+  }
+
+  const updatedTab = { ...tab, title: newTitle };
+  try {
+    const tabsRef = collection(firebase.firestoreDB, 'tabs');
+    const tabDoc = doc(tabsRef, tab.id);
+
+    await updateDoc(tabDoc, updatedTab);
+
+    return updatedTab;
   } catch (e) {
     httpErrorHandler(e);
     return null;

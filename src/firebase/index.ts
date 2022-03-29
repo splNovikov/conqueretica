@@ -5,7 +5,7 @@ import { getFirestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
-import { getTabsQuery, addTab, deleteTab } from './tabs';
+import { getTabsQuery, addTab, updateTab, deleteTab } from './tabs';
 import {
   getColumnsQuery,
   addColumn,
@@ -26,6 +26,7 @@ export default {
 
   getTabsQuery,
   addTab,
+  updateTab,
   deleteTab,
 
   getColumnsQuery,
