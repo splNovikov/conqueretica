@@ -24,7 +24,7 @@ const Tabs: FC<{
 }) => {
   const [displayForm, setDisplayForm] = useState(false);
   const toggleDisplayForm = () => setDisplayForm(!displayForm);
-  const editTabHandler = (tab: ITab, newTitle: string) =>
+  const updateTabHandler = (tab: ITab, newTitle: string) =>
     alert(`updated tab ${tab.title} to ${newTitle}`);
 
   return (
@@ -35,7 +35,7 @@ const Tabs: FC<{
             tab={tab}
             selectedTab={selectedTab}
             selectTabHandler={selectTabHandler}
-            editTabHandler={editTabHandler}
+            updateTabHandler={updateTabHandler}
             deleteTabHandler={deleteTabHandler}
             key={tab.id}
           />

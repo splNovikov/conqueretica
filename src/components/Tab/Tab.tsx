@@ -28,14 +28,14 @@ const Tab: FC<{
   tab: ITab;
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
+  updateTabHandler: (val: ITab, newTitle: string) => void;
   deleteTabHandler: (val: ITab) => void;
-  editTabHandler: (val: ITab, newTitle: string) => void;
 }> = ({
   tab,
   selectedTab,
   selectTabHandler,
+  updateTabHandler,
   deleteTabHandler,
-  editTabHandler,
 }) => {
   const [editMode, setEditMode] = useState(false);
   const handleTabSelect = () =>
@@ -43,11 +43,11 @@ const Tab: FC<{
 
   const handleTabDelete = () => deleteTabHandler(tab);
 
-  const handleTabEdit = async (v: string) => {
+  const handleTabUpdate = async (v: string) => {
     disableEditMode();
 
     if (tab.title !== v) {
-      await editTabHandler(tab, v);
+      await updateTabHandler(tab, v);
     }
   };
 
@@ -84,7 +84,7 @@ const Tab: FC<{
         <SingleInputForm
           value={tab.title}
           placeholder="Enter Tab Name"
-          formSubmitHandler={handleTabEdit}
+          formSubmitHandler={handleTabUpdate}
           abortHandler={disableEditMode}
         />
       )}

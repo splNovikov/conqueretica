@@ -13,7 +13,7 @@ describe('Tab', () => {
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
         deleteTabHandler={() => 1}
-        editTabHandler={() => 1}
+        updateTabHandler={() => 1}
       />,
     );
     expect(wrapper.hasClass('tab')).toEqual(true);
@@ -26,7 +26,7 @@ describe('Tab', () => {
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
         deleteTabHandler={() => 1}
-        editTabHandler={() => 1}
+        updateTabHandler={() => 1}
       />,
     );
 
@@ -46,7 +46,7 @@ describe('Tab', () => {
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
         deleteTabHandler={handleDeleteTab}
-        editTabHandler={() => 1}
+        updateTabHandler={() => 1}
       />,
     );
 
@@ -65,7 +65,7 @@ describe('Tab', () => {
         selectedTab={tabs[1]}
         selectTabHandler={handleSelectTab}
         deleteTabHandler={() => 1}
-        editTabHandler={() => 1}
+        updateTabHandler={() => 1}
       />,
     );
 
@@ -84,7 +84,7 @@ describe('Tab', () => {
         selectedTab={tabs[0]}
         selectTabHandler={handleSelectTab}
         deleteTabHandler={() => 1}
-        editTabHandler={() => 1}
+        updateTabHandler={() => 1}
       />,
     );
 
