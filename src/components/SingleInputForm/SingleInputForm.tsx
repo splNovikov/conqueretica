@@ -42,16 +42,22 @@ const SingleInputForm: FC<{
           },
         ]}
       >
-        <Input placeholder={placeholder} autoFocus />
+        <Input placeholder={placeholder} autoFocus size="small" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" icon={<CheckOutlined />} />
+        <Button
+          type="primary"
+          htmlType="submit"
+          icon={<CheckOutlined />}
+          size="small"
+        />
       </Form.Item>
       <Form.Item>
         <Button
           htmlType="button"
           icon={<CloseOutlined />}
           onClick={abortHandler}
+          size="small"
         />
       </Form.Item>
     </Form>
