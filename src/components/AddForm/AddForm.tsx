@@ -32,4 +32,5 @@ const AddForm: FC<{
   );
 };
 
+// todo: this form is obsolete. Let's remove it once all usages eliminated
 export default AddForm;

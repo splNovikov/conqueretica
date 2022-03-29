@@ -1,4 +1,4 @@
-@import "../../styles/theme";
+@import '../../styles/theme';
 
 .tab {
   position: relative;
@@ -14,10 +14,10 @@
     left: $tab-padding-horizontal;
     border-bottom: $tab-active-border-width solid transparent;
     transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    content: "";
+    content: '';
   }
 
-  &:hover,
+  &:not(.edit-mode):hover,
   &-selected {
     color: $tab-highlight-color;
 

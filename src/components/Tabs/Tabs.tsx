@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Button, Tooltip } from 'antd';
-import { CloseCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ITab } from '../../interfaces';
 // Components
 import Tab from '../Tab';
-import AddForm from '../AddForm';
+import SingleInputForm from '../SingleInputForm';
 // Styles
 import './Tabs.scss';
 
@@ -24,8 +24,8 @@ const Tabs: FC<{
 }) => {
   const [displayForm, setDisplayForm] = useState(false);
   const toggleDisplayForm = () => setDisplayForm(!displayForm);
-  // todo: edit handler
-  const editTabHandler = selectTabHandler;
+  const editTabHandler = (tab: ITab, newTitle: string) =>
+    alert(`updated tab ${tab.title} to ${newTitle}`);
 
   return (
     <div className="tabs">
@@ -52,19 +52,11 @@ const Tabs: FC<{
         </Tooltip>
       ) : (
         <div className="add-tab-form-wrapper">
-          <AddForm
+          <SingleInputForm
+            placeholder="Enter Tab Name"
             formSubmitHandler={tabsFormSubmitHandler}
-            placeholder="create a new tab"
+            abortHandler={toggleDisplayForm}
           />
-          <Tooltip title="Cancel Adding New Tab">
-            <Button
-              shape="circle"
-              size="small"
-              icon={<CloseCircleOutlined />}
-              onClick={toggleDisplayForm}
-              className="btn-hide-add-tab-form"
-            />
-          </Tooltip>
         </div>
       )}
     </div>

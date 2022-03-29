@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Button, Dropdown, Menu } from 'antd';
 import { MoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 // Interfaces
 import { ITab } from '../../interfaces';
+// Components
+import SingleInputForm from '../SingleInputForm';
 // Styles
 import './Tab.scss';
 
@@ -27,7 +29,7 @@ const Tab: FC<{
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
   deleteTabHandler: (val: ITab) => void;
-  editTabHandler: (val: ITab) => void;
+  editTabHandler: (val: ITab, newTitle: string) => void;
 }> = ({
   tab,
   selectedTab,
@@ -35,34 +37,57 @@ const Tab: FC<{
   deleteTabHandler,
   editTabHandler,
 }) => {
+  const [editMode, setEditMode] = useState(false);
   const handleTabSelect = () =>
     tab.id !== selectedTab.id && selectTabHandler(tab);
 
   const handleTabDelete = () => deleteTabHandler(tab);
 
-  const handleTabEdit = () => editTabHandler(tab);
+  const handleTabEdit = async (v: string) => {
+    disableEditMode();
+
+    if (tab.title !== v) {
+      await editTabHandler(tab, v);
+    }
+  };
+
+  const enableEditMode = () => setEditMode(true);
+
+  const disableEditMode = () => setEditMode(false);
 
   return (
     <div
       className={classNames('tab', {
         'tab-selected': selectedTab.id === tab.id,
+        'edit-mode': editMode,
       })}
     >
-      <span role="none" onClick={handleTabSelect} className="tab-title">
-        {tab.title}
-      </span>
-      <Dropdown
-        key="actions"
-        overlay={actionsMenu(tab, handleTabDelete, handleTabEdit)}
-        placement="bottomRight"
-        arrow
-      >
-        <Button
-          type="text"
-          icon={<MoreOutlined />}
-          className="actions-menu-trigger"
+      {!editMode ? (
+        <>
+          <span role="none" onClick={handleTabSelect} className="tab-title">
+            {tab.title}
+          </span>
+          <Dropdown
+            key="actions"
+            overlay={actionsMenu(tab, handleTabDelete, enableEditMode)}
+            placement="bottomRight"
+            arrow
+          >
+            <Button
+              type="text"
+              icon={<MoreOutlined />}
+              className="actions-menu-trigger"
+            />
+          </Dropdown>
+        </>
+      ) : (
+        <SingleInputForm
+          value={tab.title}
+          placeholder="Enter Tab Name"
+          formSubmitHandler={handleTabEdit}
+          abortHandler={disableEditMode}
         />
-      </Dropdown>
+      )}
     </div>
   );
 };
