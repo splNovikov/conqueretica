@@ -42,7 +42,12 @@ const SingleInputForm: FC<{
           },
         ]}
       >
-        <Input placeholder={placeholder} autoFocus size="small" />
+        <Input
+          placeholder={placeholder}
+          autoFocus
+          size="small"
+          onBlur={abortHandler}
+        />
       </Form.Item>
       <Form.Item>
         <Button
