@@ -41,6 +41,13 @@ const googleLinks: ILink[] = [
     // @ts-ignore
     createdAt: '',
   },
+  {
+    id: '4',
+    href: 'https://drive.google.com/drive',
+    title: 'Drive',
+    // @ts-ignore
+    createdAt: '',
+  },
 ];
 
 const googleLinksMenu = (

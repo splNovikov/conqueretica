@@ -1,6 +1,6 @@
 import { ILink } from '../interfaces';
 
-const links: { sheets: ILink; docs: ILink; slides: ILink } = {
+const links: { sheets: ILink; docs: ILink; slides: ILink; drive: ILink } = {
   sheets: {
     id: 'link-1',
     title: 'sheets link',
@@ -19,6 +19,13 @@ const links: { sheets: ILink; docs: ILink; slides: ILink } = {
     id: 'link-3',
     title: 'Slides',
     href: 'https://docs.google.com/presentation/d/1iNOo-CbfSXOChIigg9Sx9txnTqUIaxoM7mnquANaS84',
+    // @ts-ignore
+    createdAt: '2021-10-01T13:13:45.115Z',
+  },
+  drive: {
+    id: 'link-4',
+    title: 'Drive',
+    href: 'https://drive.google.com/drive/folders/0B-b8U__BG5ioNlRaUEkxb1plX3M?resourcekey=0-KAadas5EXVcKS2wl7eKMtQ',
     // @ts-ignore
     createdAt: '2021-10-01T13:13:45.115Z',
   },

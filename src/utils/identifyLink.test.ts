@@ -26,6 +26,11 @@ describe('Identify Links', () => {
     expect(res).toBe('slides');
   });
 
+  it('Should return "drive"', () => {
+    const res = identifyLink(links.drive.href);
+    expect(res).toBe('drive');
+  });
+
   it('Should return "undefined"', () => {
     const res = identifyLink('http://test.com/blablabla');
     expect(res).toBe('');
