@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown, Menu, Modal } from 'antd';
 import { MoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 // Interfaces
@@ -38,10 +38,27 @@ const Tab: FC<{
   deleteTabHandler,
 }) => {
   const [editMode, setEditMode] = useState(false);
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+
+  const showConfirmModal = () => {
+    setIsConfirmModalVisible(true);
+  };
+
+  const handleConfirmModalOk = () => {
+    setIsConfirmModalVisible(false);
+    deleteTabHandler(tab);
+  };
+
+  const handleConfirmModalCancel = () => {
+    setIsConfirmModalVisible(false);
+  };
+
+  const handleTabDelete = () => {
+    showConfirmModal();
+  };
+
   const handleTabSelect = () =>
     tab.id !== selectedTab.id && selectTabHandler(tab);
-
-  const handleTabDelete = async () => deleteTabHandler(tab);
 
   const handleTabUpdate = async (v: string) => {
     disableEditMode();
@@ -62,6 +79,18 @@ const Tab: FC<{
         'edit-mode': editMode,
       })}
     >
+      <Modal
+        title="Delete Tab Confirmation"
+        visible={isConfirmModalVisible}
+        onOk={handleConfirmModalOk}
+        onCancel={handleConfirmModalCancel}
+      >
+        <p>Are you sure you want to delete tab &quot;{tab.title}&quot;?</p>
+        <p>
+          This action will permanently delete all this tab contains and cannot
+          be undone
+        </p>
+      </Modal>
       {!editMode ? (
         <>
           <span role="none" onClick={handleTabSelect} className="tab-title">
