@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 
 import SingleInputForm from './SingleInputForm';
 
@@ -8,12 +9,14 @@ const buttonLocator = 'button[type="submit"]';
 
 // todo add tests for placeholder="placeholder"
 describe('SingleInputForm', () => {
+  const handleSubmit = jest.fn();
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
     wrapper = mount(
       <SingleInputForm
-        formSubmitHandler={() => 1}
+        value=""
+        formSubmitHandler={handleSubmit}
         placeholder="placeholder"
         abortHandler={() => 1}
       />,
@@ -49,40 +52,48 @@ describe('SingleInputForm', () => {
   });
 
   describe('SingleInputForm Element Events', () => {
-    it('Input is able to receive text', () => {
+    it('Input is able to receive text', async () => {
       const inputEl = wrapper.find(inputLocator);
 
-      inputEl.simulate('change', { target: { value: 'somenew' } });
+      await act(async () => {
+        inputEl.simulate('change', { target: { value: 'somenew' } });
+      });
+
+      wrapper.update();
 
       expect(wrapper.find(inputLocator).prop('value')).toEqual('somenew');
     });
   });
 
   describe('SingleInputForm Handlers', () => {
-    const handleSubmit = jest.fn();
-
-    it('Input should be cleared after submit', () => {
+    it('Input should be cleared after submit', async () => {
       const inputEl = wrapper.find(inputLocator);
 
-      inputEl.simulate('change', { target: { value: 'somenew' } });
+      await act(async () => {
+        inputEl.simulate('change', { target: { value: 'somenew' } });
+      });
 
-      expect(wrapper.find(inputLocator).prop('value')).toEqual('somenew');
+      await act(async () => {
+        wrapper.simulate('submit');
+      });
 
-      wrapper.simulate('submit');
+      wrapper.update();
 
       expect(wrapper.find(inputLocator).prop('value')).toEqual('');
     });
 
-    it('Input handler should be triggered', () => {
+    it('Submit handler should be triggered', async () => {
       const inputEl = wrapper.find(inputLocator);
 
-      inputEl.simulate('change', { target: { value: 'somenew' } });
+      await act(async () => {
+        inputEl.simulate('change', { target: { value: 'somenew' } });
+      });
 
-      expect(wrapper.find(inputLocator).prop('value')).toEqual('somenew');
+      await act(async () => {
+        wrapper.simulate('submit');
+      });
 
-      wrapper.simulate('submit');
-
-      expect(handleSubmit).toHaveBeenCalled();
+      expect(handleSubmit).toHaveBeenCalledWith('somenew');
     });
   });
 });

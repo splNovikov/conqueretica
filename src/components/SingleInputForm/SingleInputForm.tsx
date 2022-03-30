@@ -37,8 +37,8 @@ const SingleInputForm: FC<{
             message: 'Can not be empty',
           },
           {
-            min: 3,
-            message: 'Min 3 characters',
+            min: 2,
+            message: 'Min 2 characters',
           },
         ]}
       >
