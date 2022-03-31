@@ -57,8 +57,11 @@ const Tab: FC<{
     showConfirmModal();
   };
 
-  const handleTabSelect = () =>
-    tab.id !== selectedTab.id && selectTabHandler(tab);
+  const handleTabSelect = () => {
+    if (tab.id !== selectedTab.id) {
+      selectTabHandler(tab);
+    }
+  };
 
   const handleTabUpdate = async (v: string) => {
     disableEditMode();
@@ -66,6 +69,10 @@ const Tab: FC<{
     if (tab.title !== v) {
       await updateTabHandler(tab, v);
     }
+  };
+
+  const handleCancelEdit = () => {
+    disableEditMode();
   };
 
   const enableEditMode = () => setEditMode(true);
@@ -114,7 +121,7 @@ const Tab: FC<{
           value={tab.title}
           placeholder="Enter Tab Name"
           formSubmitHandler={handleTabUpdate}
-          abortHandler={disableEditMode}
+          abortHandler={handleCancelEdit}
         />
       )}
     </div>

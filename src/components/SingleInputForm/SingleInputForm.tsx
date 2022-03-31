@@ -21,6 +21,14 @@ const SingleInputForm: FC<{
     await formSubmitHandler(v);
   };
 
+  const handleBlur = () => {
+    abortHandler();
+  };
+
+  const handleCancelEdit = () => {
+    abortHandler();
+  };
+
   return (
     <Form
       form={form}
@@ -37,8 +45,8 @@ const SingleInputForm: FC<{
             message: 'Can not be empty',
           },
           {
-            min: 2,
-            message: 'Min 2 characters',
+            max: 15,
+            message: 'Max 15 characters',
           },
         ]}
       >
@@ -46,7 +54,7 @@ const SingleInputForm: FC<{
           placeholder={placeholder}
           autoFocus
           size="small"
-          onBlur={abortHandler}
+          onBlur={handleBlur}
         />
       </Form.Item>
       <Form.Item>
@@ -61,7 +69,7 @@ const SingleInputForm: FC<{
         <Button
           htmlType="button"
           icon={<CloseOutlined />}
-          onClick={abortHandler}
+          onClick={handleCancelEdit}
           size="small"
         />
       </Form.Item>
