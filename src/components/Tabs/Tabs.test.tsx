@@ -12,6 +12,7 @@ describe('Tabs', () => {
         tabs={tabs}
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
+        updateTabHandler={() => 1}
         deleteTabHandler={() => 1}
         tabsFormSubmitHandler={() => 1}
       />,
