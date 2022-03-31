@@ -36,6 +36,7 @@ const SingleInputForm: FC<{
       layout="inline"
       onFinish={handleFormSubmit}
       className="single-input-form"
+      onBlur={handleBlur}
     >
       <Form.Item
         name="singleInput"
@@ -50,12 +51,7 @@ const SingleInputForm: FC<{
           },
         ]}
       >
-        <Input
-          placeholder={placeholder}
-          autoFocus
-          size="small"
-          onBlur={handleBlur}
-        />
+        <Input placeholder={placeholder} autoFocus size="small" />
       </Form.Item>
       <Form.Item>
         <Button
