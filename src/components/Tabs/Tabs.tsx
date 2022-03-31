@@ -9,6 +9,7 @@ import SingleInputForm from '../SingleInputForm';
 // Styles
 import './Tabs.scss';
 
+// todo: tabs are multi-rerendering. memo didn't help
 const Tabs: FC<{
   tabs: ITab[];
   selectedTab: ITab;
