@@ -1,6 +1,10 @@
-@import "../../styles/theme.scss";
+@import '../../styles/theme';
 
 .app {
+  &.ant-layout {
+    min-height: $app-height;
+  }
+
   &-content-wrapper {
     padding: $app-content-wrapper-padding;
   }
