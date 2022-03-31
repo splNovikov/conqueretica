@@ -15,10 +15,16 @@ const SingleInputForm: FC<{
 
   const handleFormSubmit = async () => {
     const v = form.getFieldValue('singleInput');
+    const trimmedV = v.trim();
+
+    if (!trimmedV.length) {
+      form.setFieldsValue({ singleInput: '' });
+      return;
+    }
 
     form.resetFields();
 
-    await formSubmitHandler(v);
+    await formSubmitHandler(trimmedV);
   };
 
   const handleBlur = () => {
