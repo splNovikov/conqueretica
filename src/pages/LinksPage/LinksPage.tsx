@@ -41,6 +41,9 @@ const LinksPage = () => {
     }
   };
 
+  const handleTabUpdate = async (tab: ITab, newTitle: string) =>
+    firebase.updateTab(tab, newTitle);
+
   const deleteTab = async (tab: ITab) => {
     await firebase.deleteTab(tab);
 
@@ -95,6 +98,7 @@ const LinksPage = () => {
       loadingTabs={loadingTabs}
       selectedTab={selectedTab}
       selectTabHandler={selectTab}
+      updateTabHandler={handleTabUpdate}
       deleteTabHandler={deleteTab}
       tabsFormSubmitHandler={addTab}
       // columns

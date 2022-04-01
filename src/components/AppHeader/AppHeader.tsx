@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Avatar, Button, Dropdown, Layout, Menu } from 'antd';
+import { Avatar, Button, Dropdown, Layout, Menu, Skeleton } from 'antd';
 import {
   AppstoreOutlined,
   DashboardOutlined,
@@ -41,6 +41,13 @@ const googleLinks: ILink[] = [
     // @ts-ignore
     createdAt: '',
   },
+  {
+    id: '4',
+    href: 'https://drive.google.com/drive',
+    title: 'Drive',
+    // @ts-ignore
+    createdAt: '',
+  },
 ];
 
 const googleLinksMenu = (
@@ -54,7 +61,12 @@ const googleLinksMenu = (
 );
 
 const GoogleLinksDropdownMenu = () => (
-  <Dropdown key="more" overlay={googleLinksMenu} placement="bottomRight" arrow>
+  <Dropdown
+    key="google-links"
+    overlay={googleLinksMenu}
+    placement="bottomRight"
+    arrow
+  >
     <Button type="text" icon={<AppstoreOutlined />} />
   </Dropdown>
 );
@@ -79,8 +91,9 @@ const UserDropdownMenu: FC<{
 
 const AppHeader: FC<{
   user: UserInfo | null | undefined;
+  authInProgress: boolean;
   pathname: string;
-}> = ({ user, pathname }) => {
+}> = ({ user, authInProgress, pathname }) => {
   return (
     <Header className="header">
       <div className="left-wrapper">
@@ -99,7 +112,15 @@ const AppHeader: FC<{
       </div>
       <div className="right-wrapper">
         <GoogleLinksDropdownMenu />
-        {user ? <UserDropdownMenu user={user} /> : <Login key="login" />}
+        <Skeleton
+          loading={authInProgress}
+          active
+          round
+          paragraph={false}
+          className="user-skeleton"
+        >
+          {user ? <UserDropdownMenu user={user} /> : <Login key="login" />}
+        </Skeleton>
       </div>
     </Header>
   );

@@ -9,16 +9,20 @@ describe('Get Acronym', () => {
     expect(acronym('Pavel')).toBe('P');
   });
 
+  it('Negative case - get acronym - text is empty string', () => {
+    expect(acronym('')).toBe('');
+  });
+
   it('Negative case - get acronym - text is undefined', () => {
     // @ts-ignore
-    expect(acronym()).toBe('');
+    expect(acronym()).toBe('n/a');
   });
 
   it('Negative case - get acronym - text is null', () => {
-    expect(acronym(null)).toBe('');
+    expect(acronym(null)).toBe('n/a');
   });
 
   it('Negative case - get acronym - text is Object', () => {
-    expect(acronym({})).toBe('');
+    expect(acronym({})).toBe('n/a');
   });
 });

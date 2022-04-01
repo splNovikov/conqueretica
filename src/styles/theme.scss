@@ -23,12 +23,18 @@ $layout-header-height: 50px;
 $layout-header-padding: 0 50px;
 $layout-footer-background: $layout-body-background;
 
+// Ant Skeleton
+$skeleton-paragraph-li-height: 10px;
+$skeleton-paragraph-li-margin-top: 10px;
+
 // App
+$app-height: 100vh;
 $app-content-wrapper-padding: 20px 0 0;
 
 // AppHeader
 $app-header-shadow: $athens-grey;
 $app-header-user-bg: $primary-color;
+$app-header-user-skeleton-min-width: 100px;
 
 // Links Page
 $links-page-columns-wrapper-padding: 20px 0 0;
@@ -41,3 +47,11 @@ $tab-padding-horizontal: 20px;
 $tab-padding: 5px $tab-padding-horizontal;
 $tab-active-border-width: 2px;
 $tab-highlight-color: $primary-color;
+
+// Single Input Form
+$single-input-form-item-margin: 0 2px 0 0;
+
+// Column
+$column-header-border-radius: 10px 10px 0 0;
+$column-header-border-color: $primary-color;
+$column-header-padding: 5px;

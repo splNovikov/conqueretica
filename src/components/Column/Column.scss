@@ -1,6 +1,11 @@
+@import '../../styles/theme';
+
 .column {
   .column-header {
     display: flex;
     justify-content: flex-end;
+    border-radius: $column-header-border-radius;
+    border-top: 1px solid $column-header-border-color;
+    padding: $column-header-padding;
   }
 }

@@ -41,6 +41,7 @@ const Column: FC<{
   const handleConfirmModalCancel = () => {
     setIsConfirmModalVisible(false);
   };
+
   const handleColumnDelete = () => {
     showConfirmModal();
   };

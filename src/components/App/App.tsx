@@ -13,12 +13,16 @@ import './App.scss';
 const { Content, Footer } = Layout;
 
 const App = () => {
-  const [user] = useAuthState(firebase.auth);
+  const [user, loading] = useAuthState(firebase.auth);
   const location = useLocation();
 
   return (
     <Layout className="app">
-      <AppHeader user={user} pathname={location.pathname} />
+      <AppHeader
+        user={user}
+        authInProgress={loading}
+        pathname={location.pathname}
+      />
       <Content className="app-content-wrapper">
         <AppRoutes />
       </Content>

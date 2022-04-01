@@ -1,5 +1,3 @@
-
-
 .google-icon {
   background-image: url('./icons_set_2022_03.png');
   background-repeat: no-repeat;
@@ -20,6 +18,10 @@
     background-position: 0 -4554px;
   }
 
+  &.drive {
+    background-position: 0 -5932px;
+  }
+
   &.small {
     height: 64px;
     width: 64px;
@@ -34,6 +36,10 @@
 
     &.slides {
       background-position: 0 -2277px;
+    }
+
+    &.drive {
+      background-position: 0 -2966px;
     }
   }
 
@@ -52,6 +58,10 @@
     &.slides {
       background-position: 0 -1138px;
     }
+
+    &.drive {
+      background-position: 0 -1483px;
+    }
   }
 
   &.xx-small {
@@ -68,6 +78,10 @@
 
     &.slides {
       background-position: 0 -569px;
+    }
+
+    &.drive {
+      background-position: 0 -741px;
     }
   }
 }

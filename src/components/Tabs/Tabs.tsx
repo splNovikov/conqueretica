@@ -1,18 +1,20 @@
 import React, { FC, useState } from 'react';
 import { Button, Tooltip } from 'antd';
-import { CloseCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ITab } from '../../interfaces';
 // Components
 import Tab from '../Tab';
-import AddForm from '../AddForm';
+import SingleInputForm from '../SingleInputForm';
 // Styles
 import './Tabs.scss';
 
+// todo: tabs are multi-rerendering. memo didn't help
 const Tabs: FC<{
   tabs: ITab[];
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
+  updateTabHandler: (tab: ITab, newTitle: string) => void;
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
 }> = ({
@@ -20,6 +22,7 @@ const Tabs: FC<{
   selectedTab,
   selectTabHandler,
   deleteTabHandler,
+  updateTabHandler,
   tabsFormSubmitHandler,
 }) => {
   const [displayForm, setDisplayForm] = useState(false);
@@ -33,6 +36,7 @@ const Tabs: FC<{
             tab={tab}
             selectedTab={selectedTab}
             selectTabHandler={selectTabHandler}
+            updateTabHandler={updateTabHandler}
             deleteTabHandler={deleteTabHandler}
             key={tab.id}
           />
@@ -49,19 +53,11 @@ const Tabs: FC<{
         </Tooltip>
       ) : (
         <div className="add-tab-form-wrapper">
-          <AddForm
+          <SingleInputForm
+            placeholder="Enter Tab Name"
             formSubmitHandler={tabsFormSubmitHandler}
-            placeholder="create a new tab"
+            abortHandler={toggleDisplayForm}
           />
-          <Tooltip title="Cancel Adding New Tab">
-            <Button
-              shape="circle"
-              size="small"
-              icon={<CloseCircleOutlined />}
-              onClick={toggleDisplayForm}
-              className="btn-hide-add-tab-form"
-            />
-          </Tooltip>
         </div>
       )}
     </div>

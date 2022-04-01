@@ -12,6 +12,7 @@ describe('Tabs', () => {
         tabs={tabs}
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
+        updateTabHandler={() => 1}
         deleteTabHandler={() => 1}
         tabsFormSubmitHandler={() => 1}
       />,
@@ -24,6 +25,7 @@ describe('Tabs', () => {
         tabs={tabs}
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
+        updateTabHandler={() => 1}
         deleteTabHandler={() => 1}
         tabsFormSubmitHandler={() => 1}
       />,
@@ -38,6 +40,7 @@ describe('Tabs', () => {
         tabs={tabs}
         selectedTab={tabs[0]}
         selectTabHandler={() => 1}
+        updateTabHandler={() => 1}
         deleteTabHandler={() => 1}
         tabsFormSubmitHandler={() => 1}
       />,
@@ -53,6 +56,7 @@ describe('Tabs', () => {
           tabs={tabs}
           selectedTab={tabs[0]}
           selectTabHandler={() => 1}
+          updateTabHandler={() => 1}
           deleteTabHandler={() => 1}
           tabsFormSubmitHandler={() => 1}
         />,
@@ -67,6 +71,7 @@ describe('Tabs', () => {
           tabs={tabs}
           selectedTab={tabs[0]}
           selectTabHandler={() => 1}
+          updateTabHandler={() => 1}
           deleteTabHandler={() => 1}
           tabsFormSubmitHandler={() => 1}
         />,
@@ -81,6 +86,7 @@ describe('Tabs', () => {
           tabs={tabs}
           selectedTab={tabs[0]}
           selectTabHandler={() => 1}
+          updateTabHandler={() => 1}
           deleteTabHandler={() => 1}
           tabsFormSubmitHandler={() => 1}
         />,
@@ -91,31 +97,6 @@ describe('Tabs', () => {
 
       const addFormEl = wrapper.find('.add-tab-form-wrapper');
       expect(addFormEl.exists()).toBeTruthy();
-
-      const closeFormEl = wrapper.find('.btn-hide-add-tab-form');
-      expect(closeFormEl.exists()).toBeTruthy();
-    });
-
-    it('Tabs Add Form should be displayed OFF after clicking on trigger', () => {
-      const wrapper = mount(
-        <Tabs
-          tabs={tabs}
-          selectedTab={tabs[0]}
-          selectTabHandler={() => 1}
-          deleteTabHandler={() => 1}
-          tabsFormSubmitHandler={() => 1}
-        />,
-      );
-      const addTabTriggerEl = wrapper.find('button.btn-show-add-tab-form');
-      addTabTriggerEl.simulate('click');
-
-      const closeFormEl = wrapper.find('button.btn-hide-add-tab-form');
-      closeFormEl.simulate('click');
-
-      const addTabTriggerEl2 = wrapper.find('button.btn-show-add-tab-form');
-      const closeFormEl2 = wrapper.find('button.btn-hide-add-tab-form');
-      expect(addTabTriggerEl2.exists()).toBeTruthy();
-      expect(closeFormEl2.exists()).toBeFalsy();
     });
   });
 });

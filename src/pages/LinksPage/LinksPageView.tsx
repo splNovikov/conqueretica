@@ -19,6 +19,7 @@ const LinksPage: FC<{
   loadingTabs: boolean;
   selectedTab: ITab;
   selectTabHandler: (val: ITab) => void;
+  updateTabHandler: (val: ITab, newTitle: string) => void;
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
   // columns
@@ -42,6 +43,7 @@ const LinksPage: FC<{
   loadingTabs,
   selectedTab,
   selectTabHandler,
+  updateTabHandler,
   deleteTabHandler,
   tabsFormSubmitHandler,
   columns,
@@ -65,6 +67,7 @@ const LinksPage: FC<{
           tabs={tabs}
           selectedTab={selectedTab}
           selectTabHandler={selectTabHandler}
+          updateTabHandler={updateTabHandler}
           deleteTabHandler={deleteTabHandler}
           tabsFormSubmitHandler={tabsFormSubmitHandler}
         />

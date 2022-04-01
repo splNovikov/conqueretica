@@ -1,4 +1,4 @@
-@import "../../styles/theme.scss";
+@import '../../styles/theme';
 
 .header.ant-layout-header {
   display: flex;
@@ -19,5 +19,9 @@
 
   .navigation {
     border: none;
+  }
+
+  .user-skeleton {
+    min-width: $app-header-user-skeleton-min-width;
   }
 }

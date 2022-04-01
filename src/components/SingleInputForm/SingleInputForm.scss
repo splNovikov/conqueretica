@@ -1,0 +1,7 @@
+@import '../../styles/theme';
+
+.single-input-form {
+  &.ant-form-inline .ant-form-item {
+    margin: $single-input-form-item-margin;
+  }
+}

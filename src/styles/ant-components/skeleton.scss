@@ -1,0 +1,13 @@
+@import '../theme.scss';
+
+.ant-skeleton {
+  &-content &-title,
+  &-content &-paragraph > li {
+    height: $skeleton-paragraph-li-height;
+    margin-top: $skeleton-paragraph-li-margin-top;
+
+    + li {
+      margin-top: $skeleton-paragraph-li-margin-top;
+    }
+  }
+}
