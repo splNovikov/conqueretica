@@ -7,10 +7,11 @@ import firebase from '../../firebase';
 // Components
 import AppRoutes from '../AppRoutes';
 import AppHeader from '../AppHeader';
+import AppFooter from '../../AppFooter';
 // Styles
 import './App.scss';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const App = () => {
   const [user, loading] = useAuthState(firebase.auth);
@@ -26,7 +27,7 @@ const App = () => {
       <Content className="app-content-wrapper">
         <AppRoutes />
       </Content>
-      <Footer>footer</Footer>
+      <AppFooter />
     </Layout>
   );
 };

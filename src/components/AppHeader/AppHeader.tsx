@@ -95,7 +95,7 @@ const AppHeader: FC<{
   pathname: string;
 }> = ({ user, authInProgress, pathname }) => {
   return (
-    <Header className="header">
+    <Header className="app-header">
       <div className="left-wrapper">
         <Menu
           selectedKeys={[pathname]}

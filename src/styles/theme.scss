@@ -16,25 +16,34 @@ $primary-5: lighten($primary-color, 8%);
 $primary-6: $primary-color;
 $primary-7: darken($primary-color, 8%);
 
+// === Ant Components
+
 // Ant Layout
 $layout-body-background: $white;
 $layout-header-background: $white;
-$layout-header-height: 50px;
-$layout-header-padding: 0 50px;
 $layout-footer-background: $layout-body-background;
 
 // Ant Skeleton
 $skeleton-paragraph-li-height: 10px;
 $skeleton-paragraph-li-margin-top: 10px;
 
+// === Custom Components
+
 // App
 $app-height: 100vh;
 $app-content-wrapper-padding: 20px 0 0;
 
 // AppHeader
-$app-header-shadow: $athens-grey;
+$app-header-shadow: 0 2px 8px $athens-grey;
+$app-header-height: 50px;
+$app-header-padding: 0 50px;
 $app-header-user-bg: $primary-color;
 $app-header-user-skeleton-min-width: 100px;
+
+// AppFooter
+$app-footer-shadow: 0 -2px 8px $athens-grey;
+$app-footer-height: 50px;
+$app-footer-padding: 0 50px;
 
 // Links Page
 $links-page-columns-wrapper-padding: 20px 0 0;

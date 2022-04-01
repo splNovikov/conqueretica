@@ -1,8 +1,14 @@
 @import '../../styles/theme';
 
-.header.ant-layout-header {
+.app-header {
   display: flex;
-  box-shadow: 0 2px 8px $app-header-shadow;
+  box-shadow: $app-header-shadow;
+
+  &.ant-layout-header {
+    line-height: $app-header-height;
+    height: $app-header-height;
+    padding: $app-header-padding;
+  }
 
   .user-name {
     background: $app-header-user-bg;

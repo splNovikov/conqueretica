@@ -1,0 +1,12 @@
+@import '../styles/theme';
+
+.app-footer {
+  box-shadow: $app-footer-shadow;
+  text-align: center;
+
+  &.ant-layout-footer {
+    line-height: $app-footer-height;
+    height: $app-footer-height;
+    padding: $app-footer-padding;
+  }
+}
