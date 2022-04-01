@@ -11,7 +11,7 @@ it('Header is rendering', () => {
   const wrapper = shallow(
     <AppHeader user={user} pathname="/links" authInProgress={false} />,
   );
-  expect(wrapper.hasClass('header')).toEqual(true);
+  expect(wrapper.hasClass('app-header')).toEqual(true);
 });
 
 describe('User', () => {
@@ -25,6 +25,7 @@ describe('User', () => {
       );
     });
 
+    // @ts-ignore
     const userNameEl = wrapper.find('span.user-name');
     expect(userNameEl.text()).toBe('PN');
   });
@@ -39,6 +40,7 @@ describe('User', () => {
       );
     });
 
+    // @ts-ignore
     const userWrapper = wrapper.find('.user-wrapper');
     expect(userWrapper.exists()).toBe(false);
   });
