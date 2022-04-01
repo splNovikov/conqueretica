@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, KeyboardEvent } from 'react';
 import { Form, Input, Button } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 // Styles
@@ -35,6 +35,12 @@ const SingleInputForm: FC<{
     abortHandler();
   };
 
+  const handleKeyboardEvent = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Escape') {
+      abortHandler();
+    }
+  };
+
   return (
     <Form
       form={form}
@@ -57,7 +63,12 @@ const SingleInputForm: FC<{
           },
         ]}
       >
-        <Input placeholder={placeholder} autoFocus size="small" />
+        <Input
+          placeholder={placeholder}
+          autoFocus
+          size="small"
+          onKeyDown={handleKeyboardEvent}
+        />
       </Form.Item>
       <Form.Item>
         <Button
