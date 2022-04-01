@@ -26,7 +26,7 @@ const Columns: FC<{
   createLinkHandler,
 }) => {
   return (
-    <Row className="columns">
+    <Row className="columns" gutter={[16, 16]}>
       {columns.map((column: IColumn) => (
         <Column
           key={column.id}
@@ -37,7 +37,7 @@ const Columns: FC<{
           createLinkHandler={createLinkHandler}
         />
       ))}
-      <Col span={6} className="create-column-wrapper">
+      <Col span={3} className="create-column-wrapper">
         <button type="button" onClick={createColumnHandler}>
           Create Column
         </button>

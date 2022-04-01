@@ -56,7 +56,7 @@ const Column: FC<{
     createLinkHandler(title, href, category, column);
 
   return (
-    <Col span={6} className="column">
+    <Col span={3} className="column">
       <Modal
         title="Delete Column Confirmation"
         visible={isConfirmModalVisible}
