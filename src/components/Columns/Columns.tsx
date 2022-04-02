@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Col, Row } from 'antd';
+import { Button, Col, Row, Tooltip } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ICategory, IColumn } from '../../interfaces';
 // Components
@@ -38,9 +39,15 @@ const Columns: FC<{
         />
       ))}
       <Col span={3} className="create-column-wrapper">
-        <button type="button" onClick={createColumnHandler}>
-          Create Column
-        </button>
+        <Tooltip title="Add New Column">
+          <Button
+            shape="circle"
+            size="small"
+            icon={<PlusCircleOutlined />}
+            onClick={createColumnHandler}
+            className="columns-btn-add-new-column"
+          />
+        </Tooltip>
       </Col>
     </Row>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 // Components
 import Columns from './Columns';
 // Test Data
@@ -21,7 +21,7 @@ describe('Columns', () => {
   });
 
   it('Columns Component is rendering necessary elements', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Columns
         columns={columns}
         createColumnHandler={() => 1}
@@ -35,13 +35,13 @@ describe('Columns', () => {
     const categoriesEl = wrapper.find('Column');
     expect(categoriesEl.length).toBe(2);
 
-    const buttonEl = wrapper.find('button');
+    const buttonEl = wrapper.find('button.columns-btn-add-new-column');
     expect(buttonEl.exists()).toBeTruthy();
   });
 
-  it('Columns Component "Delete Column" button should invoke "Delete Column" method', () => {
+  it('Columns Component "Create Column" button should invoke "Create Column" method', () => {
     const handleCreateColumn = jest.fn();
-    const wrapper = shallow(
+    const wrapper = mount(
       <Columns
         columns={columns}
         createColumnHandler={handleCreateColumn}
@@ -52,7 +52,7 @@ describe('Columns', () => {
       />,
     );
 
-    const buttonEl = wrapper.find('button');
+    const buttonEl = wrapper.find('button.columns-btn-add-new-column');
 
     buttonEl.simulate('click');
 
