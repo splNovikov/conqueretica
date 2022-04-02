@@ -51,7 +51,7 @@ const AddLinkForm: FC<{
       className="toggle-form-display-button"
       onClick={toggleDisplayForm}
     >
-      Add New Link
+      new link
     </Button>
   ) : (
     <form onSubmit={handleFormSubmit} className="add-link-form">
@@ -83,4 +83,5 @@ const AddLinkForm: FC<{
   );
 };
 
+// todo: this component is obsolete too
 export default AddLinkForm;
