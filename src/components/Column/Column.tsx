@@ -64,6 +64,10 @@ const Column: FC<{
         onCancel={handleConfirmModalCancel}
       >
         <p>Are you sure you want to delete this column?</p>
+        <p>
+          This action will permanently delete all this columns contains and
+          cannot be undone
+        </p>
       </Modal>
 
       <div className="column-header">
