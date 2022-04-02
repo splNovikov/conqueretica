@@ -31,7 +31,6 @@ $skeleton-paragraph-li-margin-top: 10px;
 
 // App
 $app-height: 100vh;
-$app-content-wrapper-padding: 20px 0 0;
 
 // AppHeader
 $app-header-shadow: 0 2px 8px $athens-grey;
@@ -46,10 +45,10 @@ $app-footer-height: 50px;
 $app-footer-padding: 0 50px;
 
 // Links Page
-$links-page-columns-wrapper-padding: 20px 0 0;
+$links-page-padding: 0 20px;
 
 // Tabs
-$tabs-padding: 0 20px;
+$tabs-padding: 20px 0 0;
 
 // Tab
 $tab-padding-horizontal: 20px;
@@ -59,6 +58,9 @@ $tab-highlight-color: $primary-color;
 
 // Single Input Form
 $single-input-form-item-margin: 0 2px 0 0;
+
+// Columns
+$columns-padding: 20px 0 0;
 
 // Column
 $column-header-border-radius: 10px 10px 0 0;

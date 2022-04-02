@@ -5,6 +5,8 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 import { ICategory, IColumn } from '../../interfaces';
 // Components
 import Column from '../Column';
+// Styles
+import './Columns.scss';
 
 const Columns: FC<{
   columns: IColumn[];

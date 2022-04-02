@@ -1,7 +1,8 @@
 @import '../../styles/theme.scss';
 
 .links-page {
+  padding: $links-page-padding;
+
   &-columns-wrapper {
-    padding: $links-page-columns-wrapper-padding;
   }
 }
