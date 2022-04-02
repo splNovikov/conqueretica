@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, MoreOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu, Typography } from 'antd';
 // Interfaces
 import { ICategory, ILink } from '../../interfaces';
 // Components
@@ -7,6 +8,20 @@ import Linky from '../Linky';
 import AddLinkForm from '../AddLinkForm';
 // Styles
 import './Category.scss';
+
+const { Text } = Typography;
+
+const actionsMenu = (category: ICategory, handleCategoryDelete: () => void) => (
+  <Menu>
+    <Menu.Item
+      key="delete"
+      onClick={handleCategoryDelete}
+      className="delete-category"
+    >
+      <DeleteOutlined /> Delete Category
+    </Menu.Item>
+  </Menu>
+);
 
 const Category: FC<{
   category: ICategory;
@@ -21,11 +36,21 @@ const Category: FC<{
   return (
     <div className="category">
       <div className="category-header">
-        <span className="category-title">{category.title}</span>
-        <DeleteOutlined
-          className="delete-category-icon"
-          onClick={handleCategoryDelete}
-        />
+        <Text className="category-title" strong>
+          {category.title}
+        </Text>
+        <Dropdown
+          key="actions"
+          overlay={actionsMenu(category, handleCategoryDelete)}
+          placement="bottomRight"
+          arrow
+        >
+          <Button
+            type="text"
+            icon={<MoreOutlined />}
+            className="category-actions-menu-trigger"
+          />
+        </Dropdown>
       </div>
       <div className="category-links">
         {category.links.map((l: ILink) => (

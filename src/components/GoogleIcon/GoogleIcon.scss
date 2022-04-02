@@ -3,6 +3,7 @@
   background-repeat: no-repeat;
   height: 128px;
   width: 128px;
+  min-width: 128px;
   display: inline-flex;
   background-size: 100% auto;
 
@@ -25,6 +26,7 @@
   &.small {
     height: 64px;
     width: 64px;
+    min-width: 64px;
 
     &.docs {
       background-position: 0 -1242px;
@@ -46,6 +48,7 @@
   &.x-small {
     height: 32px;
     width: 32px;
+    min-width: 32px;
 
     &.docs {
       background-position: 0 -621px;
@@ -67,6 +70,7 @@
   &.xx-small {
     height: 16px;
     width: 16px;
+    min-width: 16px;
 
     &.docs {
       background-position: 0 -310px;
