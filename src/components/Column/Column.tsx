@@ -11,6 +11,7 @@ import './Column.scss';
 
 const Column: FC<{
   column: IColumn;
+  span: number;
   deleteColumnHandler: (val: IColumn) => void;
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
   deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
@@ -22,6 +23,7 @@ const Column: FC<{
   ) => void;
 }> = ({
   column,
+  span,
   deleteColumnHandler,
   categoryFormSubmitHandler,
   deleteCategoryHandler,
@@ -56,7 +58,7 @@ const Column: FC<{
     createLinkHandler(title, href, category, column);
 
   return (
-    <Col span={3} className="column">
+    <Col span={span} className="column">
       <Modal
         title="Delete Column Confirmation"
         visible={isConfirmModalVisible}

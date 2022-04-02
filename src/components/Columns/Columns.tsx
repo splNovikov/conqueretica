@@ -32,6 +32,7 @@ const Columns: FC<{
     <Row className="columns" gutter={[16, 16]}>
       {columns.map((column: IColumn) => (
         <Column
+          span={4}
           key={column.id}
           column={column}
           deleteColumnHandler={deleteColumnHandler}
