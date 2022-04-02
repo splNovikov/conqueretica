@@ -6,11 +6,7 @@ import './AppFooter.scss';
 const { Footer } = Layout;
 
 const AppFooter = () => {
-  return (
-    <Footer className="app-footer">
-      &copy; {process.env.REACT_APP_WEBSITE_NAME}
-    </Footer>
-  );
+  return <Footer className="app-footer">&copy; Conqueretica</Footer>;
 };
 
 export default AppFooter;
