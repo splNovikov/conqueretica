@@ -1,8 +1,11 @@
 @import '../../styles/theme.scss';
 
 .links-page {
-  padding: $links-page-padding;
+  &-content-wrapper {
+    padding: $links-page-content-wrapper-padding;
+  }
 
   &-columns-wrapper {
+    padding: $links-page-columns-wrapper-padding;
   }
 }

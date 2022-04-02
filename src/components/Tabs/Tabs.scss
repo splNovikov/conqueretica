@@ -1,11 +1,10 @@
-@import "../../styles/theme";
+@import '../../styles/theme';
 
 .tabs {
   display: flex;
   align-items: center;
-  padding: $tabs-padding;
 
-  .add-tab-form-wrapper{
+  .add-tab-form-wrapper {
     display: flex;
     align-items: center;
   }

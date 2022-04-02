@@ -56,38 +56,43 @@ const LinksPage: FC<{
 }) =>
   user ? (
     <Layout className="links-page">
-      <Skeleton
-        loading={loadingTabs}
-        active
-        round
-        className="tabs-skeleton"
-        paragraph={false}
-      >
-        <Tabs
-          tabs={tabs}
-          selectedTab={selectedTab}
-          selectTabHandler={selectTabHandler}
-          updateTabHandler={updateTabHandler}
-          deleteTabHandler={deleteTabHandler}
-          tabsFormSubmitHandler={tabsFormSubmitHandler}
-        />
-      </Skeleton>
-      <Content className="links-page-columns-wrapper">
+      {/* here possibly can be added sub-navigation */}
+
+      <Content className="links-page-content-wrapper">
         <Skeleton
-          loading={loadingColumns}
+          loading={loadingTabs}
           active
           round
-          className="columns-skeleton"
+          className="tabs-skeleton"
+          paragraph={false}
         >
-          <Columns
-            columns={columns}
-            createColumnHandler={createColumnHandler}
-            deleteColumnHandler={deleteColumnHandler}
-            categoryFormSubmitHandler={categoryFormSubmitHandler}
-            deleteCategoryHandler={deleteCategoryHandler}
-            createLinkHandler={createLinkHandler}
+          <Tabs
+            tabs={tabs}
+            selectedTab={selectedTab}
+            selectTabHandler={selectTabHandler}
+            updateTabHandler={updateTabHandler}
+            deleteTabHandler={deleteTabHandler}
+            tabsFormSubmitHandler={tabsFormSubmitHandler}
           />
         </Skeleton>
+
+        <Content className="links-page-columns-wrapper">
+          <Skeleton
+            loading={loadingColumns}
+            active
+            round
+            className="columns-skeleton"
+          >
+            <Columns
+              columns={columns}
+              createColumnHandler={createColumnHandler}
+              deleteColumnHandler={deleteColumnHandler}
+              categoryFormSubmitHandler={categoryFormSubmitHandler}
+              deleteCategoryHandler={deleteCategoryHandler}
+              createLinkHandler={createLinkHandler}
+            />
+          </Skeleton>
+        </Content>
       </Content>
     </Layout>
   ) : null;
