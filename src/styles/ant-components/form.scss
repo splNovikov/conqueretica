@@ -1,0 +1,11 @@
+@import '../theme';
+
+.ant-form {
+  &-inline {
+    flex-wrap: nowrap;
+  }
+
+  &-inline &-item {
+    flex: auto;
+  }
+}

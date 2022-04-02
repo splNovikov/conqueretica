@@ -5,7 +5,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { ICategory, IColumn } from '../../interfaces';
 // Components
 import Category from '../Category';
-import AddForm from '../AddForm';
+import SingleInputForm from '../SingleInputForm';
 // Styles
 import './Column.scss';
 
@@ -93,9 +93,10 @@ const Column: FC<{
           />
         ))}
       </div>
-      <AddForm
+      <SingleInputForm
+        placeholder="Create a new category"
         formSubmitHandler={handleCategoryFormSubmit}
-        placeholder="create a new category"
+        abortHandler={() => 1}
       />
     </Col>
   );
