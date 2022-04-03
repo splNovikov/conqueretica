@@ -1,11 +1,15 @@
-import React, { FC } from 'react';
-import { DeleteOutlined, MoreOutlined } from '@ant-design/icons';
+import React, { FC, useState } from 'react';
+import {
+  DeleteOutlined,
+  MoreOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons';
 import { Button, Dropdown, Menu, Typography } from 'antd';
 // Interfaces
 import { ICategory, ILink } from '../../interfaces';
 // Components
 import Linky from '../Linky';
-import AddLinkForm from '../AddLinkForm';
+import LinkForm from '../LinkForm';
 // Styles
 import './Category.scss';
 
@@ -28,6 +32,16 @@ const Category: FC<{
   deleteCategoryHandler: (val: ICategory) => void;
   createLinkHandler: (title: string, href: string, category: ICategory) => void;
 }> = ({ category, deleteCategoryHandler, createLinkHandler }) => {
+  const [isAddLinkMode, setIsAddLinkMode] = useState(false);
+
+  const enableAddLinkMode = () => {
+    setIsAddLinkMode(true);
+  };
+
+  const disableAddLinkMode = () => {
+    setIsAddLinkMode(false);
+  };
+
   const handleCategoryDelete = () => deleteCategoryHandler(category);
 
   const handleLinkCreate = (title: string, href: string) =>
@@ -59,7 +73,20 @@ const Category: FC<{
           </div>
         ))}
       </div>
-      <AddLinkForm createLinkHandler={handleLinkCreate} />
+      {!isAddLinkMode ? (
+        <Button
+          onClick={enableAddLinkMode}
+          type="link"
+          icon={<PlusCircleOutlined />}
+        >
+          New Link
+        </Button>
+      ) : (
+        <LinkForm
+          formSubmitHandler={handleLinkCreate}
+          abortHandler={disableAddLinkMode}
+        />
+      )}
     </div>
   );
 };
