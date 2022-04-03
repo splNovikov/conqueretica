@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Button, Col, Modal, Tooltip } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
 import { ICategory, IColumn } from '../../interfaces';
 // Components
@@ -30,7 +30,17 @@ const Column: FC<{
   createLinkHandler,
 }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+  const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
 
+  const enableAddCategoryMode = () => {
+    setIsAddCategoryMode(true);
+  };
+
+  const disableAddCategoryMode = () => {
+    setIsAddCategoryMode(false);
+  };
+
+  // region Modal Confirm Delete
   const showConfirmModal = () => {
     setIsConfirmModalVisible(true);
   };
@@ -47,9 +57,12 @@ const Column: FC<{
   const handleColumnDelete = () => {
     showConfirmModal();
   };
+  // endregion Modal
 
-  const handleCategoryFormSubmit = (value: string) =>
+  const handleCategoryFormSubmit = (value: string) => {
     categoryFormSubmitHandler(value, column);
+    disableAddCategoryMode();
+  };
 
   const handleCategoryDelete = (category: ICategory) =>
     deleteCategoryHandler(category, column);
@@ -93,11 +106,21 @@ const Column: FC<{
           />
         ))}
       </div>
-      <SingleInputForm
-        placeholder="Create a new category"
-        formSubmitHandler={handleCategoryFormSubmit}
-        abortHandler={() => 1}
-      />
+      {!isAddCategoryMode ? (
+        <Button
+          onClick={enableAddCategoryMode}
+          type="link"
+          icon={<PlusCircleOutlined />}
+        >
+          New Category
+        </Button>
+      ) : (
+        <SingleInputForm
+          placeholder="Create a new category"
+          formSubmitHandler={handleCategoryFormSubmit}
+          abortHandler={disableAddCategoryMode}
+        />
+      )}
     </Col>
   );
 };
