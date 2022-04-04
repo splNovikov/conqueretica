@@ -71,7 +71,7 @@ const Category: FC<{
       <div className="category-links">
         {category.links.map((l: ILink) => (
           <div key={l.id} className="linky-wrapper">
-            <Linky link={l} ellipsed iconSize="xx-small" />
+            <Linky link={l} ellipsis iconSize="xx-small" />
           </div>
         ))}
       </div>
