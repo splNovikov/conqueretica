@@ -44,8 +44,10 @@ const Category: FC<{
 
   const handleCategoryDelete = () => deleteCategoryHandler(category);
 
-  const handleLinkCreate = (title: string, href: string) =>
+  const handleLinkCreate = (title: string, href: string) => {
+    disableAddLinkMode();
     createLinkHandler(title, href, category);
+  };
 
   return (
     <div className="category">

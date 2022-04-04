@@ -1,5 +1,6 @@
 import React, { FC, KeyboardEvent } from 'react';
 import { Form, Input, Button } from 'antd';
+import OutsideClickHandler from 'react-outside-click-handler';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const LinkForm: FC<{
@@ -31,14 +32,11 @@ const LinkForm: FC<{
     );
   };
 
-  const handleBlur = () => {
-    abortHandler();
-  };
-
   const handleCancelEdit = () => {
     abortHandler();
   };
 
+  // todo: common esc handler
   const handleKeyboardEvent = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
       abortHandler();
@@ -46,66 +44,71 @@ const LinkForm: FC<{
   };
 
   return (
-    <Form
-      form={form}
-      initialValues={{ titleInput: title, linkInput: link }}
-      layout="inline"
-      onFinish={handleFormSubmit}
-      className="single-input-form"
-      onBlur={handleBlur}
-    >
-      <Form.Item
-        name="titleInput"
-        rules={[
-          {
-            max: 30,
-            message: 'Max 30 characters',
-          },
-        ]}
+    <OutsideClickHandler onOutsideClick={handleCancelEdit}>
+      <Form
+        form={form}
+        initialValues={{ titleInput: title, linkInput: link }}
+        layout="inline"
+        onFinish={handleFormSubmit}
+        className="single-input-form"
       >
-        <Input
-          placeholder="Title"
-          size="small"
-          onKeyDown={handleKeyboardEvent}
-        />
-      </Form.Item>
-      <Form.Item
-        name="linkInput"
-        rules={[
-          {
-            required: true,
-            message: 'Can not be empty',
-          },
-          {
-            max: 3000,
-            message: 'Max 3000 characters',
-          },
-        ]}
-      >
-        <Input
-          placeholder="Href"
-          autoFocus
-          size="small"
-          onKeyDown={handleKeyboardEvent}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          icon={<CheckOutlined />}
-          size="small"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          htmlType="button"
-          icon={<CloseOutlined />}
-          onClick={handleCancelEdit}
-          size="small"
-        />
-      </Form.Item>
-    </Form>
+        <Form.Item
+          name="titleInput"
+          rules={[
+            {
+              max: 30,
+              message: 'Max 30 characters',
+            },
+          ]}
+        >
+          <Input
+            placeholder="Title"
+            size="small"
+            onKeyDown={handleKeyboardEvent}
+          />
+        </Form.Item>
+        <Form.Item
+          name="linkInput"
+          rules={[
+            {
+              required: true,
+              message: 'Can not be empty',
+            },
+            {
+              type: 'url',
+              message: 'Invalid url',
+            },
+            {
+              max: 300,
+              message: 'Max 300 ch.',
+            },
+          ]}
+        >
+          <Input
+            placeholder="Href"
+            autoFocus
+            size="small"
+            onKeyDown={handleKeyboardEvent}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            icon={<CheckOutlined />}
+            size="small"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            htmlType="button"
+            icon={<CloseOutlined />}
+            onClick={handleCancelEdit}
+            size="small"
+          />
+        </Form.Item>
+      </Form>
+    </OutsideClickHandler>
   );
 };
 
