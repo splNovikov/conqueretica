@@ -56,8 +56,8 @@ const LinkForm: FC<{
           name="titleInput"
           rules={[
             {
-              max: 30,
-              message: 'Max 30 characters',
+              max: 300,
+              message: 'Max 300 ch.',
             },
           ]}
         >
