@@ -111,6 +111,7 @@ const Column: FC<{
           onClick={enableAddCategoryMode}
           type="link"
           icon={<PlusCircleOutlined />}
+          className="btn-enable-add-category"
         >
           New Category
         </Button>

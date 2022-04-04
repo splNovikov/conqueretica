@@ -3,6 +3,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 
 import SingleInputForm from './SingleInputForm';
+import { debuglog } from 'util';
 
 const inputLocator = 'input[type="text"]';
 const buttonLocator = 'button[type="submit"]';
@@ -11,6 +12,7 @@ const buttonLocator = 'button[type="submit"]';
 describe('SingleInputForm', () => {
   const handleSubmit = jest.fn();
   let wrapper: ReactWrapper;
+  let form: ReactWrapper;
 
   beforeEach(() => {
     wrapper = mount(
@@ -21,6 +23,7 @@ describe('SingleInputForm', () => {
         abortHandler={() => 1}
       />,
     );
+    form = wrapper.find('form.single-input-form');
   });
 
   afterEach(() => {
@@ -29,7 +32,7 @@ describe('SingleInputForm', () => {
 
   describe('SingleInputForm Elements Presence', () => {
     it('SingleInputForm is rendering', () => {
-      expect(wrapper.childAt(0).hasClass('single-input-form')).toEqual(true);
+      expect(form.exists()).toBe(true);
     });
 
     it('SingleInputForm Input is rendering', () => {
@@ -74,7 +77,7 @@ describe('SingleInputForm', () => {
       });
 
       await act(async () => {
-        wrapper.simulate('submit');
+        form.simulate('submit');
       });
 
       wrapper.update();
@@ -90,7 +93,7 @@ describe('SingleInputForm', () => {
       });
 
       await act(async () => {
-        wrapper.simulate('submit');
+        form.simulate('submit');
       });
 
       expect(handleSubmit).toHaveBeenCalledWith('somenew');
