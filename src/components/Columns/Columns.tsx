@@ -41,7 +41,7 @@ const Columns: FC<{
           createLinkHandler={createLinkHandler}
         />
       ))}
-      <Col span={3} className="create-column-wrapper">
+      <Col span={3} className="columns-create-column-wrapper">
         <Tooltip title="Add New Column">
           <Button
             shape="circle"

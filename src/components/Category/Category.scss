@@ -1,4 +1,8 @@
+@import '../../styles/theme';
+
 .category {
+  border-bottom: 1px solid $category-border-color;
+
   &-header {
     display: flex;
     justify-content: space-between;
@@ -7,5 +11,10 @@
   &-title {
     display: inline-flex;
     align-items: center;
+  }
+
+  .btn-enable-add-link {
+    padding: 0;
+    font-size: $category-btn-enable-add-link-font-size;
   }
 }

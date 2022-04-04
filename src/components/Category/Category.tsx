@@ -80,6 +80,7 @@ const Category: FC<{
           onClick={enableAddLinkMode}
           type="link"
           icon={<PlusCircleOutlined />}
+          className="btn-enable-add-link"
         >
           New Link
         </Button>

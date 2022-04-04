@@ -60,6 +60,7 @@ $tab-highlight-color: $primary-color;
 $single-input-form-item-margin: 0 2px 0 0;
 
 // Columns
+$columns-create-column-wrapper-padding: 5px;
 
 // Column
 $column-header-border-radius: 10px 10px 0 0;
@@ -68,3 +69,7 @@ $column-header-padding: 5px;
 
 // Linky
 $linky-font-size: small;
+
+// Category
+$category-btn-enable-add-link-font-size: small;
+$category-border-color: $primary-color;
