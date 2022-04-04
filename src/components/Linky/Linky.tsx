@@ -23,7 +23,6 @@ const Linky: FC<{
   return (
     <Link className="linky" href={link.href} ellipsis={ellipsis} underline>
       {iconType && <GoogleIcon icon={iconType} size={iconSize} />}
-
       <span className="title">{link.title || link.href}</span>
     </Link>
   );
