@@ -9,5 +9,5 @@ it('LinkForm is rendering', () => {
   const wrapper = shallow(
     <LinkForm formSubmitHandler={() => 1} abortHandler={() => 1} />,
   );
-  expect(wrapper.childAt(0).hasClass('single-input-form')).toBe(true);
+  expect(wrapper.childAt(0).hasClass('link-form')).toBe(true);
 });

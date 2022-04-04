@@ -50,7 +50,7 @@ const LinkForm: FC<{
         initialValues={{ titleInput: title, linkInput: link }}
         layout="inline"
         onFinish={handleFormSubmit}
-        className="single-input-form"
+        className="link-form"
       >
         <Form.Item
           name="titleInput"
