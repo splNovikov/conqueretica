@@ -65,6 +65,7 @@ const LinkForm: FC<{
             placeholder="Title"
             size="small"
             onKeyDown={handleKeyboardEvent}
+            className="link-form-title-input"
           />
         </Form.Item>
         <Form.Item
@@ -89,6 +90,7 @@ const LinkForm: FC<{
             autoFocus
             size="small"
             onKeyDown={handleKeyboardEvent}
+            className="link-form-link-input"
           />
         </Form.Item>
         <Form.Item>
@@ -97,6 +99,7 @@ const LinkForm: FC<{
             htmlType="submit"
             icon={<CheckOutlined />}
             size="small"
+            className="link-form-btn-submit"
           />
         </Form.Item>
         <Form.Item>
@@ -105,6 +108,7 @@ const LinkForm: FC<{
             icon={<CloseOutlined />}
             onClick={handleCancelEdit}
             size="small"
+            className="link-form-btn-cancel"
           />
         </Form.Item>
       </Form>

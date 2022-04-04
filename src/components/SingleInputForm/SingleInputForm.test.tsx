@@ -3,7 +3,6 @@ import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 
 import SingleInputForm from './SingleInputForm';
-import { debuglog } from 'util';
 
 const inputLocator = 'input[type="text"]';
 const buttonLocator = 'button[type="submit"]';
