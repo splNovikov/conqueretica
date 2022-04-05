@@ -19,8 +19,8 @@ $primary-7: darken($primary-color, 8%);
 // === Ant Components
 
 // Ant Layout
-$layout-body-background: $white;
-$layout-header-background: $white;
+$layout-body-background: transparent;
+$layout-header-background: $layout-body-background;
 $layout-footer-background: $layout-body-background;
 
 // Ant Skeleton
@@ -38,6 +38,7 @@ $app-header-height: 50px;
 $app-header-padding: 0 50px;
 $app-header-user-bg: $primary-color;
 $app-header-user-skeleton-min-width: 100px;
+$app-header-google-links-trigger-margin: 0 10px 0 0;
 
 // AppFooter
 $app-footer-shadow: 0 -2px 8px $athens-grey;

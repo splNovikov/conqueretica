@@ -30,4 +30,8 @@
   .user-skeleton {
     min-width: $app-header-user-skeleton-min-width;
   }
+
+  &-google-links-trigger {
+    margin: $app-header-google-links-trigger-margin;
+  }
 }
