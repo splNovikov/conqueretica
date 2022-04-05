@@ -100,7 +100,7 @@ const Category: FC<{
       </div>
       <div className="category-links">
         {category.links.map((l: ILink) => (
-          <div key={l.id} className="linky-wrapper">
+          <div key={l.id} className="category-linky-wrapper">
             <Linky link={l} ellipsis iconSize="xx-small" />
           </div>
         ))}
@@ -110,7 +110,7 @@ const Category: FC<{
           onClick={enableAddLinkMode}
           type="link"
           icon={<PlusCircleOutlined />}
-          className="btn-enable-add-link"
+          className="category-btn-enable-add-link"
         >
           New Link
         </Button>
