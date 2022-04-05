@@ -20,7 +20,7 @@ const actionsMenu = (category: ICategory, handleCategoryDelete: () => void) => (
     <Menu.Item
       key="delete"
       onClick={handleCategoryDelete}
-      className="delete-category"
+      className="category-actions-menu-delete-category"
     >
       <DeleteOutlined /> Delete Category
     </Menu.Item>
