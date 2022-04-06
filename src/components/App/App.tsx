@@ -7,7 +7,7 @@ import firebase from '../../firebase';
 // Components
 import AppRoutes from '../AppRoutes';
 import AppHeader from '../AppHeader';
-import AppFooter from '../../AppFooter';
+import AppFooter from '../AppFooter';
 // Styles
 import './App.scss';
 
