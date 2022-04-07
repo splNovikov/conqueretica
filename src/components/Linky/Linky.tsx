@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { Typography } from 'antd';
 // Interfaces
 import { ILink } from '../../interfaces';
@@ -22,8 +22,12 @@ const Linky: FC<{
 
   return (
     <Link className="linky" href={link.href} ellipsis={ellipsis} underline>
-      {iconType && <GoogleIcon icon={iconType} size={iconSize} />}
-      <span className="title">{link.title || link.href}</span>
+      {iconType && (
+        <span className="linky-icon-wrapper">
+          <GoogleIcon icon={iconType} size={iconSize} />
+        </span>
+      )}
+      <span className="linky-title">{link.title || link.href}</span>
     </Link>
   );
 };

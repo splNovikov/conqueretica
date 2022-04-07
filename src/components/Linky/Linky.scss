@@ -3,8 +3,8 @@
 .linky {
   font-size: $linky-font-size;
 
-  & u > *,
-  & > * {
+  & u > .linky-icon-wrapper,
+  & > .linky-icon-wrapper {
     vertical-align: middle;
   }
 }
