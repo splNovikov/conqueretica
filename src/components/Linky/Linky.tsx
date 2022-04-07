@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react';
+import React, { FC } from 'react';
 import { Typography } from 'antd';
 // Interfaces
 import { ILink } from '../../interfaces';

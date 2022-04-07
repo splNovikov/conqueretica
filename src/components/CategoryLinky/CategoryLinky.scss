@@ -1,0 +1,13 @@
+.category-linky {
+  display: flex;
+  flex-direction: column;
+
+  &-title-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &-title-wrapper &-edit-trigger {
+    flex: 0;
+  }
+}

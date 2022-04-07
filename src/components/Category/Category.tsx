@@ -8,7 +8,7 @@ import { Button, Dropdown, Menu, Modal, Typography } from 'antd';
 // Interfaces
 import { ICategory, ILink } from '../../interfaces';
 // Components
-import Linky from '../Linky';
+import CategoryLinky from '../CategoryLinky';
 import LinkForm from '../LinkForm';
 // Styles
 import './Category.scss';
@@ -100,9 +100,11 @@ const Category: FC<{
       </div>
       <div className="category-links">
         {category.links.map((l: ILink) => (
-          <div key={l.id} className="category-linky-wrapper">
-            <Linky link={l} ellipsis iconSize="xx-small" />
-          </div>
+          <CategoryLinky
+            key={l.id}
+            link={l}
+            formSubmitHandler={() => alert('save')}
+          />
         ))}
       </div>
       {!isAddLinkMode ? (
