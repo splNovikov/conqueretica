@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import Expand from 'react-expand-animated';
+import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
 // Components
@@ -43,18 +43,20 @@ const CategoryLinky: FC<{
         />
         <Linky link={link} ellipsis iconSize="xx-small" />
       </div>
-      <Expand
-        open={isEditMode}
-        duration={300}
-        transitions={['height', 'opacity']}
+      <div
+        className={classNames('category-linky-form-wrapper', {
+          'category-linky-form-wrapper-expand': isEditMode,
+        })}
       >
-        <LinkForm
-          link={link.href}
-          title={link.title}
-          formSubmitHandler={handleSubmit}
-          abortHandler={abortHandler}
-        />
-      </Expand>
+        {isEditMode && (
+          <LinkForm
+            link={link.href}
+            title={link.title}
+            formSubmitHandler={handleSubmit}
+            abortHandler={abortHandler}
+          />
+        )}
+      </div>
     </div>
   );
 };
