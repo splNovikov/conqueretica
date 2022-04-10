@@ -5,14 +5,14 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const LinkForm: FC<{
   /* eslint-disable react/require-default-props */
-  offClickIgnoreElement?: RefObject<HTMLElement>;
+  outsideClickIgnoreElement?: RefObject<HTMLElement>;
   link?: string | undefined;
   title?: string | undefined;
   /* eslint-enable */
   formSubmitHandler: (title: string, href: string) => void;
   abortHandler: () => void;
 }> = ({
-  offClickIgnoreElement,
+  outsideClickIgnoreElement,
   link = '',
   title = '',
   formSubmitHandler,
@@ -46,7 +46,7 @@ const LinkForm: FC<{
   const handleOutsideClick = (e: MouseEvent) => {
     if (
       e.target instanceof Element &&
-      offClickIgnoreElement?.current?.contains(e.target)
+      outsideClickIgnoreElement?.current?.contains(e.target)
     ) {
       return;
     }

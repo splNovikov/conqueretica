@@ -15,7 +15,10 @@ const CategoryLinky: FC<{
   formSubmitHandler: (title: string, href: string) => void;
 }> = ({ link, formSubmitHandler }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const editTrigger = useRef<HTMLElement>(null);
+  // in case when we are trying to turn off editMode by clicking on Trigger - it would not be clicked because of
+  // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
+  // turn off edit mode:
+  const editTriggerRef = useRef<HTMLElement>(null);
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
@@ -36,7 +39,7 @@ const CategoryLinky: FC<{
     <div className="category-linky">
       <div className="category-linky-title-wrapper">
         <Button
-          ref={editTrigger}
+          ref={editTriggerRef}
           type="text"
           size="small"
           icon={<EditOutlined />}
@@ -52,7 +55,7 @@ const CategoryLinky: FC<{
       >
         {isEditMode && (
           <LinkForm
-            offClickIgnoreElement={editTrigger}
+            outsideClickIgnoreElement={editTriggerRef}
             link={link.href}
             title={link.title}
             formSubmitHandler={handleSubmit}
