@@ -1,16 +1,23 @@
-import React, { FC, KeyboardEvent } from 'react';
+import React, { FC, KeyboardEvent, RefObject } from 'react';
 import { Form, Input, Button } from 'antd';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const LinkForm: FC<{
   /* eslint-disable react/require-default-props */
+  offClickIgnoreElement?: RefObject<HTMLElement>;
   link?: string | undefined;
   title?: string | undefined;
   /* eslint-enable */
   formSubmitHandler: (title: string, href: string) => void;
   abortHandler: () => void;
-}> = ({ link = '', title = '', formSubmitHandler, abortHandler }) => {
+}> = ({
+  offClickIgnoreElement,
+  link = '',
+  title = '',
+  formSubmitHandler,
+  abortHandler,
+}) => {
   const [form] = Form.useForm();
 
   const handleFormSubmit = async () => {
@@ -32,7 +39,18 @@ const LinkForm: FC<{
     );
   };
 
-  const handleCancelEdit = () => {
+  const handleCancelClick = () => {
+    abortHandler();
+  };
+
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (
+      e.target instanceof Element &&
+      offClickIgnoreElement?.current?.contains(e.target)
+    ) {
+      return;
+    }
+
     abortHandler();
   };
 
@@ -44,7 +62,7 @@ const LinkForm: FC<{
   };
 
   return (
-    <OutsideClickHandler onOutsideClick={handleCancelEdit}>
+    <OutsideClickHandler onOutsideClick={handleOutsideClick}>
       <Form
         form={form}
         initialValues={{ titleInput: title, linkInput: link }}
@@ -106,7 +124,7 @@ const LinkForm: FC<{
           <Button
             htmlType="button"
             icon={<CloseOutlined />}
-            onClick={handleCancelEdit}
+            onClick={handleCancelClick}
             size="small"
             className="link-form-btn-cancel"
           />

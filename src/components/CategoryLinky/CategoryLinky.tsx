@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import classNames from 'classnames';
@@ -15,6 +15,7 @@ const CategoryLinky: FC<{
   formSubmitHandler: (title: string, href: string) => void;
 }> = ({ link, formSubmitHandler }) => {
   const [isEditMode, setIsEditMode] = useState(false);
+  const editTrigger = useRef<HTMLElement>(null);
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
@@ -35,6 +36,7 @@ const CategoryLinky: FC<{
     <div className="category-linky">
       <div className="category-linky-title-wrapper">
         <Button
+          ref={editTrigger}
           type="text"
           size="small"
           icon={<EditOutlined />}
@@ -50,6 +52,7 @@ const CategoryLinky: FC<{
       >
         {isEditMode && (
           <LinkForm
+            offClickIgnoreElement={editTrigger}
             link={link.href}
             title={link.title}
             formSubmitHandler={handleSubmit}
