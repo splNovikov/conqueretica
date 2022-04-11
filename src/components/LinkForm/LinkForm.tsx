@@ -2,6 +2,8 @@ import React, { FC, KeyboardEvent, RefObject } from 'react';
 import { Form, Input, Button } from 'antd';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+// Styles
+import './LinkForm.scss';
 
 const LinkForm: FC<{
   /* eslint-disable react/require-default-props */
@@ -66,7 +68,7 @@ const LinkForm: FC<{
       <Form
         form={form}
         initialValues={{ titleInput: title, linkInput: link }}
-        layout="inline"
+        layout="vertical"
         onFinish={handleFormSubmit}
         className="link-form"
       >
@@ -81,6 +83,7 @@ const LinkForm: FC<{
         >
           <Input
             placeholder="Title"
+            autoFocus
             size="small"
             onKeyDown={handleKeyboardEvent}
             className="link-form-title-input"
@@ -105,30 +108,30 @@ const LinkForm: FC<{
         >
           <Input
             placeholder="Href"
-            autoFocus
             size="small"
             onKeyDown={handleKeyboardEvent}
             className="link-form-link-input"
           />
         </Form.Item>
-        <Form.Item>
+        <div className="link-form-buttons-wrapper">
           <Button
             type="primary"
             htmlType="submit"
             icon={<CheckOutlined />}
             size="small"
             className="link-form-btn-submit"
-          />
-        </Form.Item>
-        <Form.Item>
+          >
+            Save
+          </Button>
           <Button
             htmlType="button"
-            icon={<CloseOutlined />}
             onClick={handleCancelClick}
             size="small"
             className="link-form-btn-cancel"
-          />
-        </Form.Item>
+          >
+            Cancel
+          </Button>
+        </div>
       </Form>
     </OutsideClickHandler>
   );

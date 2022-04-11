@@ -1,0 +1,10 @@
+.link-form {
+  .ant-form-item {
+    margin: 0;
+  }
+
+  &-buttons-wrapper {
+    display: flex;
+    justify-content: space-around;
+  }
+}
