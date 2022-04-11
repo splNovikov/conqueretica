@@ -2,6 +2,7 @@
 
 .category {
   border-bottom: 1px solid $category-border-color;
+  padding: $category-padding;
 
   &-header {
     display: flex;
