@@ -1,3 +1,5 @@
+@import '../../styles/theme';
+
 .link-form {
   .ant-form-item {
     margin: 0;
@@ -5,6 +7,11 @@
 
   &-buttons-wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    & > .ant-form-item {
+      margin: $link-form-button-margin;
+    }
   }
 }

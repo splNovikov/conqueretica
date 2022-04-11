@@ -114,23 +114,24 @@ const LinkForm: FC<{
           />
         </Form.Item>
         <div className="link-form-buttons-wrapper">
-          <Button
-            type="primary"
-            htmlType="submit"
-            icon={<CheckOutlined />}
-            size="small"
-            className="link-form-btn-submit"
-          >
-            Save
-          </Button>
-          <Button
-            htmlType="button"
-            onClick={handleCancelClick}
-            size="small"
-            className="link-form-btn-cancel"
-          >
-            Cancel
-          </Button>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon={<CheckOutlined />}
+              size="small"
+              className="link-form-btn-submit"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="button"
+              icon={<CloseOutlined />}
+              onClick={handleCancelClick}
+              size="small"
+              className="link-form-btn-cancel"
+            />
+          </Form.Item>
         </div>
       </Form>
     </OutsideClickHandler>
