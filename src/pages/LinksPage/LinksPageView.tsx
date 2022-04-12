@@ -85,6 +85,7 @@ const LinksPage: FC<{
           >
             <Columns
               columns={columns}
+              selectedTab={selectedTab}
               createColumnHandler={createColumnHandler}
               deleteColumnHandler={deleteColumnHandler}
               categoryFormSubmitHandler={categoryFormSubmitHandler}

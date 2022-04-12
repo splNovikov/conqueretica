@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Button, Col, Row, Tooltip } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
-import { ICategory, IColumn } from '../../interfaces';
+import { ICategory, IColumn, ITab } from '../../interfaces';
 // Components
 import Column from '../Column';
 // Styles
@@ -10,6 +10,8 @@ import './Columns.scss';
 
 const Columns: FC<{
   columns: IColumn[];
+  // eslint-disable-next-line react/require-default-props
+  selectedTab?: ITab;
   createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
   categoryFormSubmitHandler: (value: string, column: IColumn) => void;
@@ -22,6 +24,7 @@ const Columns: FC<{
   ) => void;
 }> = ({
   columns,
+  selectedTab,
   createColumnHandler,
   deleteColumnHandler,
   categoryFormSubmitHandler,
@@ -41,17 +44,19 @@ const Columns: FC<{
           createLinkHandler={createLinkHandler}
         />
       ))}
-      <Col span={3} className="columns-create-column-wrapper">
-        <Tooltip title="Add New Column">
-          <Button
-            shape="circle"
-            size="small"
-            icon={<PlusCircleOutlined />}
-            onClick={createColumnHandler}
-            className="columns-btn-add-new-column"
-          />
-        </Tooltip>
-      </Col>
+      {selectedTab?.id ? (
+        <Col span={3} className="columns-create-column-wrapper">
+          <Tooltip title="Add New Column">
+            <Button
+              shape="circle"
+              size="small"
+              icon={<PlusCircleOutlined />}
+              onClick={createColumnHandler}
+              className="columns-btn-add-new-column"
+            />
+          </Tooltip>
+        </Col>
+      ) : null}
     </Row>
   );
 };
