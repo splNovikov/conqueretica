@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { UserInfo } from 'firebase/auth';
 import { Layout, Skeleton } from 'antd';
 // Interfaces
-import { ICategory, IColumn, ITab } from '../../interfaces';
+import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import Tabs from '../../components/Tabs';
 import Columns from '../../components/Columns';
@@ -37,6 +37,13 @@ const LinksPage: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
+  updateLinkHandler: (
+    title: string,
+    href: string,
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   user,
   tabs,
@@ -53,6 +60,7 @@ const LinksPage: FC<{
   categoryFormSubmitHandler,
   deleteCategoryHandler,
   createLinkHandler,
+  updateLinkHandler,
 }) =>
   user ? (
     <Layout className="links-page">
@@ -91,6 +99,7 @@ const LinksPage: FC<{
               categoryFormSubmitHandler={categoryFormSubmitHandler}
               deleteCategoryHandler={deleteCategoryHandler}
               createLinkHandler={createLinkHandler}
+              updateLinkHandler={updateLinkHandler}
             />
           </Skeleton>
         </Content>

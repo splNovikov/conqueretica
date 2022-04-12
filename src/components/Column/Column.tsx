@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { Button, Col, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
-import { ICategory, IColumn } from '../../interfaces';
+import { ICategory, IColumn, ILink } from '../../interfaces';
 // Components
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
@@ -21,6 +21,13 @@ const Column: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
+  updateLinkHandler: (
+    title: string,
+    href: string,
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   column,
   span,
@@ -28,6 +35,7 @@ const Column: FC<{
   categoryFormSubmitHandler,
   deleteCategoryHandler,
   createLinkHandler,
+  updateLinkHandler,
 }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
@@ -70,6 +78,13 @@ const Column: FC<{
   const handleLinkCreate = (title: string, href: string, category: ICategory) =>
     createLinkHandler(title, href, category, column);
 
+  const handleLinkUpdate = (
+    title: string,
+    href: string,
+    link: ILink,
+    category: ICategory,
+  ) => updateLinkHandler(title, href, link, category, column);
+
   return (
     <Col span={span} className="column">
       <Modal
@@ -103,6 +118,7 @@ const Column: FC<{
             deleteCategoryHandler={handleCategoryDelete}
             key={category.id}
             createLinkHandler={handleLinkCreate}
+            updateLinkHandler={handleLinkUpdate}
           />
         ))}
       </div>

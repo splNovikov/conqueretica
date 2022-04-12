@@ -12,7 +12,7 @@ import './CategoryLinky.scss';
 
 const CategoryLinky: FC<{
   link: ILink;
-  formSubmitHandler: (title: string, href: string) => void;
+  formSubmitHandler: (title: string, href: string, link: ILink) => void;
 }> = ({ link, formSubmitHandler }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   // in case when we are trying to turn off editMode by clicking on Trigger - it would not be clicked because of
@@ -31,7 +31,9 @@ const CategoryLinky: FC<{
   const abortHandler = () => disableEditMode();
 
   const handleSubmit = (title: string, href: string) => {
-    formSubmitHandler(title, href);
+    if (title !== link.title || href !== link.href) {
+      formSubmitHandler(title, href, link);
+    }
     disableEditMode();
   };
 

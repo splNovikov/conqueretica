@@ -31,7 +31,18 @@ const Category: FC<{
   category: ICategory;
   deleteCategoryHandler: (val: ICategory) => void;
   createLinkHandler: (title: string, href: string, category: ICategory) => void;
-}> = ({ category, deleteCategoryHandler, createLinkHandler }) => {
+  updateLinkHandler: (
+    title: string,
+    href: string,
+    link: ILink,
+    category: ICategory,
+  ) => void;
+}> = ({
+  category,
+  deleteCategoryHandler,
+  createLinkHandler,
+  updateLinkHandler,
+}) => {
   const [isAddLinkMode, setIsAddLinkMode] = useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
 
@@ -63,6 +74,10 @@ const Category: FC<{
   const handleLinkCreate = (title: string, href: string) => {
     disableAddLinkMode();
     createLinkHandler(title, href, category);
+  };
+
+  const handleLinkUpdate = (title: string, href: string, link: ILink) => {
+    updateLinkHandler(title, href, link, category);
   };
 
   return (
@@ -103,7 +118,7 @@ const Category: FC<{
           <CategoryLinky
             key={l.id}
             link={l}
-            formSubmitHandler={() => alert('save')}
+            formSubmitHandler={handleLinkUpdate}
           />
         ))}
       </div>

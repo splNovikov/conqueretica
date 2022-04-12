@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Button, Col, Row, Tooltip } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 // Interfaces
-import { ICategory, IColumn, ITab } from '../../interfaces';
+import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import Column from '../Column';
 // Styles
@@ -22,6 +22,13 @@ const Columns: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
+  updateLinkHandler: (
+    title: string,
+    href: string,
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   columns,
   selectedTab,
@@ -30,6 +37,7 @@ const Columns: FC<{
   categoryFormSubmitHandler,
   deleteCategoryHandler,
   createLinkHandler,
+  updateLinkHandler,
 }) => {
   return (
     <Row className="columns" gutter={[16, 16]}>
@@ -42,6 +50,7 @@ const Columns: FC<{
           categoryFormSubmitHandler={categoryFormSubmitHandler}
           deleteCategoryHandler={deleteCategoryHandler}
           createLinkHandler={createLinkHandler}
+          updateLinkHandler={updateLinkHandler}
         />
       ))}
       {selectedTab?.id ? (

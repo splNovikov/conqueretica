@@ -48,3 +48,49 @@ export const addLink = async (
     return null;
   }
 };
+
+// todo: tests:
+export const updateLink = async (
+  title: string,
+  href: string,
+  link: ILink,
+  category: ICategory,
+  column: IColumn,
+): Promise<ILink | null> => {
+  if (!title || !href || !category?.id || !column?.id) {
+    defaultErrorHandler('Invalid Parameters Passed to Update a link');
+    return null;
+  }
+
+  try {
+    const columnsRef = collection(firebase.firestoreDB, 'columns');
+    const columnDoc = doc(columnsRef, column.id);
+    const categories = await getCategoriesByColumnDoc(columnDoc);
+
+    if (!categories) {
+      defaultErrorHandler(`Categories not found for this Column: ${column.id}`);
+      return null;
+    }
+
+    // todo: add unit tests!
+    const updatedCategories = categories.reduce((acc, cat) => {
+      if (cat.id !== category.id) {
+        return [...acc, cat];
+      }
+
+      const updatedLinks = cat.links.reduce(
+        (acc2, l) =>
+          l.id === link.id ? [...acc2, { ...l, title, href }] : [...acc2, l],
+        [] as ILink[],
+      );
+
+      return [...acc, { ...cat, links: updatedLinks }];
+    }, [] as ICategory[]);
+
+    await updateDoc(columnDoc, { categories: updatedCategories });
+    return link;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
