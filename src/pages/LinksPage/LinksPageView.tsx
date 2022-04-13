@@ -44,6 +44,11 @@ const LinksPage: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
+  deleteLinkHandler: (
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   user,
   tabs,
@@ -61,6 +66,7 @@ const LinksPage: FC<{
   deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
+  deleteLinkHandler,
 }) =>
   user ? (
     <Layout className="links-page">
@@ -100,6 +106,7 @@ const LinksPage: FC<{
               deleteCategoryHandler={deleteCategoryHandler}
               createLinkHandler={createLinkHandler}
               updateLinkHandler={updateLinkHandler}
+              deleteLinkHandler={deleteLinkHandler}
             />
           </Skeleton>
         </Content>

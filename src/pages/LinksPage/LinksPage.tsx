@@ -95,6 +95,12 @@ const LinksPage = () => {
     category: ICategory,
     column: IColumn,
   ) => firebase.updateLink(title, href, link, category, column);
+
+  const handleLinkDelete = (
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => firebase.deleteLink(link, category, column);
   // endregion Links
 
   return (
@@ -120,6 +126,7 @@ const LinksPage = () => {
       // links
       createLinkHandler={handleLinkCreate}
       updateLinkHandler={handleLinkUpdate}
+      deleteLinkHandler={handleLinkDelete}
     />
   );
 };

@@ -28,6 +28,11 @@ const Column: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
+  deleteLinkHandler: (
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   column,
   span,
@@ -36,6 +41,7 @@ const Column: FC<{
   deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
+  deleteLinkHandler,
 }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
@@ -85,6 +91,9 @@ const Column: FC<{
     category: ICategory,
   ) => updateLinkHandler(title, href, link, category, column);
 
+  const handleDeleteLink = (link: ILink, category: ICategory) =>
+    deleteLinkHandler(link, category, column);
+
   return (
     <Col span={span} className="column">
       <Modal
@@ -119,6 +128,7 @@ const Column: FC<{
             key={category.id}
             createLinkHandler={handleLinkCreate}
             updateLinkHandler={handleLinkUpdate}
+            deleteLinkHandler={handleDeleteLink}
           />
         ))}
       </div>

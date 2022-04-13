@@ -37,11 +37,13 @@ const Category: FC<{
     link: ILink,
     category: ICategory,
   ) => void;
+  deleteLinkHandler: (link: ILink, category: ICategory) => void;
 }> = ({
   category,
   deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
+  deleteLinkHandler,
 }) => {
   const [isAddLinkMode, setIsAddLinkMode] = useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
@@ -78,6 +80,10 @@ const Category: FC<{
 
   const handleLinkUpdate = (title: string, href: string, link: ILink) => {
     updateLinkHandler(title, href, link, category);
+  };
+
+  const handleDeleteLink = (link: ILink) => {
+    deleteLinkHandler(link, category);
   };
 
   return (
@@ -119,6 +125,7 @@ const Category: FC<{
             key={l.id}
             link={l}
             formSubmitHandler={handleLinkUpdate}
+            deleteLinkHandler={handleDeleteLink}
           />
         ))}
       </div>

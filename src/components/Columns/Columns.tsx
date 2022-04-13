@@ -29,6 +29,11 @@ const Columns: FC<{
     category: ICategory,
     column: IColumn,
   ) => void;
+  deleteLinkHandler: (
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => void;
 }> = ({
   columns,
   selectedTab,
@@ -38,6 +43,7 @@ const Columns: FC<{
   deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
+  deleteLinkHandler,
 }) => {
   return (
     <Row className="columns" gutter={[16, 16]}>
@@ -51,6 +57,7 @@ const Columns: FC<{
           deleteCategoryHandler={deleteCategoryHandler}
           createLinkHandler={createLinkHandler}
           updateLinkHandler={updateLinkHandler}
+          deleteLinkHandler={deleteLinkHandler}
         />
       ))}
       {selectedTab?.id ? (

@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
-import { EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import classNames from 'classnames';
 // Interfaces
@@ -13,7 +13,8 @@ import './CategoryLinky.scss';
 const CategoryLinky: FC<{
   link: ILink;
   formSubmitHandler: (title: string, href: string, link: ILink) => void;
-}> = ({ link, formSubmitHandler }) => {
+  deleteLinkHandler: (link: ILink) => void;
+}> = ({ link, formSubmitHandler, deleteLinkHandler }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   // in case when we are trying to turn off editMode by clicking on Trigger - it would not be clicked because of
   // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
@@ -22,6 +23,10 @@ const CategoryLinky: FC<{
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
+  };
+
+  const handleDelete = () => {
+    deleteLinkHandler(link);
   };
 
   const disableEditMode = () => {
@@ -47,6 +52,13 @@ const CategoryLinky: FC<{
           icon={<EditOutlined />}
           className="category-linky-edit-trigger"
           onClick={toggleEditMode}
+        />
+        <Button
+          type="text"
+          size="small"
+          icon={<DeleteOutlined />}
+          className="category-linky-edit-trigger"
+          onClick={handleDelete}
         />
         <Linky link={link} ellipsis iconSize="xx-small" />
       </div>
