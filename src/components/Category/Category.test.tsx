@@ -9,13 +9,15 @@ import { columns } from '../../__test_data__';
 describe('Column Component', () => {
   const deleteCategoryHandler = jest.fn();
   const createLinkHandler = jest.fn();
+  const updateLinkHandler = jest.fn();
+  const deleteLinkHandler = jest.fn();
   // Selectors
   const categoryHeaderSelector = 'div.category-header';
   const categoryTitleSelector = 'span.category-title';
   const categoryActionsTriggerSelector = 'button.category-actions-menu-trigger';
   const categoryLinksSelector = 'div.category-links';
   const categoryAddLinkTriggerSelector = 'button.category-btn-enable-add-link';
-  const categoryLinkyWrapperSelector = 'div.category-linky-wrapper';
+  const categoryLinkySelector = 'div.category-linky';
   const categoryAddLinkFormSelector = 'form.link-form';
   // Test Data
   const category = columns[0].categories[0];
@@ -26,7 +28,7 @@ describe('Column Component', () => {
   let categoryActionsTrigger: ReactWrapper;
   let categoryLinks: ReactWrapper;
   let categoryAddLinkTrigger: ReactWrapper;
-  let categoryLinkyWrapper: ReactWrapper;
+  let categoryLinky: ReactWrapper;
   let categoryAddLinkForm: ReactWrapper;
 
   beforeEach(() => {
@@ -35,6 +37,8 @@ describe('Column Component', () => {
         category={category}
         deleteCategoryHandler={deleteCategoryHandler}
         createLinkHandler={createLinkHandler}
+        updateLinkHandler={updateLinkHandler}
+        deleteLinkHandler={deleteLinkHandler}
       />,
     );
     categoryHeader = wrapper.find(categoryHeaderSelector);
@@ -44,7 +48,7 @@ describe('Column Component', () => {
     );
     categoryLinks = wrapper.find(categoryLinksSelector);
     categoryAddLinkTrigger = wrapper.find(categoryAddLinkTriggerSelector);
-    categoryLinkyWrapper = wrapper.find(categoryLinkyWrapperSelector);
+    categoryLinky = wrapper.find(categoryLinkySelector);
     categoryAddLinkForm = wrapper.find(categoryAddLinkFormSelector);
   });
 
@@ -59,7 +63,7 @@ describe('Column Component', () => {
     expect(categoryActionsTrigger.exists()).toBe(true);
     expect(categoryLinks.exists()).toBe(true);
     expect(categoryAddLinkTrigger.exists()).toBe(true);
-    expect(categoryLinkyWrapper.length).toBe(3);
+    expect(categoryLinky.length).toBe(3);
     expect(categoryAddLinkForm.exists()).toBe(false);
   });
 
