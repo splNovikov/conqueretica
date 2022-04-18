@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: column;
 
-  .ant-btn-icon-only {
-    height: auto;
-    width: auto;
-    padding: 0;
-  }
-
   &-title-wrapper {
     display: flex;
     align-items: center;
+
+    & > .ant-btn-icon-only {
+      height: auto;
+      width: auto;
+      padding: 0;
+    }
   }
 
   &-title-wrapper &-edit-trigger {
