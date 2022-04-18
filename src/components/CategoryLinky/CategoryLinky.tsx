@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { DeleteOutlined, EditOutlined, MoreOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
 import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
@@ -10,6 +10,29 @@ import LinkForm from '../LinkForm';
 // Styles
 import './CategoryLinky.scss';
 
+const actionsMenu = (
+  toggleEditMode: () => void,
+  handleLinkyDelete: () => void,
+) => (
+  <Menu>
+    <Menu.Item
+      key="edit"
+      onClick={toggleEditMode}
+      className="linky-actions-menu-edit-linky"
+    >
+      <EditOutlined /> Edit Link
+    </Menu.Item>
+    <Menu.Item
+      key="delete"
+      onClick={handleLinkyDelete}
+      className="linky-actions-menu-delete-linky"
+    >
+      <DeleteOutlined /> Delete Link
+    </Menu.Item>
+  </Menu>
+);
+
+// todo: tests:
 const CategoryLinky: FC<{
   link: ILink;
   formSubmitHandler: (title: string, href: string, link: ILink) => void;
@@ -45,21 +68,18 @@ const CategoryLinky: FC<{
   return (
     <div className="category-linky">
       <div className="category-linky-title-wrapper">
-        <Button
-          ref={editTriggerRef}
-          type="text"
-          size="small"
-          icon={<EditOutlined />}
-          className="category-linky-edit-trigger"
-          onClick={toggleEditMode}
-        />
-        <Button
-          type="text"
-          size="small"
-          icon={<DeleteOutlined />}
-          className="category-linky-edit-trigger"
-          onClick={handleDelete}
-        />
+        <Dropdown
+          key="actions"
+          overlay={actionsMenu(toggleEditMode, handleDelete)}
+          placement="bottomRight"
+          arrow
+        >
+          <Button
+            type="text"
+            icon={<MoreOutlined />}
+            className="linky-actions-menu-trigger"
+          />
+        </Dropdown>
         <Linky link={link} ellipsis iconSize="xx-small" />
       </div>
       <div
