@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
+import { Button } from 'antd';
 import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
@@ -17,27 +17,13 @@ const CategoryLinky: FC<{
   deleteLinkHandler: (link: ILink) => void;
 }> = ({ link, formSubmitHandler, deleteLinkHandler }) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   // in case when we are trying to turn off editMode by clicking on Trigger - it would not be clicked because of
   // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
   // turn off edit mode:
   const editTriggerRef = useRef<HTMLElement>(null);
 
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteLinkHandler(link);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
-
   const handleDelete = () => {
-    showConfirmModal();
+    deleteLinkHandler(link);
   };
 
   const toggleEditMode = () => {
@@ -59,15 +45,6 @@ const CategoryLinky: FC<{
 
   return (
     <div className="category-linky">
-      <Modal
-        title="Delete Link Confirmation"
-        visible={isConfirmModalVisible}
-        onOk={handleConfirmModalOk}
-        onCancel={handleConfirmModalCancel}
-      >
-        <p>Are you sure you want to delete link &quot;{link.title}&quot;?</p>
-      </Modal>
-
       <div className="category-linky-title-wrapper">
         <Button
           onClick={toggleEditMode}
