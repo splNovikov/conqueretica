@@ -8,6 +8,56 @@ import { ICategory, IColumn, ILink } from '../interfaces';
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 import { getCategoriesByColumnDoc } from './categories';
 
+export const addLinkToCategory = (
+  categories: ICategory[],
+  category: ICategory,
+  link: ILink,
+): ICategory[] => {
+  return categories.reduce((acc, cat) => {
+    return cat.id === category.id
+      ? [...acc, { ...cat, links: [...cat.links, link] }]
+      : [...acc, cat];
+  }, [] as ICategory[]);
+};
+
+export const updateLinkInCategory = (
+  categories: ICategory[],
+  category: ICategory,
+  link: ILink,
+): ICategory[] => {
+  return categories.reduce((acc, cat) => {
+    if (cat.id !== category.id) {
+      return [...acc, cat];
+    }
+
+    const updatedLinks = cat.links.reduce(
+      (acc2, l) => (l.id === link.id ? [...acc2, link] : [...acc2, l]),
+      [] as ILink[],
+    );
+
+    return [...acc, { ...cat, links: updatedLinks }];
+  }, [] as ICategory[]);
+};
+
+export const deleteLinkFromCategory = (
+  categories: ICategory[],
+  category: ICategory,
+  link: ILink,
+): ICategory[] => {
+  return categories.reduce((acc, cat) => {
+    if (cat.id !== category.id) {
+      return [...acc, cat];
+    }
+
+    const updatedLinks = cat.links.reduce(
+      (acc2, l) => (l.id === link.id ? acc2 : [...acc2, l]),
+      [] as ILink[],
+    );
+
+    return [...acc, { ...cat, links: updatedLinks }];
+  }, [] as ICategory[]);
+};
+
 export const addLink = async (
   title: string,
   href: string,
@@ -29,12 +79,7 @@ export const addLink = async (
     const columnsRef = collection(firebase.firestoreDB, 'columns');
     const columnDoc = doc(columnsRef, column.id);
     const categories = await getCategoriesByColumnDoc(columnDoc);
-
-    const updatedCategories = categories.reduce((acc, cat) => {
-      return cat.id === category.id
-        ? [...acc, { ...cat, links: [...cat.links, link] }]
-        : [...acc, cat];
-    }, [] as ICategory[]);
+    const updatedCategories = addLinkToCategory(categories, category, link);
 
     await updateDoc(columnDoc, { categories: updatedCategories });
     return link;
@@ -44,7 +89,6 @@ export const addLink = async (
   }
 };
 
-// todo: tests:
 export const updateLink = async (
   title: string,
   href: string,
@@ -57,29 +101,25 @@ export const updateLink = async (
     return null;
   }
 
+  const updatedLink = { ...link, title, href };
+
   try {
     const columnsRef = collection(firebase.firestoreDB, 'columns');
     const columnDoc = doc(columnsRef, column.id);
     const categories = await getCategoriesByColumnDoc(columnDoc);
 
-    // todo: add unit tests!
-    const updatedCategories = categories.reduce((acc, cat) => {
-      if (cat.id !== category.id) {
-        return [...acc, cat];
-      }
+    if (!categories) {
+      return null;
+    }
 
-      const updatedLinks = cat.links.reduce(
-        (acc2, l) =>
-          l.id === link.id ? [...acc2, { ...l, title, href }] : [...acc2, l],
-        [] as ILink[],
-      );
-
-      return [...acc, { ...cat, links: updatedLinks }];
-    }, [] as ICategory[]);
+    const updatedCategories = updateLinkInCategory(
+      categories,
+      category,
+      updatedLink,
+    );
 
     await updateDoc(columnDoc, { categories: updatedCategories });
-    // todo return updated link
-    return link;
+    return updatedLink;
   } catch (e) {
     httpErrorHandler(e);
     return null;
@@ -101,20 +141,11 @@ export const deleteLink = async (
     const columnsRef = collection(firebase.firestoreDB, 'columns');
     const columnDoc = doc(columnsRef, column.id);
     const categories = await getCategoriesByColumnDoc(columnDoc);
-
-    // todo: add unit tests!
-    const updatedCategories = categories.reduce((acc, cat) => {
-      if (cat.id !== category.id) {
-        return [...acc, cat];
-      }
-
-      const updatedLinks = cat.links.reduce(
-        (acc2, l) => (l.id === link.id ? acc2 : [...acc2, l]),
-        [] as ILink[],
-      );
-
-      return [...acc, { ...cat, links: updatedLinks }];
-    }, [] as ICategory[]);
+    const updatedCategories = deleteLinkFromCategory(
+      categories,
+      category,
+      link,
+    );
 
     await updateDoc(columnDoc, { categories: updatedCategories });
     return link;
