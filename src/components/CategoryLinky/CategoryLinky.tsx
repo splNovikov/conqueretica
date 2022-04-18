@@ -63,7 +63,7 @@ const CategoryLinky: FC<{
         {isEditMode && (
           <LinkForm
             outsideClickIgnoreElement={editTriggerRef}
-            link={link.href}
+            href={link.href}
             title={link.title}
             formSubmitHandler={handleSubmit}
             abortHandler={abortHandler}

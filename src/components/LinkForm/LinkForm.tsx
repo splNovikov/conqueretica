@@ -12,7 +12,7 @@ import './LinkForm.scss';
 const LinkForm: FC<{
   /* eslint-disable react/require-default-props */
   outsideClickIgnoreElement?: RefObject<HTMLElement>;
-  link?: string | undefined;
+  href?: string | undefined;
   title?: string | undefined;
   deleteHandler?: () => void;
   /* eslint-enable */
@@ -20,7 +20,7 @@ const LinkForm: FC<{
   abortHandler: () => void;
 }> = ({
   outsideClickIgnoreElement,
-  link = '',
+  href = '',
   title = '',
   deleteHandler,
   formSubmitHandler,
@@ -79,7 +79,7 @@ const LinkForm: FC<{
     <OutsideClickHandler onOutsideClick={handleOutsideClick}>
       <Form
         form={form}
-        initialValues={{ titleInput: title, linkInput: link }}
+        initialValues={{ titleInput: title, linkInput: href }}
         layout="vertical"
         onFinish={handleFormSubmit}
         className="link-form"
