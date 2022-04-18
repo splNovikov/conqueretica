@@ -158,9 +158,6 @@ describe('Firebase Links Test', () => {
       const res = await addLink('1', '1', columns[0].categories[0], columns[0]);
 
       expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Categories not found for this Column: column-1',
-      );
     });
 
     it('Should Return Null when title not passed', async () => {
@@ -222,7 +219,7 @@ describe('Firebase Links Test', () => {
     });
   });
 
-  describe('Delete Link', () => {
+  describe('Update Link', () => {
     const origSetDoc = firestore.updateDoc;
     const updatedTitle = 'new-title';
     const updatedHref = 'https://ya.ru';
@@ -243,7 +240,11 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Update Link', async () => {
-      const updatedLink = { ...linkToUpdate, updatedTitle, updatedHref };
+      const updatedLink = {
+        ...linkToUpdate,
+        title: updatedTitle,
+        href: updatedHref,
+      };
 
       const res = await updateLink(
         updatedTitle,

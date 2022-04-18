@@ -79,6 +79,11 @@ export const addLink = async (
     const columnsRef = collection(firebase.firestoreDB, 'columns');
     const columnDoc = doc(columnsRef, column.id);
     const categories = await getCategoriesByColumnDoc(columnDoc);
+
+    if (!categories) {
+      return null;
+    }
+
     const updatedCategories = addLinkToCategory(categories, category, link);
 
     await updateDoc(columnDoc, { categories: updatedCategories });
