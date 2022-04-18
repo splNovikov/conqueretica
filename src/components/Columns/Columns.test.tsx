@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 // Components
 import Columns from './Columns';
 // Test Data
-import { columns } from '../../__test_data__';
+import { columns, tabs } from '../../__test_data__';
 
 describe('Columns', () => {
   it('Columns Component is rendering', () => {
@@ -15,6 +15,8 @@ describe('Columns', () => {
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
         createLinkHandler={() => 1}
+        updateLinkHandler={() => 1}
+        deleteLinkHandler={() => 1}
       />,
     );
     expect(wrapper.hasClass('columns')).toEqual(true);
@@ -29,6 +31,8 @@ describe('Columns', () => {
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
         createLinkHandler={() => 1}
+        updateLinkHandler={() => 1}
+        deleteLinkHandler={() => 1}
       />,
     );
 
@@ -45,10 +49,13 @@ describe('Columns', () => {
       <Columns
         columns={columns}
         createColumnHandler={handleCreateColumn}
+        selectedTab={tabs[0]}
         deleteColumnHandler={() => 1}
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
         createLinkHandler={() => 1}
+        updateLinkHandler={() => 1}
+        deleteLinkHandler={() => 1}
       />,
     );
 
