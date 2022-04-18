@@ -21,6 +21,13 @@ describe('Identify Links', () => {
     expect(res).toBe('docs');
   });
 
+  it('Should return "docs - 2"', () => {
+    const res = identifyLink(
+      'https://docs.google.com/document/d/1cTy6GJtjZmf8V8-VTOeKKE0Y5CKKtrgDOz9DrXl9xFA/edit',
+    );
+    expect(res).toBe('docs');
+  });
+
   it('Should return "slides"', () => {
     const res = identifyLink(links.slides.href);
     expect(res).toBe('slides');

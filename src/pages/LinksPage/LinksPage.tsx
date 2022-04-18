@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from '../../firebase';
 // Interfaces
-import { ICategory, IColumn, ITab } from '../../interfaces';
+import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import LinksPageView from './LinksPageView';
 // Utils
@@ -81,12 +81,26 @@ const LinksPage = () => {
   // endregion Categories
 
   // region Links
-  const createLinkHandler = (
+  const handleLinkCreate = (
     title: string,
     href: string,
     category: ICategory,
     column: IColumn,
   ) => firebase.addLink(title, href, category, column);
+
+  const handleLinkUpdate = (
+    title: string,
+    href: string,
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => firebase.updateLink(title, href, link, category, column);
+
+  const handleLinkDelete = (
+    link: ILink,
+    category: ICategory,
+    column: IColumn,
+  ) => firebase.deleteLink(link, category, column);
   // endregion Links
 
   return (
@@ -110,7 +124,9 @@ const LinksPage = () => {
       categoryFormSubmitHandler={categoryFormSubmitHandler}
       deleteCategoryHandler={deleteCategoryHandler}
       // links
-      createLinkHandler={createLinkHandler}
+      createLinkHandler={handleLinkCreate}
+      updateLinkHandler={handleLinkUpdate}
+      deleteLinkHandler={handleLinkDelete}
     />
   );
 };

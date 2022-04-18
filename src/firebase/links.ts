@@ -8,6 +8,56 @@ import { ICategory, IColumn, ILink } from '../interfaces';
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 import { getCategoriesByColumnDoc } from './categories';
 
+export const addLinkToCategory = (
+  categories: ICategory[],
+  category: ICategory,
+  link: ILink,
+): ICategory[] => {
+  return categories.reduce((acc, cat) => {
+    return cat.id === category.id
+      ? [...acc, { ...cat, links: [...cat.links, link] }]
+      : [...acc, cat];
+  }, [] as ICategory[]);
+};
+
+export const updateLinkInCategory = (
+  categories: ICategory[],
+  category: ICategory,
+  link: ILink,
+): ICategory[] => {
+  return categories.reduce((acc, cat) => {
+    if (cat.id !== category.id) {
+      return [...acc, cat];
+    }
+
+    const updatedLinks = cat.links.reduce(
+      (acc2, l) => (l.id === link.id ? [...acc2, link] : [...acc2, l]),
+      [] as ILink[],
+    );
+
+    return [...acc, { ...cat, links: updatedLinks }];
+  }, [] as ICategory[]);
+};
+
+export const deleteLinkFromCategory = (
+  categories: ICategory[],
+  category: ICategory,
+  link: ILink,
+): ICategory[] => {
+  return categories.reduce((acc, cat) => {
+    if (cat.id !== category.id) {
+      return [...acc, cat];
+    }
+
+    const updatedLinks = cat.links.reduce(
+      (acc2, l) => (l.id === link.id ? acc2 : [...acc2, l]),
+      [] as ILink[],
+    );
+
+    return [...acc, { ...cat, links: updatedLinks }];
+  }, [] as ICategory[]);
+};
+
 export const addLink = async (
   title: string,
   href: string,
@@ -31,15 +81,75 @@ export const addLink = async (
     const categories = await getCategoriesByColumnDoc(columnDoc);
 
     if (!categories) {
-      defaultErrorHandler(`Categories not found for this Column: ${column.id}`);
       return null;
     }
 
-    const updatedCategories = categories.reduce((acc, cat) => {
-      return cat.id === category.id
-        ? [...acc, { ...cat, links: [...cat.links, link] }]
-        : [...acc, cat];
-    }, [] as ICategory[]);
+    const updatedCategories = addLinkToCategory(categories, category, link);
+
+    await updateDoc(columnDoc, { categories: updatedCategories });
+    return link;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const updateLink = async (
+  title: string,
+  href: string,
+  link: ILink,
+  category: ICategory,
+  column: IColumn,
+): Promise<ILink | null> => {
+  if (!title || !href || !link?.id || !category?.id || !column?.id) {
+    defaultErrorHandler('Invalid Parameters Passed to Update a link');
+    return null;
+  }
+
+  const updatedLink = { ...link, title, href };
+
+  try {
+    const columnsRef = collection(firebase.firestoreDB, 'columns');
+    const columnDoc = doc(columnsRef, column.id);
+    const categories = await getCategoriesByColumnDoc(columnDoc);
+
+    if (!categories) {
+      return null;
+    }
+
+    const updatedCategories = updateLinkInCategory(
+      categories,
+      category,
+      updatedLink,
+    );
+
+    await updateDoc(columnDoc, { categories: updatedCategories });
+    return updatedLink;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const deleteLink = async (
+  link: ILink,
+  category: ICategory,
+  column: IColumn,
+): Promise<ILink | null> => {
+  if (!link?.id || !category?.id || !column?.id) {
+    defaultErrorHandler('Invalid Parameters Passed to Delete a link');
+    return null;
+  }
+
+  try {
+    const columnsRef = collection(firebase.firestoreDB, 'columns');
+    const columnDoc = doc(columnsRef, column.id);
+    const categories = await getCategoriesByColumnDoc(columnDoc);
+    const updatedCategories = deleteLinkFromCategory(
+      categories,
+      category,
+      link,
+    );
 
     await updateDoc(columnDoc, { categories: updatedCategories });
     return link;

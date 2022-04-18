@@ -1,0 +1,23 @@
+.category-linky {
+  display: flex;
+  flex-direction: column;
+
+  &-title-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &-title-wrapper &-edit-trigger {
+    flex: 0;
+  }
+
+  &-form-wrapper {
+    transition: height 200ms ease-in-out;
+    overflow: hidden;
+    height: 0;
+  }
+
+  &-form-wrapper-expand {
+    height: 96px;
+  }
+}

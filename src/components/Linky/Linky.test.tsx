@@ -7,24 +7,17 @@ import GoogleIcon from '../GoogleIcon';
 import { links } from '../../__test_data__';
 
 it('Linky is rendering', () => {
-  const wrapper = shallow(<Linky link={links.sheets} />);
-  expect(wrapper.hasClass('linky')).toEqual(true);
+  const wrapper = shallow(<Linky link={links.sheets} ellipsis />);
+  expect(wrapper.hasClass('linky')).toBe(true);
 });
 
 describe('Linky should has correct classes', () => {
-  it('Should have "colored" class', () => {
-    const wrapper = shallow(<Linky link={links.sheets} colored />);
-    expect(wrapper.hasClass('colored')).toEqual(true);
-  });
+  it('Should have "ellipsis" class', async () => {
+    const wrapper = mount(<Linky link={links.sheets} ellipsis />);
 
-  it('Should have "big" class', () => {
-    const wrapper = shallow(<Linky link={links.sheets} big />);
-    expect(wrapper.hasClass('big')).toEqual(true);
-  });
-
-  it('Should have "ellipsed" class', () => {
-    const wrapper = shallow(<Linky link={links.sheets} ellipsed />);
-    expect(wrapper.hasClass('ellipsed')).toEqual(true);
+    expect(wrapper.find('a.linky').hasClass('ant-typography-ellipsis')).toBe(
+      true,
+    );
   });
 });
 

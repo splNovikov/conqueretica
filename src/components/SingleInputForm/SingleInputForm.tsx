@@ -1,6 +1,7 @@
 import React, { FC, KeyboardEvent } from 'react';
 import { Form, Input, Button } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import OutsideClickHandler from 'react-outside-click-handler';
 // Styles
 import './SingleInputForm.scss';
 
@@ -27,14 +28,11 @@ const SingleInputForm: FC<{
     await formSubmitHandler(trimmedV);
   };
 
-  const handleBlur = () => {
-    abortHandler();
-  };
-
   const handleCancelEdit = () => {
     abortHandler();
   };
 
+  // todo: common esc handler
   const handleKeyboardEvent = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
       abortHandler();
@@ -42,51 +40,52 @@ const SingleInputForm: FC<{
   };
 
   return (
-    <Form
-      form={form}
-      initialValues={{ singleInput: value }}
-      layout="inline"
-      onFinish={handleFormSubmit}
-      className="single-input-form"
-      onBlur={handleBlur}
-    >
-      <Form.Item
-        name="singleInput"
-        rules={[
-          {
-            required: true,
-            message: 'Can not be empty',
-          },
-          {
-            max: 15,
-            message: 'Max 15 characters',
-          },
-        ]}
+    <OutsideClickHandler onOutsideClick={handleCancelEdit}>
+      <Form
+        form={form}
+        initialValues={{ singleInput: value }}
+        layout="inline"
+        onFinish={handleFormSubmit}
+        className="single-input-form"
       >
-        <Input
-          placeholder={placeholder}
-          autoFocus
-          size="small"
-          onKeyDown={handleKeyboardEvent}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          icon={<CheckOutlined />}
-          size="small"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Button
-          htmlType="button"
-          icon={<CloseOutlined />}
-          onClick={handleCancelEdit}
-          size="small"
-        />
-      </Form.Item>
-    </Form>
+        <Form.Item
+          name="singleInput"
+          rules={[
+            {
+              required: true,
+              message: 'Can not be empty',
+            },
+            {
+              max: 15,
+              message: 'Max 15 characters',
+            },
+          ]}
+        >
+          <Input
+            placeholder={placeholder}
+            autoFocus
+            size="small"
+            onKeyDown={handleKeyboardEvent}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            icon={<CheckOutlined />}
+            size="small"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            htmlType="button"
+            icon={<CloseOutlined />}
+            onClick={handleCancelEdit}
+            size="small"
+          />
+        </Form.Item>
+      </Form>
+    </OutsideClickHandler>
   );
 };
 

@@ -73,8 +73,20 @@ export const deleteCategory = async (
 export const getCategoriesByColumnDoc = async (
   columnDoc: DocumentReference,
 ): Promise<ICategory[]> => {
-  const columnDocumentSnapshot = await getDoc(columnDoc);
-  const columnData = columnDocumentSnapshot.data();
+  try {
+    const columnDocumentSnapshot = await getDoc(columnDoc);
+    const columnData = columnDocumentSnapshot.data();
 
-  return columnData ? columnData.categories : [];
+    if (!columnData?.categories?.length) {
+      defaultErrorHandler(
+        `Categories not found for this Column: ${columnDoc.id}`,
+      );
+      return [];
+    }
+
+    return columnData.categories;
+  } catch (e) {
+    httpErrorHandler(e);
+    return [];
+  }
 };

@@ -1,20 +1,21 @@
+@import '../../styles/theme';
+
 .category {
-  .linky-wrapper {
+  border-bottom: 1px solid $category-border-color;
+  padding: $category-padding;
+
+  &-header {
     display: flex;
+    justify-content: space-between;
   }
 
-  .category-header {
-    display: flex;
+  &-title {
+    display: inline-flex;
     align-items: center;
   }
 
-  .delete-category-icon {
-    // todo: move paddings to variables? check ant design
-    padding: 0 0.2em;
-
-    &:hover {
-      // todo: move to colors
-      color: red;
-    }
+  .category-btn-enable-add-link {
+    padding: 0;
+    font-size: $category-btn-enable-add-link-font-size;
   }
 }

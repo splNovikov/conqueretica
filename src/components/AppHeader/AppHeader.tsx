@@ -67,7 +67,11 @@ const GoogleLinksDropdownMenu = () => (
     placement="bottomRight"
     arrow
   >
-    <Button type="text" icon={<AppstoreOutlined />} />
+    <Button
+      type="text"
+      icon={<AppstoreOutlined />}
+      className="app-header-google-links-trigger"
+    />
   </Dropdown>
 );
 

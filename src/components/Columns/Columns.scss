@@ -1,4 +1,7 @@
 @import '../../styles/theme';
 
 .columns {
+  &-create-column-wrapper {
+    padding: $columns-create-column-wrapper-padding;
+  }
 }

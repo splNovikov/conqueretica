@@ -1,33 +1,10 @@
+@import '../../styles/theme';
+
 .linky {
-  font-size: small;
-  display: inline-flex;
-  align-items: center;
+  font-size: $linky-font-size;
 
-  .anticon {
-    // todo: move paddings to variables? check ant design
-    padding-right: 0.2em;
-  }
-
-  &.big {
-    padding: 1em 2em;
-  }
-
-  &.colored {
-    &:nth-child(2n) {
-      background-color: #fff4c2;
-    }
-    &:nth-child(2n + 1) {
-      background-color: #fce1e5;
-    }
-  }
-
-  &.ellipsed {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  &:hover {
-    text-decoration: underline;
+  & u > .linky-icon-wrapper,
+  & > .linky-icon-wrapper {
+    vertical-align: middle;
   }
 }

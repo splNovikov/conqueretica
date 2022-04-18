@@ -4,12 +4,14 @@ import { mount, shallow } from 'enzyme';
 import Column from './Column';
 // Test Data
 import { columns } from '../../__test_data__';
+import { act } from 'react-dom/test-utils';
 
 describe('Column', () => {
   it('Column Component is rendering', () => {
     const wrapper = shallow(
       <Column
         column={columns[0]}
+        span={6}
         deleteColumnHandler={() => 1}
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
@@ -19,10 +21,11 @@ describe('Column', () => {
     expect(wrapper.hasClass('column')).toEqual(true);
   });
 
-  it('Column Component is rendering necessary elements', () => {
+  it('Column Component is rendering necessary elements', async () => {
     const wrapper = mount(
       <Column
         column={columns[0]}
+        span={6}
         deleteColumnHandler={() => 1}
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
@@ -31,10 +34,19 @@ describe('Column', () => {
     );
 
     const deleteColEl = wrapper.find('button.btn-delete-column');
-    expect(deleteColEl.exists()).toBeTruthy();
+    expect(deleteColEl.exists()).toBe(true);
 
-    const addFormEl = wrapper.find('AddForm');
-    expect(addFormEl.exists()).toBeTruthy();
+    const enableAddCatTrigger = wrapper.find('button.btn-enable-add-category');
+    expect(enableAddCatTrigger.exists()).toBe(true);
+
+    await act(async () => {
+      enableAddCatTrigger.simulate('click');
+    });
+
+    wrapper.update();
+
+    const addFormEl = wrapper.find('form.single-input-form');
+    expect(addFormEl.exists()).toBe(true);
 
     const categoriesEl = wrapper.find('Category');
     expect(categoriesEl.length).toBe(2);
@@ -45,6 +57,7 @@ describe('Column', () => {
     const wrapper = mount(
       <Column
         column={columns[0]}
+        span={6}
         deleteColumnHandler={handleDeleteColumn}
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
@@ -89,6 +102,7 @@ describe('Column', () => {
     const wrapper = mount(
       <Column
         column={columns[0]}
+        span={6}
         deleteColumnHandler={handleDeleteColumn}
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
