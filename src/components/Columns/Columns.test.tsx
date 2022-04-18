@@ -26,6 +26,7 @@ describe('Columns', () => {
     const wrapper = mount(
       <Columns
         columns={columns}
+        selectedTab={tabs[0]}
         createColumnHandler={() => 1}
         deleteColumnHandler={() => 1}
         categoryFormSubmitHandler={() => 1}
@@ -48,8 +49,8 @@ describe('Columns', () => {
     const wrapper = mount(
       <Columns
         columns={columns}
-        createColumnHandler={handleCreateColumn}
         selectedTab={tabs[0]}
+        createColumnHandler={handleCreateColumn}
         deleteColumnHandler={() => 1}
         categoryFormSubmitHandler={() => 1}
         deleteCategoryHandler={() => 1}
