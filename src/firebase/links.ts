@@ -131,7 +131,6 @@ export const updateLink = async (
   }
 };
 
-// todo: tests:
 export const deleteLink = async (
   link: ILink,
   category: ICategory,

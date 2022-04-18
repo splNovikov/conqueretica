@@ -4,6 +4,7 @@ import {
   addLinkToCategory,
   updateLink,
   updateLinkInCategory,
+  deleteLink,
   deleteLinkFromCategory,
 } from './links';
 import * as categories from './categories';
@@ -434,6 +435,152 @@ describe('Firebase Links Test', () => {
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
+      );
+    });
+  });
+
+  describe('Delete Link', () => {
+    const origSetDoc = firestore.updateDoc;
+    const linkToDelete: ILink = {
+      id: 'link-2',
+      href: 'old-href',
+      title: 'old-titletitle',
+      // @ts-ignore
+      createdAt: 'date',
+    };
+
+    beforeEach(() => {
+      firestore.updateDoc = jest.fn();
+    });
+
+    afterEach(() => {
+      firestore.updateDoc = origSetDoc;
+    });
+
+    it('Should Delete Link', async () => {
+      const res = await deleteLink(
+        linkToDelete,
+        columns[0].categories[0],
+        columns[0],
+      );
+
+      const updatedCategories = [
+        {
+          ...columns[0].categories[0],
+          links: [
+            columns[0].categories[0].links[0],
+            columns[0].categories[0].links[2],
+          ],
+        },
+        columns[0].categories[1],
+      ];
+
+      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
+        categories: updatedCategories,
+      });
+      expect(res).toBe(linkToDelete);
+    });
+
+    it('Should Handle getCategoriesByColumnDoc Exception', async () => {
+      const err = new Error('Mocked error');
+      jest
+        .spyOn(categories, 'getCategoriesByColumnDoc')
+        .mockReturnValue(Promise.reject(err));
+
+      const res = await deleteLink(
+        linkToDelete,
+        columns[0].categories[0],
+        columns[0],
+      );
+
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Handle updateDoc Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.updateDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await deleteLink(
+        linkToDelete,
+        columns[0].categories[0],
+        columns[0],
+      );
+
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Handle Not Found Categories with Exception', async () => {
+      jest
+        .spyOn(categories, 'getCategoriesByColumnDoc')
+        .mockReturnValue(Promise.resolve(undefined));
+
+      const res = await deleteLink(
+        linkToDelete,
+        columns[0].categories[0],
+        columns[0],
+      );
+
+      expect(res).toBeNull();
+    });
+
+    it('Should Return Null when Link not passed', async () => {
+      const res = await deleteLink(
+        undefined,
+        columns[0].categories[0],
+        columns[0],
+      );
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Delete a link',
+      );
+    });
+
+    it('Should Return Null when Link passed as an empty Object', async () => {
+      const res = await deleteLink({}, columns[0].categories[0], columns[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Delete a link',
+      );
+    });
+
+    it('Should Return Null when Category not passed', async () => {
+      const res = await deleteLink(linkToDelete, undefined, columns[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Delete a link',
+      );
+    });
+
+    it('Should Return Null when Category passed as an empty Object', async () => {
+      const res = await deleteLink(linkToDelete, {}, columns[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Delete a link',
+      );
+    });
+
+    it('Should Return Null when Column not passed', async () => {
+      const res = await deleteLink(
+        linkToDelete,
+        columns[0].categories[0],
+        undefined,
+      );
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Delete a link',
+      );
+    });
+
+    it('Should Return Null when Column passed as an empty Object', async () => {
+      const res = await deleteLink(linkToDelete, columns[0].categories[0], {});
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Delete a link',
       );
     });
   });
