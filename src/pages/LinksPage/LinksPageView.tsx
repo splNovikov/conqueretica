@@ -23,8 +23,6 @@ const LinksPage: FC<{
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
   // columns
-  columns: IColumn[];
-  loadingColumns: boolean;
   createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
   // links
@@ -55,8 +53,6 @@ const LinksPage: FC<{
   updateTabHandler,
   deleteTabHandler,
   tabsFormSubmitHandler,
-  columns,
-  loadingColumns,
   createColumnHandler,
   deleteColumnHandler,
   createLinkHandler,
@@ -86,14 +82,8 @@ const LinksPage: FC<{
         </Skeleton>
 
         <Content className="links-page-columns-wrapper">
-          <Skeleton
-            loading={loadingColumns}
-            active
-            round
-            className="columns-skeleton"
-          >
+          {selectedTab?.id ? (
             <Columns
-              columns={columns}
               selectedTab={selectedTab}
               createColumnHandler={createColumnHandler}
               deleteColumnHandler={deleteColumnHandler}
@@ -101,7 +91,7 @@ const LinksPage: FC<{
               updateLinkHandler={updateLinkHandler}
               deleteLinkHandler={deleteLinkHandler}
             />
-          </Skeleton>
+          ) : null}
         </Content>
       </Content>
     </Layout>

@@ -1,17 +1,21 @@
 import React, { FC } from 'react';
-import { Button, Col, Row, Tooltip } from 'antd';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { Button, Col, Row, Skeleton, Tooltip } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
+// Firebase
+import firebase from '../../firebase';
 // Interfaces
 import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
 // Components
 import Column from '../Column';
+// Utils
+import { httpErrorHandler } from '../../utils';
 // Styles
 import './Columns.scss';
 
 const Columns: FC<{
-  columns: IColumn[];
+  selectedTab: ITab;
   // eslint-disable-next-line react/require-default-props
-  selectedTab?: ITab;
   createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
   createLinkHandler: (
@@ -33,7 +37,6 @@ const Columns: FC<{
     column: IColumn,
   ) => void;
 }> = ({
-  columns,
   selectedTab,
   createColumnHandler,
   deleteColumnHandler,
@@ -41,33 +44,48 @@ const Columns: FC<{
   updateLinkHandler,
   deleteLinkHandler,
 }) => {
+  const qColumns = firebase.getColumnsQuery(selectedTab);
+  const [columns = [], loadingColumns, columnsError] =
+    useCollectionData<IColumn>(qColumns);
+
+  if (columnsError?.message) {
+    httpErrorHandler(columnsError);
+  }
+
   return (
-    <Row className="columns" gutter={[16, 16]}>
-      {columns.map((column: IColumn) => (
-        <Column
-          span={4}
-          key={column.id}
-          column={column}
-          deleteColumnHandler={deleteColumnHandler}
-          createLinkHandler={createLinkHandler}
-          updateLinkHandler={updateLinkHandler}
-          deleteLinkHandler={deleteLinkHandler}
-        />
-      ))}
-      {selectedTab?.id ? (
-        <Col span={3} className="columns-create-column-wrapper">
-          <Tooltip title="Add New Column">
-            <Button
-              shape="circle"
-              size="small"
-              icon={<PlusCircleOutlined />}
-              onClick={createColumnHandler}
-              className="columns-btn-add-new-column"
-            />
-          </Tooltip>
-        </Col>
-      ) : null}
-    </Row>
+    <Skeleton
+      loading={loadingColumns}
+      active
+      round
+      className="columns-skeleton"
+    >
+      <Row className="columns" gutter={[16, 16]}>
+        {columns.map((column: IColumn) => (
+          <Column
+            span={4}
+            key={column.id}
+            column={column}
+            deleteColumnHandler={deleteColumnHandler}
+            createLinkHandler={createLinkHandler}
+            updateLinkHandler={updateLinkHandler}
+            deleteLinkHandler={deleteLinkHandler}
+          />
+        ))}
+        {selectedTab?.id ? (
+          <Col span={3} className="columns-create-column-wrapper">
+            <Tooltip title="Add New Column">
+              <Button
+                shape="circle"
+                size="small"
+                icon={<PlusCircleOutlined />}
+                onClick={createColumnHandler}
+                className="columns-btn-add-new-column"
+              />
+            </Tooltip>
+          </Col>
+        ) : null}
+      </Row>
+    </Skeleton>
   );
 };
 

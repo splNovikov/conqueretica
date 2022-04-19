@@ -56,16 +56,6 @@ const LinksPage = () => {
   // endregion Tabs
 
   // region Columns
-  let qColumns;
-  if (user && selectedTab?.id) {
-    qColumns = firebase.getColumnsQuery(selectedTab);
-  }
-  const [columns = [], loadingColumns, columnsError] =
-    useCollectionData<IColumn>(qColumns);
-
-  if (columnsError?.message) {
-    httpErrorHandler(columnsError);
-  }
 
   const addColumn = () => firebase.addColumn(selectedTab);
 
@@ -108,8 +98,6 @@ const LinksPage = () => {
       deleteTabHandler={deleteTab}
       tabsFormSubmitHandler={addTab}
       // columns
-      columns={columns}
-      loadingColumns={loadingColumns}
       createColumnHandler={addColumn}
       deleteColumnHandler={deleteColumn}
       // links
