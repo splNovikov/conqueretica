@@ -5,7 +5,6 @@ export const categories: ICategory[] = [
   {
     id: 'category-id-1',
     columnId: 'column-id-1',
-    ownerId: 'test_owner_id_1',
     title: 'NuORDER reports',
     // @ts-ignore
     createdAt: '2021-10-01T13:13:45.115Z',
@@ -37,7 +36,6 @@ export const categories: ICategory[] = [
   {
     id: 'category-id-2',
     columnId: 'column-id-1',
-    ownerId: 'test_owner_id_1',
     title: 'Weekly Reporting',
     // @ts-ignore
     createdAt: '2021-10-01T13:13:45.115Z',
@@ -55,7 +53,6 @@ export const categories: ICategory[] = [
   {
     id: 'category-id-3',
     columnId: 'column-id-2',
-    ownerId: 'test_owner_id_1',
     title: 'Money',
     // @ts-ignore
     createdAt: '2021-10-01T13:13:45.115Z',
