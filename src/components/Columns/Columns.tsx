@@ -15,9 +15,6 @@ import './Columns.scss';
 
 const Columns: FC<{
   selectedTab: ITab;
-  // eslint-disable-next-line react/require-default-props
-  createColumnHandler: () => void;
-  deleteColumnHandler: (val: IColumn) => void;
   createLinkHandler: (
     title: string,
     href: string,
@@ -38,8 +35,6 @@ const Columns: FC<{
   ) => void;
 }> = ({
   selectedTab,
-  createColumnHandler,
-  deleteColumnHandler,
   createLinkHandler,
   updateLinkHandler,
   deleteLinkHandler,
@@ -51,6 +46,14 @@ const Columns: FC<{
   if (columnsError?.message) {
     httpErrorHandler(columnsError);
   }
+
+  const handleCreateColumn = async () => {
+    await firebase.addColumn(selectedTab);
+  };
+
+  const handleDeleteColumn = async (column: IColumn) => {
+    await firebase.deleteColumn(column);
+  };
 
   return (
     <Skeleton
@@ -65,7 +68,7 @@ const Columns: FC<{
             span={4}
             key={column.id}
             column={column}
-            deleteColumnHandler={deleteColumnHandler}
+            deleteColumnHandler={handleDeleteColumn}
             createLinkHandler={createLinkHandler}
             updateLinkHandler={updateLinkHandler}
             deleteLinkHandler={deleteLinkHandler}
@@ -78,7 +81,7 @@ const Columns: FC<{
                 shape="circle"
                 size="small"
                 icon={<PlusCircleOutlined />}
-                onClick={createColumnHandler}
+                onClick={handleCreateColumn}
                 className="columns-btn-add-new-column"
               />
             </Tooltip>

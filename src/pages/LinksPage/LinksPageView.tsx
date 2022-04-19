@@ -22,9 +22,6 @@ const LinksPage: FC<{
   updateTabHandler: (val: ITab, newTitle: string) => void;
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
-  // columns
-  createColumnHandler: () => void;
-  deleteColumnHandler: (val: IColumn) => void;
   // links
   createLinkHandler: (
     title: string,
@@ -53,8 +50,6 @@ const LinksPage: FC<{
   updateTabHandler,
   deleteTabHandler,
   tabsFormSubmitHandler,
-  createColumnHandler,
-  deleteColumnHandler,
   createLinkHandler,
   updateLinkHandler,
   deleteLinkHandler,
@@ -85,8 +80,6 @@ const LinksPage: FC<{
           {selectedTab?.id ? (
             <Columns
               selectedTab={selectedTab}
-              createColumnHandler={createColumnHandler}
-              deleteColumnHandler={deleteColumnHandler}
               createLinkHandler={createLinkHandler}
               updateLinkHandler={updateLinkHandler}
               deleteLinkHandler={deleteLinkHandler}

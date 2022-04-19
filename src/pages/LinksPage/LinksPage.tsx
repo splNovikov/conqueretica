@@ -55,13 +55,6 @@ const LinksPage = () => {
   };
   // endregion Tabs
 
-  // region Columns
-
-  const addColumn = () => firebase.addColumn(selectedTab);
-
-  const deleteColumn = (column: IColumn) => firebase.deleteColumn(column);
-  // endregion Columns
-
   // region Links
   const handleLinkCreate = (
     title: string,
@@ -97,9 +90,6 @@ const LinksPage = () => {
       updateTabHandler={handleTabUpdate}
       deleteTabHandler={deleteTab}
       tabsFormSubmitHandler={addTab}
-      // columns
-      createColumnHandler={addColumn}
-      deleteColumnHandler={deleteColumn}
       // links
       createLinkHandler={handleLinkCreate}
       updateLinkHandler={handleLinkUpdate}
