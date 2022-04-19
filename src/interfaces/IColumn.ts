@@ -4,5 +4,4 @@ export interface IColumn {
   id: string;
   tabId: string;
   createdAt: FieldValue;
-  categories: string[];
 }

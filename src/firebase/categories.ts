@@ -1,5 +1,4 @@
 import {
-  arrayUnion,
   arrayRemove,
   collection,
   doc,
@@ -7,6 +6,12 @@ import {
   Timestamp,
   DocumentReference,
   getDoc,
+  setDoc,
+  Query,
+  query,
+  where,
+  orderBy,
+  QueryDocumentSnapshot,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -32,15 +37,16 @@ export const addCategory = async (
 
   const category: ICategory = {
     id: uuidv4(),
+    columnId: column.id,
     title,
     createdAt: Timestamp.now(),
     links: [],
   };
   try {
-    const columnsRef = collection(firebase.firestoreDB, 'columns');
-    const columnDoc = doc(columnsRef, column.id);
+    const categoriesRef = collection(firebase.firestoreDB, 'categories');
+    const categoriesDoc = doc(categoriesRef, category.id);
 
-    await updateDoc(columnDoc, { categories: arrayUnion(category) });
+    await setDoc(categoriesDoc, category);
     return category;
   } catch (e) {
     httpErrorHandler(e);
@@ -89,4 +95,23 @@ export const getCategoriesByColumnDoc = async (
     httpErrorHandler(e);
     return [];
   }
+};
+
+const categoriesConverter = {
+  toFirestore: (data: ICategory) => data,
+  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ICategory,
+};
+
+// todo tests
+export const getCategoriesQuery = (column: IColumn): Query<ICategory> => {
+  const categoriesRef = collection(
+    firebase.firestoreDB,
+    'categories',
+  ).withConverter<ICategory>(categoriesConverter);
+
+  return query(
+    categoriesRef,
+    where('columnId', '==', column.id),
+    orderBy('createdAt', 'asc'),
+  );
 };

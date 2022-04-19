@@ -29,7 +29,6 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
     id: uuidv4(),
     createdAt: serverTimestamp(),
     tabId: tab.id,
-    categories: [],
   };
   try {
     const columnsRef = collection(firebase.firestoreDB, 'columns');

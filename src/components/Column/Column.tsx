@@ -1,15 +1,18 @@
 import React, { FC, useState } from 'react';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Button, Col, Modal, Tooltip } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+// Firebase
+import firebase from '../../firebase';
 // Interfaces
 import { ICategory, IColumn, ILink } from '../../interfaces';
 // Components
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
+// Utils
+import { httpErrorHandler } from '../../utils';
 // Styles
 import './Column.scss';
-// Mocks
-import { categories } from '../../__test_data__';
 
 const Column: FC<{
   column: IColumn;
@@ -47,6 +50,13 @@ const Column: FC<{
 }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
+  const qCategories = firebase.getCategoriesQuery(column);
+  const [categories = [], loadingCategories, categoriesError] =
+    useCollectionData<ICategory>(qCategories);
+
+  if (categoriesError?.message) {
+    httpErrorHandler(categoriesError);
+  }
 
   const enableAddCategoryMode = () => {
     setIsAddCategoryMode(true);
