@@ -12,7 +12,12 @@ import {
   deleteColumn,
   deleteColumns,
 } from './columns';
-import { getCategoriesQuery, addCategory, deleteCategory } from './categories';
+import {
+  getCategoriesQuery,
+  addCategory,
+  deleteCategory,
+  deleteCategories,
+} from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -38,6 +43,7 @@ export default {
   getCategoriesQuery,
   addCategory,
   deleteCategory,
+  deleteCategories,
 
   addLink,
   updateLink,

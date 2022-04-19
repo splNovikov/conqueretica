@@ -10,14 +10,16 @@ import {
   QueryDocumentSnapshot,
   serverTimestamp,
   where,
+  getDocs,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
 // Interfaces
-import { IColumn, ITab } from '../interfaces';
+import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
+import { deleteCategories, getCategoriesQuery } from './categories';
 
 export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   if (!tab?.id) {
@@ -46,10 +48,8 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
 export const deleteColumns = async (
   columns: QuerySnapshot<IColumn>,
 ): Promise<void> => {
-  // todo: delete with async?
   await columns.forEach((column) => {
-    // added exports. for testing ability
-    exports.deleteColumn(column.data());
+    deleteColumn(column.data());
   });
 };
 
@@ -60,6 +60,13 @@ export const deleteColumn = async (
     defaultErrorHandler('No Column');
     return null;
   }
+
+  // 1. get all categories
+  const categoriesQ = getCategoriesQuery(column);
+  const categories: QuerySnapshot<ICategory> = await getDocs(categoriesQ);
+
+  // 2. delete all categories
+  await deleteCategories(categories);
 
   try {
     await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));

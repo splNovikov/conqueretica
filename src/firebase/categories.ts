@@ -11,6 +11,7 @@ import {
   orderBy,
   QueryDocumentSnapshot,
   deleteDoc,
+  QuerySnapshot,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -51,6 +52,14 @@ export const addCategory = async (
     httpErrorHandler(e);
     return null;
   }
+};
+
+export const deleteCategories = async (
+  categories: QuerySnapshot<ICategory>,
+): Promise<void> => {
+  await categories.forEach((category) => {
+    deleteCategory(category.data());
+  });
 };
 
 export const deleteCategory = async (
