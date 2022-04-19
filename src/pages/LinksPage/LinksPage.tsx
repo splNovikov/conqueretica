@@ -72,14 +72,6 @@ const LinksPage = () => {
   const deleteColumn = (column: IColumn) => firebase.deleteColumn(column);
   // endregion Columns
 
-  // region Categories
-  const categoryFormSubmitHandler = (value: string, column: IColumn) =>
-    firebase.addCategory(value, column);
-
-  const deleteCategoryHandler = (category: ICategory, column: IColumn) =>
-    firebase.deleteCategory(column, category);
-  // endregion Categories
-
   // region Links
   const handleLinkCreate = (
     title: string,
@@ -120,9 +112,6 @@ const LinksPage = () => {
       loadingColumns={loadingColumns}
       createColumnHandler={addColumn}
       deleteColumnHandler={deleteColumn}
-      // categories
-      categoryFormSubmitHandler={categoryFormSubmitHandler}
-      deleteCategoryHandler={deleteCategoryHandler}
       // links
       createLinkHandler={handleLinkCreate}
       updateLinkHandler={handleLinkUpdate}

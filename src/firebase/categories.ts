@@ -1,8 +1,6 @@
 import {
-  arrayRemove,
   collection,
   doc,
-  updateDoc,
   Timestamp,
   DocumentReference,
   getDoc,
@@ -12,6 +10,7 @@ import {
   where,
   orderBy,
   QueryDocumentSnapshot,
+  deleteDoc,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -55,19 +54,15 @@ export const addCategory = async (
 };
 
 export const deleteCategory = async (
-  column: IColumn,
   category: ICategory,
 ): Promise<ICategory | null> => {
-  if (!column?.id || !category?.id) {
-    defaultErrorHandler('No Column || Category');
+  if (!category?.id) {
+    defaultErrorHandler('No Category');
     return null;
   }
 
   try {
-    const columnsRef = collection(firebase.firestoreDB, 'columns');
-    const columnDoc = doc(columnsRef, column.id);
-
-    await updateDoc(columnDoc, { categories: arrayRemove(category) });
+    await deleteDoc(doc(firebase.firestoreDB, 'categories', category.id));
 
     return category;
   } catch (e) {

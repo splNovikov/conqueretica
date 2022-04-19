@@ -18,8 +18,6 @@ const Column: FC<{
   column: IColumn;
   span: number;
   deleteColumnHandler: (val: IColumn) => void;
-  categoryFormSubmitHandler: (value: string, column: IColumn) => void;
-  deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
   createLinkHandler: (
     title: string,
     href: string,
@@ -42,8 +40,6 @@ const Column: FC<{
   column,
   span,
   deleteColumnHandler,
-  categoryFormSubmitHandler,
-  deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
   deleteLinkHandler,
@@ -57,6 +53,15 @@ const Column: FC<{
   if (categoriesError?.message) {
     httpErrorHandler(categoriesError);
   }
+
+  const handleCategoryFormSubmit = async (value: string) => {
+    disableAddCategoryMode();
+    await firebase.addCategory(value, column);
+  };
+
+  const handleCategoryDelete = async (category: ICategory) => {
+    await firebase.deleteCategory(category);
+  };
 
   const enableAddCategoryMode = () => {
     setIsAddCategoryMode(true);
@@ -84,14 +89,6 @@ const Column: FC<{
     showConfirmModal();
   };
   // endregion Modal
-
-  const handleCategoryFormSubmit = (value: string) => {
-    categoryFormSubmitHandler(value, column);
-    disableAddCategoryMode();
-  };
-
-  const handleCategoryDelete = (category: ICategory) =>
-    deleteCategoryHandler(category, column);
 
   const handleLinkCreate = (title: string, href: string, category: ICategory) =>
     createLinkHandler(title, href, category, column);

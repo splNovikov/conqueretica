@@ -14,8 +14,6 @@ const Columns: FC<{
   selectedTab?: ITab;
   createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
-  categoryFormSubmitHandler: (value: string, column: IColumn) => void;
-  deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
   createLinkHandler: (
     title: string,
     href: string,
@@ -39,8 +37,6 @@ const Columns: FC<{
   selectedTab,
   createColumnHandler,
   deleteColumnHandler,
-  categoryFormSubmitHandler,
-  deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
   deleteLinkHandler,
@@ -53,8 +49,6 @@ const Columns: FC<{
           key={column.id}
           column={column}
           deleteColumnHandler={deleteColumnHandler}
-          categoryFormSubmitHandler={categoryFormSubmitHandler}
-          deleteCategoryHandler={deleteCategoryHandler}
           createLinkHandler={createLinkHandler}
           updateLinkHandler={updateLinkHandler}
           deleteLinkHandler={deleteLinkHandler}

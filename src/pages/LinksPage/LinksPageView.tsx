@@ -27,9 +27,6 @@ const LinksPage: FC<{
   loadingColumns: boolean;
   createColumnHandler: () => void;
   deleteColumnHandler: (val: IColumn) => void;
-  // categories
-  categoryFormSubmitHandler: (value: string, column: IColumn) => void;
-  deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
   // links
   createLinkHandler: (
     title: string,
@@ -62,8 +59,6 @@ const LinksPage: FC<{
   loadingColumns,
   createColumnHandler,
   deleteColumnHandler,
-  categoryFormSubmitHandler,
-  deleteCategoryHandler,
   createLinkHandler,
   updateLinkHandler,
   deleteLinkHandler,
@@ -102,8 +97,6 @@ const LinksPage: FC<{
               selectedTab={selectedTab}
               createColumnHandler={createColumnHandler}
               deleteColumnHandler={deleteColumnHandler}
-              categoryFormSubmitHandler={categoryFormSubmitHandler}
-              deleteCategoryHandler={deleteCategoryHandler}
               createLinkHandler={createLinkHandler}
               updateLinkHandler={updateLinkHandler}
               deleteLinkHandler={deleteLinkHandler}
