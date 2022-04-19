@@ -8,6 +8,8 @@ import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
 // Styles
 import './Column.scss';
+// Mocks
+import { categories } from '../../__test_data__';
 
 const Column: FC<{
   column: IColumn;
@@ -121,7 +123,7 @@ const Column: FC<{
         </Tooltip>
       </div>
       <div className="column-categories">
-        {column.categories.map((category: ICategory) => (
+        {categories.map((category: ICategory) => (
           <Category
             category={category}
             deleteCategoryHandler={handleCategoryDelete}
