@@ -56,12 +56,8 @@ const LinksPage = () => {
   // endregion Tabs
 
   // region Links
-  const handleLinkCreate = (
-    title: string,
-    href: string,
-    category: ICategory,
-    column: IColumn,
-  ) => firebase.addLink(title, href, category, column);
+  const handleLinkCreate = (title: string, href: string, category: ICategory) =>
+    firebase.addLink(title, href, category);
 
   const handleLinkUpdate = (
     title: string,

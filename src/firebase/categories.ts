@@ -2,8 +2,6 @@ import {
   collection,
   doc,
   Timestamp,
-  DocumentReference,
-  getDoc,
   setDoc,
   Query,
   query,
@@ -77,27 +75,6 @@ export const deleteCategory = async (
   } catch (e) {
     httpErrorHandler(e);
     return null;
-  }
-};
-
-export const getCategoriesByColumnDoc = async (
-  columnDoc: DocumentReference,
-): Promise<ICategory[]> => {
-  try {
-    const columnDocumentSnapshot = await getDoc(columnDoc);
-    const columnData = columnDocumentSnapshot.data();
-
-    if (!columnData?.categories?.length) {
-      defaultErrorHandler(
-        `Categories not found for this Column: ${columnDoc.id}`,
-      );
-      return [];
-    }
-
-    return columnData.categories;
-  } catch (e) {
-    httpErrorHandler(e);
-    return [];
   }
 };
 
