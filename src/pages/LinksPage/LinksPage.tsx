@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from '../../firebase';
 // Interfaces
-import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
+import { ITab } from '../../interfaces';
 // Components
 import LinksPageView from './LinksPageView';
 // Utils
@@ -17,7 +17,6 @@ const LinksPage = () => {
   const [user] = useAuthState(firebase.auth);
   const [selectedTab, selectTab] = useState({} as ITab);
 
-  // region Tabs
   let qTabs;
   if (user) {
     qTabs = firebase.getTabsQuery(user);
@@ -53,26 +52,6 @@ const LinksPage = () => {
       selectTab(next);
     }
   };
-  // endregion Tabs
-
-  // region Links
-  const handleLinkCreate = (title: string, href: string, category: ICategory) =>
-    firebase.addLink(title, href, category);
-
-  const handleLinkUpdate = (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => firebase.updateLink(title, href, link, category, column);
-
-  const handleLinkDelete = (
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => firebase.deleteLink(link, category, column);
-  // endregion Links
 
   return (
     <LinksPageView
@@ -86,10 +65,6 @@ const LinksPage = () => {
       updateTabHandler={handleTabUpdate}
       deleteTabHandler={deleteTab}
       tabsFormSubmitHandler={addTab}
-      // links
-      createLinkHandler={handleLinkCreate}
-      updateLinkHandler={handleLinkUpdate}
-      deleteLinkHandler={handleLinkDelete}
     />
   );
 };

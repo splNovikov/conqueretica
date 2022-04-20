@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { UserInfo } from 'firebase/auth';
 import { Layout, Skeleton } from 'antd';
 // Interfaces
-import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
+import { ITab } from '../../interfaces';
 // Components
 import Tabs from '../../components/Tabs';
 import Columns from '../../components/Columns';
@@ -22,25 +22,6 @@ const LinksPage: FC<{
   updateTabHandler: (val: ITab, newTitle: string) => void;
   deleteTabHandler: (val: ITab) => void;
   tabsFormSubmitHandler: (val: string) => void;
-  // links
-  createLinkHandler: (
-    title: string,
-    href: string,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  updateLinkHandler: (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  deleteLinkHandler: (
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
 }> = ({
   user,
   tabs,
@@ -50,9 +31,6 @@ const LinksPage: FC<{
   updateTabHandler,
   deleteTabHandler,
   tabsFormSubmitHandler,
-  createLinkHandler,
-  updateLinkHandler,
-  deleteLinkHandler,
 }) =>
   user ? (
     <Layout className="links-page">
@@ -77,14 +55,7 @@ const LinksPage: FC<{
         </Skeleton>
 
         <Content className="links-page-columns-wrapper">
-          {selectedTab?.id ? (
-            <Columns
-              selectedTab={selectedTab}
-              createLinkHandler={createLinkHandler}
-              updateLinkHandler={updateLinkHandler}
-              deleteLinkHandler={deleteLinkHandler}
-            />
-          ) : null}
+          {selectedTab?.id ? <Columns selectedTab={selectedTab} /> : null}
         </Content>
       </Content>
     </Layout>

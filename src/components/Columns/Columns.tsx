@@ -5,7 +5,7 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 // Firebase
 import firebase from '../../firebase';
 // Interfaces
-import { ICategory, IColumn, ILink, ITab } from '../../interfaces';
+import { IColumn, ITab } from '../../interfaces';
 // Components
 import Column from '../Column';
 // Utils
@@ -15,30 +15,7 @@ import './Columns.scss';
 
 const Columns: FC<{
   selectedTab: ITab;
-  createLinkHandler: (
-    title: string,
-    href: string,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  updateLinkHandler: (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  deleteLinkHandler: (
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-}> = ({
-  selectedTab,
-  createLinkHandler,
-  updateLinkHandler,
-  deleteLinkHandler,
-}) => {
+}> = ({ selectedTab }) => {
   const qColumns = firebase.getColumnsQuery(selectedTab);
   const [columns = [], loadingColumns, columnsError] =
     useCollectionData<IColumn>(qColumns);
@@ -69,9 +46,6 @@ const Columns: FC<{
             key={column.id}
             column={column}
             deleteColumnHandler={handleDeleteColumn}
-            createLinkHandler={createLinkHandler}
-            updateLinkHandler={updateLinkHandler}
-            deleteLinkHandler={deleteLinkHandler}
           />
         ))}
         {selectedTab?.id ? (

@@ -5,7 +5,7 @@ import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 // Firebase
 import firebase from '../../firebase';
 // Interfaces
-import { ICategory, IColumn, ILink } from '../../interfaces';
+import { ICategory, IColumn } from '../../interfaces';
 // Components
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
@@ -18,32 +18,7 @@ const Column: FC<{
   column: IColumn;
   span: number;
   deleteColumnHandler: (val: IColumn) => void;
-  createLinkHandler: (
-    title: string,
-    href: string,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  updateLinkHandler: (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  deleteLinkHandler: (
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-}> = ({
-  column,
-  span,
-  deleteColumnHandler,
-  createLinkHandler,
-  updateLinkHandler,
-  deleteLinkHandler,
-}) => {
+}> = ({ column, span, deleteColumnHandler }) => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
   const qCategories = firebase.getCategoriesQuery(column);
@@ -90,19 +65,6 @@ const Column: FC<{
   };
   // endregion Modal
 
-  const handleLinkCreate = (title: string, href: string, category: ICategory) =>
-    createLinkHandler(title, href, category, column);
-
-  const handleLinkUpdate = (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-  ) => updateLinkHandler(title, href, link, category, column);
-
-  const handleDeleteLink = (link: ILink, category: ICategory) =>
-    deleteLinkHandler(link, category, column);
-
   return (
     <Col span={span} className="column">
       <Modal
@@ -135,9 +97,6 @@ const Column: FC<{
             category={category}
             deleteCategoryHandler={handleCategoryDelete}
             key={category.id}
-            createLinkHandler={handleLinkCreate}
-            updateLinkHandler={handleLinkUpdate}
-            deleteLinkHandler={handleDeleteLink}
           />
         ))}
       </div>
