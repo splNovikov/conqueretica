@@ -80,12 +80,7 @@ const Tab: FC<{
   const disableEditMode = () => setEditMode(false);
 
   return (
-    <div
-      className={classNames('tab', {
-        'tab-selected': selectedTab.id === tab.id,
-        'edit-mode': editMode,
-      })}
-    >
+    <>
       <Modal
         title="Delete Tab Confirmation"
         visible={isConfirmModalVisible}
@@ -98,33 +93,40 @@ const Tab: FC<{
           be undone
         </p>
       </Modal>
-      {!editMode ? (
-        <>
-          <span role="none" onClick={handleTabSelect} className="tab-title">
-            {tab.title}
-          </span>
-          <Dropdown
-            key="actions"
-            overlay={actionsMenu(tab, handleTabDelete, enableEditMode)}
-            placement="bottomRight"
-            arrow
-          >
-            <Button
-              type="text"
-              icon={<MoreOutlined />}
-              className="actions-menu-trigger"
-            />
-          </Dropdown>
-        </>
-      ) : (
-        <SingleInputForm
-          value={tab.title}
-          placeholder="Enter Tab Name"
-          formSubmitHandler={handleTabUpdate}
-          abortHandler={handleCancelEdit}
-        />
-      )}
-    </div>
+      <div
+        className={classNames('tab', {
+          'tab-selected': selectedTab.id === tab.id,
+          'edit-mode': editMode,
+        })}
+      >
+        {!editMode ? (
+          <>
+            <span className="tab-title" role="none" onClick={handleTabSelect}>
+              {tab.title}
+            </span>
+            <Dropdown
+              key="actions"
+              overlay={actionsMenu(tab, handleTabDelete, enableEditMode)}
+              placement="bottomRight"
+              arrow
+            >
+              <Button
+                type="text"
+                icon={<MoreOutlined />}
+                className="tab-actions-menu-trigger"
+              />
+            </Dropdown>
+          </>
+        ) : (
+          <SingleInputForm
+            value={tab.title}
+            placeholder="Enter Tab Name"
+            formSubmitHandler={handleTabUpdate}
+            abortHandler={handleCancelEdit}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

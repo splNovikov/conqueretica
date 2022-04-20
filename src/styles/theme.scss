@@ -52,8 +52,9 @@ $links-page-columns-wrapper-padding: 20px 0 0;
 // Tabs
 
 // Tab
+$tab-title-padding: 10px 0;
 $tab-padding-horizontal: 20px;
-$tab-padding: 5px $tab-padding-horizontal;
+$tab-padding: 0 $tab-padding-horizontal;
 $tab-active-border-width: 2px;
 $tab-highlight-color: $primary-color;
 
