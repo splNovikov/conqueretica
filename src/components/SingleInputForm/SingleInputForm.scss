@@ -1,12 +1,4 @@
 @import '../../styles/theme';
 
 .single-input-form {
-  &.ant-form-inline {
-    flex-wrap: nowrap;
-  }
-
-  &.ant-form-inline .ant-form-item {
-    flex: auto;
-    margin: $single-input-form-item-margin;
-  }
 }

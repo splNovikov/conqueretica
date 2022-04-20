@@ -44,9 +44,9 @@ const SingleInputForm: FC<{
       <Form
         form={form}
         initialValues={{ singleInput: value }}
-        layout="inline"
+        layout="vertical"
         onFinish={handleFormSubmit}
-        className="single-input-form"
+        className="single-input-form custom-ant-vertical-form"
       >
         <Form.Item
           name="singleInput"
@@ -68,22 +68,24 @@ const SingleInputForm: FC<{
             onKeyDown={handleKeyboardEvent}
           />
         </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            icon={<CheckOutlined />}
-            size="small"
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            htmlType="button"
-            icon={<CloseOutlined />}
-            onClick={handleCancelEdit}
-            size="small"
-          />
-        </Form.Item>
+        <div className="custom-ant-vertical-form-buttons-wrapper">
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon={<CheckOutlined />}
+              size="small"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="button"
+              icon={<CloseOutlined />}
+              onClick={handleCancelEdit}
+              size="small"
+            />
+          </Form.Item>
+        </div>
       </Form>
     </OutsideClickHandler>
   );
