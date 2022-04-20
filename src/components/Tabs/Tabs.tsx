@@ -26,7 +26,15 @@ const Tabs: FC<{
   tabsFormSubmitHandler,
 }) => {
   const [displayForm, setDisplayForm] = useState(false);
-  const toggleDisplayForm = () => setDisplayForm(!displayForm);
+
+  const enableDisplayForm = () => setDisplayForm(true);
+
+  const disableDisplayForm = () => setDisplayForm(false);
+
+  const handleTabSubmit = (value: string) => {
+    tabsFormSubmitHandler(value);
+    disableDisplayForm();
+  };
 
   return (
     <div className="tabs">
@@ -47,7 +55,7 @@ const Tabs: FC<{
             shape="circle"
             size="small"
             icon={<PlusCircleOutlined />}
-            onClick={toggleDisplayForm}
+            onClick={enableDisplayForm}
             className="btn-show-add-tab-form"
           />
         </Tooltip>
@@ -55,8 +63,8 @@ const Tabs: FC<{
         <div className="add-tab-form-wrapper">
           <SingleInputForm
             placeholder="Enter Tab Name"
-            formSubmitHandler={tabsFormSubmitHandler}
-            abortHandler={toggleDisplayForm}
+            formSubmitHandler={handleTabSubmit}
+            abortHandler={disableDisplayForm}
           />
         </div>
       )}
