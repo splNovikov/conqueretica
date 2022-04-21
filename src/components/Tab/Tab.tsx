@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import { ITab } from '../../interfaces';
 // Components
 import SingleInputForm from '../SingleInputForm';
+// Utils
+import { defaultConfirmModal } from '../../utils';
 // Styles
 import './Tab.scss';
 
@@ -40,22 +42,14 @@ const Tab: FC<{
   const [editMode, setEditMode] = useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
 
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteTabHandler(tab);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
+  // region Modal Confirm Delete
+  const { showConfirmModal, handleConfirmModalOk, handleConfirmModalCancel } =
+    defaultConfirmModal(setIsConfirmModalVisible, () => deleteTabHandler(tab));
 
   const handleTabDelete = () => {
     showConfirmModal();
   };
+  // endregion Modal
 
   const handleTabSelect = () => {
     if (tab.id !== selectedTab.id) {

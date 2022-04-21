@@ -10,7 +10,7 @@ import { ICategory, IColumn } from '../../interfaces';
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
 // Utils
-import { httpErrorHandler } from '../../utils';
+import { httpErrorHandler, defaultConfirmModal } from '../../utils';
 // Styles
 import './Column.scss';
 
@@ -47,18 +47,10 @@ const Column: FC<{
   };
 
   // region Modal Confirm Delete
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteColumnHandler(column);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
+  const { showConfirmModal, handleConfirmModalOk, handleConfirmModalCancel } =
+    defaultConfirmModal(setIsConfirmModalVisible, () =>
+      deleteColumnHandler(column),
+    );
 
   const handleColumnDelete = () => {
     showConfirmModal();

@@ -10,7 +10,6 @@ import LinksPageView from './LinksPageView';
 // Utils
 import { getNextSibling, httpErrorHandler } from '../../utils';
 
-// todo: after release multi-rerendering!!!
 // todo: login and logout should be there as well:
 // todo: when logout - we should reset everything - selectedTab
 const LinksPage = () => {

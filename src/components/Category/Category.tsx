@@ -12,6 +12,8 @@ import { ICategory, ILink } from '../../interfaces';
 // Components
 import CategoryLinky from '../CategoryLinky';
 import LinkForm from '../LinkForm';
+// Utils
+import { defaultConfirmModal } from '../../utils';
 // Styles
 import './Category.scss';
 
@@ -36,22 +38,16 @@ const Category: FC<{
   const [isAddLinkMode, setIsAddLinkMode] = useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
 
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteCategoryHandler(category);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
+  // region Modal Confirm Delete
+  const { showConfirmModal, handleConfirmModalOk, handleConfirmModalCancel } =
+    defaultConfirmModal(setIsConfirmModalVisible, () =>
+      deleteCategoryHandler(category),
+    );
 
   const handleCategoryDelete = () => {
     showConfirmModal();
   };
+  // endregion Modal
 
   const enableAddLinkMode = () => {
     setIsAddLinkMode(true);
