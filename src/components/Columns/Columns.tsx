@@ -28,10 +28,6 @@ const Columns: FC<{
     await firebase.addColumn(selectedTab);
   };
 
-  const handleDeleteColumn = async (column: IColumn) => {
-    await firebase.deleteColumn(column);
-  };
-
   return (
     <Skeleton
       loading={loadingColumns}
@@ -41,12 +37,7 @@ const Columns: FC<{
     >
       <Row className="columns" gutter={[16, 16]}>
         {columns.map((column: IColumn) => (
-          <Column
-            span={4}
-            key={column.id}
-            column={column}
-            deleteColumnHandler={handleDeleteColumn}
-          />
+          <Column span={4} key={column.id} column={column} />
         ))}
         {selectedTab?.id ? (
           <Col span={3} className="columns-create-column-wrapper">

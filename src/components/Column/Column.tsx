@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Button, Col, Modal, Skeleton, Tooltip } from 'antd';
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Col, Skeleton } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 // Firebase
 import firebase from '../../firebase';
 // Interfaces
@@ -10,16 +10,14 @@ import { ICategory, IColumn } from '../../interfaces';
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
 // Utils
-import { httpErrorHandler, defaultConfirmModal } from '../../utils';
+import { httpErrorHandler } from '../../utils';
 // Styles
 import './Column.scss';
 
 const Column: FC<{
   column: IColumn;
   span: number;
-  deleteColumnHandler: (val: IColumn) => void;
-}> = ({ column, span, deleteColumnHandler }) => {
-  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+}> = ({ column, span }) => {
   const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
   const qCategories = firebase.getCategoriesQuery(column);
   const [categories = [], loadingCategories, categoriesError] =
@@ -46,43 +44,9 @@ const Column: FC<{
     setIsAddCategoryMode(false);
   };
 
-  // region Modal Confirm Delete
-  const { showConfirmModal, handleConfirmModalOk, handleConfirmModalCancel } =
-    defaultConfirmModal(setIsConfirmModalVisible, () =>
-      deleteColumnHandler(column),
-    );
-
-  const handleColumnDelete = () => {
-    showConfirmModal();
-  };
-  // endregion Modal
-
   return (
     <Col span={span} className="column">
-      <Modal
-        title="Delete Column Confirmation"
-        visible={isConfirmModalVisible}
-        onOk={handleConfirmModalOk}
-        onCancel={handleConfirmModalCancel}
-      >
-        <p>Are you sure you want to delete this column?</p>
-        <p>
-          This action will permanently delete all this columns contains and
-          cannot be undone
-        </p>
-      </Modal>
-
-      <div className="column-header">
-        <Tooltip title="Delete Column">
-          <Button
-            shape="circle"
-            size="small"
-            icon={<DeleteOutlined />}
-            onClick={handleColumnDelete}
-            className="btn-delete-column"
-          />
-        </Tooltip>
-      </div>
+      <div className="column-header" />
       <Skeleton
         loading={loadingCategories}
         active
