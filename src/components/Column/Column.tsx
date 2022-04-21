@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Button, Col, Modal, Tooltip } from 'antd';
+import { Button, Col, Modal, Skeleton, Tooltip } from 'antd';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 // Firebase
 import firebase from '../../firebase';
@@ -83,15 +83,22 @@ const Column: FC<{
           />
         </Tooltip>
       </div>
-      <div className="column-categories">
-        {categories.map((category: ICategory) => (
-          <Category
-            category={category}
-            deleteCategoryHandler={handleCategoryDelete}
-            key={category.id}
-          />
-        ))}
-      </div>
+      <Skeleton
+        loading={loadingCategories}
+        active
+        round
+        className="categories-skeleton"
+      >
+        <div className="column-categories">
+          {categories.map((category: ICategory) => (
+            <Category
+              category={category}
+              deleteCategoryHandler={handleCategoryDelete}
+              key={category.id}
+            />
+          ))}
+        </div>
+      </Skeleton>
       {!isAddCategoryMode ? (
         <Button
           onClick={enableAddCategoryMode}
