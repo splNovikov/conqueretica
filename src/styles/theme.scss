@@ -65,10 +65,11 @@ $single-input-form-item-margin: 0 2px 0 0;
 $columns-create-column-wrapper-padding: 5px;
 
 // Column
-$column-min-width: 150px;
+$column-min-width: 160px;
 $column-header-border-radius: 10px 10px 0 0;
 $column-header-border-color: $primary-color;
-$column-header-padding: 5px;
+$column-header-padding: 10px 0 0 0;
+$column-categories-padding: 0 5px;
 
 // Linky
 $linky-font-size: small;

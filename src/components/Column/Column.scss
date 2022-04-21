@@ -3,9 +3,13 @@
 .column {
   min-width: $column-min-width;
 
-  .column-header {
+  &-header {
     border-radius: $column-header-border-radius;
     border-top: 1px solid $column-header-border-color;
     padding: $column-header-padding;
+  }
+
+  &-categories {
+    padding: $column-categories-padding;
   }
 }
