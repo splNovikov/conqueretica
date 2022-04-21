@@ -70,6 +70,7 @@ $column-header-border-radius: 10px 10px 0 0;
 $column-header-border-color: $primary-color;
 $column-header-padding: 10px 0 0 0;
 $column-categories-padding: 0 5px;
+$column-btn-enable-add-category-font-size: small;
 
 // Linky
 $linky-font-size: small;
@@ -77,7 +78,7 @@ $linky-font-size: small;
 // Category
 $category-btn-enable-add-link-font-size: small;
 $category-border-color: $primary-color;
-$category-padding: 5px 0;
+$category-padding: 0 0 5px 0;
 
 // LinkForm
 $link-form-button-margin: 0 0 0 5px;

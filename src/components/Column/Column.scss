@@ -3,13 +3,17 @@
 .column {
   min-width: $column-min-width;
 
-  &-header {
+  & &-header {
     border-radius: $column-header-border-radius;
     border-top: 1px solid $column-header-border-color;
     padding: $column-header-padding;
   }
 
-  &-categories {
+  & &-categories {
     padding: $column-categories-padding;
+  }
+
+  & &-btn-enable-add-category {
+    font-size: $column-btn-enable-add-category-font-size;
   }
 }
