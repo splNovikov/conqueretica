@@ -33,7 +33,12 @@ const Column: FC<{
   };
 
   const handleCategoryDelete = async (category: ICategory) => {
-    await firebase.deleteCategory(category);
+    // if last category in column:
+    if (categories.length === 1) {
+      return firebase.deleteCategoryWithColumnScenario(category, column);
+    }
+
+    return firebase.deleteCategory(category);
   };
 
   const enableAddCategoryMode = () => {

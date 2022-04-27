@@ -1,9 +1,9 @@
-import { ICategory, ITab } from '../interfaces';
-import { addColumn } from './columns';
-import { addCategory } from './categories';
+import { ICategory, IColumn, ITab } from '../interfaces';
+import { addColumn, deleteColumn } from './columns';
+import { addCategory, deleteCategory } from './categories';
 
 // todo: tests
-export const addColumnAndCategory = async (
+export const addCategoryWithColumnScenario = async (
   categoryTitle: string,
   tab: ITab,
 ): Promise<ICategory | null> => {
@@ -14,4 +14,18 @@ export const addColumnAndCategory = async (
   }
 
   return null;
+};
+
+// todo: tests
+export const deleteCategoryWithColumnScenario = async (
+  category: ICategory,
+  column: IColumn,
+): Promise<ICategory | null> => {
+  // 1. Delete Category
+  const cat = await deleteCategory(category);
+
+  // 2. Delete Column
+  await deleteColumn(column);
+
+  return cat;
 };

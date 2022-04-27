@@ -26,7 +26,7 @@ const Columns: FC<{
   }
 
   const handleCreateCategoryScenario = async (title: string) => {
-    await firebase.addColumnAndCategory(title, selectedTab);
+    await firebase.addCategoryWithColumnScenario(title, selectedTab);
   };
 
   return (
