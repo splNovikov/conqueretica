@@ -19,6 +19,7 @@ import {
   deleteCategories,
 } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
+import { addColumnAndCategory } from './scenarios';
 
 const isProd = process.env.NODE_ENV === 'production';
 const app = initializeApp(isProd ? FIREBASE_CONFIG_PROD : FIREBASE_CONFIG_DEV);
@@ -48,6 +49,9 @@ export default {
   addLink,
   updateLink,
   deleteLink,
+
+  // scenarios
+  addColumnAndCategory,
 
   auth,
   firestoreDB,

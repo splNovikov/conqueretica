@@ -48,7 +48,7 @@ const Column: FC<{
     <Col span={span} className="column">
       <div className="column-header" />
       <Skeleton
-        loading={loadingCategories}
+        loading={loadingCategories || !categories?.length}
         active
         round
         className="categories-skeleton"

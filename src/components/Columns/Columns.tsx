@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Button, Col, Row, Skeleton, Tooltip } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
@@ -12,6 +12,7 @@ import Column from '../Column';
 import { httpErrorHandler } from '../../utils';
 // Styles
 import './Columns.scss';
+import SingleInputForm from '../SingleInputForm';
 
 const Columns: FC<{
   selectedTab: ITab;
@@ -19,13 +20,14 @@ const Columns: FC<{
   const qColumns = firebase.getColumnsQuery(selectedTab);
   const [columns = [], loadingColumns, columnsError] =
     useCollectionData<IColumn>(qColumns);
+  const span = 4;
 
   if (columnsError?.message) {
     httpErrorHandler(columnsError);
   }
 
-  const handleCreateColumn = async () => {
-    await firebase.addColumn(selectedTab);
+  const handleCreateCategoryScenario = async (title: string) => {
+    await firebase.addColumnAndCategory(title, selectedTab);
   };
 
   return (
@@ -37,23 +39,56 @@ const Columns: FC<{
     >
       <Row className="columns" gutter={[16, 16]}>
         {columns.map((column: IColumn) => (
-          <Column span={4} key={column.id} column={column} />
+          <Column span={span} key={column.id} column={column} />
         ))}
         {selectedTab?.id ? (
-          <Col span={3} className="columns-create-column-wrapper">
-            <Tooltip title="Add New Column">
-              <Button
-                shape="circle"
-                size="small"
-                icon={<PlusCircleOutlined />}
-                onClick={handleCreateColumn}
-                className="columns-btn-add-new-column"
-              />
-            </Tooltip>
-          </Col>
+          <ColumnsAddCategory
+            span={span}
+            addCategoryScenarioHandler={handleCreateCategoryScenario}
+          />
         ) : null}
       </Row>
     </Skeleton>
+  );
+};
+
+const ColumnsAddCategory: FC<{
+  span: number;
+  addCategoryScenarioHandler: (title: string) => void;
+}> = ({ span, addCategoryScenarioHandler }) => {
+  const [isAddCategoryModeActive, setIsAddCategoryModeActive] = useState(false);
+
+  const enableAddCategoryMode = () => setIsAddCategoryModeActive(true);
+
+  const disableAddCategoryMode = () => setIsAddCategoryModeActive(false);
+
+  const handleAddCategoryButton = () => enableAddCategoryMode();
+
+  const handleCategoryFormSubmit = (value: string) => {
+    disableAddCategoryMode();
+    addCategoryScenarioHandler(value);
+  };
+
+  return (
+    <Col span={span} className="columns-create-column-wrapper">
+      {isAddCategoryModeActive ? (
+        <SingleInputForm
+          placeholder="Create a new category"
+          formSubmitHandler={handleCategoryFormSubmit}
+          abortHandler={disableAddCategoryMode}
+        />
+      ) : (
+        <Tooltip title="Add New Category">
+          <Button
+            shape="circle"
+            size="small"
+            icon={<PlusCircleOutlined />}
+            onClick={handleAddCategoryButton}
+            className="columns-btn-add-new-category"
+          />
+        </Tooltip>
+      )}
+    </Col>
   );
 };
 
