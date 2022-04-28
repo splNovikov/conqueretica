@@ -8,8 +8,10 @@ import AppHeader from './AppHeader';
 import { user } from '../../__test_data__';
 
 describe('AppHeader Component', () => {
+  // Selectors
   const appHeaderSelector = 'header.app-header';
   const userNameSelector = 'span.user-name';
+  // Wrappers
   let wrapper: ReactWrapper;
   let header: ReactWrapper;
   let userNameEl: ReactWrapper;

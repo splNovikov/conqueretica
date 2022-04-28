@@ -4,7 +4,9 @@ import { mount, ReactWrapper } from 'enzyme';
 import AppFooter from './AppFooter';
 
 describe('AppFooter Component', () => {
+  // Selectors
   const appFooterSelector = 'footer.app-footer';
+  // Wrappers
   let wrapper: ReactWrapper;
   let footer: ReactWrapper;
 

@@ -9,10 +9,12 @@ import App from './App';
 import { user } from '../../__test_data__';
 
 describe('App Component', () => {
+  // Selectors
   const appSelector = 'section.app';
   const appHeaderSelector = 'header.app-header';
   const appContentSelector = 'main.app-content-wrapper';
   const appFooterSelector = 'footer.app-footer';
+  // Wrappers
   let wrapper: ReactWrapper;
   let app: ReactWrapper;
   let header: ReactWrapper;
