@@ -4,13 +4,10 @@ import { act } from 'react-dom/test-utils';
 // Components
 import Category from './Category';
 // Test Data
-import { columns } from '../../__test_data__';
+import { categories } from '../../__test_data__';
 
 describe('Column Component', () => {
   const deleteCategoryHandler = jest.fn();
-  const createLinkHandler = jest.fn();
-  const updateLinkHandler = jest.fn();
-  const deleteLinkHandler = jest.fn();
   // Selectors
   const categoryHeaderSelector = 'div.category-header';
   const categoryTitleSelector = 'span.category-title';
@@ -20,7 +17,7 @@ describe('Column Component', () => {
   const categoryLinkySelector = 'div.category-linky';
   const categoryAddLinkFormSelector = 'form.link-form';
   // Test Data
-  const category = columns[0].categories[0];
+  const category = categories[0];
   // Wrappers
   let wrapper: ReactWrapper;
   let categoryHeader: ReactWrapper;
@@ -36,9 +33,6 @@ describe('Column Component', () => {
       <Category
         category={category}
         deleteCategoryHandler={deleteCategoryHandler}
-        createLinkHandler={createLinkHandler}
-        updateLinkHandler={updateLinkHandler}
-        deleteLinkHandler={deleteLinkHandler}
       />,
     );
     categoryHeader = wrapper.find(categoryHeaderSelector);
