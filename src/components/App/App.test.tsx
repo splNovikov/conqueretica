@@ -12,7 +12,7 @@ describe('App Component', () => {
   const appSelector = 'section.app';
   const appHeaderSelector = 'header.app-header';
   const appContentSelector = 'main.app-content-wrapper';
-  const appFooter = 'footer.app-footer';
+  const appFooterSelector = 'footer.app-footer';
   let wrapper: ReactWrapper;
   let app: ReactWrapper;
   let header: ReactWrapper;
@@ -36,7 +36,7 @@ describe('App Component', () => {
     app = wrapper.find(appSelector);
     header = wrapper.find(appHeaderSelector);
     content = wrapper.find(appContentSelector);
-    footer = wrapper.find(appFooter);
+    footer = wrapper.find(appFooterSelector);
   });
 
   afterEach(() => {
