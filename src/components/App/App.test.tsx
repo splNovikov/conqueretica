@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { mount, ReactWrapper } from 'enzyme';
 import * as authHooks from 'react-firebase-hooks/auth';
+import { act } from 'react-dom/test-utils';
 // Components
 import App from './App';
 // Test Data
 import { user } from '../../__test_data__';
-import { act } from 'react-dom/test-utils';
 
 describe('App Component', () => {
   const appSelector = 'section.app';
