@@ -30,7 +30,7 @@ const actionsMenu = (category: ICategory, handleCategoryDelete: () => void) => (
     </Menu.Item>
   </Menu>
 );
-
+//       57,61-62,66,70
 const Category: FC<{
   category: ICategory;
   deleteCategoryHandler: (val: ICategory) => void;
@@ -77,6 +77,7 @@ const Category: FC<{
         visible={isConfirmModalVisible}
         onOk={handleConfirmModalOk}
         onCancel={handleConfirmModalCancel}
+        forceRender
       >
         <p>
           Are you sure you want to delete category &quot;{category.title}&quot;?

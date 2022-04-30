@@ -3,10 +3,18 @@ import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 // Components
 import Category from './Category';
+// Utils
+import {
+  getModalWrapper,
+  getModalPrimaryButton,
+  getSubmenuItems,
+  isModalDisplayed,
+  isModalHidden,
+} from '../../testUtils';
 // Test Data
 import { categories } from '../../__test_data__';
 
-describe('Column Component', () => {
+describe('Category Component', () => {
   const deleteCategoryHandler = jest.fn();
   // Selectors
   const categoryHeaderSelector = 'div.category-header';
@@ -50,7 +58,7 @@ describe('Column Component', () => {
     wrapper.unmount();
   });
 
-  it('Column Component is rendering', () => {
+  it('Category Component is rendering', () => {
     expect(wrapper.exists()).toBe(true);
     expect(categoryHeader.exists()).toBe(true);
     expect(categoryTitle.exists()).toBe(true);
@@ -61,7 +69,10 @@ describe('Column Component', () => {
     expect(categoryAddLinkForm.exists()).toBe(false);
   });
 
-  describe('Column Component Handlers', () => {
+  describe('Category Component Interactions', () => {
+    // Selectors
+    const actionsMenuDeleteSelector = 'category-actions-menu-delete-category';
+
     it('Should enable Create Link Mode', async () => {
       await act(async () => {
         categoryAddLinkTrigger.simulate('click');
@@ -70,6 +81,36 @@ describe('Column Component', () => {
       wrapper.update();
 
       expect(wrapper.find(categoryAddLinkFormSelector).exists()).toBe(true);
+    });
+
+    it('Should have Dropdown Menu Items', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      expect(submenuItems.length).toBe(1);
+      expect(submenuItems.at(0).hasClass(actionsMenuDeleteSelector)).toBe(true);
+    });
+
+    it('Should invoke open Modal', async () => {
+      expect(isModalDisplayed(wrapper)).toBe(true);
+
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      expect(isModalHidden(wrapper)).toBe(true);
+    });
+  });
+
+  describe('Category Component Handlers', () => {
+    it('Should invoke Delete Category Handler', () => {
+      const modal = getModalWrapper(wrapper);
+      const btnEl = getModalPrimaryButton(modal);
+
+      btnEl.simulate('click');
+
+      expect(deleteCategoryHandler).toHaveBeenCalledWith(category);
     });
   });
 });
