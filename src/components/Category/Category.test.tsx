@@ -10,6 +10,7 @@ import {
   getSubmenuItems,
   isModalDisplayed,
   isModalHidden,
+  getModalSecondaryButton,
 } from '../../testUtils';
 // Test Data
 import { categories } from '../../__test_data__';
@@ -89,12 +90,23 @@ describe('Category Component', () => {
       expect(submenuItems.at(0).hasClass(actionsMenuDeleteSelector)).toBe(true);
     });
 
-    it('Should invoke open Modal', async () => {
-      expect(isModalDisplayed(wrapper)).toBe(true);
+    it('Should invoke open/close Modal', async () => {
+      expect(isModalHidden(wrapper)).toBe(true);
 
       const submenuItems = getSubmenuItems(wrapper);
       await act(async () => {
         submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      expect(isModalDisplayed(wrapper)).toBe(true);
+
+      const modal = getModalWrapper(wrapper);
+      const cancelBtn = getModalSecondaryButton(modal);
+
+      await act(async () => {
+        cancelBtn.simulate('click');
       });
 
       wrapper.update();

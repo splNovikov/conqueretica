@@ -5,6 +5,8 @@ import { ReactWrapper } from 'enzyme';
 const modalWrapperSelector = 'div.ant-modal-wrap';
 const modalWrapperPrimaryButtonSelector =
   'div.ant-modal-footer button.ant-btn-primary';
+const modalWrapperDefaultButtonSelector =
+  'div.ant-modal-footer button.ant-btn-default';
 
 export const getModalWrapper = (wrapper: ReactWrapper) => {
   const modal = wrapper.find(Modal);
@@ -15,12 +17,16 @@ export const getModalPrimaryButton = (modalWrapper: ReactWrapper) => {
   return modalWrapper.find(modalWrapperPrimaryButtonSelector);
 };
 
+export const getModalSecondaryButton = (modalWrapper: ReactWrapper) => {
+  return modalWrapper.find(modalWrapperDefaultButtonSelector);
+};
+
 export const isModalDisplayed = (wrapper: ReactWrapper): boolean => {
   const modalWrapper = getModalWrapper(wrapper);
-  return modalWrapper.prop('style')?.display === 'none';
+  return modalWrapper.prop('style')?.display === null;
 };
 
 export const isModalHidden = (wrapper: ReactWrapper): boolean => {
   const modalWrapper = getModalWrapper(wrapper);
-  return modalWrapper.prop('style')?.display === null;
+  return modalWrapper.prop('style')?.display === 'none';
 };
