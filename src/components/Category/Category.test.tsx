@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+// Firebase
+import firebase from '../../firebase';
 // Components
 import Category from './Category';
 // Utils
@@ -14,6 +16,7 @@ import {
 } from '../../testUtils';
 // Test Data
 import { categories } from '../../__test_data__';
+import LinkForm from '../LinkForm';
 
 describe('Category Component', () => {
   const deleteCategoryHandler = jest.fn();
@@ -25,6 +28,7 @@ describe('Category Component', () => {
   const categoryAddLinkTriggerSelector = 'button.category-btn-enable-add-link';
   const categoryLinkySelector = 'div.category-linky';
   const categoryAddLinkFormSelector = 'form.link-form';
+  const actionsMenuDeleteSelector = 'category-actions-menu-delete-category';
   // Test Data
   const category = categories[0];
   // Wrappers
@@ -71,9 +75,6 @@ describe('Category Component', () => {
   });
 
   describe('Category Component Interactions', () => {
-    // Selectors
-    const actionsMenuDeleteSelector = 'category-actions-menu-delete-category';
-
     it('Should enable Create Link Mode', async () => {
       await act(async () => {
         categoryAddLinkTrigger.simulate('click');
@@ -123,6 +124,52 @@ describe('Category Component', () => {
       btnEl.simulate('click');
 
       expect(deleteCategoryHandler).toHaveBeenCalledWith(category);
+    });
+
+    it('Should invoke Create Link function', async () => {
+      firebase.addLink = jest.fn();
+
+      // open link form
+      await act(async () => {
+        categoryAddLinkTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const linkForm = wrapper.find(LinkForm);
+
+      // trigger formSubmitHandler
+      await act(async () => {
+        linkForm.prop('formSubmitHandler')('qwe', 'href');
+      });
+
+      wrapper.update();
+
+      expect(firebase.addLink).toHaveBeenCalledWith('qwe', 'href', category);
+      expect(wrapper.find(categoryAddLinkFormSelector).exists()).toBe(false);
+    });
+
+    it('Should invoke Abort Create Link function', async () => {
+      firebase.addLink = jest.fn();
+
+      // open link form
+      await act(async () => {
+        categoryAddLinkTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const linkForm = wrapper.find(LinkForm);
+
+      // trigger formSubmitHandler
+      await act(async () => {
+        linkForm.prop('abortHandler')();
+      });
+
+      wrapper.update();
+
+      expect(firebase.addLink).not.toHaveBeenCalled();
+      expect(wrapper.find(categoryAddLinkFormSelector).exists()).toBe(false);
     });
   });
 });
