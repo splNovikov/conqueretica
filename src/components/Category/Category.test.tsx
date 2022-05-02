@@ -124,7 +124,9 @@ describe('Category Component', () => {
 
       expect(deleteCategoryHandler).toHaveBeenCalledWith(category);
     });
+  });
 
+  describe('Category Component -> LinkForm Component Handlers', () => {
     it('Should invoke "Create Link handler"', async () => {
       firebase.addLink = jest.fn();
 
@@ -168,7 +170,9 @@ describe('Category Component', () => {
       expect(firebase.addLink).not.toHaveBeenCalled();
       expect(wrapper.find(LinkForm).exists()).toBe(false);
     });
+  });
 
+  describe('Category Component -> CategoryLinky Component Handlers', () => {
     it('Should invoke "Update Link Handler"', async () => {
       firebase.updateLink = jest.fn();
 
