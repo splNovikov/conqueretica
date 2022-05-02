@@ -72,4 +72,79 @@ describe('CategoryLinky Component', () => {
       expect(wrapper.find(LinkForm).exists()).toBe(false);
     });
   });
+
+  describe('CategoryLinky Component -> LinkForm Component Handlers', () => {
+    it('Should invoke "Delete Link handler"', async () => {
+      await act(async () => {
+        categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const deleteHandler = wrapper.find(LinkForm).prop('deleteHandler');
+
+      deleteHandler && deleteHandler();
+
+      expect(deleteLinkHandler).toHaveBeenCalledWith(link);
+    });
+
+    it('Should invoke "Abort Link handler"', async () => {
+      await act(async () => {
+        categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const abortHandler = wrapper.find(LinkForm).prop('abortHandler');
+
+      await act(async () => {
+        abortHandler && abortHandler();
+      });
+
+      wrapper.update();
+
+      expect(wrapper.find(LinkForm).exists()).toBe(false);
+    });
+
+    it('Should invoke "Save Link handler"', async () => {
+      await act(async () => {
+        categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const submitHandler = wrapper.find(LinkForm).prop('formSubmitHandler');
+
+      await act(async () => {
+        submitHandler && submitHandler('title', 'href');
+      });
+
+      expect(formSubmitHandler).toHaveBeenCalledWith('title', 'href', link);
+
+      wrapper.update();
+
+      expect(wrapper.find(LinkForm).exists()).toBe(false);
+    });
+
+    it('Should not invoke "Save Link handler" when title and href is the same', async () => {
+      await act(async () => {
+        categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const submitHandler = wrapper.find(LinkForm).prop('formSubmitHandler');
+
+      await act(async () => {
+        // @ts-ignore
+        submitHandler && submitHandler(link.title, link.href);
+      });
+
+      expect(formSubmitHandler).not.toHaveBeenCalled();
+
+      wrapper.update();
+
+      expect(wrapper.find(LinkForm).exists()).toBe(false);
+    });
+  });
 });
