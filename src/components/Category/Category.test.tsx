@@ -17,6 +17,7 @@ import {
 // Test Data
 import { categories } from '../../__test_data__';
 import LinkForm from '../LinkForm';
+import CategoryLinky from '../CategoryLinky';
 
 describe('Category Component', () => {
   const deleteCategoryHandler = jest.fn();
@@ -26,8 +27,6 @@ describe('Category Component', () => {
   const categoryActionsTriggerSelector = 'button.category-actions-menu-trigger';
   const categoryLinksSelector = 'div.category-links';
   const categoryAddLinkTriggerSelector = 'button.category-btn-enable-add-link';
-  const categoryLinkySelector = 'div.category-linky';
-  const categoryAddLinkFormSelector = 'form.link-form';
   const actionsMenuDeleteSelector = 'category-actions-menu-delete-category';
   // Test Data
   const category = categories[0];
@@ -38,8 +37,8 @@ describe('Category Component', () => {
   let categoryActionsTrigger: ReactWrapper;
   let categoryLinks: ReactWrapper;
   let categoryAddLinkTrigger: ReactWrapper;
-  let categoryLinky: ReactWrapper;
-  let categoryAddLinkForm: ReactWrapper;
+  let categoryLinky: ReactWrapper<any>;
+  let categoryAddLinkForm: ReactWrapper<any>;
 
   beforeEach(() => {
     wrapper = mount(
@@ -55,8 +54,8 @@ describe('Category Component', () => {
     );
     categoryLinks = wrapper.find(categoryLinksSelector);
     categoryAddLinkTrigger = wrapper.find(categoryAddLinkTriggerSelector);
-    categoryLinky = wrapper.find(categoryLinkySelector);
-    categoryAddLinkForm = wrapper.find(categoryAddLinkFormSelector);
+    categoryLinky = wrapper.find(CategoryLinky);
+    categoryAddLinkForm = wrapper.find(LinkForm);
   });
 
   afterEach(() => {
@@ -82,7 +81,7 @@ describe('Category Component', () => {
 
       wrapper.update();
 
-      expect(wrapper.find(categoryAddLinkFormSelector).exists()).toBe(true);
+      expect(wrapper.find(LinkForm).exists()).toBe(true);
     });
 
     it('Should have Dropdown Menu Items', async () => {
@@ -117,7 +116,7 @@ describe('Category Component', () => {
   });
 
   describe('Category Component Handlers', () => {
-    it('Should invoke Delete Category Handler', () => {
+    it('Should invoke "Delete Category Handler"', () => {
       const modal = getModalWrapper(wrapper);
       const btnEl = getModalPrimaryButton(modal);
 
@@ -126,7 +125,7 @@ describe('Category Component', () => {
       expect(deleteCategoryHandler).toHaveBeenCalledWith(category);
     });
 
-    it('Should invoke Create Link function', async () => {
+    it('Should invoke "Create Link handler"', async () => {
       firebase.addLink = jest.fn();
 
       // open link form
@@ -138,7 +137,6 @@ describe('Category Component', () => {
 
       const linkForm = wrapper.find(LinkForm);
 
-      // trigger formSubmitHandler
       await act(async () => {
         linkForm.prop('formSubmitHandler')('qwe', 'href');
       });
@@ -146,10 +144,10 @@ describe('Category Component', () => {
       wrapper.update();
 
       expect(firebase.addLink).toHaveBeenCalledWith('qwe', 'href', category);
-      expect(wrapper.find(categoryAddLinkFormSelector).exists()).toBe(false);
+      expect(wrapper.find(LinkForm).exists()).toBe(false);
     });
 
-    it('Should invoke Abort Create Link function', async () => {
+    it('Should invoke Abort "Create Link handler"', async () => {
       firebase.addLink = jest.fn();
 
       // open link form
@@ -161,7 +159,6 @@ describe('Category Component', () => {
 
       const linkForm = wrapper.find(LinkForm);
 
-      // trigger formSubmitHandler
       await act(async () => {
         linkForm.prop('abortHandler')();
       });
@@ -169,7 +166,39 @@ describe('Category Component', () => {
       wrapper.update();
 
       expect(firebase.addLink).not.toHaveBeenCalled();
-      expect(wrapper.find(categoryAddLinkFormSelector).exists()).toBe(false);
+      expect(wrapper.find(LinkForm).exists()).toBe(false);
+    });
+
+    it('Should invoke "Update Link Handler"', async () => {
+      firebase.updateLink = jest.fn();
+
+      await act(async () => {
+        categoryLinky.first().prop('formSubmitHandler')(
+          'title',
+          'href',
+          category.links[0],
+        );
+      });
+
+      expect(firebase.updateLink).toHaveBeenCalledWith(
+        'title',
+        'href',
+        category.links[0],
+        category,
+      );
+    });
+
+    it('Should invoke "Delete Link Handler"', async () => {
+      firebase.deleteLink = jest.fn();
+
+      await act(async () => {
+        categoryLinky.first().prop('deleteLinkHandler')(category.links[0]);
+      });
+
+      expect(firebase.deleteLink).toHaveBeenCalledWith(
+        category.links[0],
+        category,
+      );
     });
   });
 });
