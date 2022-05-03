@@ -83,7 +83,11 @@ const columnsConverter = {
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as IColumn,
 };
 
-export const getColumnsQuery = (tab: ITab): Query<IColumn> => {
+export const getColumnsQuery = (tab: ITab): Query<IColumn> | null => {
+  if (!tab?.id) {
+    return null;
+  }
+
   const columnsRef = collection(
     firebase.firestoreDB,
     'columns',

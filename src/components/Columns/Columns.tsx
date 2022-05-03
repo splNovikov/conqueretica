@@ -23,6 +23,7 @@ const Columns: FC<{
 
   if (columnsError?.message) {
     httpErrorHandler(columnsError);
+    return null;
   }
 
   const handleCreateCategoryScenario = async (title: string) => {
