@@ -1,14 +1,15 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import * as firestoreHooks from 'react-firebase-hooks/firestore';
+import { act } from 'react-dom/test-utils';
+// Firebase
+import firebase from '../../firebase';
 // Components
 import Column from './Column';
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
 // Test Data
 import { categories, columns } from '../../__test_data__';
-import { act } from 'react-dom/test-utils';
-import firebase from '../../firebase';
 
 describe('Column Component', () => {
   const origConsoleError = console.error;
