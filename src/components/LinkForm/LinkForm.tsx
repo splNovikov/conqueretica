@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 // Styles
 import './LinkForm.scss';
-// todo:  38,55-56,61-68,73-74
+
 const LinkForm: FC<{
   /* eslint-disable react/require-default-props */
   outsideClickIgnoreElement?: RefObject<HTMLElement>;
