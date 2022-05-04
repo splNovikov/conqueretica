@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 // Components
 import GoogleIcon from './GoogleIcon';
 
-describe('GoogleIcon', () => {
+describe('GoogleIcon Component', () => {
   it('GoogleIcon is rendering', () => {
     const wrapper = shallow(<GoogleIcon icon="sheets" />);
     expect(wrapper.hasClass('google-icon')).toEqual(true);
