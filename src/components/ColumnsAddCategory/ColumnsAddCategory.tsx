@@ -4,7 +4,6 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 // Components
 import SingleInputForm from '../SingleInputForm';
 
-// todo: add tests
 const ColumnsAddCategory: FC<{
   span: number;
   addCategoryScenarioHandler: (title: string) => void;
