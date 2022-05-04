@@ -7,6 +7,7 @@ import LinkForm from './LinkForm';
 import { links } from '../../__test_data__';
 
 describe('LinkForm Component', () => {
+  const origConsoleWarn = console.warn;
   const handleSubmit = jest.fn();
   const abortHandler = jest.fn();
   const titleInputSelector = 'input.link-form-title-input';
@@ -19,6 +20,7 @@ describe('LinkForm Component', () => {
   let btnCancel: ReactWrapper;
 
   beforeEach(() => {
+    console.warn = jest.fn();
     wrapper = mount(
       <LinkForm formSubmitHandler={handleSubmit} abortHandler={abortHandler} />,
     );
@@ -31,6 +33,7 @@ describe('LinkForm Component', () => {
 
   afterEach(() => {
     wrapper.unmount();
+    console.warn = origConsoleWarn;
   });
 
   it('LinkForm is rendering', () => {
@@ -41,7 +44,7 @@ describe('LinkForm Component', () => {
     expect(btnCancel.exists()).toBe(true);
   });
 
-  describe('LinkForm Input is able to input text', () => {
+  describe('LinkForm Component interactions', () => {
     it('Title Input is able to input text', async () => {
       await act(async () => {
         titleInput.simulate('change', { target: { value: 'somenew' } });
@@ -52,7 +55,7 @@ describe('LinkForm Component', () => {
       expect(wrapper.find(titleInputSelector).prop('value')).toEqual('somenew');
     });
 
-    it('Cancel Input is able to input text', async () => {
+    it('Link Input is able to input text', async () => {
       await act(async () => {
         linkInput.simulate('change', { target: { value: links.sheets.href } });
       });
@@ -65,7 +68,7 @@ describe('LinkForm Component', () => {
     });
   });
 
-  describe('LinkForm Handlers', () => {
+  describe('LinkForm Component Handlers', () => {
     it('Submit is triggering', async () => {
       await act(async () => {
         titleInput.simulate('change', { target: { value: 'somenew' } });
@@ -88,10 +91,8 @@ describe('LinkForm Component', () => {
 
       expect(abortHandler).toHaveBeenCalled();
     });
-  });
 
-  describe('LinkForm Handlers are not triggering when input invalid', () => {
-    it('Submit is triggering', async () => {
+    it('Submit is not triggering when Href is empty', async () => {
       await act(async () => {
         titleInput.simulate('change', { target: { value: 'somenew' } });
       });
@@ -101,6 +102,44 @@ describe('LinkForm Component', () => {
       await act(async () => {
         form.simulate('submit');
       });
+
+      wrapper.update();
+
+      expect(handleSubmit).not.toHaveBeenCalled();
+    });
+
+    it('Submit should be triggered when Title is empty', async () => {
+      await act(async () => {
+        linkInput.simulate('change', { target: { value: links.sheets.href } });
+      });
+
+      wrapper.update();
+
+      await act(async () => {
+        form.simulate('submit');
+      });
+
+      wrapper.update();
+
+      expect(handleSubmit).toHaveBeenCalledWith(
+        links.sheets.href,
+        links.sheets.href,
+      );
+    });
+
+    it('Submit is not triggering when Href is equals spaces', async () => {
+      await act(async () => {
+        titleInput.simulate('change', { target: { value: 'somenew' } });
+        linkInput.simulate('change', { target: { value: '     ' } });
+      });
+
+      wrapper.update();
+
+      await act(async () => {
+        form.simulate('submit');
+      });
+
+      wrapper.update();
 
       expect(handleSubmit).not.toHaveBeenCalled();
     });

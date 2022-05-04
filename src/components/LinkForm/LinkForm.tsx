@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 // Styles
 import './LinkForm.scss';
-
+// todo:  38,55-56,61-68,73-74
 const LinkForm: FC<{
   /* eslint-disable react/require-default-props */
   outsideClickIgnoreElement?: RefObject<HTMLElement>;
@@ -28,20 +28,19 @@ const LinkForm: FC<{
 }) => {
   const [form] = Form.useForm();
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = () => {
     const t = form.getFieldValue('titleInput');
     const l = form.getFieldValue('linkInput');
     const trimmedTitle = t.trim();
     const trimmedLink = l.trim();
 
     if (!trimmedLink.length) {
-      form.setFieldsValue({ titleInput: '' });
       return;
     }
 
     form.resetFields();
 
-    await formSubmitHandler(
+    formSubmitHandler(
       trimmedTitle.length ? trimmedTitle : trimmedLink,
       trimmedLink,
     );
@@ -113,8 +112,8 @@ const LinkForm: FC<{
               message: 'Invalid url',
             },
             {
-              max: 300,
-              message: 'Max 300 ch.',
+              max: 1500,
+              message: 'Max 1500 ch.',
             },
           ]}
         >
