@@ -11,11 +11,13 @@ import * as categories from './categories';
 // Interfaces
 import { ICategory, ILink } from '../interfaces';
 // Test Data
-import { columns } from '../__test_data__';
+import { categories as categoriesTestData } from '../__test_data__';
 
 describe('Links "Utils" Test', () => {
+  // Test Data
+  const category = categoriesTestData[0];
+
   it('Should Add Link To Category', () => {
-    const cats: ICategory[] = columns[0].categories;
     const link: ILink = {
       id: 'id',
       href: 'href',
@@ -24,15 +26,11 @@ describe('Links "Utils" Test', () => {
       createdAt: 'date',
     };
 
-    const res = addLinkToCategory(cats, cats[0], link);
-    expect(res).toEqual([
-      { ...cats[0], links: [...cats[0].links, link] },
-      cats[1],
-    ]);
+    const res = addLinkToCategory(category, link);
+    expect(res).toEqual({ ...category, links: [...category.links, link] });
   });
 
   it('Should Update Link In Category', () => {
-    const cats: ICategory[] = columns[0].categories;
     const link: ILink = {
       id: 'link-2',
       href: 'href',
@@ -41,15 +39,14 @@ describe('Links "Utils" Test', () => {
       createdAt: 'date',
     };
 
-    const res = updateLinkInCategory(cats, cats[0], link);
-    expect(res).toEqual([
-      { ...cats[0], links: [cats[0].links[0], link, cats[0].links[2]] },
-      cats[1],
-    ]);
+    const res = updateLinkInCategory(category, link);
+    expect(res).toEqual({
+      ...category,
+      links: [category.links[0], link, category.links[2]],
+    });
   });
 
   it('Should Delete Link From Category', () => {
-    const cats: ICategory[] = columns[0].categories;
     const link: ILink = {
       id: 'link-2',
       href: 'href',
@@ -58,11 +55,11 @@ describe('Links "Utils" Test', () => {
       createdAt: 'date',
     };
 
-    const res = deleteLinkFromCategory(cats, cats[0], link);
-    expect(res).toEqual([
-      { ...cats[0], links: [cats[0].links[0], cats[0].links[2]] },
-      cats[1],
-    ]);
+    const res = deleteLinkFromCategory(category, link);
+    expect(res).toEqual({
+      ...category,
+      links: [category.links[0], category.links[2]],
+    });
   });
 });
 
