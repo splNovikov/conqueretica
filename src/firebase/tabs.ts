@@ -87,6 +87,12 @@ export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
 
   // 1. get all columns
   const columnsQ = getColumnsQuery(tab);
+
+  if (!columnsQ) {
+    defaultErrorHandler('Columns Query can not be formulated');
+    return null;
+  }
+
   const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
 
   // 2. delete all columns
