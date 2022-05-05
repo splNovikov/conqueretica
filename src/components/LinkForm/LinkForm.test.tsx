@@ -3,6 +3,8 @@ import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 // Components
 import LinkForm from './LinkForm';
+// Utils
+import { updateInputValue, getInputValue } from '../../testUtils';
 // Test Data
 import { links } from '../../__test_data__';
 
@@ -47,32 +49,34 @@ describe('LinkForm Component', () => {
   describe('LinkForm Component interactions', () => {
     it('Title Input is able to input text', async () => {
       await act(async () => {
-        titleInput.simulate('change', { target: { value: 'somenew' } });
+        updateInputValue(titleInput, 'somenew');
       });
 
       wrapper.update();
 
-      expect(wrapper.find(titleInputSelector).prop('value')).toEqual('somenew');
+      const inputValue = getInputValue(wrapper.find(titleInputSelector));
+
+      expect(inputValue).toEqual('somenew');
     });
 
     it('Link Input is able to input text', async () => {
       await act(async () => {
-        linkInput.simulate('change', { target: { value: links.sheets.href } });
+        updateInputValue(linkInput, links.sheets.href);
       });
 
       wrapper.update();
 
-      expect(wrapper.find(linkInputSelector).prop('value')).toEqual(
-        links.sheets.href,
-      );
+      const inputValue = getInputValue(wrapper.find(linkInputSelector));
+
+      expect(inputValue).toEqual(links.sheets.href);
     });
   });
 
   describe('LinkForm Component Handlers', () => {
     it('Submit is triggering', async () => {
       await act(async () => {
-        titleInput.simulate('change', { target: { value: 'somenew' } });
-        linkInput.simulate('change', { target: { value: links.sheets.href } });
+        updateInputValue(titleInput, 'somenew');
+        updateInputValue(linkInput, links.sheets.href);
       });
 
       wrapper.update();
@@ -94,7 +98,7 @@ describe('LinkForm Component', () => {
 
     it('Submit is not triggering when Href is empty', async () => {
       await act(async () => {
-        titleInput.simulate('change', { target: { value: 'somenew' } });
+        updateInputValue(titleInput, 'somenew');
       });
 
       wrapper.update();
@@ -110,7 +114,7 @@ describe('LinkForm Component', () => {
 
     it('Submit should be triggered when Title is empty', async () => {
       await act(async () => {
-        linkInput.simulate('change', { target: { value: links.sheets.href } });
+        updateInputValue(linkInput, links.sheets.href);
       });
 
       wrapper.update();
@@ -129,8 +133,8 @@ describe('LinkForm Component', () => {
 
     it('Submit is not triggering when Href is equals spaces', async () => {
       await act(async () => {
-        titleInput.simulate('change', { target: { value: 'somenew' } });
-        linkInput.simulate('change', { target: { value: '     ' } });
+        updateInputValue(titleInput, 'somenew');
+        updateInputValue(linkInput, '     ');
       });
 
       wrapper.update();
