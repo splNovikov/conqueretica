@@ -8,6 +8,8 @@ import firebase from '../../firebase';
 import Column from './Column';
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
+// Utils
+import { mockUseCollectionData } from '../../testUtils';
 // Test Data
 import { categories, columns } from '../../__test_data__';
 
@@ -31,7 +33,7 @@ describe('Column Component', () => {
     jest
       .spyOn(firestoreHooks, 'useCollectionData')
       // @ts-ignore
-      .mockImplementation(() => [categories, false, undefined]);
+      .mockImplementation(mockUseCollectionData());
     wrapper = mount(<Column column={column} span={6} />);
     columnHeader = wrapper.find(columnHeaderSelector);
     categoriesWrappers = wrapper.find(Category);
@@ -55,10 +57,10 @@ describe('Column Component', () => {
 
   it('Column Component is handling errors when categories are not loading', () => {
     jest.resetAllMocks();
-    jest
-      .spyOn(firestoreHooks, 'useCollectionData')
+    jest.spyOn(firestoreHooks, 'useCollectionData').mockImplementation(
       // @ts-ignore
-      .mockImplementation(() => [[], false, { message: 'err' }]);
+      mockUseCollectionData([[], false, { message: 'err' }]),
+    );
 
     wrapper.unmount();
     wrapper = mount(<Column column={column} span={6} />);
@@ -124,10 +126,12 @@ describe('Column Component', () => {
     it('Should invoke "Delete Category Handler" and delete Column as well', async () => {
       const category = categories[0];
       jest.resetAllMocks();
-      jest
-        .spyOn(firestoreHooks, 'useCollectionData')
-        // @ts-ignore
-        .mockImplementation(() => [[category], false, undefined]);
+      jest.spyOn(firestoreHooks, 'useCollectionData').mockImplementation(
+        mockUseCollectionData(
+          // @ts-ignore
+          [[category], false, undefined],
+        ),
+      );
 
       wrapper.unmount();
       wrapper = mount(<Column column={column} span={6} />);

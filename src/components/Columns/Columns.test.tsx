@@ -7,8 +7,10 @@ import firebase from '../../firebase';
 import Columns from './Columns';
 import Column from '../Column';
 import ColumnsAddCategory from '../ColumnsAddCategory';
+// Utils
+import { mockUseCollectionData } from '../../testUtils';
 // Test Data
-import { categories, columns, tabs } from '../../__test_data__';
+import { tabs } from '../../__test_data__';
 
 describe('Columns Component', () => {
   const origConsoleError = console.error;
@@ -24,25 +26,7 @@ describe('Columns Component', () => {
     jest
       .spyOn(firestoreHooks, 'useCollectionData')
       // @ts-ignore
-      .mockImplementation((query) => {
-        if (!query) {
-          return [];
-        }
-
-        // @ts-ignore
-        // eslint-disable-next-line no-underscore-dangle
-        const dataType = query._query.path.segments[0];
-
-        if (dataType === 'columns') {
-          return [columns, false, undefined];
-        }
-
-        if (dataType === 'categories') {
-          return [categories, false, undefined];
-        }
-
-        return [];
-      });
+      .mockImplementation(mockUseCollectionData());
 
     wrapper = mount(<Columns selectedTab={tab} />);
     columnWrappers = wrapper.find(Column);
@@ -72,10 +56,10 @@ describe('Columns Component', () => {
 
   it('Columns Component is handling errors when columns are not loading', () => {
     jest.resetAllMocks();
-    jest
-      .spyOn(firestoreHooks, 'useCollectionData')
+    jest.spyOn(firestoreHooks, 'useCollectionData').mockImplementation(
       // @ts-ignore
-      .mockImplementation(() => [[], false, { message: 'err' }]);
+      mockUseCollectionData([[], false, { message: 'err' }]),
+    );
 
     wrapper.unmount();
     wrapper = mount(<Columns selectedTab={tab} />);

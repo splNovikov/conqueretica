@@ -7,6 +7,7 @@ import {
 } from './modal.test';
 import { getSubmenuItems } from './menu.test';
 import { updateInputValue, getInputValue } from './input.test';
+import { mockUseCollectionData } from './useCollectionData.test';
 
 export {
   getModalWrapper,
@@ -17,4 +18,5 @@ export {
   getSubmenuItems,
   updateInputValue,
   getInputValue,
+  mockUseCollectionData,
 };
