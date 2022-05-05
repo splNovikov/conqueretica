@@ -34,10 +34,6 @@ const LinkForm: FC<{
     const trimmedTitle = t.trim();
     const trimmedLink = l.trim();
 
-    if (!trimmedLink.length) {
-      return;
-    }
-
     form.resetFields();
 
     formSubmitHandler(
@@ -132,7 +128,7 @@ const LinkForm: FC<{
                 icon={<DeleteOutlined />}
                 onClick={handleDeleteClick}
                 size="small"
-                className="link-form-btn-cancel"
+                className="link-form-btn-delete"
               />
             </Form.Item>
           ) : null}
