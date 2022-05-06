@@ -3,6 +3,8 @@ const rules = {
   docs: 'https://docs.google.com/document',
   slides: 'https://docs.google.com/presentation',
   drive: 'https://drive.google.com/drive',
+  confluence: 'atlassian.net/wiki',
+  jira: 'atlassian.net/jira',
 };
 
 export const identifyLink = (href: string): string => {
@@ -17,6 +19,12 @@ export const identifyLink = (href: string): string => {
   }
   if (href.includes(rules.drive)) {
     return 'drive';
+  }
+  if (href.includes(rules.confluence)) {
+    return 'confluence';
+  }
+  if (href.includes(rules.jira)) {
+    return 'jira';
   }
 
   return '';

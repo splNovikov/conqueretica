@@ -3,8 +3,13 @@
 .linky {
   font-size: $linky-font-size;
 
-  & u > .linky-icon-wrapper,
-  & > .linky-icon-wrapper {
+  & &-icon-wrapper {
+    display: inline-flex;
+    min-width: 20px;
+  }
+
+  & u > &-icon-wrapper,
+  & > &-icon-wrapper {
     vertical-align: middle;
   }
 }

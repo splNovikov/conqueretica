@@ -38,6 +38,20 @@ describe('Identify Links', () => {
     expect(res).toBe('drive');
   });
 
+  it('Should return "confluence"', () => {
+    const res = identifyLink(
+      'https://jaxel-inc.atlassian.net/wiki/spaces/OH/overview',
+    );
+    expect(res).toBe('confluence');
+  });
+
+  it('Should return "jira"', () => {
+    const res = identifyLink(
+      'https://jaxel-inc.atlassian.net/jira/software/c/projects/OH/boards/54',
+    );
+    expect(res).toBe('jira');
+  });
+
   it('Should return "undefined"', () => {
     const res = identifyLink('http://test.com/blablabla');
     expect(res).toBe('');
