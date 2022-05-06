@@ -220,6 +220,26 @@ describe('LinkForm Component', () => {
 
         expect(deleteHandler).toHaveBeenCalled();
       });
+
+      it('Esc event should invoke abort handler at Title', async () => {
+        const { titleInput } = getWrappers(wrapper);
+
+        await act(async () => {
+          titleInput.simulate('keydown', { key: 'Escape' });
+        });
+
+        expect(abortHandler).toHaveBeenCalled();
+      });
+
+      it('Esc event should invoke abort handler at Href', async () => {
+        const { linkInput } = getWrappers(wrapper);
+
+        await act(async () => {
+          linkInput.simulate('keydown', { key: 'Escape' });
+        });
+
+        expect(abortHandler).toHaveBeenCalled();
+      });
     });
   });
 });
