@@ -221,6 +221,27 @@ describe('LinkForm Component', () => {
         expect(deleteHandler).toHaveBeenCalled();
       });
 
+      it('Delete button should not invoke delete handler when deleteHandler is not passed', async () => {
+        wrapper.unmount();
+        wrapper = mount(
+          <LinkForm
+            href={links.sheets.href}
+            title="any-title"
+            deleteHandler={123}
+            formSubmitHandler={handleSubmit}
+            abortHandler={abortHandler}
+          />,
+        );
+
+        const { btnDelete } = getWrappers(wrapper);
+
+        await act(async () => {
+          btnDelete.simulate('click');
+        });
+
+        expect(deleteHandler).not.toHaveBeenCalled();
+      });
+
       it('Esc event should invoke abort handler at Title', async () => {
         const { titleInput } = getWrappers(wrapper);
 
@@ -239,6 +260,16 @@ describe('LinkForm Component', () => {
         });
 
         expect(abortHandler).toHaveBeenCalled();
+      });
+
+      it('"Not Esc" event should NOT invoke abort handler at Href', async () => {
+        const { linkInput } = getWrappers(wrapper);
+
+        await act(async () => {
+          linkInput.simulate('keydown', { key: 'A' });
+        });
+
+        expect(abortHandler).not.toHaveBeenCalled();
       });
     });
   });
