@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 // Components
@@ -240,6 +240,65 @@ describe('LinkForm Component', () => {
 
         expect(abortHandler).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('LinkForm Component - Outside click', () => {
+    const TestLinkForm = () => {
+      const ref = useRef<HTMLElement>(null);
+
+      return (
+        <div>
+          <div className="outside">Outside El</div>
+          <div className="outside-ignored" ref={ref}>
+            Outside El
+          </div>
+          <LinkForm
+            outsideClickIgnoreElement={ref}
+            formSubmitHandler={handleSubmit}
+            abortHandler={abortHandler}
+          />
+        </div>
+      );
+    };
+    const eventListener = {};
+    document.addEventListener = (evt, cb) => (eventListener[evt] = cb);
+    // Selectors
+    const outsideWrapperSelector = 'div.outside';
+    const outsideIgnoredWrapperSelector = 'div.outside-ignored';
+
+    const getOutsideClickWrappers = (w: ReactWrapper) => {
+      const outsideWrapper = w.find(outsideWrapperSelector);
+      const outsideIgnoredWrapper = w.find(outsideIgnoredWrapperSelector);
+
+      return {
+        outsideWrapper,
+        outsideEl: outsideWrapper.getDOMNode(),
+        outsideIgnoredWrapper,
+        outsideIgnoredEl: outsideIgnoredWrapper.getDOMNode(),
+      };
+    };
+
+    beforeEach(() => {
+      wrapper = mount(<TestLinkForm />);
+    });
+
+    it('Should trigger abort handler on outside click', async () => {
+      const { outsideEl } = getOutsideClickWrappers(wrapper);
+
+      eventListener.mousedown({ target: outsideEl });
+      eventListener.mouseup({ target: outsideEl });
+
+      expect(abortHandler).toHaveBeenCalled();
+    });
+
+    it('Should not trigger abort handler on outside click on ignored element', async () => {
+      const { outsideIgnoredEl } = getOutsideClickWrappers(wrapper);
+
+      eventListener.mousedown({ target: outsideIgnoredEl });
+      eventListener.mouseup({ target: outsideIgnoredEl });
+
+      expect(abortHandler).not.toHaveBeenCalled();
     });
   });
 });
