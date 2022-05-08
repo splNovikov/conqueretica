@@ -1,9 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 
 import Login from './Login';
 
-it('Login is rendering', () => {
-  const wrapper = shallow(<Login />);
-  expect(wrapper.hasClass('login')).toEqual(true);
+describe('Login Component', () => {
+  // Wrappers
+  let wrapper: ReactWrapper;
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  it('Login is rendering', () => {
+    wrapper = mount(<Login />);
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.text()).toBe('Login with Google');
+  });
 });
