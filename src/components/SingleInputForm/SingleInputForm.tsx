@@ -75,6 +75,7 @@ const SingleInputForm: FC<{
               htmlType="submit"
               icon={<CheckOutlined />}
               size="small"
+              className="single-input-form-submit-btn"
             />
           </Form.Item>
           <Form.Item>
@@ -83,6 +84,7 @@ const SingleInputForm: FC<{
               icon={<CloseOutlined />}
               onClick={handleCancelEdit}
               size="small"
+              className="single-input-form-cancel-btn"
             />
           </Form.Item>
         </div>
