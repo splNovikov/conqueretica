@@ -1,63 +1,78 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 // Components
 import Linky from './Linky';
 import GoogleIcon from '../GoogleIcon';
 // Test Data
 import { links } from '../../__test_data__';
 
-it('Linky is rendering', () => {
-  const wrapper = shallow(<Linky link={links.sheets} ellipsis />);
-  expect(wrapper.hasClass('linky')).toBe(true);
-});
+describe('Linky Component', () => {
+  // Selectors
+  const hrefLinkySelector = 'a.linky';
+  const ellipsisSelector = 'ant-typography-ellipsis';
 
-describe('Linky should has correct classes', () => {
-  it('Should have "ellipsis" class', async () => {
-    const wrapper = mount(<Linky link={links.sheets} ellipsis />);
+  // Wrappers
+  let wrapper: ReactWrapper;
 
-    expect(wrapper.find('a.linky').hasClass('ant-typography-ellipsis')).toBe(
-      true,
-    );
-  });
-});
-
-describe('Linky should has correct title', () => {
-  it('Should have "predefined" title', () => {
-    const link = {
-      ...links.sheets,
-      title: 'predefined',
-    };
-
-    const wrapper = mount(<Linky link={link} />);
-    expect(wrapper.text()).toEqual('predefined');
+  const getWrappers = (w: ReactWrapper) => ({
+    hrefLinky: w.find(hrefLinkySelector),
   });
 
-  it('Should have "https://" title', () => {
-    const link = {
-      ...links.sheets,
-      title: '',
-      href: 'https://',
-    };
-
-    const wrapper = shallow(<Linky link={link} />);
-    expect(wrapper.text()).toEqual('https://');
-  });
-});
-
-describe('Linky - Icon', () => {
-  it('Icon should be displayed', () => {
-    const wrapper = shallow(<Linky link={links.sheets} />);
-
-    expect(wrapper.find(GoogleIcon).exists()).toBe(true);
+  afterEach(() => {
+    wrapper.unmount();
   });
 
-  it('Icon should not be displayed', () => {
-    const link = {
-      ...links.sheets,
-      href: 'asdasdasdasd',
-    };
-    const wrapper = shallow(<Linky link={link} />);
+  describe('Linky Component Rendering Elements', () => {
+    it('Linky is rendering elements correctly', () => {
+      wrapper = mount(<Linky link={links.sheets} />);
+      const { hrefLinky } = getWrappers(wrapper);
+      expect(hrefLinky.exists()).toBe(true);
+      expect(hrefLinky.hasClass(ellipsisSelector)).toBe(false);
+    });
 
-    expect(wrapper.find(GoogleIcon).exists()).toBe(false);
+    it('Linky has ellipsis attribute', () => {
+      wrapper = mount(<Linky link={links.sheets} ellipsis />);
+      const { hrefLinky } = getWrappers(wrapper);
+      expect(hrefLinky.hasClass(ellipsisSelector)).toBe(true);
+    });
+
+    it('Should have "predefined" title', () => {
+      const link = {
+        ...links.sheets,
+        title: 'predefined',
+      };
+
+      wrapper = mount(<Linky link={link} />);
+      expect(wrapper.text()).toEqual('predefined');
+    });
+
+    it('Should have "https://" title', () => {
+      const link = {
+        ...links.sheets,
+        title: '',
+        href: 'https://',
+      };
+
+      wrapper = mount(<Linky link={link} />);
+      expect(wrapper.text()).toEqual('https://');
+    });
+  });
+
+  describe('Linky Component - Icon', () => {
+    it('Icon should be displayed', () => {
+      wrapper = mount(<Linky link={links.sheets} />);
+
+      expect(wrapper.find(GoogleIcon).exists()).toBe(true);
+    });
+
+    it('Icon should not be displayed', () => {
+      const link = {
+        ...links.sheets,
+        href: 'asdasdasdasd',
+      };
+      wrapper = mount(<Linky link={link} />);
+
+      expect(wrapper.find(GoogleIcon).exists()).toBe(false);
+    });
   });
 });
