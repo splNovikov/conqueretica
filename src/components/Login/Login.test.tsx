@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
-
+// Components
 import Login from './Login';
 
 describe('Login Component', () => {
@@ -11,7 +11,7 @@ describe('Login Component', () => {
     wrapper.unmount();
   });
 
-  it('Login is rendering', () => {
+  it('Login Component is rendering', () => {
     wrapper = mount(<Login />);
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.text()).toBe('Login with Google');
