@@ -59,7 +59,7 @@ describe('Column Component', () => {
     jest.resetAllMocks();
     jest.spyOn(firestoreHooks, 'useCollectionData').mockImplementation(
       // @ts-ignore
-      mockUseCollectionData([[], false, { message: 'err' }]),
+      mockUseCollectionData([undefined, false, { message: 'err' }]),
     );
 
     wrapper.unmount();
