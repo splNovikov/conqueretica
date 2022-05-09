@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 // Utils
 import { getInputValue, updateInputValue } from '../../testUtils';
 // Components
 import SingleInputForm from './SingleInputForm';
-import LinkForm from '../LinkForm';
 
 describe('SingleInputForm Component', () => {
   const formSubmitHandler = jest.fn();
