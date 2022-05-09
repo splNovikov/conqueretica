@@ -6,6 +6,7 @@ import Tab from '../Tab';
 import SingleInputForm from '../SingleInputForm';
 // Test Data
 import { tabs } from '../../__test_data__';
+import { act } from 'react-dom/test-utils';
 
 describe('Tabs Component', () => {
   const selectTabHandler = jest.fn();
@@ -84,6 +85,40 @@ describe('Tabs Component', () => {
       tabsAddFormTrigger.simulate('click');
 
       expect(getWrappers(wrapper).addFormWrapper.exists()).toBe(true);
+    });
+  });
+
+  describe('Tabs Component Рфтвдукы', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Tabs
+          tabs={tabs}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          updateTabHandler={updateTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          tabsFormSubmitHandler={tabsFormSubmitHandler}
+        />,
+      );
+    });
+
+    it('Tabs Component Should handle tab creation', async () => {
+      const { tabsAddFormTrigger } = getWrappers(wrapper);
+
+      tabsAddFormTrigger.simulate('click');
+
+      const { addFormWrapper } = getWrappers(wrapper);
+
+      const formSubmitHandler = addFormWrapper.prop('formSubmitHandler');
+
+      await act(async () => {
+        formSubmitHandler && formSubmitHandler('new-tab-title');
+      });
+
+      wrapper.update();
+
+      expect(tabsFormSubmitHandler).toHaveBeenCalledWith('new-tab-title');
+      expect(getWrappers(wrapper).addFormWrapper.exists()).toBe(false);
     });
   });
 });
