@@ -17,10 +17,18 @@ const actionsMenu = (
   handleTabEdit: () => void,
 ) => (
   <Menu>
-    <Menu.Item key="edit" onClick={handleTabEdit} className="edit-tab">
+    <Menu.Item
+      key="edit"
+      onClick={handleTabEdit}
+      className="tab-actions-menu-edit-tab"
+    >
       <EditOutlined /> Edit Tab
     </Menu.Item>
-    <Menu.Item key="delete" onClick={handleTabDelete} className="delete-tab">
+    <Menu.Item
+      key="delete"
+      onClick={handleTabDelete}
+      className="tab-actions-menu-delete-tab"
+    >
       <DeleteOutlined /> Delete Tab
     </Menu.Item>
   </Menu>
@@ -80,6 +88,7 @@ const Tab: FC<{
         visible={isConfirmModalVisible}
         onOk={handleConfirmModalOk}
         onCancel={handleConfirmModalCancel}
+        forceRender
       >
         <p>Are you sure you want to delete tab &quot;{tab.title}&quot;?</p>
         <p>
