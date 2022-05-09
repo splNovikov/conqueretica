@@ -223,5 +223,26 @@ describe('Tab Component', () => {
       expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
       expect(updateTabHandler).not.toHaveBeenCalled();
     });
+
+    it('Should handle cancel edit Tab', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      const { singleInputWrapper } = getWrappers(wrapper);
+
+      const abortHandler = singleInputWrapper.prop('abortHandler');
+
+      await act(async () => {
+        abortHandler && abortHandler();
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
+    });
   });
 });
