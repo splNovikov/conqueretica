@@ -179,5 +179,49 @@ describe('Tab Component', () => {
 
       expect(selectTabHandler).toHaveBeenCalledWith(tab);
     });
+
+    it('Should handle Tab update', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      const { singleInputWrapper } = getWrappers(wrapper);
+
+      const formSubmitHandler = singleInputWrapper.prop('formSubmitHandler');
+
+      await act(async () => {
+        formSubmitHandler && formSubmitHandler('new-tab-title');
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
+      expect(updateTabHandler).toHaveBeenCalledWith(tab, 'new-tab-title');
+    });
+
+    it('Should NOT handle Tab update if title is the same', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      const { singleInputWrapper } = getWrappers(wrapper);
+
+      const formSubmitHandler = singleInputWrapper.prop('formSubmitHandler');
+
+      await act(async () => {
+        formSubmitHandler && formSubmitHandler(tab.title);
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
+      expect(updateTabHandler).not.toHaveBeenCalled();
+    });
   });
 });
