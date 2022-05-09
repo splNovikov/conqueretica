@@ -136,4 +136,48 @@ describe('Tab Component', () => {
       expect(isModalHidden(wrapper)).toBe(true);
     });
   });
+
+  describe('Tab Component Handlers', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Tab
+          tab={tab}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          updateTabHandler={updateTabHandler}
+        />,
+      );
+    });
+
+    it('Should prevent handle Tab Select when tab is already selected', async () => {
+      const { tabTitleWrapper } = getWrappers(wrapper);
+
+      await act(async () => {
+        tabTitleWrapper.simulate('click');
+      });
+
+      expect(selectTabHandler).not.toHaveBeenCalled();
+    });
+
+    it('Should handle Tab Select', async () => {
+      wrapper.unmount();
+      wrapper = mount(
+        <Tab
+          tab={tab}
+          selectedTab={tabs[1]}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          updateTabHandler={updateTabHandler}
+        />,
+      );
+      const { tabTitleWrapper } = getWrappers(wrapper);
+
+      await act(async () => {
+        tabTitleWrapper.simulate('click');
+      });
+
+      expect(selectTabHandler).toHaveBeenCalledWith(tab);
+    });
+  });
 });
