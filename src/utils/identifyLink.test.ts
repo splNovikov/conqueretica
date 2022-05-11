@@ -52,6 +52,11 @@ describe('Identify Links', () => {
     expect(res).toBe('jira');
   });
 
+  it('Should return "youtube"', () => {
+    const res = identifyLink('https://www.youtube.com/watch?v=fNEJmLhkt74');
+    expect(res).toBe('youtube');
+  });
+
   it('Should return "undefined"', () => {
     const res = identifyLink('http://test.com/blablabla');
     expect(res).toBe('');

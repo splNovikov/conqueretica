@@ -5,6 +5,7 @@ const rules = {
   drive: 'https://drive.google.com/drive',
   confluence: 'atlassian.net/wiki',
   jira: 'atlassian.net/jira',
+  youtube: 'youtube.com/watch',
 };
 
 export const identifyLink = (href: string): string => {
@@ -25,6 +26,9 @@ export const identifyLink = (href: string): string => {
   }
   if (href.includes(rules.jira)) {
     return 'jira';
+  }
+  if (href.includes(rules.youtube)) {
+    return 'youtube';
   }
 
   return '';
