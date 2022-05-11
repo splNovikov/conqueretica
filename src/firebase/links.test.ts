@@ -7,9 +7,8 @@ import {
   deleteLink,
   deleteLinkFromCategory,
 } from './links';
-import * as categories from './categories';
 // Interfaces
-import { ICategory, ILink } from '../interfaces';
+import { ILink } from '../interfaces';
 // Test Data
 import { categories as categoriesTestData } from '../__test_data__';
 
@@ -65,15 +64,16 @@ describe('Links "Utils" Test', () => {
 
 describe('Firebase Links Test', () => {
   const collectionRef = { colRef: 'test_collectionRef' };
-  const columnDoc = { columnDoc: 'test_columnDoc' };
+  const categoryDoc = { columnDoc: 'test_categoryDoc' };
   const origConsoleError = console.error;
+  // Test data
+  const title = 'title';
+  const href = 'https://ya.ru';
+  const category = categoriesTestData[0];
 
   beforeEach(() => {
     jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    jest.spyOn(firestore, 'doc').mockReturnValue(columnDoc);
-    jest
-      .spyOn(categories, 'getCategoriesByColumnDoc')
-      .mockReturnValue(Promise.resolve(columns[0].categories));
+    jest.spyOn(firestore, 'doc').mockReturnValue(categoryDoc);
     console.error = jest.fn();
   });
 
@@ -94,46 +94,25 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Add Link', async () => {
-      const title = 'title';
-      const href = 'https://ya.ru';
-      const res = await addLink(
-        title,
-        href,
-        columns[0].categories[0],
-        columns[0],
+      const res = await addLink(title, href, category);
+
+      const updatedCategory = {
+        ...category,
+        links: [
+          ...category.links,
+          expect.objectContaining({
+            title,
+            href,
+          }),
+        ],
+      };
+
+      expect(firestore.updateDoc).toHaveBeenCalledWith(
+        categoryDoc,
+        updatedCategory,
       );
-
-      const updatedCategories = [
-        {
-          ...columns[0].categories[0],
-          links: [
-            ...columns[0].categories[0].links,
-            expect.objectContaining({
-              title,
-              href,
-            }),
-          ],
-        },
-        columns[0].categories[1],
-      ];
-
-      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
-        categories: updatedCategories,
-      });
       expect(res?.title).toBe(title);
       expect(res?.href).toBe(href);
-    });
-
-    it('Should Handle getCategoriesByColumnDoc Exception', async () => {
-      const err = new Error('Mocked error');
-      jest
-        .spyOn(categories, 'getCategoriesByColumnDoc')
-        .mockReturnValue(Promise.reject(err));
-
-      const res = await addLink('1', '1', columns[0].categories[0], columns[0]);
-
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(err);
     });
 
     it('Should Handle updateDoc Exception', async () => {
@@ -143,28 +122,13 @@ describe('Firebase Links Test', () => {
         throw err;
       });
 
-      const res = await addLink('1', '1', columns[0].categories[0], columns[0]);
+      const res = await addLink(title, href, category);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(err);
     });
 
-    it('Should Handle Not Found Categories with Exception', async () => {
-      jest
-        .spyOn(categories, 'getCategoriesByColumnDoc')
-        .mockReturnValue(Promise.resolve(undefined));
-
-      const res = await addLink('1', '1', columns[0].categories[0], columns[0]);
-
-      expect(res).toBeNull();
-    });
-
     it('Should Return Null when title not passed', async () => {
-      const res = await addLink(
-        undefined,
-        '1',
-        columns[0].categories[0],
-        columns[0],
-      );
+      const res = await addLink(undefined, href, category);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
@@ -172,12 +136,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when href not passed', async () => {
-      const res = await addLink(
-        '1',
-        undefined,
-        columns[0].categories[0],
-        columns[0],
-      );
+      const res = await addLink(title, undefined, category);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
@@ -185,7 +144,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when category not passed', async () => {
-      const res = await addLink('1', '1', undefined, columns[0]);
+      const res = await addLink(title, href, undefined);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
@@ -193,23 +152,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when category.id not passed', async () => {
-      const res = await addLink('1', '1', {}, columns[0]);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Invalid Parameters Passed to Create new link',
-      );
-    });
-
-    it('Should Return Null when column not passed', async () => {
-      const res = await addLink('1', '1', columns[0].categories[0], undefined);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Invalid Parameters Passed to Create new link',
-      );
-    });
-
-    it('Should Return Null when column.id not passed', async () => {
-      const res = await addLink('1', '1', columns[0].categories[0], {});
+      const res = await addLink(title, href, {});
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
@@ -248,44 +191,19 @@ describe('Firebase Links Test', () => {
         updatedTitle,
         updatedHref,
         linkToUpdate,
-        columns[0].categories[0],
-        columns[0],
+        category,
       );
 
-      const updatedCategories = [
-        {
-          ...columns[0].categories[0],
-          links: [
-            columns[0].categories[0].links[0],
-            updatedLink,
-            columns[0].categories[0].links[2],
-          ],
-        },
-        columns[0].categories[1],
-      ];
+      const updatedCategory = {
+        ...category,
+        links: [category.links[0], updatedLink, category.links[2]],
+      };
 
-      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
-        categories: updatedCategories,
-      });
+      expect(firestore.updateDoc).toHaveBeenCalledWith(
+        categoryDoc,
+        updatedCategory,
+      );
       expect(res).toStrictEqual(updatedLink);
-    });
-
-    it('Should Handle getCategoriesByColumnDoc Exception', async () => {
-      const err = new Error('Mocked error');
-      jest
-        .spyOn(categories, 'getCategoriesByColumnDoc')
-        .mockReturnValue(Promise.reject(err));
-
-      const res = await updateLink(
-        updatedTitle,
-        updatedHref,
-        linkToUpdate,
-        columns[0].categories[0],
-        columns[0],
-      );
-
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(err);
     });
 
     it('Should Handle updateDoc Exception', async () => {
@@ -299,28 +217,11 @@ describe('Firebase Links Test', () => {
         updatedTitle,
         updatedHref,
         linkToUpdate,
-        columns[0].categories[0],
-        columns[0],
+        category,
       );
 
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(err);
-    });
-
-    it('Should Handle Not Found Categories with Exception', async () => {
-      jest
-        .spyOn(categories, 'getCategoriesByColumnDoc')
-        .mockReturnValue(Promise.resolve(undefined));
-
-      const res = await updateLink(
-        updatedTitle,
-        updatedHref,
-        linkToUpdate,
-        columns[0].categories[0],
-        columns[0],
-      );
-
-      expect(res).toBeNull();
     });
 
     it('Should Return Null when title not passed', async () => {
@@ -328,8 +229,7 @@ describe('Firebase Links Test', () => {
         undefined,
         updatedHref,
         linkToUpdate,
-        columns[0].categories[0],
-        columns[0],
+        category,
       );
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
@@ -342,8 +242,7 @@ describe('Firebase Links Test', () => {
         updatedTitle,
         undefined,
         linkToUpdate,
-        columns[0].categories[0],
-        columns[0],
+        category,
       );
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
@@ -356,8 +255,7 @@ describe('Firebase Links Test', () => {
         updatedTitle,
         updatedHref,
         undefined,
-        columns[0].categories[0],
-        columns[0],
+        category,
       );
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
@@ -366,13 +264,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when Link passed as an empty Object', async () => {
-      const res = await updateLink(
-        updatedTitle,
-        updatedHref,
-        {},
-        columns[0].categories[0],
-        columns[0],
-      );
+      const res = await updateLink(updatedTitle, updatedHref, {}, category);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
@@ -385,7 +277,6 @@ describe('Firebase Links Test', () => {
         updatedHref,
         linkToUpdate,
         undefined,
-        columns[0],
       );
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
@@ -394,41 +285,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when Category passed as an empty Object', async () => {
-      const res = await updateLink(
-        updatedTitle,
-        updatedHref,
-        linkToUpdate,
-        {},
-        columns[0],
-      );
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Invalid Parameters Passed to Update a link',
-      );
-    });
-
-    it('Should Return Null when Column not passed', async () => {
-      const res = await updateLink(
-        updatedTitle,
-        updatedHref,
-        linkToUpdate,
-        columns[0].categories[0],
-        undefined,
-      );
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Invalid Parameters Passed to Update a link',
-      );
-    });
-
-    it('Should Return Null when Column passed as an empty Object', async () => {
-      const res = await updateLink(
-        updatedTitle,
-        updatedHref,
-        linkToUpdate,
-        columns[0].categories[0],
-        {},
-      );
+      const res = await updateLink(updatedTitle, updatedHref, linkToUpdate, {});
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
@@ -455,43 +312,18 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Delete Link', async () => {
-      const res = await deleteLink(
-        linkToDelete,
-        columns[0].categories[0],
-        columns[0],
+      const res = await deleteLink(linkToDelete, category);
+
+      const updatedCategory = {
+        ...category,
+        links: [category.links[0], category.links[2]],
+      };
+
+      expect(firestore.updateDoc).toHaveBeenCalledWith(
+        categoryDoc,
+        updatedCategory,
       );
-
-      const updatedCategories = [
-        {
-          ...columns[0].categories[0],
-          links: [
-            columns[0].categories[0].links[0],
-            columns[0].categories[0].links[2],
-          ],
-        },
-        columns[0].categories[1],
-      ];
-
-      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
-        categories: updatedCategories,
-      });
       expect(res).toBe(linkToDelete);
-    });
-
-    it('Should Handle getCategoriesByColumnDoc Exception', async () => {
-      const err = new Error('Mocked error');
-      jest
-        .spyOn(categories, 'getCategoriesByColumnDoc')
-        .mockReturnValue(Promise.reject(err));
-
-      const res = await deleteLink(
-        linkToDelete,
-        columns[0].categories[0],
-        columns[0],
-      );
-
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(err);
     });
 
     it('Should Handle updateDoc Exception', async () => {
@@ -501,36 +333,14 @@ describe('Firebase Links Test', () => {
         throw err;
       });
 
-      const res = await deleteLink(
-        linkToDelete,
-        columns[0].categories[0],
-        columns[0],
-      );
+      const res = await deleteLink(linkToDelete, category);
 
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(err);
     });
 
-    it('Should Handle Not Found Categories with Exception', async () => {
-      jest
-        .spyOn(categories, 'getCategoriesByColumnDoc')
-        .mockReturnValue(Promise.resolve(undefined));
-
-      const res = await deleteLink(
-        linkToDelete,
-        columns[0].categories[0],
-        columns[0],
-      );
-
-      expect(res).toBeNull();
-    });
-
     it('Should Return Null when Link not passed', async () => {
-      const res = await deleteLink(
-        undefined,
-        columns[0].categories[0],
-        columns[0],
-      );
+      const res = await deleteLink(undefined, category);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
@@ -538,7 +348,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when Link passed as an empty Object', async () => {
-      const res = await deleteLink({}, columns[0].categories[0], columns[0]);
+      const res = await deleteLink({}, category);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
@@ -546,7 +356,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when Category not passed', async () => {
-      const res = await deleteLink(linkToDelete, undefined, columns[0]);
+      const res = await deleteLink(linkToDelete, undefined);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
@@ -554,27 +364,7 @@ describe('Firebase Links Test', () => {
     });
 
     it('Should Return Null when Category passed as an empty Object', async () => {
-      const res = await deleteLink(linkToDelete, {}, columns[0]);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Invalid Parameters Passed to Delete a link',
-      );
-    });
-
-    it('Should Return Null when Column not passed', async () => {
-      const res = await deleteLink(
-        linkToDelete,
-        columns[0].categories[0],
-        undefined,
-      );
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(
-        'Invalid Parameters Passed to Delete a link',
-      );
-    });
-
-    it('Should Return Null when Column passed as an empty Object', async () => {
-      const res = await deleteLink(linkToDelete, columns[0].categories[0], {});
+      const res = await deleteLink(linkToDelete, {});
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
