@@ -12,17 +12,13 @@ import {
   deleteColumn,
   deleteColumns,
 } from './columns';
-import {
-  getCategoriesQuery,
-  addCategory,
-  deleteCategory,
-  deleteCategories,
-} from './categories';
+import { addCategory, deleteCategory, deleteCategories } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 import {
   addCategoryWithColumnScenario,
   deleteCategoryWithColumnScenario,
 } from './scenarios';
+import { getCategoriesQuery } from './queryBuilders';
 
 const isProd = process.env.NODE_ENV === 'production';
 const app = initializeApp(isProd ? FIREBASE_CONFIG_PROD : FIREBASE_CONFIG_DEV);

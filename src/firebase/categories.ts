@@ -3,11 +3,6 @@ import {
   doc,
   Timestamp,
   setDoc,
-  Query,
-  query,
-  where,
-  orderBy,
-  QueryDocumentSnapshot,
   deleteDoc,
   QuerySnapshot,
 } from 'firebase/firestore';
@@ -18,7 +13,7 @@ import firebase from './index';
 import { ICategory, IColumn } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
-
+// todo: 58-59,82-83
 export const addCategory = async (
   title: string,
   column: IColumn,
@@ -76,23 +71,4 @@ export const deleteCategory = async (
     httpErrorHandler(e);
     return null;
   }
-};
-
-const categoriesConverter = {
-  toFirestore: (data: ICategory) => data,
-  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ICategory,
-};
-
-// todo tests
-export const getCategoriesQuery = (column: IColumn): Query<ICategory> => {
-  const categoriesRef = collection(
-    firebase.firestoreDB,
-    'categories',
-  ).withConverter<ICategory>(categoriesConverter);
-
-  return query(
-    categoriesRef,
-    where('columnId', '==', column.id),
-    orderBy('createdAt', 'asc'),
-  );
 };

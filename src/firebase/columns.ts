@@ -15,12 +15,13 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
+import { deleteCategories } from './categories';
+import { getCategoriesQuery } from './queryBuilders';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
-import { deleteCategories, getCategoriesQuery } from './categories';
-
+// todo: 52-53,83-84
 export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   if (!tab?.id) {
     defaultErrorHandler('No Tab');
