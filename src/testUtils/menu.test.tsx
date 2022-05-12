@@ -7,3 +7,7 @@ export const getSubmenuItems = (w: ReactWrapper) => {
   const submenu = shallow(<div>{dropdown.prop('overlay')}</div>);
   return submenu.find(Menu.Item);
 };
+
+it('Menu Dummy Test', () => {
+  expect(true).toBe(true);
+});

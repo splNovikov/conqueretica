@@ -30,3 +30,7 @@ export const isModalHidden = (wrapper: ReactWrapper): boolean => {
   const modalWrapper = getModalWrapper(wrapper);
   return modalWrapper.prop('style')?.display === 'none';
 };
+
+it('Modal Dummy Test', () => {
+  expect(true).toBe(true);
+});

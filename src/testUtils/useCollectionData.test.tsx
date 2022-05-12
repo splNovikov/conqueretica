@@ -35,3 +35,8 @@ export const mockUseCollectionData = (response: any) => (query: any) => {
 
   return [];
 };
+
+// todo: make test for mockUseCollectionData
+it('UseCollectionData Dummy Test', () => {
+  expect(true).toBe(true);
+});
