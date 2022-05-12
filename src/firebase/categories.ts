@@ -47,6 +47,7 @@ export const addCategory = async (
   }
 };
 
+// todo: wrap with try catch, data() possibly is undefined or not a function
 export const deleteCategories = async (
   categories: QuerySnapshot<ICategory>,
 ): Promise<void> => {

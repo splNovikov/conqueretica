@@ -1,11 +1,11 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
-import * as firebaseColumns from './columns';
 import { addTab, deleteTab, updateTab } from './tabs';
+import * as queryBuilders from './queryBuilders';
 // Interfaces
 import { ITab } from '../interfaces';
 // Test Data
-import { tabs, user } from '../__test_data__';
+import { categories, columns, tabs, user } from '../__test_data__';
 
 describe('Firebase Tabs Test', () => {
   const tabDoc = { tabDoc: 'test_tabDoc' };
@@ -135,22 +135,41 @@ describe('Firebase Tabs Test', () => {
   });
 
   describe('Delete Tab', () => {
-    const origGetColumnsQuery = firebaseColumns.getColumnsQuery;
+    const origGetColumnsQuery = queryBuilders.getColumnsQuery;
+    const origGetCategoriesQuery = queryBuilders.getCategoriesQuery;
     const origGetDocs = firestore.getDocs;
-    const origDeleteColumns = firebaseColumns.deleteColumns;
     const origDelete = firestore.deleteDoc;
+    const data = () => columns[0];
+    const columnsDocs = [{ data }, { data }, { data }];
+    const dataCat = () => categories[0];
+    const categoriesDocs = [
+      { data: dataCat },
+      { data: dataCat },
+      { data: dataCat },
+    ];
 
     beforeEach(() => {
-      firebaseColumns.getColumnsQuery = jest.fn();
-      firestore.getDocs = jest.fn();
-      firebaseColumns.deleteColumns = jest.fn();
+      queryBuilders.getColumnsQuery = jest.fn(() => ({
+        query: 'columns_q',
+      }));
+      queryBuilders.getCategoriesQuery = jest.fn(() => ({
+        query: 'categories_q',
+      }));
+      firestore.getDocs = jest.fn(({ query }) => {
+        if (query === 'columns_q') {
+          return columnsDocs;
+        }
+        if (query === 'categories_q') {
+          return categoriesDocs;
+        }
+      });
       firestore.deleteDoc = jest.fn();
     });
 
     afterEach(() => {
-      firebaseColumns.getColumnsQuery = origGetColumnsQuery;
+      queryBuilders.getColumnsQuery = origGetColumnsQuery;
+      queryBuilders.getCategoriesQuery = origGetCategoriesQuery;
       firestore.getDocs = origGetDocs;
-      firebaseColumns.deleteColumns = origDeleteColumns;
       firestore.deleteDoc = origDelete;
     });
 
@@ -158,6 +177,8 @@ describe('Firebase Tabs Test', () => {
       const tab = tabs[0];
       const res = await deleteTab(tab);
 
+      // 9 categories, 3 columns, 1 tab
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(9 + 3 + 1);
       expect(firestore.deleteDoc).toHaveBeenCalledWith(tabDoc);
       expect(res).toBe(tab);
     });

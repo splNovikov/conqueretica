@@ -5,20 +5,19 @@ import { getFirestore } from 'firebase/firestore';
 import { FIREBASE_CONFIG_DEV, FIREBASE_CONFIG_PROD } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
-import { getTabsQuery, addTab, updateTab, deleteTab } from './tabs';
-import {
-  getColumnsQuery,
-  addColumn,
-  deleteColumn,
-  deleteColumns,
-} from './columns';
+import { addTab, updateTab, deleteTab } from './tabs';
+import { addColumn, deleteColumn, deleteColumns } from './columns';
 import { addCategory, deleteCategory, deleteCategories } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 import {
   addCategoryWithColumnScenario,
   deleteCategoryWithColumnScenario,
 } from './scenarios';
-import { getCategoriesQuery } from './queryBuilders';
+import {
+  getCategoriesQuery,
+  getColumnsQuery,
+  getTabsQuery,
+} from './queryBuilders';
 
 const isProd = process.env.NODE_ENV === 'production';
 const app = initializeApp(isProd ? FIREBASE_CONFIG_PROD : FIREBASE_CONFIG_DEV);

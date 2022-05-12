@@ -3,21 +3,17 @@ import {
   deleteDoc,
   doc,
   getDocs,
-  orderBy,
-  query,
-  Query,
-  QueryDocumentSnapshot,
   QuerySnapshot,
   serverTimestamp,
   setDoc,
   updateDoc,
-  where,
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
-import { getColumnsQuery, deleteColumns } from './columns';
+import { deleteColumns } from './columns';
+import { getColumnsQuery } from './queryBuilders';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
@@ -107,21 +103,4 @@ export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
     httpErrorHandler(e);
     return null;
   }
-};
-
-const tabsConverter = {
-  toFirestore: (data: ITab) => data,
-  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab,
-};
-
-export const getTabsQuery = (user: UserInfo): Query<ITab> => {
-  const tabsRef = collection(firebase.firestoreDB, 'tabs').withConverter<ITab>(
-    tabsConverter,
-  );
-
-  return query(
-    tabsRef,
-    where('ownerId', '==', user.uid),
-    orderBy('createdAt', 'asc'),
-  );
 };

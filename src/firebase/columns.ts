@@ -3,13 +3,8 @@ import {
   deleteDoc,
   doc,
   collection,
-  orderBy,
-  query,
-  Query,
   QuerySnapshot,
-  QueryDocumentSnapshot,
   serverTimestamp,
-  where,
   getDocs,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,7 +16,7 @@ import { getCategoriesQuery } from './queryBuilders';
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
-// todo: 52-53,83-84
+// todo: 52-53
 export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   if (!tab?.id) {
     defaultErrorHandler('No Tab');
@@ -46,6 +41,7 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   }
 };
 
+// todo: wrap with try catch, data() possibly is undefined or not a function
 export const deleteColumns = async (
   columns: QuerySnapshot<IColumn>,
 ): Promise<void> => {
@@ -77,26 +73,4 @@ export const deleteColumn = async (
     httpErrorHandler(e);
     return null;
   }
-};
-
-const columnsConverter = {
-  toFirestore: (data: IColumn) => data,
-  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as IColumn,
-};
-
-export const getColumnsQuery = (tab: ITab): Query<IColumn> | null => {
-  if (!tab?.id) {
-    return null;
-  }
-
-  const columnsRef = collection(
-    firebase.firestoreDB,
-    'columns',
-  ).withConverter<IColumn>(columnsConverter);
-
-  return query(
-    columnsRef,
-    where('tabId', '==', tab.id),
-    orderBy('createdAt', 'asc'),
-  );
 };
