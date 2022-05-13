@@ -125,11 +125,9 @@ describe('Firebase Categories Test', () => {
   describe('Delete CategorIES', () => {
     const origDelete = firestore.deleteDoc;
     const dataCat = () => categories[0];
-    const categoriesDocs = [
-      { data: dataCat },
-      { data: dataCat },
-      { data: dataCat },
-    ];
+    const categoriesDocs = {
+      docs: [{ data: dataCat }, { data: dataCat }, { data: dataCat }],
+    };
 
     beforeEach(() => {
       firestore.deleteDoc = jest.fn();
@@ -146,7 +144,10 @@ describe('Firebase Categories Test', () => {
     });
 
     it('Should Delete Only Valid Categories', async () => {
-      const invalidDocs = [...categoriesDocs, categories[0]];
+      const invalidDocs = {
+        ...categoriesDocs,
+        docs: [...categoriesDocs.docs, categories[0], undefined],
+      };
       await deleteCategories(invalidDocs);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);

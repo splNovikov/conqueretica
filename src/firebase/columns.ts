@@ -47,14 +47,11 @@ export const deleteColumns = async (
 ): Promise<(IColumn | null)[]> => {
   let deletedColumns: (IColumn | null)[] = [];
 
-  const arr: QueryDocumentSnapshot<IColumn>[] = [];
-  columns.forEach((column) => arr.push(column));
-
   await Promise.all(
-    arr.map(async (column: QueryDocumentSnapshot<IColumn>) => {
+    columns.docs.map(async (column: QueryDocumentSnapshot<IColumn>) => {
       if (column?.data && typeof column?.data === 'function') {
-        const col = await deleteColumn(column.data());
-        deletedColumns = [...deletedColumns, col];
+        const deletedCol = await deleteColumn(column.data());
+        deletedColumns = [...deletedColumns, deletedCol];
       } else {
         defaultErrorHandler("Column's data is incorrect");
       }

@@ -77,8 +77,10 @@ describe('Firebase Columns Test', () => {
     const origGetCategoriesQuery = queryBuilders.getCategoriesQuery;
     const origGetDocs = firestore.getDocs;
     const origDelete = firestore.deleteDoc;
-    const data = () => categories[0];
-    const categoriesDocs = [{ data }, { data }, { data }];
+    const dataCat = () => categories[0];
+    const categoriesDocs = {
+      docs: [{ data: dataCat }, { data: dataCat }, { data: dataCat }],
+    };
 
     beforeEach(() => {
       queryBuilders.getCategoriesQuery = jest.fn();
@@ -128,7 +130,10 @@ describe('Firebase Columns Test', () => {
 
     it('Should Delete ColumnS', async () => {
       const dataCol = () => columns[0];
-      const columnsDocs = [{ data: dataCol }, { data: dataCol }];
+      const columnsDocs = {
+        docs: [{ data: dataCol }, { data: dataCol }],
+      };
+
       await deleteColumns(columnsDocs);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
@@ -136,12 +141,9 @@ describe('Firebase Columns Test', () => {
 
     it('Should Delete Only Valid ColumnS', async () => {
       const dataCol = () => columns[0];
-      const invalidDocs = [
-        { data: dataCol },
-        { data: dataCol },
-        columns[0],
-        undefined,
-      ];
+      const invalidDocs = {
+        docs: [{ data: dataCol }, { data: dataCol }, columns[0], undefined],
+      };
       await deleteColumns(invalidDocs);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);

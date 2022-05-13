@@ -139,14 +139,14 @@ describe('Firebase Tabs Test', () => {
     const origGetCategoriesQuery = queryBuilders.getCategoriesQuery;
     const origGetDocs = firestore.getDocs;
     const origDelete = firestore.deleteDoc;
-    const data = () => columns[0];
-    const columnsDocs = [{ data }, { data }, { data }];
+    const dataCol = () => columns[0];
+    const columnsDocs = {
+      docs: [{ data: dataCol }, { data: dataCol }, { data: dataCol }],
+    };
     const dataCat = () => categories[0];
-    const categoriesDocs = [
-      { data: dataCat },
-      { data: dataCat },
-      { data: dataCat },
-    ];
+    const categoriesDocs = {
+      docs: [{ data: dataCat }, { data: dataCat }, { data: dataCat }],
+    };
 
     beforeEach(() => {
       queryBuilders.getColumnsQuery = jest.fn(() => ({

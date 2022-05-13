@@ -53,11 +53,8 @@ export const deleteCategories = async (
 ): Promise<(ICategory | null)[]> => {
   let deletedCategories: (ICategory | null)[] = [];
 
-  const arr: QueryDocumentSnapshot<ICategory>[] = [];
-  categories.forEach((category) => arr.push(category));
-
   await Promise.all(
-    arr.map(async (category: QueryDocumentSnapshot<ICategory>) => {
+    categories.docs.map(async (category: QueryDocumentSnapshot<ICategory>) => {
       if (category?.data && typeof category?.data === 'function') {
         const deletedCat = await deleteCategory(category.data());
         deletedCategories = [...deletedCategories, deletedCat];
