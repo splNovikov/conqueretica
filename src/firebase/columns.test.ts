@@ -1,7 +1,6 @@
 import * as firestore from '@firebase/firestore';
 // Firebase
-import * as firebaseColumns from './columns';
-import { addColumn, deleteColumn } from './columns';
+import { addColumn, deleteColumn, deleteColumns } from './columns';
 import * as queryBuilders from './queryBuilders';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
@@ -74,27 +73,6 @@ describe('Firebase Columns Test', () => {
     });
   });
 
-  // todo:
-  xdescribe('Delete Columns', () => {
-    const originalDelete = firebaseColumns.deleteColumn;
-
-    beforeEach(() => {
-      firebaseColumns.deleteColumn = jest.fn();
-    });
-
-    afterEach(() => {
-      firebaseColumns.deleteColumn = originalDelete;
-    });
-
-    it('Should delete columns', async () => {
-      const data = () => columns[0];
-      const toDelete = [{ data }, { data }, { data }];
-
-      await firebaseColumns.deleteColumns(toDelete);
-      expect(firebaseColumns.deleteColumn).toBeCalledTimes(3);
-    });
-  });
-
   describe('Delete Column', () => {
     const origGetCategoriesQuery = queryBuilders.getCategoriesQuery;
     const origGetDocs = firestore.getDocs;
@@ -144,6 +122,29 @@ describe('Firebase Columns Test', () => {
       const res = await deleteColumn({} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+    });
+
+    // Delete ColumnS
+
+    it('Should Delete ColumnS', async () => {
+      const dataCol = () => columns[0];
+      const columnsDocs = [{ data: dataCol }, { data: dataCol }];
+      await deleteColumns(columnsDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
+    });
+
+    it('Should Delete Only Valid ColumnS', async () => {
+      const dataCol = () => columns[0];
+      const invalidDocs = [
+        { data: dataCol },
+        { data: dataCol },
+        columns[0],
+        undefined,
+      ];
+      await deleteColumns(invalidDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
     });
   });
 });

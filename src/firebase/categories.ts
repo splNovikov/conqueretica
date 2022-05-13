@@ -5,6 +5,7 @@ import {
   setDoc,
   deleteDoc,
   QuerySnapshot,
+  QueryDocumentSnapshot,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -49,12 +50,24 @@ export const addCategory = async (
 
 export const deleteCategories = async (
   categories: QuerySnapshot<ICategory>,
-): Promise<void> => {
-  await categories.forEach((category) => {
-    if (category?.data && typeof category?.data === 'function') {
-      deleteCategory(category.data());
-    }
-  });
+): Promise<(ICategory | null)[]> => {
+  let deletedCategories: (ICategory | null)[] = [];
+
+  const arr: QueryDocumentSnapshot<ICategory>[] = [];
+  categories.forEach((category) => arr.push(category));
+
+  await Promise.all(
+    arr.map(async (category: QueryDocumentSnapshot<ICategory>) => {
+      if (category?.data && typeof category?.data === 'function') {
+        const deletedCat = await deleteCategory(category.data());
+        deletedCategories = [...deletedCategories, deletedCat];
+      } else {
+        defaultErrorHandler('Categories data is incorrect');
+      }
+    }),
+  );
+
+  return deletedCategories;
 };
 
 export const deleteCategory = async (

@@ -6,6 +6,7 @@ import {
   QuerySnapshot,
   serverTimestamp,
   getDocs,
+  QueryDocumentSnapshot,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -16,7 +17,7 @@ import { getCategoriesQuery } from './queryBuilders';
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
-// todo: 48-49
+
 export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   if (!tab?.id) {
     defaultErrorHandler('No Tab');
@@ -41,13 +42,26 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   }
 };
 
-// todo: wrap with try catch, data() possibly is undefined or not a function
 export const deleteColumns = async (
   columns: QuerySnapshot<IColumn>,
-): Promise<void> => {
-  await columns.forEach((column) => {
-    deleteColumn(column.data());
-  });
+): Promise<(IColumn | null)[]> => {
+  let deletedColumns: (IColumn | null)[] = [];
+
+  const arr: QueryDocumentSnapshot<IColumn>[] = [];
+  columns.forEach((column) => arr.push(column));
+
+  await Promise.all(
+    arr.map(async (column: QueryDocumentSnapshot<IColumn>) => {
+      if (column?.data && typeof column?.data === 'function') {
+        const col = await deleteColumn(column.data());
+        deletedColumns = [...deletedColumns, col];
+      } else {
+        defaultErrorHandler("Column's data is incorrect");
+      }
+    }),
+  );
+
+  return deletedColumns;
 };
 
 export const deleteColumn = async (

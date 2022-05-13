@@ -151,29 +151,5 @@ describe('Firebase Categories Test', () => {
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
     });
-
-    it('Should Handle Exception', async () => {
-      const err = new Error('Mocked error');
-
-      firestore.deleteDoc = jest.fn(() => {
-        throw err;
-      });
-
-      const res = await deleteCategory(categories[0]);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(err);
-    });
-
-    it('Should Return Null when category not passed', async () => {
-      const res = await deleteCategory(undefined);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Category');
-    });
-
-    it('Should Return Null when category passed as empty object', async () => {
-      const res = await deleteCategory({} as ICategory);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Category');
-    });
   });
 });
