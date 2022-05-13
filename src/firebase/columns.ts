@@ -16,7 +16,7 @@ import { getCategoriesQuery } from './queryBuilders';
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
-// todo: 52-53
+// todo: 48-49
 export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
   if (!tab?.id) {
     defaultErrorHandler('No Tab');
