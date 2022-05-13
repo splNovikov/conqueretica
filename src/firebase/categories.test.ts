@@ -1,5 +1,5 @@
 import * as firestore from '@firebase/firestore';
-import { addCategory, deleteCategory } from './categories';
+import { addCategory, deleteCategories, deleteCategory } from './categories';
 // Interfaces
 import { ICategory, IColumn } from '../interfaces';
 // Test Data
@@ -95,6 +95,61 @@ describe('Firebase Categories Test', () => {
 
       expect(firestore.deleteDoc).toHaveBeenCalledWith(categoryDoc);
       expect(res).toBe(category);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.deleteDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await deleteCategory(categories[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when category not passed', async () => {
+      const res = await deleteCategory(undefined);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Category');
+    });
+
+    it('Should Return Null when category passed as empty object', async () => {
+      const res = await deleteCategory({} as ICategory);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Category');
+    });
+  });
+
+  describe('Delete CategorIES', () => {
+    const origDelete = firestore.deleteDoc;
+    const dataCat = () => categories[0];
+    const categoriesDocs = [
+      { data: dataCat },
+      { data: dataCat },
+      { data: dataCat },
+    ];
+
+    beforeEach(() => {
+      firestore.deleteDoc = jest.fn();
+    });
+
+    afterEach(() => {
+      firestore.deleteDoc = origDelete;
+    });
+
+    it('Should Delete Categories', async () => {
+      await deleteCategories(categoriesDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
+    });
+
+    it('Should Delete Only Valid Categories', async () => {
+      const invalidDocs = [...categoriesDocs, categories[0]];
+      await deleteCategories(invalidDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
     });
 
     it('Should Handle Exception', async () => {

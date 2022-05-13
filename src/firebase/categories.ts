@@ -13,7 +13,7 @@ import firebase from './index';
 import { ICategory, IColumn } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
-// todo: 58-59,82-83
+
 export const addCategory = async (
   title: string,
   column: IColumn,
@@ -47,12 +47,13 @@ export const addCategory = async (
   }
 };
 
-// todo: wrap with try catch, data() possibly is undefined or not a function
 export const deleteCategories = async (
   categories: QuerySnapshot<ICategory>,
 ): Promise<void> => {
   await categories.forEach((category) => {
-    deleteCategory(category.data());
+    if (category?.data && typeof category?.data === 'function') {
+      deleteCategory(category.data());
+    }
   });
 };
 
