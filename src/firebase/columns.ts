@@ -42,6 +42,7 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
 };
 
 // todo: wrap with try catch, data() possibly is undefined or not a function
+// pre-push
 export const deleteColumns = async (
   columns: QuerySnapshot<IColumn>,
 ): Promise<void> => {
