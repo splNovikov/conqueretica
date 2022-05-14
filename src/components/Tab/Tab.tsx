@@ -123,9 +123,10 @@ const Tab: FC<{
         ) : (
           <SingleInputForm
             value={tab.title}
-            placeholder="Enter Tab Name"
+            placeholder="Edit Tab Name"
             formSubmitHandler={handleTabUpdate}
             abortHandler={handleCancelEdit}
+            layout="inline"
           />
         )}
       </div>

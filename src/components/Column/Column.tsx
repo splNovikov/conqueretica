@@ -82,6 +82,7 @@ const Column: FC<{
           placeholder="Create a new category"
           formSubmitHandler={handleCategoryFormSubmit}
           abortHandler={disableAddCategoryMode}
+          layout="vertical"
         />
       )}
     </Col>

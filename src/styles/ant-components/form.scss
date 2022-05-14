@@ -1,6 +1,6 @@
 @import '../theme';
 
-.custom-ant-vertical-form {
+.custom-ant-form {
   .ant-form-item {
     margin: 0;
   }
@@ -11,7 +11,7 @@
     flex-wrap: wrap;
 
     & > .ant-form-item {
-      margin: $link-form-button-margin;
+      margin: $ant-form-item-margin;
     }
   }
 }

@@ -65,6 +65,7 @@ const Tabs: FC<{
             placeholder="Enter Tab Name"
             formSubmitHandler={handleTabSubmit}
             abortHandler={disableDisplayForm}
+            layout="inline"
           />
         </div>
       )}

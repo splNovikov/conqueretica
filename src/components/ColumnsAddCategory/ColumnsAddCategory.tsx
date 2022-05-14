@@ -28,6 +28,7 @@ const ColumnsAddCategory: FC<{
           placeholder="Create a new category"
           formSubmitHandler={handleCategoryFormSubmit}
           abortHandler={disableAddCategoryMode}
+          layout="vertical"
         />
       ) : (
         <Tooltip title="Add New Category">

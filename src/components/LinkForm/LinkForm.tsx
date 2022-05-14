@@ -77,7 +77,7 @@ const LinkForm: FC<{
         initialValues={{ titleInput: title, linkInput: href }}
         layout="vertical"
         onFinish={handleFormSubmit}
-        className="link-form custom-ant-vertical-form"
+        className="link-form custom-ant-form"
       >
         <Form.Item
           name="titleInput"
@@ -120,7 +120,7 @@ const LinkForm: FC<{
             className="link-form-link-input"
           />
         </Form.Item>
-        <div className="custom-ant-vertical-form-buttons-wrapper">
+        <div className="custom-ant-form-buttons-wrapper">
           {deleteHandler ? (
             <Form.Item>
               <Button

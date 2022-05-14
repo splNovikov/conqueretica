@@ -27,6 +27,9 @@ $layout-footer-background: $layout-body-background;
 $skeleton-paragraph-li-height: 10px;
 $skeleton-paragraph-li-margin-top: 10px;
 
+// Ant Form
+$ant-form-item-margin: 0 0 0 5px;
+
 // === Custom Components
 
 // App
@@ -49,17 +52,12 @@ $app-footer-padding: 0 50px;
 $links-page-content-wrapper-padding: 20px;
 $links-page-columns-wrapper-padding: 20px 0 0;
 
-// Tabs
-
 // Tab
 $tab-title-padding: 10px 0;
 $tab-padding-horizontal: 20px;
 $tab-padding: 0 $tab-padding-horizontal;
 $tab-active-border-width: 2px;
 $tab-highlight-color: $primary-color;
-
-// Single Input Form
-$single-input-form-item-margin: 0 2px 0 0;
 
 // Columns
 $columns-create-column-wrapper-padding: 5px;
@@ -79,6 +77,3 @@ $linky-font-size: small;
 $category-btn-enable-add-link-font-size: small;
 $category-border-color: $primary-color;
 $category-padding: 0 0 5px 0;
-
-// LinkForm
-$link-form-button-margin: 0 0 0 5px;
