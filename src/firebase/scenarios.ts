@@ -29,3 +29,5 @@ export const deleteCategoryWithColumnScenario = async (
 
   return cat;
 };
+
+// todo: deleteTabWithContent, deleteColumnWithContent - are scenarios either
