@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-import { FIREBASE_CONFIG_DEV, FIREBASE_CONFIG_PROD } from './config';
+import { getFirebaseConfig } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { addTab, updateTab, deleteTab } from './tabs';
@@ -19,8 +19,8 @@ import {
   getTabsQuery,
 } from './queryBuilders';
 
-const isProd = process.env.NODE_ENV === 'production';
-const app = initializeApp(isProd ? FIREBASE_CONFIG_PROD : FIREBASE_CONFIG_DEV);
+const config = getFirebaseConfig(process.env.NODE_ENV);
+const app = initializeApp(config);
 const auth = getAuth(app);
 const firestoreDB = getFirestore(app);
 
