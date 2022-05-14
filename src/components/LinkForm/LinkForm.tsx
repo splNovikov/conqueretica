@@ -134,20 +134,20 @@ const LinkForm: FC<{
           ) : null}
           <Form.Item>
             <Button
-              htmlType="button"
-              icon={<CloseOutlined />}
-              onClick={handleCancelClick}
-              size="small"
-              className="link-form-btn-cancel"
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button
               type="primary"
               htmlType="submit"
               icon={<CheckOutlined />}
               size="small"
               className="link-form-btn-submit"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="button"
+              icon={<CloseOutlined />}
+              onClick={handleCancelClick}
+              size="small"
+              className="link-form-btn-cancel"
             />
           </Form.Item>
         </div>
