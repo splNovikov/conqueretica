@@ -12,7 +12,7 @@ import firebase from './index';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../interfaces';
 
-const categoriesConverter = {
+export const categoriesConverter = {
   toFirestore: (data: ICategory) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ICategory,
 };
@@ -36,7 +36,7 @@ export const getCategoriesQuery = (
   );
 };
 
-const columnsConverter = {
+export const columnsConverter = {
   toFirestore: (data: IColumn) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as IColumn,
 };
@@ -58,7 +58,7 @@ export const getColumnsQuery = (tab: ITab): Query<IColumn> | null => {
   );
 };
 
-const tabsConverter = {
+export const tabsConverter = {
   toFirestore: (data: ITab) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab,
 };
