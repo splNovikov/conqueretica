@@ -1,45 +1,25 @@
 import * as firestore from '@firebase/firestore';
 // Firebase
 import { addColumn, deleteColumn, deleteColumns } from './columns';
-import * as queryBuilders from './queryBuilders';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
+// Utils
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
-import { tabs, columns, categories } from '../__test_data__';
+import { tabs, columns } from '../__test_data__';
+// Firebase BeforeEach
+import './_firebase.beforeEach.test';
 
 describe('Firebase Columns Test', () => {
-  const columnDoc = { columnDoc: 'test_columnDoc' };
-  const collectionRef = { colRef: 'test_collectionRef' };
-  const origConsoleError = console.error;
-
-  beforeEach(() => {
-    jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    jest.spyOn(firestore, 'doc').mockReturnValue(columnDoc);
-    console.error = jest.fn();
-  });
-
-  afterEach(() => {
-    jest.resetAllMocks();
-    console.error = origConsoleError;
-  });
-
   describe('Add Column', () => {
-    const origSetDoc = firestore.setDoc;
-
-    beforeEach(() => {
-      firestore.setDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.setDoc = origSetDoc;
-    });
-
     it('Should Add Column', async () => {
+      firestore.setDoc = jest.fn();
+
       const tab = tabs[0];
       const res = await addColumn(tab);
 
       expect(firestore.setDoc).toHaveBeenCalledWith(
-        columnDoc,
+        fsMock.columnDoc,
         expect.objectContaining({
           tabId: tab.id,
         }),
@@ -74,31 +54,13 @@ describe('Firebase Columns Test', () => {
   });
 
   describe('Delete Column', () => {
-    const origGetCategoriesQuery = queryBuilders.getCategoriesQuery;
-    const origGetDocs = firestore.getDocs;
-    const origDelete = firestore.deleteDoc;
-    const dataCat = () => categories[0];
-    const categoriesDocs = {
-      docs: [{ data: dataCat }, { data: dataCat }, { data: dataCat }],
-    };
-
-    beforeEach(() => {
-      queryBuilders.getCategoriesQuery = jest.fn(() => true);
-      firestore.getDocs = jest.fn(() => categoriesDocs);
-      firestore.deleteDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      queryBuilders.getCategoriesQuery = origGetCategoriesQuery;
-      firestore.getDocs = origGetDocs;
-      firestore.deleteDoc = origDelete;
-    });
-
     it('Should Delete Column', async () => {
+      firestore.deleteDoc = jest.fn();
+
       const column = columns[0];
       const res = await deleteColumn(column);
 
-      expect(firestore.deleteDoc).toHaveBeenCalledWith(columnDoc);
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
       expect(res).toBe(column);
     });
 
@@ -129,20 +91,15 @@ describe('Firebase Columns Test', () => {
     // Delete ColumnS
 
     it('Should Delete ColumnS', async () => {
-      const dataCol = () => columns[0];
-      const columnsDocs = {
-        docs: [{ data: dataCol }, { data: dataCol }],
-      };
-
-      await deleteColumns(columnsDocs);
+      await deleteColumns(fsMock.columnsDocs);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
     });
 
     it('Should Delete Only Valid ColumnS', async () => {
-      const dataCol = () => columns[0];
       const invalidDocs = {
-        docs: [{ data: dataCol }, { data: dataCol }, columns[0], undefined],
+        ...fsMock.columnsDocs,
+        docs: [...fsMock.columnsDocs.docs, columns[0], undefined],
       };
       await deleteColumns(invalidDocs);
 

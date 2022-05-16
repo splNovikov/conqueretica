@@ -9,7 +9,6 @@ const signInWithGoogle = async (): Promise<UserInfo | null> => {
   const { user } = await signInWithPopup(firebase.auth, googleProvider);
 
   const usersRef = collection(firebase.firestoreDB, 'users');
-
   const userRef = await doc(usersRef, user.uid);
   const userDoc = await getDoc(userRef);
 

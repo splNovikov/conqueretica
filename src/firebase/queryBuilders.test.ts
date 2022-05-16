@@ -9,36 +9,20 @@ import {
 } from './queryBuilders';
 // Test Data
 import { categories, columns, tabs, user } from '../__test_data__';
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 
 describe('Query Builders', () => {
   const whereResults = 'where_res';
   const orderByResults = 'orderBy_res';
-  const origQuery = firestore.query;
-  const origWhere = firestore.where;
-  const origOrderBy = firestore.orderBy;
 
   beforeEach(() => {
+    firestore.collection = jest.fn(fsMock.mockCollection);
     firestore.query = jest.fn();
-    firestore.where = jest.fn();
-    firestore.orderBy = jest.fn();
-    jest.spyOn(firestore, 'where').mockReturnValue(whereResults);
-    jest.spyOn(firestore, 'orderBy').mockReturnValue(orderByResults);
-  });
-
-  afterEach(() => {
-    firestore.query = origQuery;
-    firestore.where = origWhere;
-    firestore.orderBy = origOrderBy;
-    jest.resetAllMocks();
+    firestore.where = jest.fn(() => whereResults);
+    firestore.orderBy = jest.fn(() => orderByResults);
   });
 
   describe('Categories Queries', () => {
-    beforeEach(() => {
-      jest
-        .spyOn(firestore, 'collection')
-        .mockReturnValue({ withConverter: () => categoriesConverter });
-    });
-
     it('Get Categories Query', () => {
       const column = columns[0];
       getCategoriesQuery(column);
@@ -81,12 +65,6 @@ describe('Query Builders', () => {
   });
 
   describe('Columns Queries', () => {
-    beforeEach(() => {
-      jest
-        .spyOn(firestore, 'collection')
-        .mockReturnValue({ withConverter: () => columnsConverter });
-    });
-
     it('Get Column Query', () => {
       const tab = tabs[0];
       getColumnsQuery(tab);
@@ -129,12 +107,6 @@ describe('Query Builders', () => {
   });
 
   describe('Tabs Queries', () => {
-    beforeEach(() => {
-      jest
-        .spyOn(firestore, 'collection')
-        .mockReturnValue({ withConverter: () => tabsConverter });
-    });
-
     it('Get Tabs Query', () => {
       getTabsQuery(user);
 

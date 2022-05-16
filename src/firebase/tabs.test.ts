@@ -1,45 +1,25 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { addTab, deleteTab, updateTab } from './tabs';
-import * as queryBuilders from './queryBuilders';
 // Interfaces
 import { ITab } from '../interfaces';
+// Utils
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
-import { categories, columns, tabs, user } from '../__test_data__';
+import { tabs, user } from '../__test_data__';
+// Firebase BeforeEach
+import './_firebase.beforeEach.test';
 
 describe('Firebase Tabs Test', () => {
-  const tabDoc = { tabDoc: 'test_tabDoc' };
-  const collectionRef = { colRef: 'test_collectionRef' };
-  const origConsoleError = console.error;
-
-  beforeEach(() => {
-    jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    jest.spyOn(firestore, 'doc').mockReturnValue(tabDoc);
-    console.error = jest.fn();
-  });
-
-  afterEach(() => {
-    jest.resetAllMocks();
-    console.error = origConsoleError;
-  });
-
   describe('Add Tab', () => {
-    const origSetDoc = firestore.setDoc;
-
-    beforeEach(() => {
-      firestore.setDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.setDoc = origSetDoc;
-    });
-
     it('Should Add Tab', async () => {
+      firestore.setDoc = jest.fn();
+
       const tab = { title: 'tab_title' };
       const res = await addTab(tab.title, user);
 
       expect(firestore.setDoc).toHaveBeenCalledWith(
-        tabDoc,
+        fsMock.tabDoc,
         expect.objectContaining({
           title: tab.title,
           ownerId: user.uid,
@@ -82,23 +62,15 @@ describe('Firebase Tabs Test', () => {
   });
 
   describe('Update Tab', () => {
-    const origUpdDoc = firestore.updateDoc;
-
-    beforeEach(() => {
-      firestore.updateDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.updateDoc = origUpdDoc;
-    });
-
     it('Should Update Tab', async () => {
+      firestore.updateDoc = jest.fn();
+
       const title = 'new_title';
       const res = await updateTab(tabs[0], title);
 
       const newTab = { ...tabs[0], title };
 
-      expect(firestore.updateDoc).toHaveBeenCalledWith(tabDoc, newTab);
+      expect(firestore.updateDoc).toHaveBeenCalledWith(fsMock.tabDoc, newTab);
       expect(res?.title).toBe(title);
     });
 
@@ -135,51 +107,15 @@ describe('Firebase Tabs Test', () => {
   });
 
   describe('Delete Tab', () => {
-    const origGetColumnsQuery = queryBuilders.getColumnsQuery;
-    const origGetCategoriesQuery = queryBuilders.getCategoriesQuery;
-    const origGetDocs = firestore.getDocs;
-    const origDelete = firestore.deleteDoc;
-    const dataCol = () => columns[0];
-    const columnsDocs = {
-      docs: [{ data: dataCol }, { data: dataCol }, { data: dataCol }],
-    };
-    const dataCat = () => categories[0];
-    const categoriesDocs = {
-      docs: [{ data: dataCat }, { data: dataCat }, { data: dataCat }],
-    };
-
-    beforeEach(() => {
-      queryBuilders.getColumnsQuery = jest.fn(() => ({
-        query: 'columns_q',
-      }));
-      queryBuilders.getCategoriesQuery = jest.fn(() => ({
-        query: 'categories_q',
-      }));
-      firestore.getDocs = jest.fn(({ query }) => {
-        if (query === 'columns_q') {
-          return columnsDocs;
-        }
-        if (query === 'categories_q') {
-          return categoriesDocs;
-        }
-      });
-      firestore.deleteDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      queryBuilders.getColumnsQuery = origGetColumnsQuery;
-      queryBuilders.getCategoriesQuery = origGetCategoriesQuery;
-      firestore.getDocs = origGetDocs;
-      firestore.deleteDoc = origDelete;
-    });
-
     it('Should Delete Tab', async () => {
+      firestore.deleteDoc = jest.fn();
+
       const tab = tabs[0];
       const res = await deleteTab(tab);
 
-      // 9 categories, 3 columns, 1 tab
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(9 + 3 + 1);
-      expect(firestore.deleteDoc).toHaveBeenCalledWith(tabDoc);
+      // 3 (cat)*2(col) categories, 2 columns, 1 tab
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3 * 2 + 2 + 1);
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.tabDoc);
       expect(res).toBe(tab);
     });
 

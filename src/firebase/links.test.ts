@@ -9,9 +9,14 @@ import {
 } from './links';
 // Interfaces
 import { ILink } from '../interfaces';
+// Utils
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
 import { categories as categoriesTestData } from '../__test_data__';
+// Firebase BeforeEach
+import './_firebase.beforeEach.test';
 
+// todo: add to all firebase tests firestore.updateDoc = jest.fn(); NOT TO HAVE BEEN CALLED
 describe('Links "Utils" Test', () => {
   // Test Data
   const category = categoriesTestData[0];
@@ -63,37 +68,15 @@ describe('Links "Utils" Test', () => {
 });
 
 describe('Firebase Links Test', () => {
-  const collectionRef = { colRef: 'test_collectionRef' };
-  const categoryDoc = { columnDoc: 'test_categoryDoc' };
-  const origConsoleError = console.error;
   // Test data
   const title = 'title';
   const href = 'https://ya.ru';
   const category = categoriesTestData[0];
 
-  beforeEach(() => {
-    jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    jest.spyOn(firestore, 'doc').mockReturnValue(categoryDoc);
-    console.error = jest.fn();
-  });
-
-  afterEach(() => {
-    jest.resetAllMocks();
-    console.error = origConsoleError;
-  });
-
   describe('Add Link', () => {
-    const origSetDoc = firestore.updateDoc;
-
-    beforeEach(() => {
-      firestore.updateDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.updateDoc = origSetDoc;
-    });
-
     it('Should Add Link', async () => {
+      firestore.updateDoc = jest.fn();
+
       const res = await addLink(title, href, category);
 
       const updatedCategory = {
@@ -108,7 +91,7 @@ describe('Firebase Links Test', () => {
       };
 
       expect(firestore.updateDoc).toHaveBeenCalledWith(
-        categoryDoc,
+        fsMock.categoryDoc,
         updatedCategory,
       );
       expect(res?.title).toBe(title);
@@ -161,7 +144,6 @@ describe('Firebase Links Test', () => {
   });
 
   describe('Update Link', () => {
-    const origSetDoc = firestore.updateDoc;
     const updatedTitle = 'new-title';
     const updatedHref = 'https://ya.ru';
     const linkToUpdate: ILink = {
@@ -172,15 +154,9 @@ describe('Firebase Links Test', () => {
       createdAt: 'date',
     };
 
-    beforeEach(() => {
-      firestore.updateDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.updateDoc = origSetDoc;
-    });
-
     it('Should Update Link', async () => {
+      firestore.updateDoc = jest.fn();
+
       const updatedLink = {
         ...linkToUpdate,
         title: updatedTitle,
@@ -200,7 +176,7 @@ describe('Firebase Links Test', () => {
       };
 
       expect(firestore.updateDoc).toHaveBeenCalledWith(
-        categoryDoc,
+        fsMock.categoryDoc,
         updatedCategory,
       );
       expect(res).toStrictEqual(updatedLink);
@@ -294,7 +270,6 @@ describe('Firebase Links Test', () => {
   });
 
   describe('Delete Link', () => {
-    const origSetDoc = firestore.updateDoc;
     const linkToDelete: ILink = {
       id: 'link-2',
       href: 'old-href',
@@ -303,15 +278,9 @@ describe('Firebase Links Test', () => {
       createdAt: 'date',
     };
 
-    beforeEach(() => {
-      firestore.updateDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.updateDoc = origSetDoc;
-    });
-
     it('Should Delete Link', async () => {
+      firestore.updateDoc = jest.fn();
+
       const res = await deleteLink(linkToDelete, category);
 
       const updatedCategory = {
@@ -320,7 +289,7 @@ describe('Firebase Links Test', () => {
       };
 
       expect(firestore.updateDoc).toHaveBeenCalledWith(
-        categoryDoc,
+        fsMock.categoryDoc,
         updatedCategory,
       );
       expect(res).toBe(linkToDelete);

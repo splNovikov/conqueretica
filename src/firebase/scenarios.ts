@@ -2,7 +2,6 @@ import { ICategory, IColumn, ITab } from '../interfaces';
 import { addColumn, deleteColumn } from './columns';
 import { addCategory, deleteCategory } from './categories';
 
-// todo: tests
 export const addCategoryWithColumnScenario = async (
   categoryTitle: string,
   tab: ITab,

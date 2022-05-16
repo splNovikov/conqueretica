@@ -2,18 +2,18 @@ import * as auth from '@firebase/auth';
 import * as firestore from '@firebase/firestore';
 import { signInWithGoogle, signOut } from './auth';
 import firebase from './index';
+// Utils
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
 import { user } from '../__test_data__';
+// Firebase BeforeEach
+import './_firebase.beforeEach.test';
 
 describe('Firebase Auth Test', () => {
-  const collectionRef = { colRef: 'test' };
-
   beforeEach(() => {
     jest
       .spyOn(auth, 'signInWithPopup')
       .mockReturnValue(new Promise((resolve) => resolve({ user })));
-    jest.spyOn(firestore, 'doc').mockReturnValue({});
-    jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
   });
 
   afterEach(() => {
@@ -33,7 +33,7 @@ describe('Firebase Auth Test', () => {
     firebase.createUser = jest.fn();
 
     await signInWithGoogle();
-    expect(firebase.createUser).toHaveBeenCalledWith(collectionRef, user);
+    expect(firebase.createUser).toHaveBeenCalledWith(fsMock.usersRef, user);
   });
 
   it('Should Logout User', async () => {
