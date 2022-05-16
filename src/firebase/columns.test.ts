@@ -83,7 +83,7 @@ describe('Firebase Columns Test', () => {
     };
 
     beforeEach(() => {
-      queryBuilders.getCategoriesQuery = jest.fn();
+      queryBuilders.getCategoriesQuery = jest.fn(() => true);
       firestore.getDocs = jest.fn(() => categoriesDocs);
       firestore.deleteDoc = jest.fn();
     });

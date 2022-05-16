@@ -71,6 +71,12 @@ export const deleteColumn = async (
 
   // 1. get all categories
   const categoriesQ = getCategoriesQuery(column);
+
+  if (!categoriesQ) {
+    defaultErrorHandler('Categories Query can not be formulated');
+    return null;
+  }
+
   const categories: QuerySnapshot<ICategory> = await getDocs(categoriesQ);
 
   // 2. delete all categories

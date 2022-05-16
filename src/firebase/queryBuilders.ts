@@ -17,12 +17,12 @@ const categoriesConverter = {
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ICategory,
 };
 
-// todo tests
-export const getCategoriesQuery = (column: IColumn): Query<ICategory> => {
-  // todo: + update tests in columns.tests -> delete column
-  // if (!column?.id) {
-  //   return null;
-  // }
+export const getCategoriesQuery = (
+  column: IColumn,
+): Query<ICategory> | null => {
+  if (!column?.id) {
+    return null;
+  }
 
   const categoriesRef = collection(
     firebase.firestoreDB,
@@ -41,7 +41,6 @@ const columnsConverter = {
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as IColumn,
 };
 
-// todo tests
 export const getColumnsQuery = (tab: ITab): Query<IColumn> | null => {
   if (!tab?.id) {
     return null;
@@ -59,7 +58,6 @@ export const getColumnsQuery = (tab: ITab): Query<IColumn> | null => {
   );
 };
 
-// todo tests
 const tabsConverter = {
   toFirestore: (data: ITab) => data,
   fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab,
