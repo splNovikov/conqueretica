@@ -1,11 +1,4 @@
-import {
-  doc,
-  Timestamp,
-  setDoc,
-  deleteDoc,
-  QuerySnapshot,
-  QueryDocumentSnapshot,
-} from 'firebase/firestore';
+import { doc, Timestamp, setDoc, deleteDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
