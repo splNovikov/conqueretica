@@ -46,7 +46,6 @@ const categoriesQuery = {
   query: 'categories_q',
 };
 
-// todo: this function should be removed
 const mockCollection = (firestore: Firestore, path: string) => {
   if (path === 'users') {
     return usersRef;
@@ -68,51 +67,24 @@ const mockCollection = (firestore: Firestore, path: string) => {
 };
 
 const mockDoc = (firestore: Firestore, path: string) => {
-  // todo:
-  // todo!!!
-  // We need to make the single line like this:
-  // doc(firebase.firestoreDB, 'categories', category.id)
-  // instead of those to:
-  // const columnsRef = collection(firebase.firestoreDB, 'columns');
-  // const columnDoc = doc(columnsRef, column.id);
-
-  // todo: This is a method we should use everywhere (in tests)!!!
-  if (firestore?.type === 'firestore') {
-    // todo: path should be a constant in separate file
-    if (path === 'users') {
-      return userDoc;
-    }
-
-    if (path === 'tabs') {
-      return tabDoc;
-    }
-
-    if (path === 'columns') {
-      return columnDoc;
-    }
-
-    if (path === 'categories') {
-      return categoryDoc;
-    }
+  if (firestore?.type !== 'firestore') {
+    return null;
   }
 
-  // todo: remove this shit
-  if (firestore === usersRef) {
+  // todo: path should be a constant in separate file
+  if (path === 'users') {
     return userDoc;
   }
 
-  // todo: remove this shit
-  if (firestore === tabsRef) {
+  if (path === 'tabs') {
     return tabDoc;
   }
 
-  // todo: remove this shit
-  if (firestore === columnsRef) {
+  if (path === 'columns') {
     return columnDoc;
   }
 
-  // todo: remove this shit
-  if (firestore === categoriesRef) {
+  if (path === 'categories') {
     return categoryDoc;
   }
 
