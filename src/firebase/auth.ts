@@ -8,7 +8,8 @@ const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async (): Promise<UserInfo | null> => {
   const { user } = await signInWithPopup(firebase.auth, googleProvider);
 
-  const userRef = await doc(firebase.firestoreDB, 'users', user.uid);
+  const userRef = doc(firebase.firestoreDB, 'users', user.uid);
+
   const userDoc = await getDoc(userRef);
 
   if (!userDoc.exists()) {

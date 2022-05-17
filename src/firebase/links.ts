@@ -52,9 +52,9 @@ export const addLink = async (
   };
   const updatedCategory = addLinkToCategory(category, link);
   try {
-    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
-    await updateDoc(categoriesDoc, updatedCategory);
+    await updateDoc(categoryRef, updatedCategory);
     return link;
   } catch (e) {
     httpErrorHandler(e);
@@ -76,9 +76,9 @@ export const updateLink = async (
   const updatedLink = { ...link, title, href };
   const updatedCategory = updateLinkInCategory(category, updatedLink);
   try {
-    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
-    await updateDoc(categoriesDoc, updatedCategory);
+    await updateDoc(categoryRef, updatedCategory);
     return updatedLink;
   } catch (e) {
     httpErrorHandler(e);
@@ -97,9 +97,9 @@ export const deleteLink = async (
 
   const updatedCategory = deleteLinkFromCategory(category, link);
   try {
-    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
-    await updateDoc(categoriesDoc, updatedCategory);
+    await updateDoc(categoryRef, updatedCategory);
     return link;
   } catch (e) {
     httpErrorHandler(e);

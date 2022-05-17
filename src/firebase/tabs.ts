@@ -30,10 +30,9 @@ export const addTab = async (
     ownerId: user.uid,
   };
   try {
-    const tabDoc = doc(firebase.firestoreDB, 'tabs', tab.id);
+    const tabRef = doc(firebase.firestoreDB, 'tabs', tab.id);
 
-    await setDoc(tabDoc, tab);
-
+    await setDoc(tabRef, tab);
     return tab;
   } catch (e) {
     httpErrorHandler(e);
@@ -57,10 +56,9 @@ export const updateTab = async (
 
   const updatedTab = { ...tab, title: newTitle };
   try {
-    const tabDoc = doc(firebase.firestoreDB, 'tabs', tab.id);
+    const tabRef = doc(firebase.firestoreDB, 'tabs', tab.id);
 
-    await updateDoc(tabDoc, updatedTab);
-
+    await updateDoc(tabRef, updatedTab);
     return updatedTab;
   } catch (e) {
     httpErrorHandler(e);
@@ -75,8 +73,9 @@ export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
   }
 
   try {
-    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
+    const tabRef = doc(firebase.firestoreDB, 'tabs', tab.id);
 
+    await deleteDoc(tabRef);
     return tab;
   } catch (e) {
     httpErrorHandler(e);

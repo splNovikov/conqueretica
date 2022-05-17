@@ -19,10 +19,9 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
     tabId: tab.id,
   };
   try {
-    const columnDoc = doc(firebase.firestoreDB, 'columns', column.id);
+    const columnRef = doc(firebase.firestoreDB, 'columns', column.id);
 
-    await setDoc(columnDoc, column);
-
+    await setDoc(columnRef, column);
     return column;
   } catch (e) {
     httpErrorHandler(e);
@@ -39,8 +38,9 @@ export const deleteColumn = async (
   }
 
   try {
-    await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));
+    const columnRef = doc(firebase.firestoreDB, 'columns', column.id);
 
+    await deleteDoc(columnRef);
     return column;
   } catch (e) {
     httpErrorHandler(e);

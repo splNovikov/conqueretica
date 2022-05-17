@@ -15,19 +15,15 @@ describe('Firebase Auth Test', () => {
       .mockReturnValue(new Promise((resolve) => resolve({ user })));
   });
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
   it('Should Return User when user exist', async () => {
-    jest.spyOn(firestore, 'getDoc').mockReturnValue({ exists: () => true });
+    firestore.getDoc = jest.fn(() => ({ exists: () => true }));
 
     const res = await signInWithGoogle();
     expect(res).toEqual(user);
   });
 
   it('Should Return User when user not exist', async () => {
-    jest.spyOn(firestore, 'getDoc').mockReturnValue({ exists: () => false });
+    firestore.getDoc = jest.fn(() => ({ exists: () => false }));
 
     firebase.createUser = jest.fn();
 

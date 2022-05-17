@@ -12,15 +12,14 @@ const createUser = async (user: UserInfo): Promise<UserInfo | null> => {
   }
 
   try {
-    const userDoc = doc(firebase.firestoreDB, 'users', user.uid);
+    const userRef = doc(firebase.firestoreDB, 'users', user.uid);
 
-    await setDoc(userDoc, {
+    await setDoc(userRef, {
       uid: user.uid,
       name: user.displayName,
       authProvider: 'google',
       email: user.email,
     });
-
     return user;
   } catch (e) {
     httpErrorHandler(e);

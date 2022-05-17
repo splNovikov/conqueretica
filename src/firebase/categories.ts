@@ -36,9 +36,9 @@ export const addCategory = async (
     links: [],
   };
   try {
-    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
-    await setDoc(categoriesDoc, category);
+    await setDoc(categoryRef, category);
     return category;
   } catch (e) {
     httpErrorHandler(e);
@@ -55,8 +55,9 @@ export const deleteCategory = async (
   }
 
   try {
-    await deleteDoc(doc(firebase.firestoreDB, 'categories', category.id));
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
+    await deleteDoc(categoryRef);
     return category;
   } catch (e) {
     httpErrorHandler(e);
