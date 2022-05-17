@@ -1,7 +1,6 @@
 import * as firestore from '@firebase/firestore';
-import * as queryBuilders from './queryBuilders';
 // Firebase
-import { addColumn, deleteColumns } from './columns';
+import { addColumn, deleteColumn, deleteColumns } from './columns';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
@@ -51,6 +50,42 @@ describe('Firebase Columns Test', () => {
       const res = await addColumn({} as ITab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
+    });
+  });
+
+  describe('Delete Column', () => {
+    const column = columns[0];
+    firestore.deleteDoc = jest.fn();
+
+    it('Should Delete Column', async () => {
+      await deleteColumn(column);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(1);
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.deleteDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await deleteColumn(column);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when column not passed', async () => {
+      const res = await deleteColumn(undefined);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column');
+    });
+
+    it('Should Return Null when column passed as empty object', async () => {
+      const res = await deleteColumn({} as IColumn);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Column');
     });
   });
 

@@ -7,11 +7,10 @@ import {
 import * as queryBuilders from './queryBuilders';
 // Utils
 import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
-// Interfaces
-import './_firebase.beforeEach.test';
 // Test Data
 import { columns, tabs } from '../__test_data__';
 // Firebase BeforeEach
+import './_firebase.beforeEach.test';
 
 import { IColumn } from '../interfaces';
 
@@ -82,6 +81,8 @@ describe('Firebase Scenarios', () => {
       const res = await deleteColumnScenario(column);
 
       expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
+      // 3 categories + 1 column
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3 + 1);
       expect(res).toBe(column);
     });
 

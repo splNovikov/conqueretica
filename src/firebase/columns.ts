@@ -4,6 +4,7 @@ import {
   QuerySnapshot,
   serverTimestamp,
   QueryDocumentSnapshot,
+  deleteDoc,
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -54,4 +55,22 @@ export const deleteColumns = async (
   );
 
   return deletedColumns;
+};
+
+export const deleteColumn = async (
+  column: IColumn,
+): Promise<IColumn | null> => {
+  if (!column?.id) {
+    defaultErrorHandler('No Column');
+    return null;
+  }
+
+  try {
+    await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));
+
+    return column;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
 };

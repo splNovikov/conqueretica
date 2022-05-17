@@ -1,13 +1,12 @@
-import { deleteDoc, doc, getDocs, QuerySnapshot } from 'firebase/firestore';
+import { getDocs, QuerySnapshot } from 'firebase/firestore';
 // Firebase
-import firebase from './index';
-import { addColumn } from './columns';
-import { addCategory, deleteCategories, deleteCategory } from './categories';
+import { addColumn, deleteColumn } from './columns';
+import { addCategory, deleteCategories } from './categories';
 import { getCategoriesQuery } from './queryBuilders';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
-import { defaultErrorHandler, httpErrorHandler } from '../utils';
+import { defaultErrorHandler } from '../utils';
 
 export const addCategoryWithColumnScenario = async (
   categoryTitle: string,
@@ -43,13 +42,6 @@ export const deleteColumnScenario = async (
   // 2. delete all categories
   await deleteCategories(categories);
 
-  // todo: here deleteColumn should be called
-  try {
-    await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));
-
-    return column;
-  } catch (e) {
-    httpErrorHandler(e);
-    return null;
-  }
+  // 3. delete column
+  return deleteColumn(column);
 };
