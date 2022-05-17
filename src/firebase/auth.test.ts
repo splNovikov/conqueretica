@@ -1,6 +1,7 @@
 import * as auth from '@firebase/auth';
 import * as firestore from '@firebase/firestore';
 import { signInWithGoogle, signOut } from './auth';
+// Firebase
 import firebase from './index';
 // Utils
 import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
