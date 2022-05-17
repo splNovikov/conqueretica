@@ -2,7 +2,6 @@ import {
   setDoc,
   deleteDoc,
   doc,
-  collection,
   QuerySnapshot,
   serverTimestamp,
   getDocs,
@@ -30,8 +29,7 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
     tabId: tab.id,
   };
   try {
-    const columnsRef = collection(firebase.firestoreDB, 'columns');
-    const columnDoc = doc(columnsRef, column.id);
+    const columnDoc = doc(firebase.firestoreDB, 'columns', column.id);
 
     await setDoc(columnDoc, column);
 

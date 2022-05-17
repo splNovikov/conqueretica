@@ -4,7 +4,6 @@ import { act } from 'react-dom/test-utils';
 // Components
 import ColumnsAddCategory from './ColumnsAddCategory';
 import SingleInputForm from '../SingleInputForm';
-import firebase from '../../firebase';
 
 describe('ColumnsAddCategory Component', () => {
   const addCategoryScenarioHandler = jest.fn();
