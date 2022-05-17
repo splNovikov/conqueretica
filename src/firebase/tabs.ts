@@ -11,8 +11,8 @@ import { UserInfo } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
-import { deleteColumns } from './columns';
 import { getColumnsQuery } from './queryBuilders';
+import { deleteColumnsScenario } from './scenarios';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
@@ -89,7 +89,7 @@ export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
   const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
 
   // 2. delete all columns
-  await deleteColumns(columns);
+  await deleteColumnsScenario(columns);
 
   // 3. delete Tab
   try {

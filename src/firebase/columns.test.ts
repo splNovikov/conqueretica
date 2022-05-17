@@ -1,6 +1,6 @@
 import * as firestore from '@firebase/firestore';
 // Firebase
-import { addColumn, deleteColumn, deleteColumns } from './columns';
+import { addColumn, deleteColumn } from './columns';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
@@ -86,26 +86,6 @@ describe('Firebase Columns Test', () => {
       const res = await deleteColumn({} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
-    });
-  });
-
-  describe('Delete ColumnS', () => {
-    firestore.deleteDoc = jest.fn();
-
-    it('Should Delete ColumnS', async () => {
-      await deleteColumns(fsMock.columnsDocs);
-
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
-    });
-
-    it('Should Delete Only Valid ColumnS', async () => {
-      const invalidDocs = {
-        ...fsMock.columnsDocs,
-        docs: [...fsMock.columnsDocs.docs, columns[0], undefined],
-      };
-      await deleteColumns(invalidDocs);
-
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
     });
   });
 });

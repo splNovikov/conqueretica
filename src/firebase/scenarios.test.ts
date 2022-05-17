@@ -3,6 +3,7 @@ import * as firestore from '@firebase/firestore';
 import {
   addCategoryWithColumnScenario,
   deleteColumnScenario,
+  deleteColumnsScenario,
 } from './scenarios';
 import * as queryBuilders from './queryBuilders';
 // Utils
@@ -122,6 +123,26 @@ describe('Firebase Scenarios', () => {
       const res = await deleteColumnScenario({} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+    });
+  });
+
+  describe('Delete ColumnS', () => {
+    firestore.deleteDoc = jest.fn();
+
+    it('Should Delete ColumnS', async () => {
+      await deleteColumnsScenario(fsMock.columnsDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
+    });
+
+    it('Should Delete Only Valid ColumnS', async () => {
+      const invalidDocs = {
+        ...fsMock.columnsDocs,
+        docs: [...fsMock.columnsDocs.docs, columns[0], undefined],
+      };
+      await deleteColumnsScenario(invalidDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
     });
   });
 });

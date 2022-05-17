@@ -1,4 +1,8 @@
-import { getDocs, QuerySnapshot } from 'firebase/firestore';
+import {
+  getDocs,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+} from 'firebase/firestore';
 // Firebase
 import { addColumn, deleteColumn } from './columns';
 import { addCategory, deleteCategories } from './categories';
@@ -44,4 +48,23 @@ export const deleteColumnScenario = async (
 
   // 3. delete column
   return deleteColumn(column);
+};
+
+export const deleteColumnsScenario = async (
+  columns: QuerySnapshot<IColumn>,
+): Promise<(IColumn | null)[]> => {
+  let deletedColumns: (IColumn | null)[] = [];
+
+  await Promise.all(
+    columns.docs.map(async (column: QueryDocumentSnapshot<IColumn>) => {
+      if (column?.data && typeof column?.data === 'function') {
+        const deletedCol = await deleteColumnScenario(column.data());
+        deletedColumns = [...deletedColumns, deletedCol];
+      } else {
+        defaultErrorHandler("Column's data is incorrect");
+      }
+    }),
+  );
+
+  return deletedColumns;
 };

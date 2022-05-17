@@ -1,15 +1,7 @@
-import {
-  setDoc,
-  doc,
-  QuerySnapshot,
-  serverTimestamp,
-  QueryDocumentSnapshot,
-  deleteDoc,
-} from 'firebase/firestore';
+import { setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
-import { deleteColumnScenario } from './scenarios';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
@@ -36,25 +28,6 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
     httpErrorHandler(e);
     return null;
   }
-};
-
-export const deleteColumns = async (
-  columns: QuerySnapshot<IColumn>,
-): Promise<(IColumn | null)[]> => {
-  let deletedColumns: (IColumn | null)[] = [];
-
-  await Promise.all(
-    columns.docs.map(async (column: QueryDocumentSnapshot<IColumn>) => {
-      if (column?.data && typeof column?.data === 'function') {
-        const deletedCol = await deleteColumnScenario(column.data());
-        deletedColumns = [...deletedColumns, deletedCol];
-      } else {
-        defaultErrorHandler("Column's data is incorrect");
-      }
-    }),
-  );
-
-  return deletedColumns;
 };
 
 export const deleteColumn = async (
