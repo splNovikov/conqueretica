@@ -7,9 +7,10 @@ import {
   getTabsQuery,
   tabsConverter,
 } from './queryBuilders';
+// Utils
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
 import { categories, columns, tabs, user } from '../__test_data__';
-import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 
 describe('Query Builders', () => {
   const whereResults = 'where_res';
