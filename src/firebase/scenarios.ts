@@ -1,19 +1,17 @@
 import {
-  deleteDoc,
-  doc,
   getDocs,
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from 'firebase/firestore';
 // Firebase
-import firebase from './index';
+import { deleteTab } from './tabs';
 import { addColumn, deleteColumn } from './columns';
 import { addCategory, deleteCategories } from './categories';
 import { getCategoriesQuery, getColumnsQuery } from './queryBuilders';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
-import { defaultErrorHandler, httpErrorHandler } from '../utils';
+import { defaultErrorHandler } from '../utils';
 
 export const addCategoryWithColumnScenario = async (
   categoryTitle: string,
@@ -92,13 +90,5 @@ export const deleteTabScenario = async (tab: ITab): Promise<ITab | null> => {
   await deleteColumnsScenario(columns);
 
   // 3. Delete Tab
-  // todo: it should be a function deleteTab
-  try {
-    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
-
-    return tab;
-  } catch (e) {
-    httpErrorHandler(e);
-    return null;
-  }
+  return deleteTab(tab);
 };

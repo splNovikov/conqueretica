@@ -1,15 +1,16 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
-import { addTab, deleteTabScenario, updateTab } from './tabs';
+import { addTab, deleteTab, deleteTabScenario, updateTab } from './tabs';
 import * as queryBuilders from './queryBuilders';
 // Interfaces
-import { ITab } from '../interfaces';
+import { ICategory, ITab } from '../interfaces';
 // Utils
 import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
-import { tabs, user } from '../__test_data__';
+import { categories, tabs, user } from '../__test_data__';
 // Firebase BeforeEach
 import './_firebase.beforeEach.test';
+import { deleteCategory } from './categories';
 
 describe('Firebase Tabs Test', () => {
   describe('Add Tab', () => {
@@ -104,6 +105,44 @@ describe('Firebase Tabs Test', () => {
       const res = await updateTab({}, 'str');
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
+    });
+  });
+
+  describe('Delete Tab', () => {
+    firestore.deleteDoc = jest.fn();
+
+    it('Should Delete Tab', async () => {
+      const tab = tabs[0];
+      const res = await deleteTab(tab);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.tabDoc);
+      expect(res).toBe(tab);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.deleteDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await deleteTab(tabs[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when tab not passed', async () => {
+      const res = await deleteTab(undefined);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when tab passed as empty object', async () => {
+      const res = await deleteTab({} as ITab);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
   });
 });

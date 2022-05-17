@@ -1,4 +1,10 @@
-import { doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
@@ -56,6 +62,22 @@ export const updateTab = async (
     await updateDoc(tabDoc, updatedTab);
 
     return updatedTab;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
+  if (!tab?.id) {
+    defaultErrorHandler('No Tab');
+    return null;
+  }
+
+  try {
+    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
+
+    return tab;
   } catch (e) {
     httpErrorHandler(e);
     return null;
