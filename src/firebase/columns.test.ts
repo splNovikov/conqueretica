@@ -1,4 +1,5 @@
 import * as firestore from '@firebase/firestore';
+import * as queryBuilders from './queryBuilders';
 // Firebase
 import { addColumn, deleteColumn, deleteColumns } from './columns';
 // Interfaces
@@ -62,6 +63,20 @@ describe('Firebase Columns Test', () => {
 
       expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
       expect(res).toBe(column);
+    });
+
+    it('Should return null when Categories Query can not be formulated', async () => {
+      firestore.deleteDoc = jest.fn();
+      queryBuilders.getCategoriesQuery = jest.fn(() => false);
+
+      const column = columns[0];
+      const res = await deleteColumn(column);
+
+      expect(console.error).toHaveBeenCalledWith(
+        'Categories Query can not be formulated',
+      );
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
+      expect(res).toBe(null);
     });
 
     it('Should Handle Exception', async () => {
