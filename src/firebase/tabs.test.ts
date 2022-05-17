@@ -1,6 +1,7 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { addTab, deleteTab, updateTab } from './tabs';
+import * as queryBuilders from './queryBuilders';
 // Interfaces
 import { ITab } from '../interfaces';
 // Utils
@@ -117,6 +118,20 @@ describe('Firebase Tabs Test', () => {
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(3 * 2 + 2 + 1);
       expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.tabDoc);
       expect(res).toBe(tab);
+    });
+
+    it('Should return null when columns query can not be formulated', async () => {
+      firestore.deleteDoc = jest.fn();
+      queryBuilders.getColumnsQuery = jest.fn(() => false);
+
+      const tab = tabs[0];
+      const res = await deleteTab(tab);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledWith(
+        'Columns Query can not be formulated',
+      );
+      expect(res).toBe(null);
     });
 
     it('Should Handle Exception', async () => {
