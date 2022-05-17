@@ -35,7 +35,7 @@ const Column: FC<{
   const handleCategoryDelete = async (category: ICategory) => {
     // if last category in column:
     if (categories.length === 1) {
-      return firebase.deleteCategoryWithColumnScenario(category, column);
+      return firebase.deleteColumnScenario(column);
     }
 
     return firebase.deleteCategory(category);

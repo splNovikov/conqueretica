@@ -2,7 +2,6 @@ import * as firestore from '@firebase/firestore';
 // Firebase
 import {
   addCategoryWithColumnScenario,
-  deleteCategoryWithColumnScenario,
   deleteColumnScenario,
 } from './scenarios';
 import * as queryBuilders from './queryBuilders';
@@ -11,7 +10,7 @@ import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.te
 // Interfaces
 import './_firebase.beforeEach.test';
 // Test Data
-import { categories, columns, tabs } from '../__test_data__';
+import { columns, tabs } from '../__test_data__';
 // Firebase BeforeEach
 
 import { IColumn } from '../interfaces';
@@ -72,23 +71,6 @@ describe('Firebase Scenarios', () => {
 
       expect(res).toBe(null);
       expect(firestore.setDoc).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('Delete Category With Column Scenario', () => {
-    const category = categories[0];
-    const column = columns[0];
-
-    it('Should delete category with column', async () => {
-      firestore.deleteDoc = jest.fn();
-
-      const res = await deleteCategoryWithColumnScenario(category, column);
-
-      expect(res).toBe(category);
-      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.categoryDoc);
-      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
-      // 1 category, 1 column with 3 categories
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(1 + 1 + 3);
     });
   });
 

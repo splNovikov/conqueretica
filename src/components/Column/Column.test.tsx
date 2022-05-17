@@ -136,7 +136,7 @@ describe('Column Component', () => {
       wrapper.unmount();
       wrapper = mount(<Column column={column} span={6} />);
 
-      firebase.deleteCategoryWithColumnScenario = jest.fn();
+      firebase.deleteColumnScenario = jest.fn();
       firebase.deleteCategory = jest.fn();
 
       const categoryWrapper = wrapper.find(Category);
@@ -146,15 +146,12 @@ describe('Column Component', () => {
 
       deleteCategoryHandler && deleteCategoryHandler(category);
 
-      expect(firebase.deleteCategoryWithColumnScenario).toHaveBeenCalledWith(
-        category,
-        column,
-      );
+      expect(firebase.deleteColumnScenario).toHaveBeenCalledWith(column);
       expect(firebase.deleteCategory).not.toHaveBeenCalled();
     });
 
     it('Should invoke "Delete Category Handler"', async () => {
-      firebase.deleteCategoryWithColumnScenario = jest.fn();
+      firebase.deleteColumnScenario = jest.fn();
       firebase.deleteCategory = jest.fn();
 
       const category = categories[0];
@@ -165,7 +162,7 @@ describe('Column Component', () => {
 
       deleteCategoryHandler && deleteCategoryHandler(category);
 
-      expect(firebase.deleteCategoryWithColumnScenario).not.toHaveBeenCalled();
+      expect(firebase.deleteColumnScenario).not.toHaveBeenCalled();
       expect(firebase.deleteCategory).toHaveBeenCalledWith(category);
     });
   });

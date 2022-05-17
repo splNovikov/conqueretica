@@ -43,6 +43,7 @@ export const deleteColumnScenario = async (
   // 2. delete all categories
   await deleteCategories(categories);
 
+  // todo: here deleteColumn should be called
   try {
     await deleteDoc(doc(firebase.firestoreDB, 'columns', column.id));
 
@@ -51,19 +52,4 @@ export const deleteColumnScenario = async (
     httpErrorHandler(e);
     return null;
   }
-};
-
-export const deleteCategoryWithColumnScenario = async (
-  category: ICategory,
-  column: IColumn,
-): Promise<ICategory | null> => {
-  // todo: update the logic
-  // there should be used deleteColumnScenario and tha is it.
-
-  const [cat] = await Promise.all([
-    deleteCategory(category),
-    deleteColumnScenario(column),
-  ]);
-
-  return cat;
 };

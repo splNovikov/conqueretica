@@ -11,7 +11,7 @@ import { addCategory, deleteCategory, deleteCategories } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 import {
   addCategoryWithColumnScenario,
-  deleteCategoryWithColumnScenario,
+  deleteColumnScenario,
 } from './scenarios';
 import {
   getCategoriesQuery,
@@ -49,7 +49,7 @@ export default {
 
   // scenarios
   addCategoryWithColumnScenario,
-  deleteCategoryWithColumnScenario,
+  deleteColumnScenario,
 
   auth,
   firestoreDB,
