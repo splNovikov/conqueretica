@@ -1,5 +1,30 @@
+@mixin generate-icon($icon, $order) {
+  &.#{$icon} {
+    background-position: 0 #{-128 * $order}px;
+  }
+
+  &.small.#{$icon} {
+    background-position: 0 #{-64 * $order}px;
+  }
+
+  &.x-small.#{$icon} {
+    background-position: 0 #{-32 * $order}px;
+  }
+
+  &.xx-small.#{$icon} {
+    background-position: 0 #{-16 * $order}px;
+  }
+}
+
+@mixin generate-icons($icons) {
+  @for $i from 1 through length($icons) {
+    $icon: nth($icons, $i);
+    @include generate-icon($icon, $i - 1);
+  }
+}
+
 .google-icon {
-  background-image: url('./icons_set.png');
+  background-image: url('./conqueretica_icons_set.png');
   background-repeat: no-repeat;
   height: 128px;
   width: 128px;
@@ -7,133 +32,37 @@
   display: inline-flex;
   background-size: 100% auto;
 
-  &.docs {
-    background-position: 0 -2484px;
-  }
-
-  &.sheets {
-    background-position: 0 -4416px;
-  }
-
-  &.slides {
-    background-position: 0 -4554px;
-  }
-
-  &.drive {
-    background-position: 0 -5932px;
-  }
-
-  &.confluence {
-    background-position: 0 -6212px;
-  }
-
-  &.jira {
-    background-position: 0 -6345px;
-  }
-
-  &.youtube {
-    background-position: 0 -5242px;
-  }
-
   &.small {
     height: 64px;
     width: 64px;
     min-width: 64px;
-
-    &.docs {
-      background-position: 0 -1242px;
-    }
-
-    &.sheets {
-      background-position: 0 -2208px;
-    }
-
-    &.slides {
-      background-position: 0 -2277px;
-    }
-
-    &.drive {
-      background-position: 0 -2966px;
-    }
-
-    &.confluence {
-      background-position: 0 -3106px;
-    }
-
-    &.jira {
-      background-position: 0 -3172px;
-    }
-
-    &.youtube {
-      background-position: 0 -2621px;
-    }
   }
 
   &.x-small {
     height: 32px;
     width: 32px;
     min-width: 32px;
-
-    &.docs {
-      background-position: 0 -621px;
-    }
-
-    &.sheets {
-      background-position: 0 -1104px;
-    }
-
-    &.slides {
-      background-position: 0 -1138px;
-    }
-
-    &.drive {
-      background-position: 0 -1483px;
-    }
-
-    &.confluence {
-      background-position: 0 -1553px;
-    }
-
-    &.jira {
-      background-position: 0 -1586px;
-    }
-
-    &.youtube {
-      background-position: 0 -1311px;
-    }
   }
 
   &.xx-small {
     height: 16px;
     width: 16px;
     min-width: 16px;
-
-    &.docs {
-      background-position: 0 -310px;
-    }
-
-    &.sheets {
-      background-position: 0 -552px;
-    }
-
-    &.slides {
-      background-position: 0 -569px;
-    }
-
-    &.drive {
-      background-position: 0 -741px;
-    }
-
-    &.confluence {
-      background-position: 0 -776px;
-    }
-
-    &.jira {
-      background-position: 0 -792px;
-    }
-
-    &.youtube {
-      background-position: 0 -655px;
-    }
   }
+
+  $icons: (
+    'meet',
+    'docs',
+    'gmail',
+    'sheets',
+    'slides',
+    'calendar',
+    'youtube',
+    'drive',
+    'confluence',
+    'jira',
+    'lucid-charts',
+    'figma'
+  );
+  @include generate-icons($icons);
 }

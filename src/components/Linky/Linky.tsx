@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { Typography } from 'antd';
-// Interfaces
+// Interfaces, Types
 import { ILink } from '../../interfaces';
+import { IconSize } from '../../types';
 // Components
 import GoogleIcon from '../GoogleIcon';
 // Utils
@@ -14,7 +15,7 @@ const { Link } = Typography;
 const Linky: FC<{
   link: ILink;
   /* eslint-disable react/require-default-props */
-  iconSize?: string;
+  iconSize?: IconSize;
   ellipsis?: boolean;
   /* eslint-enable */
 }> = ({ link, iconSize, ellipsis }) => {
