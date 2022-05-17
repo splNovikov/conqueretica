@@ -8,10 +8,10 @@ import { user } from '../__test_data__';
 import './_firebase.beforeEach.test';
 
 describe('Firebase User Test', () => {
+  firestore.setDoc = jest.fn();
+
   describe('Create User', () => {
     it('Should Create User', async () => {
-      firestore.setDoc = jest.fn();
-
       const userNew = {
         uid: user.uid,
         name: user.displayName,
@@ -43,6 +43,7 @@ describe('Firebase User Test', () => {
 
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No User');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when user passed as empty object with no uid', async () => {
@@ -50,6 +51,7 @@ describe('Firebase User Test', () => {
 
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No User');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
   });
 });

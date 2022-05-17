@@ -18,13 +18,14 @@ import { categories, columns, tabs } from '../__test_data__';
 import './_firebase.beforeEach.test';
 
 describe('Firebase Scenarios', () => {
+  firestore.setDoc = jest.fn();
+  firestore.deleteDoc = jest.fn();
+
   describe('Add Category With Column Scenario', () => {
     const newCategoryTitle = 'new-category-title';
     const tab = tabs[0];
 
     it('Should add Category With Column Scenario', async () => {
-      firestore.setDoc = jest.fn();
-
       const res = await addCategoryWithColumnScenario(newCategoryTitle, tab);
 
       // add column
@@ -78,17 +79,12 @@ describe('Firebase Scenarios', () => {
 
   describe('Delete CategorIES Scenario', () => {
     it('Should Delete Categories', async () => {
-      // todo: check for deleteDoc not have been called
-      firestore.deleteDoc = jest.fn();
-
       await deleteCategoriesScenario(fsMock.categoriesDocs);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
     });
 
     it('Should Delete Only Valid Categories', async () => {
-      firestore.deleteDoc = jest.fn();
-
       const invalidDocs = {
         ...fsMock.categoriesDocs,
         docs: [...fsMock.categoriesDocs.docs, categories[0], undefined],
@@ -101,8 +97,6 @@ describe('Firebase Scenarios', () => {
 
   describe('Delete Column Scenario', () => {
     it('Should Delete Column', async () => {
-      firestore.deleteDoc = jest.fn();
-
       const column = columns[0];
       const res = await deleteColumnScenario(column);
 
@@ -113,7 +107,6 @@ describe('Firebase Scenarios', () => {
     });
 
     it('Should return null when Categories Query can not be formulated', async () => {
-      firestore.deleteDoc = jest.fn();
       queryBuilders.getCategoriesQuery = jest.fn(() => false);
 
       const column = columns[0];
@@ -122,7 +115,7 @@ describe('Firebase Scenarios', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Categories Query can not be formulated',
       );
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
       expect(res).toBe(null);
     });
 
@@ -142,18 +135,18 @@ describe('Firebase Scenarios', () => {
       const res = await deleteColumnScenario();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when column passed as empty object', async () => {
       const res = await deleteColumnScenario({} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
   });
 
   describe('Delete ColumnS Scenario', () => {
-    firestore.deleteDoc = jest.fn();
-
     it('Should Delete ColumnS', async () => {
       await deleteColumnsScenario(fsMock.columnsDocs);
 
@@ -173,8 +166,6 @@ describe('Firebase Scenarios', () => {
 
   describe('Delete Tab Scenario', () => {
     it('Should Delete Tab', async () => {
-      firestore.deleteDoc = jest.fn();
-
       const tab = tabs[0];
       const res = await deleteTabScenario(tab);
 
@@ -185,13 +176,12 @@ describe('Firebase Scenarios', () => {
     });
 
     it('Should return null when columns query can not be formulated', async () => {
-      firestore.deleteDoc = jest.fn();
       queryBuilders.getColumnsQuery = jest.fn(() => false);
 
       const tab = tabs[0];
       const res = await deleteTabScenario(tab);
 
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
       expect(console.error).toHaveBeenCalledWith(
         'Columns Query can not be formulated',
       );
@@ -214,12 +204,14 @@ describe('Firebase Scenarios', () => {
       const res = await deleteTabScenario();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when tab passed as empty object', async () => {
       const res = await deleteTabScenario({} as ITab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
   });
 });

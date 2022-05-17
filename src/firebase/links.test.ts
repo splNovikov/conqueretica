@@ -16,7 +16,6 @@ import { categories as categoriesTestData } from '../__test_data__';
 // Firebase BeforeEach
 import './_firebase.beforeEach.test';
 
-// todo: add to all firebase tests firestore.updateDoc = jest.fn(); NOT TO HAVE BEEN CALLED
 describe('Links "Utils" Test', () => {
   // Test Data
   const category = categoriesTestData[0];
@@ -68,6 +67,7 @@ describe('Links "Utils" Test', () => {
 });
 
 describe('Firebase Links Test', () => {
+  firestore.updateDoc = jest.fn();
   // Test data
   const title = 'title';
   const href = 'https://ya.ru';
@@ -75,8 +75,6 @@ describe('Firebase Links Test', () => {
 
   describe('Add Link', () => {
     it('Should Add Link', async () => {
-      firestore.updateDoc = jest.fn();
-
       const res = await addLink(title, href, category);
 
       const updatedCategory = {
@@ -116,6 +114,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when href not passed', async () => {
@@ -124,6 +123,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when category not passed', async () => {
@@ -132,6 +132,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when category.id not passed', async () => {
@@ -140,6 +141,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Create new link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
   });
 
@@ -155,8 +157,6 @@ describe('Firebase Links Test', () => {
     };
 
     it('Should Update Link', async () => {
-      firestore.updateDoc = jest.fn();
-
       const updatedLink = {
         ...linkToUpdate,
         title: updatedTitle,
@@ -211,6 +211,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Href not passed', async () => {
@@ -224,6 +225,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Link not passed', async () => {
@@ -237,6 +239,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Link passed as an empty Object', async () => {
@@ -245,6 +248,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Category not passed', async () => {
@@ -258,6 +262,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Category passed as an empty Object', async () => {
@@ -266,6 +271,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
   });
 
@@ -279,8 +285,6 @@ describe('Firebase Links Test', () => {
     };
 
     it('Should Delete Link', async () => {
-      firestore.updateDoc = jest.fn();
-
       const res = await deleteLink(linkToDelete, category);
 
       const updatedCategory = {
@@ -314,6 +318,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Link passed as an empty Object', async () => {
@@ -322,6 +327,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Category not passed', async () => {
@@ -330,6 +336,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when Category passed as an empty Object', async () => {
@@ -338,6 +345,7 @@ describe('Firebase Links Test', () => {
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Delete a link',
       );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
     });
   });
 });

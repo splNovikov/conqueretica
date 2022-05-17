@@ -12,9 +12,9 @@ import './_firebase.beforeEach.test';
 
 describe('Firebase Columns Test', () => {
   describe('Add Column', () => {
-    it('Should Add Column', async () => {
-      firestore.setDoc = jest.fn();
+    firestore.setDoc = jest.fn();
 
+    it('Should Add Column', async () => {
       const tab = tabs[0];
       const res = await addColumn(tab);
 
@@ -44,12 +44,14 @@ describe('Firebase Columns Test', () => {
       const res = await addColumn();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when tab passed as empty object', async () => {
       const res = await addColumn({} as ITab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
   });
 
@@ -80,12 +82,14 @@ describe('Firebase Columns Test', () => {
       const res = await deleteColumn(undefined);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when column passed as empty object', async () => {
       const res = await deleteColumn({} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
   });
 });
