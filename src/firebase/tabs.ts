@@ -1,5 +1,4 @@
 import {
-  collection,
   deleteDoc,
   doc,
   getDocs,
@@ -35,8 +34,7 @@ export const addTab = async (
     ownerId: user.uid,
   };
   try {
-    const tabsRef = collection(firebase.firestoreDB, 'tabs');
-    const tabDoc = doc(tabsRef, tab.id);
+    const tabDoc = doc(firebase.firestoreDB, 'tabs', tab.id);
 
     await setDoc(tabDoc, tab);
 
@@ -63,8 +61,7 @@ export const updateTab = async (
 
   const updatedTab = { ...tab, title: newTitle };
   try {
-    const tabsRef = collection(firebase.firestoreDB, 'tabs');
-    const tabDoc = doc(tabsRef, tab.id);
+    const tabDoc = doc(firebase.firestoreDB, 'tabs', tab.id);
 
     await updateDoc(tabDoc, updatedTab);
 
