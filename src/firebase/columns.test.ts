@@ -1,7 +1,7 @@
 import * as firestore from '@firebase/firestore';
 import * as queryBuilders from './queryBuilders';
 // Firebase
-import { addColumn, deleteColumn, deleteColumns } from './columns';
+import { addColumn, deleteColumns } from './columns';
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Utils
@@ -54,56 +54,8 @@ describe('Firebase Columns Test', () => {
     });
   });
 
-  describe('Delete Column', () => {
-    it('Should Delete Column', async () => {
-      firestore.deleteDoc = jest.fn();
-
-      const column = columns[0];
-      const res = await deleteColumn(column);
-
-      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
-      expect(res).toBe(column);
-    });
-
-    it('Should return null when Categories Query can not be formulated', async () => {
-      firestore.deleteDoc = jest.fn();
-      queryBuilders.getCategoriesQuery = jest.fn(() => false);
-
-      const column = columns[0];
-      const res = await deleteColumn(column);
-
-      expect(console.error).toHaveBeenCalledWith(
-        'Categories Query can not be formulated',
-      );
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
-      expect(res).toBe(null);
-    });
-
-    it('Should Handle Exception', async () => {
-      const err = new Error('Mocked error');
-      firestore.deleteDoc = jest.fn(() => {
-        throw err;
-      });
-
-      const column = columns[0];
-      const res = await deleteColumn(column);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith(err);
-    });
-
-    it('Should Return Null when column not passed', async () => {
-      const res = await deleteColumn();
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Column');
-    });
-
-    it('Should Return Null when column passed as empty object', async () => {
-      const res = await deleteColumn({} as IColumn);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Column');
-    });
-
-    // Delete ColumnS
+  describe('Delete ColumnS', () => {
+    firestore.deleteDoc = jest.fn();
 
     it('Should Delete ColumnS', async () => {
       await deleteColumns(fsMock.columnsDocs);

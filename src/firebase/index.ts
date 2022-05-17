@@ -6,7 +6,7 @@ import { getFirebaseConfig } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { addTab, updateTab, deleteTab } from './tabs';
-import { addColumn, deleteColumn, deleteColumns } from './columns';
+import { addColumn, deleteColumns } from './columns';
 import { addCategory, deleteCategory, deleteCategories } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 import {
@@ -36,7 +36,6 @@ export default {
 
   getColumnsQuery,
   addColumn,
-  deleteColumn,
   deleteColumns,
   // categories
   getCategoriesQuery,
