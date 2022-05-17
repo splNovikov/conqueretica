@@ -1,5 +1,4 @@
 import {
-  collection,
   doc,
   Timestamp,
   setDoc,
@@ -37,8 +36,7 @@ export const addCategory = async (
     links: [],
   };
   try {
-    const categoriesRef = collection(firebase.firestoreDB, 'categories');
-    const categoriesDoc = doc(categoriesRef, category.id);
+    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
 
     await setDoc(categoriesDoc, category);
     return category;
