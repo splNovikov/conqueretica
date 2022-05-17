@@ -1,18 +1,17 @@
 import { UserInfo } from 'firebase/auth';
-import { CollectionReference, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
+import firebase from './index';
 
-const createUser = async (
-  usersRef: CollectionReference,
-  user: UserInfo,
-): Promise<UserInfo | null> => {
-  if (!usersRef || !user?.uid) {
+const createUser = async (user: UserInfo): Promise<UserInfo | null> => {
+  if (!user?.uid) {
     defaultErrorHandler('No User');
     return null;
   }
 
   try {
+    const usersRef = collection(firebase.firestoreDB, 'users');
     const userDoc = doc(usersRef, user.uid);
 
     await setDoc(userDoc, {

@@ -9,17 +9,9 @@ import './_firebase.beforeEach.test';
 
 describe('Firebase User Test', () => {
   describe('Create User', () => {
-    const origSetDoc = firestore.setDoc;
-
-    beforeEach(() => {
-      firestore.setDoc = jest.fn();
-    });
-
-    afterEach(() => {
-      firestore.setDoc = origSetDoc;
-    });
-
     it('Should Create User', async () => {
+      firestore.setDoc = jest.fn();
+
       const userNew = {
         uid: user.uid,
         name: user.displayName,
@@ -27,7 +19,7 @@ describe('Firebase User Test', () => {
         email: user.email,
       };
 
-      const res = await createUser(fsMock.usersRef, user);
+      const res = await createUser(user);
 
       expect(firestore.setDoc).toHaveBeenCalledWith(fsMock.userDoc, userNew);
       expect(res?.uid).toBe(user.uid);
@@ -41,27 +33,20 @@ describe('Firebase User Test', () => {
         throw err;
       });
 
-      const res = await createUser(fsMock.usersRef, user);
+      const res = await createUser(user);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(err);
     });
 
     it('Should Return Null when user not passed', async () => {
-      const res = await createUser(fsMock.usersRef);
+      const res = await createUser();
 
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No User');
     });
 
     it('Should Return Null when user passed as empty object with no uid', async () => {
-      const res = await createUser(fsMock.usersRef, {});
-
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No User');
-    });
-
-    it('Should Return Null when usersRef not passed', async () => {
-      const res = await createUser(undefined, user);
+      const res = await createUser({});
 
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No User');

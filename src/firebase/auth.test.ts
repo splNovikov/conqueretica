@@ -3,8 +3,6 @@ import * as firestore from '@firebase/firestore';
 import { signInWithGoogle, signOut } from './auth';
 // Firebase
 import firebase from './index';
-// Utils
-import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
 import { user } from '../__test_data__';
 // Firebase BeforeEach
@@ -34,7 +32,7 @@ describe('Firebase Auth Test', () => {
     firebase.createUser = jest.fn();
 
     await signInWithGoogle();
-    expect(firebase.createUser).toHaveBeenCalledWith(fsMock.usersRef, user);
+    expect(firebase.createUser).toHaveBeenCalledWith(user);
   });
 
   it('Should Logout User', async () => {
