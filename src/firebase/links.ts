@@ -1,4 +1,4 @@
-import { collection, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
@@ -52,8 +52,7 @@ export const addLink = async (
   };
   const updatedCategory = addLinkToCategory(category, link);
   try {
-    const categoriesRef = collection(firebase.firestoreDB, 'categories');
-    const categoriesDoc = doc(categoriesRef, category.id);
+    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
 
     await updateDoc(categoriesDoc, updatedCategory);
     return link;
@@ -77,8 +76,7 @@ export const updateLink = async (
   const updatedLink = { ...link, title, href };
   const updatedCategory = updateLinkInCategory(category, updatedLink);
   try {
-    const categoriesRef = collection(firebase.firestoreDB, 'categories');
-    const categoriesDoc = doc(categoriesRef, category.id);
+    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
 
     await updateDoc(categoriesDoc, updatedCategory);
     return updatedLink;
@@ -99,8 +97,7 @@ export const deleteLink = async (
 
   const updatedCategory = deleteLinkFromCategory(category, link);
   try {
-    const categoriesRef = collection(firebase.firestoreDB, 'categories');
-    const categoriesDoc = doc(categoriesRef, category.id);
+    const categoriesDoc = doc(firebase.firestoreDB, 'categories', category.id);
 
     await updateDoc(categoriesDoc, updatedCategory);
     return link;
