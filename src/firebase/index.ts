@@ -5,12 +5,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getFirebaseConfig } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
-import { addTab, updateTab, deleteTabScenario } from './tabs';
+import { addTab, updateTab } from './tabs';
 import { addCategory, deleteCategory, deleteCategories } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 import {
   addCategoryWithColumnScenario,
   deleteColumnScenario,
+  deleteTabScenario,
 } from './scenarios';
 import {
   getCategoriesQuery,
@@ -24,29 +25,30 @@ const auth = getAuth(app);
 const firestoreDB = getFirestore(app);
 
 export default {
+  // auth
   signInWithGoogle,
   signOut,
+  // user
   createUser,
-
-  getTabsQuery,
+  // tabs
   addTab,
   updateTab,
-  deleteTabScenario,
-
-  getColumnsQuery,
   // categories
-  getCategoriesQuery,
   addCategory,
   deleteCategory,
   deleteCategories,
-
+  // links
   addLink,
   updateLink,
   deleteLink,
-
   // scenarios
   addCategoryWithColumnScenario,
   deleteColumnScenario,
+  deleteTabScenario,
+  // queryBuilders
+  getTabsQuery,
+  getColumnsQuery,
+  getCategoriesQuery,
 
   auth,
   firestoreDB,

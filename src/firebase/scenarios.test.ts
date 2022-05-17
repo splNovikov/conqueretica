@@ -4,19 +4,20 @@ import {
   addCategoryWithColumnScenario,
   deleteColumnScenario,
   deleteColumnsScenario,
+  deleteTabScenario,
 } from './scenarios';
 import * as queryBuilders from './queryBuilders';
 // Utils
 import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
+// Interfaces
+import { IColumn, ITab } from '../interfaces';
 // Test Data
 import { columns, tabs } from '../__test_data__';
 // Firebase BeforeEach
 import './_firebase.beforeEach.test';
 
-import { IColumn } from '../interfaces';
-
 describe('Firebase Scenarios', () => {
-  describe('Add Category With Column', () => {
+  describe('Add Category With Column Scenario', () => {
     const newCategoryTitle = 'new-category-title';
     const tab = tabs[0];
 
@@ -126,7 +127,7 @@ describe('Firebase Scenarios', () => {
     });
   });
 
-  describe('Delete ColumnS', () => {
+  describe('Delete ColumnS Scenario', () => {
     firestore.deleteDoc = jest.fn();
 
     it('Should Delete ColumnS', async () => {
@@ -143,6 +144,58 @@ describe('Firebase Scenarios', () => {
       await deleteColumnsScenario(invalidDocs);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(8);
+    });
+  });
+
+  describe('Delete Tab Scenario', () => {
+    it('Should Delete Tab', async () => {
+      firestore.deleteDoc = jest.fn();
+
+      const tab = tabs[0];
+      const res = await deleteTabScenario(tab);
+
+      // 3 (cat)*2(col) categories, 2 columns, 1 tab
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3 * 2 + 2 + 1);
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.tabDoc);
+      expect(res).toBe(tab);
+    });
+
+    it('Should return null when columns query can not be formulated', async () => {
+      firestore.deleteDoc = jest.fn();
+      queryBuilders.getColumnsQuery = jest.fn(() => false);
+
+      const tab = tabs[0];
+      const res = await deleteTabScenario(tab);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
+      expect(console.error).toHaveBeenCalledWith(
+        'Columns Query can not be formulated',
+      );
+      expect(res).toBe(null);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+      firestore.deleteDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const tab = tabs[0];
+      const res = await deleteTabScenario(tab);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when tab not passed', async () => {
+      const res = await deleteTabScenario();
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
+    });
+
+    it('Should Return Null when tab passed as empty object', async () => {
+      const res = await deleteTabScenario({} as ITab);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Tab');
     });
   });
 });

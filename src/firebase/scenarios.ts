@@ -1,16 +1,19 @@
 import {
+  deleteDoc,
+  doc,
   getDocs,
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from 'firebase/firestore';
 // Firebase
+import firebase from './index';
 import { addColumn, deleteColumn } from './columns';
 import { addCategory, deleteCategories } from './categories';
-import { getCategoriesQuery } from './queryBuilders';
+import { getCategoriesQuery, getColumnsQuery } from './queryBuilders';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../interfaces';
 // Utils
-import { defaultErrorHandler } from '../utils';
+import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
 export const addCategoryWithColumnScenario = async (
   categoryTitle: string,
@@ -67,4 +70,35 @@ export const deleteColumnsScenario = async (
   );
 
   return deletedColumns;
+};
+
+export const deleteTabScenario = async (tab: ITab): Promise<ITab | null> => {
+  if (!tab?.id) {
+    defaultErrorHandler('No Tab');
+    return null;
+  }
+
+  // 1. Get all columns
+  const columnsQ = getColumnsQuery(tab);
+
+  if (!columnsQ) {
+    defaultErrorHandler('Columns Query can not be formulated');
+    return null;
+  }
+
+  const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
+
+  // 2. Delete all columns with all content
+  await deleteColumnsScenario(columns);
+
+  // 3. Delete Tab
+  // todo: it should be a function deleteTab
+  try {
+    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
+
+    return tab;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
 };
