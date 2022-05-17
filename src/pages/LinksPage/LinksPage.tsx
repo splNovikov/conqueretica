@@ -43,7 +43,7 @@ const LinksPage = () => {
     firebase.updateTab(tab, newTitle);
 
   const deleteTab = async (tab: ITab) => {
-    await firebase.deleteTab(tab);
+    await firebase.deleteTabScenario(tab);
 
     if (tab.id === selectedTab.id) {
       const next = getNextSibling(tabs, selectedTab, 'id');

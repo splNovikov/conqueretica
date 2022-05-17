@@ -72,13 +72,13 @@ export const updateTab = async (
   }
 };
 
-export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
+export const deleteTabScenario = async (tab: ITab): Promise<ITab | null> => {
   if (!tab?.id) {
     defaultErrorHandler('No Tab');
     return null;
   }
 
-  // 1. get all columns
+  // 1. Get all columns
   const columnsQ = getColumnsQuery(tab);
 
   if (!columnsQ) {
@@ -88,10 +88,11 @@ export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
 
   const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
 
-  // 2. delete all columns
+  // 2. Delete all columns with all content
   await deleteColumnsScenario(columns);
 
-  // 3. delete Tab
+  // 3. Delete Tab
+  // todo: it should be a function deleteTab
   try {
     await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
 

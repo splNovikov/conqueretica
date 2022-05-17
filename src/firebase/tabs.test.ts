@@ -1,6 +1,6 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
-import { addTab, deleteTab, updateTab } from './tabs';
+import { addTab, deleteTabScenario, updateTab } from './tabs';
 import * as queryBuilders from './queryBuilders';
 // Interfaces
 import { ITab } from '../interfaces';
@@ -112,7 +112,7 @@ describe('Firebase Tabs Test', () => {
       firestore.deleteDoc = jest.fn();
 
       const tab = tabs[0];
-      const res = await deleteTab(tab);
+      const res = await deleteTabScenario(tab);
 
       // 3 (cat)*2(col) categories, 2 columns, 1 tab
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(3 * 2 + 2 + 1);
@@ -125,7 +125,7 @@ describe('Firebase Tabs Test', () => {
       queryBuilders.getColumnsQuery = jest.fn(() => false);
 
       const tab = tabs[0];
-      const res = await deleteTab(tab);
+      const res = await deleteTabScenario(tab);
 
       expect(firestore.deleteDoc).toHaveBeenCalledTimes(0);
       expect(console.error).toHaveBeenCalledWith(
@@ -141,19 +141,19 @@ describe('Firebase Tabs Test', () => {
       });
 
       const tab = tabs[0];
-      const res = await deleteTab(tab);
+      const res = await deleteTabScenario(tab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(err);
     });
 
     it('Should Return Null when tab not passed', async () => {
-      const res = await deleteTab();
+      const res = await deleteTabScenario();
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
     });
 
     it('Should Return Null when tab passed as empty object', async () => {
-      const res = await deleteTab({} as ITab);
+      const res = await deleteTabScenario({} as ITab);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Tab');
     });
