@@ -1,5 +1,9 @@
 import * as firestore from '@firebase/firestore';
-import { addCategory, deleteCategories, deleteCategory } from './categories';
+import {
+  addCategory,
+  deleteCategoriesScenario,
+  deleteCategory,
+} from './categories';
 // Interfaces
 import { ICategory, IColumn } from '../interfaces';
 // Utils
@@ -93,29 +97,6 @@ describe('Firebase Categories Test', () => {
       const res = await deleteCategory({} as ICategory);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Category');
-    });
-  });
-
-  describe('Delete CategorIES', () => {
-    it('Should Delete Categories', async () => {
-      // todo: check for deleteDoc not have been called
-      firestore.deleteDoc = jest.fn();
-
-      await deleteCategories(fsMock.categoriesDocs);
-
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
-    });
-
-    it('Should Delete Only Valid Categories', async () => {
-      firestore.deleteDoc = jest.fn();
-
-      const invalidDocs = {
-        ...fsMock.categoriesDocs,
-        docs: [...fsMock.categoriesDocs.docs, categories[0], undefined],
-      };
-      await deleteCategories(invalidDocs);
-
-      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
     });
   });
 });

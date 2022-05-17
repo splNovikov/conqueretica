@@ -2,6 +2,7 @@ import * as firestore from '@firebase/firestore';
 // Firebase
 import {
   addCategoryWithColumnScenario,
+  deleteCategoriesScenario,
   deleteColumnScenario,
   deleteColumnsScenario,
   deleteTabScenario,
@@ -12,7 +13,7 @@ import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.te
 // Interfaces
 import { IColumn, ITab } from '../interfaces';
 // Test Data
-import { columns, tabs } from '../__test_data__';
+import { categories, columns, tabs } from '../__test_data__';
 // Firebase BeforeEach
 import './_firebase.beforeEach.test';
 
@@ -72,6 +73,29 @@ describe('Firebase Scenarios', () => {
 
       expect(res).toBe(null);
       expect(firestore.setDoc).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Delete CategorIES Scenario', () => {
+    it('Should Delete Categories', async () => {
+      // todo: check for deleteDoc not have been called
+      firestore.deleteDoc = jest.fn();
+
+      await deleteCategoriesScenario(fsMock.categoriesDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
+    });
+
+    it('Should Delete Only Valid Categories', async () => {
+      firestore.deleteDoc = jest.fn();
+
+      const invalidDocs = {
+        ...fsMock.categoriesDocs,
+        docs: [...fsMock.categoriesDocs.docs, categories[0], undefined],
+      };
+      await deleteCategoriesScenario(invalidDocs);
+
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(3);
     });
   });
 

@@ -6,7 +6,7 @@ import {
 // Firebase
 import { deleteTab } from './tabs';
 import { addColumn, deleteColumn } from './columns';
-import { addCategory, deleteCategories } from './categories';
+import { addCategory, deleteCategory } from './categories';
 import { getCategoriesQuery, getColumnsQuery } from './queryBuilders';
 // Interfaces
 import { ICategory, IColumn, ITab } from '../interfaces';
@@ -24,6 +24,25 @@ export const addCategoryWithColumnScenario = async (
   }
 
   return null;
+};
+
+export const deleteCategoriesScenario = async (
+  categories: QuerySnapshot<ICategory>,
+): Promise<(ICategory | null)[]> => {
+  let deletedCategories: (ICategory | null)[] = [];
+
+  await Promise.all(
+    categories.docs.map(async (category: QueryDocumentSnapshot<ICategory>) => {
+      if (category?.data && typeof category?.data === 'function') {
+        const deletedCat = await deleteCategory(category.data());
+        deletedCategories = [...deletedCategories, deletedCat];
+      } else {
+        defaultErrorHandler('Categories data is incorrect');
+      }
+    }),
+  );
+
+  return deletedCategories;
 };
 
 export const deleteColumnScenario = async (
@@ -45,7 +64,7 @@ export const deleteColumnScenario = async (
   const categories: QuerySnapshot<ICategory> = await getDocs(categoriesQ);
 
   // 2. delete all categories
-  await deleteCategories(categories);
+  await deleteCategoriesScenario(categories);
 
   // 3. delete column
   return deleteColumn(column);

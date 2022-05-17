@@ -46,25 +46,6 @@ export const addCategory = async (
   }
 };
 
-export const deleteCategories = async (
-  categories: QuerySnapshot<ICategory>,
-): Promise<(ICategory | null)[]> => {
-  let deletedCategories: (ICategory | null)[] = [];
-
-  await Promise.all(
-    categories.docs.map(async (category: QueryDocumentSnapshot<ICategory>) => {
-      if (category?.data && typeof category?.data === 'function') {
-        const deletedCat = await deleteCategory(category.data());
-        deletedCategories = [...deletedCategories, deletedCat];
-      } else {
-        defaultErrorHandler('Categories data is incorrect');
-      }
-    }),
-  );
-
-  return deletedCategories;
-};
-
 export const deleteCategory = async (
   category: ICategory,
 ): Promise<ICategory | null> => {
