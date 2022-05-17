@@ -15,16 +15,17 @@ export const addCategoryWithColumnScenario = async (
   return null;
 };
 
-// todo: tests
 export const deleteCategoryWithColumnScenario = async (
   category: ICategory,
   column: IColumn,
 ): Promise<ICategory | null> => {
-  // 1. Delete Category
-  const cat = await deleteCategory(category);
+  // todo: update the logic
+  // there should be used deleteColumnScenario and tha is it.
 
-  // 2. Delete Column
-  await deleteColumn(column);
+  const [cat] = await Promise.all([
+    deleteCategory(category),
+    deleteColumn(column),
+  ]);
 
   return cat;
 };
