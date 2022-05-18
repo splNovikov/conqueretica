@@ -62,7 +62,10 @@
     'confluence',
     'jira',
     'lucid-charts',
-    'figma'
+    'figma',
+    'github',
+    'gitlab',
+    'code-commit'
   );
   @include generate-icons($icons);
 }

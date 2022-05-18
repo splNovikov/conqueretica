@@ -18,6 +18,9 @@ const rules = {
   serviceDesk: 'atlassian.net/servicedesk',
   lucidCharts: 'lucid.app/lucidchart',
   figma: 'figma.com',
+  github: 'github.',
+  gitlab: 'gitlab.',
+  codeCommit: 'codesuite/codecommit',
 };
 
 export const identifyLink = (href: string): IconName | undefined => {
@@ -62,6 +65,15 @@ export const identifyLink = (href: string): IconName | undefined => {
   }
   if (href.includes(rules.figma)) {
     return 'figma';
+  }
+  if (href.includes(rules.github)) {
+    return 'github';
+  }
+  if (href.includes(rules.gitlab)) {
+    return 'gitlab';
+  }
+  if (href.includes(rules.codeCommit)) {
+    return 'code-commit';
   }
 
   return undefined;

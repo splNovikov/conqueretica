@@ -11,5 +11,8 @@ declare const IconNames: [
   'jira',
   'lucid-charts',
   'figma',
+  'github',
+  'gitlab',
+  'code-commit',
 ];
 export declare type IconName = typeof IconNames[number];

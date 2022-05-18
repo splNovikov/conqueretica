@@ -107,7 +107,24 @@ describe('Identify Links', () => {
     expect(res).toBe('figma');
   });
 
-  https: it('Should return "empty string"', () => {
+  it('Should return "github"', () => {
+    const res = identifyLink('https://github.com/splNovikov/conqueretica');
+    expect(res).toBe('github');
+  });
+
+  it('Should return "gitlab"', () => {
+    const res = identifyLink('https://gitlab.overhull.jaxel.com/');
+    expect(res).toBe('gitlab');
+  });
+
+  it('Should return "code-commit"', () => {
+    const res = identifyLink(
+      'https://console.aws.amazon.com/codesuite/codecommit/repositories/SDGE-UI/browse?region=us-east-1',
+    );
+    expect(res).toBe('code-commit');
+  });
+
+  it('Should return "empty string"', () => {
     const res = identifyLink(blablaHref);
     expect(res).toBe(undefined);
   });
