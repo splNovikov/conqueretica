@@ -67,6 +67,13 @@ describe('Identify Links', () => {
     expect(res).toBe('jira');
   });
 
+  it('Should return "jira" when servicedesk', () => {
+    const res = identifyLink(
+      'https://jaxel-inc.atlassian.net/servicedesk/customer/portal/3',
+    );
+    expect(res).toBe('jira');
+  });
+
   it('Should return "lucid-charts"', () => {
     const res = identifyLink(
       'https://lucid.app/lucidchart/09eec516-5471-4093-880b-9ce58636cab6/edit?page=Y4GqplY9EZqp#',

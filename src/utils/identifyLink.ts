@@ -12,6 +12,7 @@ const rules = {
   drive: 'drive.google.com/drive',
   confluence: 'atlassian.net/wiki',
   jira: 'atlassian.net/jira',
+  serviceDesk: 'atlassian.net/servicedesk',
   lucidCharts: 'lucid.app/lucidchart',
   figma: 'figma.com',
 };
@@ -45,6 +46,9 @@ export const identifyLink = (href: string): IconName | undefined => {
     return 'confluence';
   }
   if (href.includes(rules.jira)) {
+    return 'jira';
+  }
+  if (href.includes(rules.serviceDesk)) {
     return 'jira';
   }
   if (href.includes(rules.lucidCharts)) {
