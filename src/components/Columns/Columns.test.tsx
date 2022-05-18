@@ -1,69 +1,87 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
+import * as firestoreHooks from 'react-firebase-hooks/firestore';
+// Firebase
+import firebase from '../../firebase';
 // Components
 import Columns from './Columns';
+import Column from '../Column';
+import ColumnsAddCategory from '../ColumnsAddCategory';
+// Utils
+import { mockUseCollectionData } from '../../testUtils';
 // Test Data
-import { columns, tabs } from '../../__test_data__';
+import { tabs } from '../../__test_data__';
 
-describe('Columns', () => {
+describe('Columns Component', () => {
+  const origConsoleError = console.error;
+  // Test Data
+  const tab = tabs[0];
+  // Wrappers
+  let wrapper: ReactWrapper;
+  let columnWrappers: ReactWrapper<any>;
+  let columnsAddCategoryWrapper: ReactWrapper<any>;
+
+  beforeEach(() => {
+    console.error = jest.fn();
+    jest
+      .spyOn(firestoreHooks, 'useCollectionData')
+      // @ts-ignore
+      .mockImplementation(mockUseCollectionData());
+
+    wrapper = mount(<Columns selectedTab={tab} />);
+    columnWrappers = wrapper.find(Column);
+    columnsAddCategoryWrapper = wrapper.find(ColumnsAddCategory);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+    console.error = origConsoleError;
+    wrapper.unmount();
+  });
+
   it('Columns Component is rendering', () => {
-    const wrapper = shallow(
-      <Columns
-        columns={columns}
-        createColumnHandler={() => 1}
-        deleteColumnHandler={() => 1}
-        categoryFormSubmitHandler={() => 1}
-        deleteCategoryHandler={() => 1}
-        createLinkHandler={() => 1}
-        updateLinkHandler={() => 1}
-        deleteLinkHandler={() => 1}
-      />,
-    );
-    expect(wrapper.hasClass('columns')).toEqual(true);
+    expect(wrapper.exists()).toBe(true);
+    expect(columnWrappers.length).toBe(2);
+    expect(columnsAddCategoryWrapper.exists()).toBe(true);
   });
 
-  it('Columns Component is rendering necessary elements', () => {
-    const wrapper = mount(
-      <Columns
-        columns={columns}
-        selectedTab={tabs[0]}
-        createColumnHandler={() => 1}
-        deleteColumnHandler={() => 1}
-        categoryFormSubmitHandler={() => 1}
-        deleteCategoryHandler={() => 1}
-        createLinkHandler={() => 1}
-        updateLinkHandler={() => 1}
-        deleteLinkHandler={() => 1}
-      />,
-    );
+  it('Columns Component -> ColumnsAddCategory should not be shown', () => {
+    // @ts-ignore
+    wrapper = mount(<Columns selectedTab={undefined} />);
 
-    const categoriesEl = wrapper.find('Column');
-    expect(categoriesEl.length).toBe(2);
+    const columnsAddCategoryWrapper2 = wrapper.find(ColumnsAddCategory);
 
-    const buttonEl = wrapper.find('button.columns-btn-add-new-column');
-    expect(buttonEl.exists()).toBeTruthy();
+    expect(columnsAddCategoryWrapper2.exists()).toBe(false);
   });
 
-  it('Columns Component "Create Column" button should invoke "Create Column" method', () => {
-    const handleCreateColumn = jest.fn();
-    const wrapper = mount(
-      <Columns
-        columns={columns}
-        selectedTab={tabs[0]}
-        createColumnHandler={handleCreateColumn}
-        deleteColumnHandler={() => 1}
-        categoryFormSubmitHandler={() => 1}
-        deleteCategoryHandler={() => 1}
-        createLinkHandler={() => 1}
-        updateLinkHandler={() => 1}
-        deleteLinkHandler={() => 1}
-      />,
+  it('Columns Component is handling errors when columns are not loading', () => {
+    jest.resetAllMocks();
+    jest.spyOn(firestoreHooks, 'useCollectionData').mockImplementation(
+      // @ts-ignore
+      mockUseCollectionData([[], false, { message: 'err' }]),
     );
 
-    const buttonEl = wrapper.find('button.columns-btn-add-new-column');
+    wrapper.unmount();
+    wrapper = mount(<Columns selectedTab={tab} />);
 
-    buttonEl.simulate('click');
+    expect(console.error).toHaveBeenCalledWith({ message: 'err' });
+  });
 
-    expect(handleCreateColumn).toHaveBeenCalled();
+  describe('Columns Component Handlers', () => {
+    it('Should invoke "Add Category Scenario Handler"', () => {
+      firebase.addCategoryWithColumnScenario = jest.fn();
+
+      const addCategoryScenarioHandler = columnsAddCategoryWrapper.prop(
+        'addCategoryScenarioHandler',
+      );
+
+      addCategoryScenarioHandler &&
+        addCategoryScenarioHandler('category-title');
+
+      expect(firebase.addCategoryWithColumnScenario).toHaveBeenCalledWith(
+        'category-title',
+        tab,
+      );
+    });
   });
 });

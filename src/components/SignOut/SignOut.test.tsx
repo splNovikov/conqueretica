@@ -1,9 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { mount, ReactWrapper } from 'enzyme';
+// Components
 import SignOut from './SignOut';
 
-it('SignOut is rendering', () => {
-  const wrapper = shallow(<SignOut />);
-  expect(wrapper.hasClass('sign-out')).toEqual(true);
+describe('SignOut Component', () => {
+  // Wrappers
+  let wrapper: ReactWrapper;
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  it('SignOut Component is rendering', () => {
+    wrapper = mount(<SignOut />);
+    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.text()).toBe(' Log Out');
+  });
 });

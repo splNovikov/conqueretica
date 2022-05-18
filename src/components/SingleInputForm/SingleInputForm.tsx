@@ -6,12 +6,20 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import './SingleInputForm.scss';
 
 const SingleInputForm: FC<{
-  // eslint-disable-next-line react/require-default-props
+  /* eslint-disable react/require-default-props */
   value?: string | undefined;
+  layout?: 'vertical' | 'inline';
+  /* eslint-enable */
   placeholder: string;
   formSubmitHandler: (value: string) => void;
   abortHandler: () => void;
-}> = ({ value = '', placeholder, formSubmitHandler, abortHandler }) => {
+}> = ({
+  value = '',
+  layout = 'vertical',
+  placeholder,
+  formSubmitHandler,
+  abortHandler,
+}) => {
   const [form] = Form.useForm();
 
   const handleFormSubmit = async () => {
@@ -44,9 +52,9 @@ const SingleInputForm: FC<{
       <Form
         form={form}
         initialValues={{ singleInput: value }}
-        layout="inline"
+        layout={layout}
         onFinish={handleFormSubmit}
-        className="single-input-form"
+        className="single-input-form custom-ant-form"
       >
         <Form.Item
           name="singleInput"
@@ -68,22 +76,26 @@ const SingleInputForm: FC<{
             onKeyDown={handleKeyboardEvent}
           />
         </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            icon={<CheckOutlined />}
-            size="small"
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            htmlType="button"
-            icon={<CloseOutlined />}
-            onClick={handleCancelEdit}
-            size="small"
-          />
-        </Form.Item>
+        <div className="custom-ant-form-buttons-wrapper">
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon={<CheckOutlined />}
+              size="small"
+              className="single-input-form-submit-btn"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="button"
+              icon={<CloseOutlined />}
+              onClick={handleCancelEdit}
+              size="small"
+              className="single-input-form-cancel-btn"
+            />
+          </Form.Item>
+        </div>
       </Form>
     </OutsideClickHandler>
   );

@@ -1,13 +1,4 @@
-import {
-  arrayUnion,
-  arrayRemove,
-  collection,
-  doc,
-  updateDoc,
-  Timestamp,
-  DocumentReference,
-  getDoc,
-} from 'firebase/firestore';
+import { doc, Timestamp, setDoc, deleteDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
@@ -32,15 +23,15 @@ export const addCategory = async (
 
   const category: ICategory = {
     id: uuidv4(),
+    columnId: column.id,
     title,
     createdAt: Timestamp.now(),
     links: [],
   };
   try {
-    const columnsRef = collection(firebase.firestoreDB, 'columns');
-    const columnDoc = doc(columnsRef, column.id);
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
-    await updateDoc(columnDoc, { categories: arrayUnion(category) });
+    await setDoc(categoryRef, category);
     return category;
   } catch (e) {
     httpErrorHandler(e);
@@ -49,44 +40,20 @@ export const addCategory = async (
 };
 
 export const deleteCategory = async (
-  column: IColumn,
   category: ICategory,
 ): Promise<ICategory | null> => {
-  if (!column?.id || !category?.id) {
-    defaultErrorHandler('No Column || Category');
+  if (!category?.id) {
+    defaultErrorHandler('No Category');
     return null;
   }
 
   try {
-    const columnsRef = collection(firebase.firestoreDB, 'columns');
-    const columnDoc = doc(columnsRef, column.id);
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
 
-    await updateDoc(columnDoc, { categories: arrayRemove(category) });
-
+    await deleteDoc(categoryRef);
     return category;
   } catch (e) {
     httpErrorHandler(e);
     return null;
-  }
-};
-
-export const getCategoriesByColumnDoc = async (
-  columnDoc: DocumentReference,
-): Promise<ICategory[]> => {
-  try {
-    const columnDocumentSnapshot = await getDoc(columnDoc);
-    const columnData = columnDocumentSnapshot.data();
-
-    if (!columnData?.categories?.length) {
-      defaultErrorHandler(
-        `Categories not found for this Column: ${columnDoc.id}`,
-      );
-      return [];
-    }
-
-    return columnData.categories;
-  } catch (e) {
-    httpErrorHandler(e);
-    return [];
   }
 };

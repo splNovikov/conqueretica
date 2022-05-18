@@ -4,8 +4,10 @@ import * as authHooks from 'react-firebase-hooks/auth';
 import * as firestoreHooks from 'react-firebase-hooks/firestore';
 // Components
 import LinksPage from './LinksPage';
+// Utils
+import { mockUseCollectionData } from '../../testUtils';
 // Test Data
-import { user, tabs, columns } from '../../__test_data__';
+import { user } from '../../__test_data__';
 
 describe('LinksPage component', () => {
   let wrapper: any;
@@ -18,25 +20,7 @@ describe('LinksPage component', () => {
     jest
       .spyOn(firestoreHooks, 'useCollectionData')
       // @ts-ignore
-      .mockImplementation((query) => {
-        if (!query) {
-          return [];
-        }
-
-        // @ts-ignore
-        // eslint-disable-next-line no-underscore-dangle
-        const dataType = query._query.path.segments[0];
-
-        if (dataType === 'tabs') {
-          return [tabs, false, undefined];
-        }
-
-        if (dataType === 'columns') {
-          return [columns, false, undefined];
-        }
-
-        return [];
-      });
+      .mockImplementation(mockUseCollectionData());
   });
 
   afterEach(() => {

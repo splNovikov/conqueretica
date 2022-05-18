@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import { ITab } from '../../interfaces';
 // Components
 import SingleInputForm from '../SingleInputForm';
+// Utils
+import { defaultConfirmModal } from '../../utils';
 // Styles
 import './Tab.scss';
 
@@ -15,10 +17,18 @@ const actionsMenu = (
   handleTabEdit: () => void,
 ) => (
   <Menu>
-    <Menu.Item key="edit" onClick={handleTabEdit} className="edit-tab">
+    <Menu.Item
+      key="edit"
+      onClick={handleTabEdit}
+      className="tab-actions-menu-edit-tab"
+    >
       <EditOutlined /> Edit Tab
     </Menu.Item>
-    <Menu.Item key="delete" onClick={handleTabDelete} className="delete-tab">
+    <Menu.Item
+      key="delete"
+      onClick={handleTabDelete}
+      className="tab-actions-menu-delete-tab"
+    >
       <DeleteOutlined /> Delete Tab
     </Menu.Item>
   </Menu>
@@ -40,22 +50,14 @@ const Tab: FC<{
   const [editMode, setEditMode] = useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
 
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteTabHandler(tab);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
+  // region Modal Confirm Delete
+  const { showConfirmModal, handleConfirmModalOk, handleConfirmModalCancel } =
+    defaultConfirmModal(setIsConfirmModalVisible, () => deleteTabHandler(tab));
 
   const handleTabDelete = () => {
     showConfirmModal();
   };
+  // endregion Modal
 
   const handleTabSelect = () => {
     if (tab.id !== selectedTab.id) {
@@ -80,17 +82,13 @@ const Tab: FC<{
   const disableEditMode = () => setEditMode(false);
 
   return (
-    <div
-      className={classNames('tab', {
-        'tab-selected': selectedTab.id === tab.id,
-        'edit-mode': editMode,
-      })}
-    >
+    <>
       <Modal
         title="Delete Tab Confirmation"
         visible={isConfirmModalVisible}
         onOk={handleConfirmModalOk}
         onCancel={handleConfirmModalCancel}
+        forceRender
       >
         <p>Are you sure you want to delete tab &quot;{tab.title}&quot;?</p>
         <p>
@@ -98,33 +96,41 @@ const Tab: FC<{
           be undone
         </p>
       </Modal>
-      {!editMode ? (
-        <>
-          <span role="none" onClick={handleTabSelect} className="tab-title">
-            {tab.title}
-          </span>
-          <Dropdown
-            key="actions"
-            overlay={actionsMenu(tab, handleTabDelete, enableEditMode)}
-            placement="bottomRight"
-            arrow
-          >
-            <Button
-              type="text"
-              icon={<MoreOutlined />}
-              className="actions-menu-trigger"
-            />
-          </Dropdown>
-        </>
-      ) : (
-        <SingleInputForm
-          value={tab.title}
-          placeholder="Enter Tab Name"
-          formSubmitHandler={handleTabUpdate}
-          abortHandler={handleCancelEdit}
-        />
-      )}
-    </div>
+      <div
+        className={classNames('tab', {
+          'tab-selected': selectedTab.id === tab.id,
+          'edit-mode': editMode,
+        })}
+      >
+        {!editMode ? (
+          <>
+            <span className="tab-title" role="none" onClick={handleTabSelect}>
+              {tab.title}
+            </span>
+            <Dropdown
+              key="actions"
+              overlay={actionsMenu(tab, handleTabDelete, enableEditMode)}
+              placement="bottomRight"
+              arrow
+            >
+              <Button
+                type="text"
+                icon={<MoreOutlined />}
+                className="tab-actions-menu-trigger"
+              />
+            </Dropdown>
+          </>
+        ) : (
+          <SingleInputForm
+            value={tab.title}
+            placeholder="Edit Tab Name"
+            formSubmitHandler={handleTabUpdate}
+            abortHandler={handleCancelEdit}
+            layout="inline"
+          />
+        )}
+      </div>
+    </>
   );
 };
 

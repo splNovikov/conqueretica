@@ -4,6 +4,7 @@ import { ILink } from './ILink';
 
 export interface ICategory {
   id: string;
+  columnId: string;
   title: string;
   createdAt: FieldValue;
   links: ILink[];

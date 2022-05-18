@@ -5,11 +5,15 @@ import {
   PlusCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Dropdown, Menu, Modal, Typography } from 'antd';
+// Firebase
+import firebase from '../../firebase';
 // Interfaces
 import { ICategory, ILink } from '../../interfaces';
 // Components
 import CategoryLinky from '../CategoryLinky';
 import LinkForm from '../LinkForm';
+// Utils
+import { defaultConfirmModal } from '../../utils';
 // Styles
 import './Category.scss';
 
@@ -30,40 +34,20 @@ const actionsMenu = (category: ICategory, handleCategoryDelete: () => void) => (
 const Category: FC<{
   category: ICategory;
   deleteCategoryHandler: (val: ICategory) => void;
-  createLinkHandler: (title: string, href: string, category: ICategory) => void;
-  updateLinkHandler: (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-  ) => void;
-  deleteLinkHandler: (link: ILink, category: ICategory) => void;
-}> = ({
-  category,
-  deleteCategoryHandler,
-  createLinkHandler,
-  updateLinkHandler,
-  deleteLinkHandler,
-}) => {
+}> = ({ category, deleteCategoryHandler }) => {
   const [isAddLinkMode, setIsAddLinkMode] = useState(false);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
 
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteCategoryHandler(category);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
+  // region Modal Confirm Delete
+  const { showConfirmModal, handleConfirmModalOk, handleConfirmModalCancel } =
+    defaultConfirmModal(setIsConfirmModalVisible, () =>
+      deleteCategoryHandler(category),
+    );
 
   const handleCategoryDelete = () => {
     showConfirmModal();
   };
+  // endregion Modal
 
   const enableAddLinkMode = () => {
     setIsAddLinkMode(true);
@@ -73,17 +57,17 @@ const Category: FC<{
     setIsAddLinkMode(false);
   };
 
-  const handleLinkCreate = (title: string, href: string) => {
+  const handleLinkCreate = async (title: string, href: string) => {
     disableAddLinkMode();
-    createLinkHandler(title, href, category);
+    await firebase.addLink(title, href, category);
   };
 
-  const handleLinkUpdate = (title: string, href: string, link: ILink) => {
-    updateLinkHandler(title, href, link, category);
+  const handleLinkUpdate = async (title: string, href: string, link: ILink) => {
+    await firebase.updateLink(title, href, link, category);
   };
 
-  const handleDeleteLink = (link: ILink) => {
-    deleteLinkHandler(link, category);
+  const handleDeleteLink = async (link: ILink) => {
+    await firebase.deleteLink(link, category);
   };
 
   return (
@@ -93,6 +77,7 @@ const Category: FC<{
         visible={isConfirmModalVisible}
         onOk={handleConfirmModalOk}
         onCancel={handleConfirmModalCancel}
+        forceRender
       >
         <p>
           Are you sure you want to delete category &quot;{category.title}&quot;?

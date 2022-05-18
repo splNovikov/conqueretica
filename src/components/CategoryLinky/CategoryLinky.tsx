@@ -10,7 +10,6 @@ import LinkForm from '../LinkForm';
 // Styles
 import './CategoryLinky.scss';
 
-// todo: tests:
 const CategoryLinky: FC<{
   link: ILink;
   formSubmitHandler: (title: string, href: string, link: ILink) => void;

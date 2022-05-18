@@ -2,19 +2,22 @@
 
 .category {
   border-bottom: 1px solid $category-border-color;
-  padding: $category-padding;
 
-  &-header {
+  &:not(:last-child) {
+    padding: $category-padding;
+  }
+
+  & &-header {
     display: flex;
     justify-content: space-between;
   }
 
-  &-title {
+  & &-title {
     display: inline-flex;
     align-items: center;
   }
 
-  .category-btn-enable-add-link {
+  & &-btn-enable-add-link {
     padding: 0;
     font-size: $category-btn-enable-add-link-font-size;
   }

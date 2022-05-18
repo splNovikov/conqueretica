@@ -27,6 +27,9 @@ $layout-footer-background: $layout-body-background;
 $skeleton-paragraph-li-height: 10px;
 $skeleton-paragraph-li-margin-top: 10px;
 
+// Ant Form
+$ant-form-item-margin: 0 0 0 5px;
+
 // === Custom Components
 
 // App
@@ -49,24 +52,23 @@ $app-footer-padding: 0 50px;
 $links-page-content-wrapper-padding: 20px;
 $links-page-columns-wrapper-padding: 20px 0 0;
 
-// Tabs
-
 // Tab
+$tab-title-padding: 10px 0;
 $tab-padding-horizontal: 20px;
-$tab-padding: 5px $tab-padding-horizontal;
+$tab-padding: 0 $tab-padding-horizontal;
 $tab-active-border-width: 2px;
 $tab-highlight-color: $primary-color;
-
-// Single Input Form
-$single-input-form-item-margin: 0 2px 0 0;
 
 // Columns
 $columns-create-column-wrapper-padding: 5px;
 
 // Column
+$column-min-width: 160px;
 $column-header-border-radius: 10px 10px 0 0;
 $column-header-border-color: $primary-color;
-$column-header-padding: 5px;
+$column-header-padding: 10px 0 0 0;
+$column-categories-padding: 0 5px;
+$column-btn-enable-add-category-font-size: small;
 
 // Linky
 $linky-font-size: small;
@@ -74,7 +76,4 @@ $linky-font-size: small;
 // Category
 $category-btn-enable-add-link-font-size: small;
 $category-border-color: $primary-color;
-$category-padding: 5px 0;
-
-// LinkForm
-$link-form-button-margin: 0 0 0 5px;
+$category-padding: 0 0 5px 0;

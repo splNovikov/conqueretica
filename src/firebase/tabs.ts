@@ -1,25 +1,16 @@
 import {
-  collection,
   deleteDoc,
   doc,
-  getDocs,
-  orderBy,
-  query,
-  Query,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
   serverTimestamp,
   setDoc,
   updateDoc,
-  where,
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
-import { getColumnsQuery, deleteColumns } from './columns';
 // Interfaces
-import { IColumn, ITab } from '../interfaces';
+import { ITab } from '../interfaces';
 // Utils
 import { defaultErrorHandler, httpErrorHandler } from '../utils';
 
@@ -39,11 +30,9 @@ export const addTab = async (
     ownerId: user.uid,
   };
   try {
-    const tabsRef = collection(firebase.firestoreDB, 'tabs');
-    const tabDoc = doc(tabsRef, tab.id);
+    const tabRef = doc(firebase.firestoreDB, 'tabs', tab.id);
 
-    await setDoc(tabDoc, tab);
-
+    await setDoc(tabRef, tab);
     return tab;
   } catch (e) {
     httpErrorHandler(e);
@@ -67,11 +56,9 @@ export const updateTab = async (
 
   const updatedTab = { ...tab, title: newTitle };
   try {
-    const tabsRef = collection(firebase.firestoreDB, 'tabs');
-    const tabDoc = doc(tabsRef, tab.id);
+    const tabRef = doc(firebase.firestoreDB, 'tabs', tab.id);
 
-    await updateDoc(tabDoc, updatedTab);
-
+    await updateDoc(tabRef, updatedTab);
     return updatedTab;
   } catch (e) {
     httpErrorHandler(e);
@@ -85,37 +72,13 @@ export const deleteTab = async (tab: ITab): Promise<ITab | null> => {
     return null;
   }
 
-  // 1. get all columns
-  const columnsQ = getColumnsQuery(tab);
-  const columns: QuerySnapshot<IColumn> = await getDocs(columnsQ);
-
-  // 2. delete all columns
-  await deleteColumns(columns);
-
-  // 3. delete Tab
   try {
-    await deleteDoc(doc(firebase.firestoreDB, 'tabs', tab.id));
+    const tabRef = doc(firebase.firestoreDB, 'tabs', tab.id);
 
+    await deleteDoc(tabRef);
     return tab;
   } catch (e) {
     httpErrorHandler(e);
     return null;
   }
-};
-
-const tabsConverter = {
-  toFirestore: (data: ITab) => data,
-  fromFirestore: (snap: QueryDocumentSnapshot) => snap.data() as ITab,
-};
-
-export const getTabsQuery = (user: UserInfo): Query<ITab> => {
-  const tabsRef = collection(firebase.firestoreDB, 'tabs').withConverter<ITab>(
-    tabsConverter,
-  );
-
-  return query(
-    tabsRef,
-    where('ownerId', '==', user.uid),
-    orderBy('createdAt', 'asc'),
-  );
 };

@@ -1,50 +1,45 @@
 import React, { FC, useState } from 'react';
-import { Button, Col, Modal, Tooltip } from 'antd';
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { Button, Col, Skeleton } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
+// Firebase
+import firebase from '../../firebase';
 // Interfaces
-import { ICategory, IColumn, ILink } from '../../interfaces';
+import { ICategory, IColumn } from '../../interfaces';
 // Components
 import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
+// Utils
+import { httpErrorHandler } from '../../utils';
 // Styles
 import './Column.scss';
 
 const Column: FC<{
   column: IColumn;
   span: number;
-  deleteColumnHandler: (val: IColumn) => void;
-  categoryFormSubmitHandler: (value: string, column: IColumn) => void;
-  deleteCategoryHandler: (category: ICategory, column: IColumn) => void;
-  createLinkHandler: (
-    title: string,
-    href: string,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  updateLinkHandler: (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-  deleteLinkHandler: (
-    link: ILink,
-    category: ICategory,
-    column: IColumn,
-  ) => void;
-}> = ({
-  column,
-  span,
-  deleteColumnHandler,
-  categoryFormSubmitHandler,
-  deleteCategoryHandler,
-  createLinkHandler,
-  updateLinkHandler,
-  deleteLinkHandler,
-}) => {
-  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+}> = ({ column, span }) => {
   const [isAddCategoryMode, setIsAddCategoryMode] = useState(false);
+  const qCategories = firebase.getCategoriesQuery(column);
+  const [categories = [], loadingCategories, categoriesError] =
+    useCollectionData<ICategory>(qCategories);
+
+  if (categoriesError?.message) {
+    httpErrorHandler(categoriesError);
+  }
+
+  const handleCategoryFormSubmit = async (value: string) => {
+    disableAddCategoryMode();
+    await firebase.addCategory(value, column);
+  };
+
+  const handleCategoryDelete = async (category: ICategory) => {
+    // if last category in column:
+    if (categories.length === 1) {
+      return firebase.deleteColumnScenario(column);
+    }
+
+    return firebase.deleteCategory(category);
+  };
 
   const enableAddCategoryMode = () => {
     setIsAddCategoryMode(true);
@@ -54,90 +49,31 @@ const Column: FC<{
     setIsAddCategoryMode(false);
   };
 
-  // region Modal Confirm Delete
-  const showConfirmModal = () => {
-    setIsConfirmModalVisible(true);
-  };
-
-  const handleConfirmModalOk = () => {
-    setIsConfirmModalVisible(false);
-    deleteColumnHandler(column);
-  };
-
-  const handleConfirmModalCancel = () => {
-    setIsConfirmModalVisible(false);
-  };
-
-  const handleColumnDelete = () => {
-    showConfirmModal();
-  };
-  // endregion Modal
-
-  const handleCategoryFormSubmit = (value: string) => {
-    categoryFormSubmitHandler(value, column);
-    disableAddCategoryMode();
-  };
-
-  const handleCategoryDelete = (category: ICategory) =>
-    deleteCategoryHandler(category, column);
-
-  const handleLinkCreate = (title: string, href: string, category: ICategory) =>
-    createLinkHandler(title, href, category, column);
-
-  const handleLinkUpdate = (
-    title: string,
-    href: string,
-    link: ILink,
-    category: ICategory,
-  ) => updateLinkHandler(title, href, link, category, column);
-
-  const handleDeleteLink = (link: ILink, category: ICategory) =>
-    deleteLinkHandler(link, category, column);
-
   return (
     <Col span={span} className="column">
-      <Modal
-        title="Delete Column Confirmation"
-        visible={isConfirmModalVisible}
-        onOk={handleConfirmModalOk}
-        onCancel={handleConfirmModalCancel}
+      <div className="column-header" />
+      <Skeleton
+        loading={loadingCategories || !categories?.length}
+        active
+        round
+        className="categories-skeleton"
       >
-        <p>Are you sure you want to delete this column?</p>
-        <p>
-          This action will permanently delete all this columns contains and
-          cannot be undone
-        </p>
-      </Modal>
-
-      <div className="column-header">
-        <Tooltip title="Delete Column">
-          <Button
-            shape="circle"
-            size="small"
-            icon={<DeleteOutlined />}
-            onClick={handleColumnDelete}
-            className="btn-delete-column"
-          />
-        </Tooltip>
-      </div>
-      <div className="column-categories">
-        {column.categories.map((category: ICategory) => (
-          <Category
-            category={category}
-            deleteCategoryHandler={handleCategoryDelete}
-            key={category.id}
-            createLinkHandler={handleLinkCreate}
-            updateLinkHandler={handleLinkUpdate}
-            deleteLinkHandler={handleDeleteLink}
-          />
-        ))}
-      </div>
+        <div className="column-categories">
+          {categories.map((category: ICategory) => (
+            <Category
+              category={category}
+              deleteCategoryHandler={handleCategoryDelete}
+              key={category.id}
+            />
+          ))}
+        </div>
+      </Skeleton>
       {!isAddCategoryMode ? (
         <Button
           onClick={enableAddCategoryMode}
           type="link"
           icon={<PlusCircleOutlined />}
-          className="btn-enable-add-category"
+          className="column-btn-enable-add-category"
         >
           New Category
         </Button>
@@ -146,6 +82,7 @@ const Column: FC<{
           placeholder="Create a new category"
           formSubmitHandler={handleCategoryFormSubmit}
           abortHandler={disableAddCategoryMode}
+          layout="vertical"
         />
       )}
     </Col>

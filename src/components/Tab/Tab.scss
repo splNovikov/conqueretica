@@ -7,6 +7,17 @@
   cursor: pointer;
   padding: $tab-padding;
 
+  &-title {
+    padding: $tab-title-padding;
+  }
+
+  &-actions-menu-trigger {
+    &.ant-btn-icon-only {
+      height: auto;
+      padding: 0;
+    }
+  }
+
   &::after {
     position: absolute;
     right: $tab-padding-horizontal;

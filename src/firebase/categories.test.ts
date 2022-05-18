@@ -1,56 +1,36 @@
 import * as firestore from '@firebase/firestore';
-import {
-  addCategory,
-  deleteCategory,
-  getCategoriesByColumnDoc,
-} from './categories';
+import { addCategory, deleteCategory } from './categories';
 // Interfaces
 import { ICategory, IColumn } from '../interfaces';
+// Utils
+import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
-import { columns } from '../__test_data__';
+import { categories, columns } from '../__test_data__';
+// Firebase BeforeEach
+import './_firebase.beforeEach.test';
 
 describe('Firebase Categories Test', () => {
-  const columnDoc = { columnDoc: 'test_columnDoc' };
-  const collectionRef = { colRef: 'test_collectionRef' };
-  const origUpdateDoc = firestore.updateDoc;
-  const origConsoleError = console.error;
-
-  beforeEach(() => {
-    jest.spyOn(firestore, 'doc').mockReturnValue(columnDoc);
-    jest.spyOn(firestore, 'collection').mockReturnValue(collectionRef);
-    firestore.updateDoc = jest.fn();
-    console.error = jest.fn();
-  });
-
-  afterEach(() => {
-    jest.resetAllMocks();
-    firestore.updateDoc = origUpdateDoc;
-    console.error = origConsoleError;
-  });
-
   describe('Add Category', () => {
+    firestore.setDoc = jest.fn();
+
     it('Should Add Category', async () => {
       const categoryTitle = 'category_title';
-      const categoryExpectedRes = {
-        title: categoryTitle,
-        links: [],
-      };
-      const arrayUnionRes = [categoryExpectedRes];
-
-      jest.spyOn(firestore, 'arrayUnion').mockReturnValue(arrayUnionRes);
-
       const res = await addCategory(categoryTitle, columns[0]);
-      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
-        categories: arrayUnionRes,
-      });
-      expect(res?.title).toBe(categoryExpectedRes.title);
-      expect(res?.links.length).toBe(0);
+
+      expect(firestore.setDoc).toHaveBeenCalledWith(
+        fsMock.categoryDoc,
+        expect.objectContaining({
+          title: categoryTitle,
+          columnId: columns[0].id,
+          links: [],
+        }),
+      );
+      expect(res?.title).toBe(categoryTitle);
     });
 
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
-
-      firestore.updateDoc = jest.fn(() => {
+      firestore.setDoc = jest.fn(() => {
         throw err;
       });
 
@@ -63,89 +43,59 @@ describe('Firebase Categories Test', () => {
       const res = await addCategory('title');
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when column passed as empty object', async () => {
       const res = await addCategory('title', {} as IColumn);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Column');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when title is empty', async () => {
       const res = await addCategory(undefined, { id: '123' });
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title');
+      expect(firestore.setDoc).not.toHaveBeenCalled();
     });
   });
 
   describe('Delete Category', () => {
+    firestore.deleteDoc = jest.fn();
+
     it('Should Delete Category', async () => {
-      const arrayRemoveRes = [];
+      const category = categories[0];
+      const res = await deleteCategory(category);
 
-      jest.spyOn(firestore, 'arrayRemove').mockReturnValue(arrayRemoveRes);
-
-      const res = await deleteCategory(columns[0], columns[0].categories[0]);
-      expect(firestore.updateDoc).toHaveBeenCalledWith(columnDoc, {
-        categories: arrayRemoveRes,
-      });
-      expect(res?.title).toBe(columns[0].categories[0].title);
-      expect(res?.links.length).toBe(columns[0].categories[0].links.length);
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.categoryDoc);
+      expect(res).toBe(category);
     });
 
     it('Should Handle Exception', async () => {
       const err = new Error('Mocked error');
 
-      firestore.updateDoc = jest.fn(() => {
+      firestore.deleteDoc = jest.fn(() => {
         throw err;
       });
 
-      const res = await deleteCategory(columns[0], columns[0].categories[0]);
+      const res = await deleteCategory(categories[0]);
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(err);
     });
 
-    it('Should Return Null when column not passed', async () => {
-      const res = await deleteCategory(undefined, columns[0].categories[0]);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Column || Category');
-    });
-
-    it('Should Return Null when column passed as empty object', async () => {
-      const res = await deleteCategory({} as IColumn, columns[0].categories[0]);
-      expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Column || Category');
-    });
-
     it('Should Return Null when category not passed', async () => {
-      const res = await deleteCategory(columns[0]);
+      const res = await deleteCategory(undefined);
       expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Column || Category');
+      expect(console.error).toHaveBeenCalledWith('No Category');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
 
     it('Should Return Null when category passed as empty object', async () => {
-      const res = await deleteCategory(columns[0], {} as ICategory);
+      const res = await deleteCategory({} as ICategory);
       expect(res).toBeNull();
-      expect(console.error).toHaveBeenCalledWith('No Column || Category');
-    });
-  });
-
-  describe('Get Categories By Column Doc', () => {
-    it('Should return categories', async () => {
-      jest
-        .spyOn(firestore, 'getDoc')
-        .mockReturnValue({ data: () => columns[0] });
-
-      const res = await getCategoriesByColumnDoc({});
-      expect(res).toBe(columns[0].categories);
-    });
-
-    it('Should return empty array when categories are undefined', async () => {
-      jest
-        .spyOn(firestore, 'getDoc')
-        .mockReturnValue({ data: () => undefined });
-
-      const res = await getCategoriesByColumnDoc({});
-      expect(res).toEqual([]);
+      expect(console.error).toHaveBeenCalledWith('No Category');
+      expect(firestore.deleteDoc).not.toHaveBeenCalled();
     });
   });
 });

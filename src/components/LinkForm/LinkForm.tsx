@@ -28,20 +28,15 @@ const LinkForm: FC<{
 }) => {
   const [form] = Form.useForm();
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = () => {
     const t = form.getFieldValue('titleInput');
     const l = form.getFieldValue('linkInput');
     const trimmedTitle = t.trim();
     const trimmedLink = l.trim();
 
-    if (!trimmedLink.length) {
-      form.setFieldsValue({ titleInput: '' });
-      return;
-    }
-
     form.resetFields();
 
-    await formSubmitHandler(
+    formSubmitHandler(
       trimmedTitle.length ? trimmedTitle : trimmedLink,
       trimmedLink,
     );
@@ -82,7 +77,7 @@ const LinkForm: FC<{
         initialValues={{ titleInput: title, linkInput: href }}
         layout="vertical"
         onFinish={handleFormSubmit}
-        className="link-form"
+        className="link-form custom-ant-form"
       >
         <Form.Item
           name="titleInput"
@@ -113,8 +108,8 @@ const LinkForm: FC<{
               message: 'Invalid url',
             },
             {
-              max: 300,
-              message: 'Max 300 ch.',
+              max: 1500,
+              message: 'Max 1500 ch.',
             },
           ]}
         >
@@ -125,7 +120,7 @@ const LinkForm: FC<{
             className="link-form-link-input"
           />
         </Form.Item>
-        <div className="link-form-buttons-wrapper">
+        <div className="custom-ant-form-buttons-wrapper">
           {deleteHandler ? (
             <Form.Item>
               <Button
@@ -133,19 +128,10 @@ const LinkForm: FC<{
                 icon={<DeleteOutlined />}
                 onClick={handleDeleteClick}
                 size="small"
-                className="link-form-btn-cancel"
+                className="link-form-btn-delete"
               />
             </Form.Item>
           ) : null}
-          <Form.Item>
-            <Button
-              htmlType="button"
-              icon={<CloseOutlined />}
-              onClick={handleCancelClick}
-              size="small"
-              className="link-form-btn-cancel"
-            />
-          </Form.Item>
           <Form.Item>
             <Button
               type="primary"
@@ -153,6 +139,15 @@ const LinkForm: FC<{
               icon={<CheckOutlined />}
               size="small"
               className="link-form-btn-submit"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="button"
+              icon={<CloseOutlined />}
+              onClick={handleCancelClick}
+              size="small"
+              className="link-form-btn-cancel"
             />
           </Form.Item>
         </div>

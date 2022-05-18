@@ -1,97 +1,248 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
+import { act } from 'react-dom/test-utils';
+// Utils
+import {
+  getModalSecondaryButton,
+  getModalWrapper,
+  getSubmenuItems,
+  isModalDisplayed,
+  isModalHidden,
+} from '../../testUtils';
 // Components
 import Tab from './Tab';
+import SingleInputForm from '../SingleInputForm';
 // Test Data
 import { tabs } from '../../__test_data__';
 
-describe('Tab', () => {
-  it('Tab Component is rendering', () => {
-    const wrapper = shallow(
-      <Tab
-        tab={tabs[0]}
-        selectedTab={tabs[0]}
-        selectTabHandler={() => 1}
-        deleteTabHandler={() => 1}
-        updateTabHandler={() => 1}
-      />,
-    );
-    expect(wrapper.hasClass('tab')).toEqual(true);
+describe('Tab Component', () => {
+  const selectTabHandler = jest.fn();
+  const updateTabHandler = jest.fn();
+  const deleteTabHandler = jest.fn();
+  // Selectors
+  const tabSelector = 'div.tab';
+  const tabTitleSelector = 'span.tab-title';
+  const tabActionsMenuTriggerSelector = 'button.tab-actions-menu-trigger';
+  // ClassNames
+  const tabIsSelectedClassName = 'tab-selected';
+  const editModeClassName = 'edit-mode';
+  const actionsMenuEditClassName = 'tab-actions-menu-edit-tab';
+  const actionsMenuDeleteClassName = 'tab-actions-menu-delete-tab';
+  // Test Data
+  const tab = tabs[0];
+  // Wrappers
+  let wrapper: ReactWrapper;
+
+  const getWrappers = (w: ReactWrapper) => ({
+    tabWrapper: w.find(tabSelector),
+    singleInputWrapper: w.find(SingleInputForm),
+    tabTitleWrapper: w.find(tabTitleSelector),
+    tabActionsMenuTrigger: w.find(tabActionsMenuTriggerSelector),
   });
 
-  it('Tab Component is rendering necessary elements', () => {
-    const wrapper = mount(
-      <Tab
-        tab={tabs[0]}
-        selectedTab={tabs[0]}
-        selectTabHandler={() => 1}
-        deleteTabHandler={() => 1}
-        updateTabHandler={() => 1}
-      />,
-    );
-
-    expect(wrapper.text()).toBe('test_tab_1');
-    expect(wrapper.find('.tab-selected').exists()).toBe(true);
-
-    const actionMenuTriggerEl = wrapper.find('button.actions-menu-trigger');
-    expect(actionMenuTriggerEl.exists()).toBe(true);
+  afterEach(() => {
+    wrapper.unmount();
   });
 
-  // Since we moved delete button to dropdown - it has been move out of the wrapper's scope. And we can not test it anymore
-  xit('Tab Component "Delete Tab" button should invoke "Delete Tab" method', () => {
-    const handleDeleteTab = jest.fn();
-    const wrapper = shallow(
-      <Tab
-        tab={tabs[0]}
-        selectedTab={tabs[0]}
-        selectTabHandler={() => 1}
-        deleteTabHandler={handleDeleteTab}
-        updateTabHandler={() => 1}
-      />,
-    );
+  describe('Tab Component is rendering elements', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Tab
+          tab={tab}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          updateTabHandler={updateTabHandler}
+        />,
+      );
+    });
 
-    const actionMenuTriggerEl = wrapper.find('button.actions-menu-trigger');
-    actionMenuTriggerEl.simulate('mouseover');
+    it('Tab Component is rendering correctly', () => {
+      const {
+        tabWrapper,
+        singleInputWrapper,
+        tabTitleWrapper,
+        tabActionsMenuTrigger,
+      } = getWrappers(wrapper);
 
-    // const deleteEl = wrapper.find('.btn-delete-tab');
-    expect(handleDeleteTab).toHaveBeenCalledWith(tabs[0]);
+      expect(tabWrapper.exists()).toBe(true);
+      expect(singleInputWrapper.exists()).toBe(false);
+      expect(tabTitleWrapper.text()).toBe(tab.title);
+      expect(tabActionsMenuTrigger.exists()).toBe(true);
+    });
+
+    it('Tab Component rendering classNames correctly', () => {
+      const { tabWrapper } = getWrappers(wrapper);
+
+      expect(tabWrapper.hasClass(tabIsSelectedClassName)).toBe(true);
+      expect(tabWrapper.hasClass(editModeClassName)).toBe(false);
+    });
+
+    it('Should have Dropdown Menu Items', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      expect(submenuItems.length).toBe(2);
+      expect(submenuItems.at(0).hasClass(actionsMenuEditClassName)).toBe(true);
+      expect(submenuItems.at(1).hasClass(actionsMenuDeleteClassName)).toBe(
+        true,
+      );
+    });
   });
 
-  it('Tab Component "Select Tab" button should invoke "Select Tab" method', () => {
-    const handleSelectTab = jest.fn();
-    const wrapper = shallow(
-      <Tab
-        tab={tabs[0]}
-        selectedTab={tabs[1]}
-        selectTabHandler={handleSelectTab}
-        deleteTabHandler={() => 1}
-        updateTabHandler={() => 1}
-      />,
-    );
+  describe('Tab Component Interactions', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Tab
+          tab={tab}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          updateTabHandler={updateTabHandler}
+        />,
+      );
+    });
 
-    const tabTitleEl = wrapper.find('.tab-title');
+    it('Should enable Edit Mode', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
 
-    tabTitleEl.simulate('click');
+      wrapper.update();
 
-    expect(handleSelectTab).toHaveBeenCalledWith(tabs[0]);
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(true);
+    });
+
+    it('Should invoke open/close Modal', async () => {
+      expect(isModalHidden(wrapper)).toBe(true);
+
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.at(1).simulate('click');
+      });
+
+      wrapper.update();
+
+      expect(isModalDisplayed(wrapper)).toBe(true);
+
+      const modal = getModalWrapper(wrapper);
+      const cancelBtn = getModalSecondaryButton(modal);
+
+      await act(async () => {
+        cancelBtn.simulate('click');
+      });
+
+      wrapper.update();
+
+      expect(isModalHidden(wrapper)).toBe(true);
+    });
   });
 
-  it('Tab Component "Select Tab" button should NOT invoke "Select Tab" method on clicking the same tab', () => {
-    const handleSelectTab = jest.fn();
-    const wrapper = shallow(
-      <Tab
-        tab={tabs[0]}
-        selectedTab={tabs[0]}
-        selectTabHandler={handleSelectTab}
-        deleteTabHandler={() => 1}
-        updateTabHandler={() => 1}
-      />,
-    );
+  describe('Tab Component Handlers', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Tab
+          tab={tab}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          updateTabHandler={updateTabHandler}
+        />,
+      );
+    });
 
-    const tabTitleEl = wrapper.find('.tab-title');
+    it('Should prevent handle Tab Select when tab is already selected', async () => {
+      const { tabTitleWrapper } = getWrappers(wrapper);
 
-    tabTitleEl.simulate('click');
+      await act(async () => {
+        tabTitleWrapper.simulate('click');
+      });
 
-    expect(handleSelectTab).toHaveBeenCalledTimes(0);
+      expect(selectTabHandler).not.toHaveBeenCalled();
+    });
+
+    it('Should handle Tab Select', async () => {
+      wrapper.unmount();
+      wrapper = mount(
+        <Tab
+          tab={tab}
+          selectedTab={tabs[1]}
+          selectTabHandler={selectTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          updateTabHandler={updateTabHandler}
+        />,
+      );
+      const { tabTitleWrapper } = getWrappers(wrapper);
+
+      await act(async () => {
+        tabTitleWrapper.simulate('click');
+      });
+
+      expect(selectTabHandler).toHaveBeenCalledWith(tab);
+    });
+
+    it('Should handle Tab update', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      const { singleInputWrapper } = getWrappers(wrapper);
+
+      const formSubmitHandler = singleInputWrapper.prop('formSubmitHandler');
+
+      await act(async () => {
+        formSubmitHandler && formSubmitHandler('new-tab-title');
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
+      expect(updateTabHandler).toHaveBeenCalledWith(tab, 'new-tab-title');
+    });
+
+    it('Should NOT handle Tab update if title is the same', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      const { singleInputWrapper } = getWrappers(wrapper);
+
+      const formSubmitHandler = singleInputWrapper.prop('formSubmitHandler');
+
+      await act(async () => {
+        formSubmitHandler && formSubmitHandler(tab.title);
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
+      expect(updateTabHandler).not.toHaveBeenCalled();
+    });
+
+    it('Should handle cancel edit Tab', async () => {
+      const submenuItems = getSubmenuItems(wrapper);
+      await act(async () => {
+        submenuItems.first().simulate('click');
+      });
+
+      wrapper.update();
+
+      const { singleInputWrapper } = getWrappers(wrapper);
+
+      const abortHandler = singleInputWrapper.prop('abortHandler');
+
+      await act(async () => {
+        abortHandler && abortHandler();
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).singleInputWrapper.exists()).toBe(false);
+    });
   });
 });

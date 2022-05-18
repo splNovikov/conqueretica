@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+// Types
+import { IconName, IconSize } from '../../types';
 // Styles
 import './GoogleIcon.scss';
 
 const GoogleIcon: FC<{
-  icon: string;
-  size?: string;
+  icon: IconName;
+  size?: IconSize;
 }> = ({ icon, size }) => (
   <div className={classNames('google-icon', icon, size)} />
 );

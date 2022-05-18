@@ -3,6 +3,7 @@ import { identifyLink } from './identifyLink';
 import { getNextSibling } from './getNextSibling';
 import { urlValidation } from './urlValidation';
 import { acronym } from './acronym';
+import { defaultConfirmModal } from './defaultConfirmModal';
 
 export {
   httpErrorHandler,
@@ -11,4 +12,5 @@ export {
   getNextSibling,
   urlValidation,
   acronym,
+  defaultConfirmModal,
 };

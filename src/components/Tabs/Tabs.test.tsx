@@ -1,102 +1,124 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 // Components
 import Tabs from './Tabs';
+import Tab from '../Tab';
+import SingleInputForm from '../SingleInputForm';
 // Test Data
 import { tabs } from '../../__test_data__';
+import { act } from 'react-dom/test-utils';
 
-describe('Tabs', () => {
-  it('Tabs Component is rendering', () => {
-    shallow(
-      <Tabs
-        tabs={tabs}
-        selectedTab={tabs[0]}
-        selectTabHandler={() => 1}
-        updateTabHandler={() => 1}
-        deleteTabHandler={() => 1}
-        tabsFormSubmitHandler={() => 1}
-      />,
-    );
+describe('Tabs Component', () => {
+  const selectTabHandler = jest.fn();
+  const updateTabHandler = jest.fn();
+  const deleteTabHandler = jest.fn();
+  const tabsFormSubmitHandler = jest.fn();
+  // Selectors
+  const tabsAddFormTriggerSelector = 'button.btn-show-add-tab-form';
+  const tabSelector = 'div.tab';
+  // ClassNames
+  const tabIsSelectedClassName = 'tab-selected';
+  // Test Data
+  const tab = tabs[0];
+  // Wrappers
+  let wrapper: ReactWrapper;
+
+  const getWrappers = (w: ReactWrapper) => ({
+    tabWrappers: w.find(Tab),
+    addFormWrapper: w.find(SingleInputForm),
+    tabsAddFormTrigger: w.find(tabsAddFormTriggerSelector),
   });
 
-  it('Tabs Component render all tabs', () => {
-    const wrapper = shallow(
-      <Tabs
-        tabs={tabs}
-        selectedTab={tabs[0]}
-        selectTabHandler={() => 1}
-        updateTabHandler={() => 1}
-        deleteTabHandler={() => 1}
-        tabsFormSubmitHandler={() => 1}
-      />,
-    );
-    const tabsEl = wrapper.find('Tab');
-    expect(tabsEl.length).toBe(3);
+  afterEach(() => {
+    wrapper.unmount();
   });
 
-  it('Tabs Component Should select Selected Tab', () => {
-    const wrapper = mount(
-      <Tabs
-        tabs={tabs}
-        selectedTab={tabs[0]}
-        selectTabHandler={() => 1}
-        updateTabHandler={() => 1}
-        deleteTabHandler={() => 1}
-        tabsFormSubmitHandler={() => 1}
-      />,
-    );
-    const tabsEl = wrapper.find('.tab');
-    expect(tabsEl.at(0).hasClass('tab-selected')).toBe(true);
-  });
-
-  describe('Tabs Add Form', () => {
-    it('Tabs Add Form should not be displayed by default', () => {
-      const wrapper = mount(
+  describe('Tabs Component is rendering elements', () => {
+    beforeEach(() => {
+      wrapper = mount(
         <Tabs
           tabs={tabs}
-          selectedTab={tabs[0]}
-          selectTabHandler={() => 1}
-          updateTabHandler={() => 1}
-          deleteTabHandler={() => 1}
-          tabsFormSubmitHandler={() => 1}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          updateTabHandler={updateTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          tabsFormSubmitHandler={tabsFormSubmitHandler}
         />,
       );
-      const addFormEl = wrapper.find('AddForm');
-      expect(addFormEl.exists()).toBeFalsy();
     });
 
-    it('Tabs Add Form display trigger is exist', () => {
-      const wrapper = mount(
+    it('Tabs Component is rendering correctly', () => {
+      const { tabWrappers, addFormWrapper, tabsAddFormTrigger } =
+        getWrappers(wrapper);
+
+      expect(tabWrappers.length).toBe(3);
+      expect(addFormWrapper.exists()).toBe(false);
+      expect(tabsAddFormTrigger.exists()).toBe(true);
+    });
+
+    it('First tab is selected', () => {
+      const { tabWrappers } = getWrappers(wrapper);
+
+      expect(
+        tabWrappers.at(0).find(tabSelector).hasClass(tabIsSelectedClassName),
+      ).toBe(true);
+    });
+  });
+
+  describe('Tabs Component Interactions', () => {
+    beforeEach(() => {
+      wrapper = mount(
         <Tabs
           tabs={tabs}
-          selectedTab={tabs[0]}
-          selectTabHandler={() => 1}
-          updateTabHandler={() => 1}
-          deleteTabHandler={() => 1}
-          tabsFormSubmitHandler={() => 1}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          updateTabHandler={updateTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          tabsFormSubmitHandler={tabsFormSubmitHandler}
         />,
       );
-      const addTabTriggerEl = wrapper.find('.btn-show-add-tab-form');
-      expect(addTabTriggerEl.exists()).toBeTruthy();
     });
 
     it('Tabs Add Form should be displayed after clicking on trigger', () => {
-      const wrapper = mount(
+      const { tabsAddFormTrigger } = getWrappers(wrapper);
+
+      tabsAddFormTrigger.simulate('click');
+
+      expect(getWrappers(wrapper).addFormWrapper.exists()).toBe(true);
+    });
+  });
+
+  describe('Tabs Component Рфтвдукы', () => {
+    beforeEach(() => {
+      wrapper = mount(
         <Tabs
           tabs={tabs}
-          selectedTab={tabs[0]}
-          selectTabHandler={() => 1}
-          updateTabHandler={() => 1}
-          deleteTabHandler={() => 1}
-          tabsFormSubmitHandler={() => 1}
+          selectedTab={tab}
+          selectTabHandler={selectTabHandler}
+          updateTabHandler={updateTabHandler}
+          deleteTabHandler={deleteTabHandler}
+          tabsFormSubmitHandler={tabsFormSubmitHandler}
         />,
       );
-      const addTabTriggerEl = wrapper.find('button.btn-show-add-tab-form');
+    });
 
-      addTabTriggerEl.simulate('click');
+    it('Tabs Component Should handle tab creation', async () => {
+      const { tabsAddFormTrigger } = getWrappers(wrapper);
 
-      const addFormEl = wrapper.find('.add-tab-form-wrapper');
-      expect(addFormEl.exists()).toBeTruthy();
+      tabsAddFormTrigger.simulate('click');
+
+      const { addFormWrapper } = getWrappers(wrapper);
+
+      const formSubmitHandler = addFormWrapper.prop('formSubmitHandler');
+
+      await act(async () => {
+        formSubmitHandler && formSubmitHandler('new-tab-title');
+      });
+
+      wrapper.update();
+
+      expect(tabsFormSubmitHandler).toHaveBeenCalledWith('new-tab-title');
+      expect(getWrappers(wrapper).addFormWrapper.exists()).toBe(false);
     });
   });
 });
