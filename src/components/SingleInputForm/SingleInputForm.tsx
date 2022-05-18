@@ -64,8 +64,8 @@ const SingleInputForm: FC<{
               message: 'Can not be empty',
             },
             {
-              max: 15,
-              message: 'Max 15 characters',
+              max: 20,
+              message: 'Max 20 characters',
             },
           ]}
         >
