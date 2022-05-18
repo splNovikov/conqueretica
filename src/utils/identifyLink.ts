@@ -13,6 +13,7 @@ const rules = {
   confluence: 'atlassian.net/wiki',
   jira: 'atlassian.net/jira',
   jiraBrowse: 'atlassian.net/browse',
+  jiraProjects: 'atlassian.net/projects',
   serviceDesk: 'atlassian.net/servicedesk',
   lucidCharts: 'lucid.app/lucidchart',
   figma: 'figma.com',
@@ -46,13 +47,12 @@ export const identifyLink = (href: string): IconName | undefined => {
   if (href.includes(rules.confluence)) {
     return 'confluence';
   }
-  if (href.includes(rules.jira)) {
-    return 'jira';
-  }
-  if (href.includes(rules.jiraBrowse)) {
-    return 'jira';
-  }
-  if (href.includes(rules.serviceDesk)) {
+  if (
+    href.includes(rules.jira) ||
+    href.includes(rules.jiraBrowse) ||
+    href.includes(rules.jiraProjects) ||
+    href.includes(rules.serviceDesk)
+  ) {
     return 'jira';
   }
   if (href.includes(rules.lucidCharts)) {

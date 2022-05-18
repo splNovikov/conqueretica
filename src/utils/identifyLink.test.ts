@@ -72,6 +72,13 @@ describe('Identify Links', () => {
     expect(res).toBe('jira');
   });
 
+  it('Should return "jira" when "projects"', () => {
+    const res = identifyLink(
+      'https://e2dataio.atlassian.net/projects/EUSD?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page',
+    );
+    expect(res).toBe('jira');
+  });
+
   it('Should return "jira" when servicedesk', () => {
     const res = identifyLink(
       'https://jaxel-inc.atlassian.net/servicedesk/customer/portal/3',
