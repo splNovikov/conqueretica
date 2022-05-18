@@ -14,5 +14,7 @@ declare const IconNames: [
   'github',
   'gitlab',
   'code-commit',
+  'drawings',
+  'trello',
 ];
 export declare type IconName = typeof IconNames[number];

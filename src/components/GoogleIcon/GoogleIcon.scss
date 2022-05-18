@@ -65,7 +65,9 @@
     'figma',
     'github',
     'gitlab',
-    'code-commit'
+    'code-commit',
+    'drawings',
+    'trello'
   );
   @include generate-icons($icons);
 }

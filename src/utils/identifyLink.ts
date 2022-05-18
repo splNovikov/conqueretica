@@ -21,6 +21,8 @@ const rules = {
   github: 'github.',
   gitlab: 'gitlab.',
   codeCommit: 'codesuite/codecommit',
+  drawings: 'docs.google.com/drawings',
+  trello: 'trello.com',
 };
 
 export const identifyLink = (href: string): IconName | undefined => {
@@ -74,6 +76,12 @@ export const identifyLink = (href: string): IconName | undefined => {
   }
   if (href.includes(rules.codeCommit)) {
     return 'code-commit';
+  }
+  if (href.includes(rules.drawings)) {
+    return 'drawings';
+  }
+  if (href.includes(rules.trello)) {
+    return 'trello';
   }
 
   return undefined;

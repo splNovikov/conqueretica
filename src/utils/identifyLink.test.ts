@@ -124,6 +124,18 @@ describe('Identify Links', () => {
     expect(res).toBe('code-commit');
   });
 
+  it('Should return "drawings"', () => {
+    const res = identifyLink(
+      'docs.google.com/drawings/d/1YWKK_5aUn_8Myde-Dm6OGPpiBUgC-bDQoIIRJzO27ek/edit',
+    );
+    expect(res).toBe('drawings');
+  });
+
+  it('Should return "trello"', () => {
+    const res = identifyLink('https://trello.com/b/E2uK42r9/project-board');
+    expect(res).toBe('trello');
+  });
+
   it('Should return "empty string"', () => {
     const res = identifyLink(blablaHref);
     expect(res).toBe(undefined);
