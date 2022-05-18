@@ -79,6 +79,13 @@ describe('Identify Links', () => {
     expect(res).toBe('jira');
   });
 
+  it('Should return "jira" when "issues"', () => {
+    const res = identifyLink(
+      'https://jaxel-inc.atlassian.net/issues/?filter=10153',
+    );
+    expect(res).toBe('jira');
+  });
+
   it('Should return "jira" when servicedesk', () => {
     const res = identifyLink(
       'https://jaxel-inc.atlassian.net/servicedesk/customer/portal/3',

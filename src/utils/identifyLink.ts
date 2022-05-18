@@ -14,6 +14,7 @@ const rules = {
   jira: 'atlassian.net/jira',
   jiraBrowse: 'atlassian.net/browse',
   jiraProjects: 'atlassian.net/projects',
+  jiraIssues: 'atlassian.net/issues',
   serviceDesk: 'atlassian.net/servicedesk',
   lucidCharts: 'lucid.app/lucidchart',
   figma: 'figma.com',
@@ -51,6 +52,7 @@ export const identifyLink = (href: string): IconName | undefined => {
     href.includes(rules.jira) ||
     href.includes(rules.jiraBrowse) ||
     href.includes(rules.jiraProjects) ||
+    href.includes(rules.jiraIssues) ||
     href.includes(rules.serviceDesk)
   ) {
     return 'jira';
