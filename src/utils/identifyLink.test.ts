@@ -67,6 +67,11 @@ describe('Identify Links', () => {
     expect(res).toBe('jira');
   });
 
+  it('Should return "jira" when "browse"', () => {
+    const res = identifyLink('https://jaxel-inc.atlassian.net/browse/JUBS-329');
+    expect(res).toBe('jira');
+  });
+
   it('Should return "jira" when servicedesk', () => {
     const res = identifyLink(
       'https://jaxel-inc.atlassian.net/servicedesk/customer/portal/3',
