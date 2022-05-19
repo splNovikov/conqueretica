@@ -1,20 +1,18 @@
-declare const IconNames: [
-  'meet',
-  'docs',
-  'gmail',
-  'sheets',
-  'slides',
-  'calendar',
-  'youtube',
-  'drive',
-  'confluence',
-  'jira',
-  'lucid-charts',
-  'figma',
-  'github',
-  'gitlab',
-  'code-commit',
-  'drawings',
-  'trello',
-];
-export declare type IconName = typeof IconNames[number];
+export declare type IconName =
+  | 'meet'
+  | 'docs'
+  | 'gmail'
+  | 'sheets'
+  | 'slides'
+  | 'calendar'
+  | 'youtube'
+  | 'drive'
+  | 'confluence'
+  | 'jira'
+  | 'lucid-charts'
+  | 'figma'
+  | 'github'
+  | 'gitlab'
+  | 'code-commit'
+  | 'drawings'
+  | 'trello';
