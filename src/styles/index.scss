@@ -3,8 +3,11 @@
 @import '~sanitize.css/typography.css';
 
 // sanitize breaks svg positioning. Here is bringing it back:
-svg { vertical-align: baseline; }
+svg {
+  vertical-align: baseline;
+}
 
 // https://ant.design/docs/react/customize-theme-variable
 @import '~antd/dist/antd.variable.min.css';
-@import './ant-components/index.scss';
+@import './ant-components';
+@import './mixins';

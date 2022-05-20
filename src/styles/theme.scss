@@ -39,7 +39,6 @@ $app-height: 100vh;
 $app-header-shadow: 0 2px 8px $athens-grey;
 $app-header-height: 50px;
 $app-header-padding: 0 50px;
-$app-header-user-bg: $primary-color;
 $app-header-user-skeleton-min-width: 100px;
 $app-header-google-links-trigger-margin: 0 10px 0 0;
 
@@ -77,3 +76,9 @@ $linky-font-size: small;
 $category-btn-enable-add-link-font-size: small;
 $category-border-color: $primary-color;
 $category-padding: 0 0 5px 0;
+
+// UserAvatar - it should be a component but it doesn't work for Ant's Dropdown as a trigger
+$user-avatar-bg: $primary-color;
+.user-avatar {
+  background: $user-avatar-bg;
+}
