@@ -40,7 +40,7 @@ $app-header-shadow: 0 2px 8px $athens-grey;
 $app-header-height: 50px;
 $app-header-padding: 0 50px;
 $app-header-user-skeleton-min-width: 100px;
-$app-header-google-links-trigger-margin: 0 10px 0 0;
+$app-header-google-links-trigger-margin: 0 20px 0 0;
 
 // AppFooter
 $app-footer-shadow: 0 -2px 8px $athens-grey;
@@ -82,3 +82,8 @@ $user-avatar-bg: $primary-color;
 .user-avatar {
   background: $user-avatar-bg;
 }
+
+// QuickAccessLinksMenu
+$quick-access-links-menu-width: 365px;
+$quick-access-links-menu-padding: 10px;
+$quick-access-links-menu-card-padding: 10px;
