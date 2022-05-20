@@ -7,91 +7,16 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { UserInfo } from 'firebase/auth';
-// Interfaces
-import { ILink } from '../../interfaces';
 // Components
-import SignOut from '../SignOut';
+import UserMenu from '../UserMenu';
 import Login from '../Login';
-import Linky from '../Linky';
+import QuickAccessLinksMenu from '../QuickAccessLinksMenu';
+// Utils
+import { acronym } from '../../utils';
 // Styles
 import './AppHeader.scss';
-import { acronym } from '../../utils';
 
 const { Header } = Layout;
-
-const googleLinks: ILink[] = [
-  {
-    id: '1',
-    href: 'https://docs.google.com/spreadsheets',
-    title: 'Sheets',
-    // @ts-ignore
-    createdAt: '',
-  },
-  {
-    id: '2',
-    href: 'https://docs.google.com/document',
-    title: 'Docs',
-    // @ts-ignore
-    createdAt: '',
-  },
-  {
-    id: '3',
-    href: 'https://docs.google.com/presentation',
-    title: 'Slides',
-    // @ts-ignore
-    createdAt: '',
-  },
-  {
-    id: '4',
-    href: 'https://drive.google.com/drive',
-    title: 'Drive',
-    // @ts-ignore
-    createdAt: '',
-  },
-];
-
-const googleLinksMenu = (
-  <Menu>
-    {googleLinks.map((l) => (
-      <Menu.Item key={l.id}>
-        <Linky link={l} iconSize="x-small" />
-      </Menu.Item>
-    ))}
-  </Menu>
-);
-
-const GoogleLinksDropdownMenu = () => (
-  <Dropdown
-    key="google-links"
-    overlay={googleLinksMenu}
-    placement="bottomRight"
-    arrow
-  >
-    <Button
-      type="text"
-      icon={<AppstoreOutlined />}
-      className="app-header-google-links-trigger"
-    />
-  </Dropdown>
-);
-
-const userMenu = (
-  <Menu>
-    <Menu.Item key="sign-out">
-      <SignOut />
-    </Menu.Item>
-  </Menu>
-);
-
-const UserDropdownMenu: FC<{
-  user: UserInfo;
-}> = ({ user: { displayName } }) => (
-  <Dropdown key="user-menu" overlay={userMenu} placement="bottomRight" arrow>
-    <Avatar className="user-name" gap={1}>
-      {acronym(displayName)}
-    </Avatar>
-  </Dropdown>
-);
 
 const AppHeader: FC<{
   user: UserInfo | null | undefined;
@@ -115,7 +40,17 @@ const AppHeader: FC<{
         </Menu>
       </div>
       <div className="right-wrapper">
-        <GoogleLinksDropdownMenu />
+        <Dropdown
+          key="quick-access-links-menu"
+          overlay={<QuickAccessLinksMenu />}
+          trigger={['click']}
+        >
+          <Button
+            shape="circle"
+            icon={<AppstoreOutlined />}
+            className="app-header-google-links-trigger"
+          />
+        </Dropdown>
         <Skeleton
           loading={authInProgress}
           active
@@ -123,7 +58,23 @@ const AppHeader: FC<{
           paragraph={false}
           className="user-skeleton"
         >
-          {user ? <UserDropdownMenu user={user} /> : <Login key="login" />}
+          {user ? (
+            <Dropdown
+              key="user-menu"
+              overlay={<UserMenu user={user} />}
+              trigger={['click']}
+            >
+              <Avatar
+                className="user-avatar app-header-user-avatar"
+                gap={1}
+                src={user.photoURL}
+              >
+                {acronym(user.displayName)}
+              </Avatar>
+            </Dropdown>
+          ) : (
+            <Login key="login" />
+          )}
         </Skeleton>
       </div>
     </Header>

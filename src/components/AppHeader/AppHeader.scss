@@ -10,10 +10,6 @@
     padding: $app-header-padding;
   }
 
-  .user-name {
-    background: $app-header-user-bg;
-  }
-
   .left-wrapper {
     flex: 1 0 auto;
   }
@@ -29,6 +25,10 @@
 
   .user-skeleton {
     min-width: $app-header-user-skeleton-min-width;
+  }
+
+  & &-user-avatar {
+    cursor: pointer;
   }
 
   &-google-links-trigger {
