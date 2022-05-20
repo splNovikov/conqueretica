@@ -1,0 +1,11 @@
+@import '../../styles';
+
+.user-menu {
+  @include block-shadow();
+
+  & &-bottom {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}
