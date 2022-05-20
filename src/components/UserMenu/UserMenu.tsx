@@ -17,7 +17,7 @@ const UserMenu: FC<{
     <Meta
       avatar={
         <Avatar
-          className="user-avatar"
+          className="user-avatar user-menu-user-avatar"
           size="large"
           gap={1}
           src={user.photoURL}
