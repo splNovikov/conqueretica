@@ -1,16 +1,14 @@
 import * as firestore from '@firebase/firestore';
 import { UserInfo } from 'firebase/auth';
-import { addTab, deleteTab, deleteTabScenario, updateTab } from './tabs';
-import * as queryBuilders from './queryBuilders';
+import { addTab, deleteTab, updateTab } from './tabs';
 // Interfaces
-import { ICategory, ITab } from '../interfaces';
+import { ITab } from '../interfaces';
 // Utils
 import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
-import { categories, tabs, user } from '../__test_data__';
+import { tabs, user } from '../__test_data__';
 // Firebase BeforeEach
 import './_firebase.beforeEach.test';
-import { deleteCategory } from './categories';
 
 describe('Firebase Tabs Test', () => {
   describe('Add Tab', () => {
