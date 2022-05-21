@@ -6,7 +6,7 @@ import { getFirebaseConfig } from './config';
 import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { addTab, updateTab } from './tabs';
-import { addCategory, deleteCategory } from './categories';
+import { addCategory, updateCategory, deleteCategory } from './categories';
 import { addLink, updateLink, deleteLink } from './links';
 import {
   addCategoryWithColumnScenario,
@@ -35,6 +35,7 @@ export default {
   updateTab,
   // categories
   addCategory,
+  updateCategory,
   deleteCategory,
   // links
   addLink,

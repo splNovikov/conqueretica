@@ -1,11 +1,11 @@
 import * as firestore from '@firebase/firestore';
-import { addCategory, deleteCategory } from './categories';
+import { addCategory, deleteCategory, updateCategory } from './categories';
 // Interfaces
 import { ICategory, IColumn } from '../interfaces';
 // Utils
 import { firestoreMockImplementation as fsMock } from '../testUtils/firestore.test';
 // Test Data
-import { categories, columns } from '../__test_data__';
+import { categories, columns, tabs } from '../__test_data__';
 // Firebase BeforeEach
 import './_firebase.beforeEach.test';
 
@@ -58,6 +58,54 @@ describe('Firebase Categories Test', () => {
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith('No Title');
       expect(firestore.setDoc).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Update Category', () => {
+    it('Should Update Category', async () => {
+      firestore.updateDoc = jest.fn();
+
+      const title = 'new_title';
+      const res = await updateCategory(categories[0], title);
+
+      const newCategory = { ...categories[0], title };
+
+      expect(firestore.updateDoc).toHaveBeenCalledWith(
+        fsMock.categoryDoc,
+        newCategory,
+      );
+      expect(res?.title).toBe(title);
+    });
+
+    it('Should Handle Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.updateDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const title = 'new_title';
+      const res = await updateCategory(categories[0], title);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when title not passed', async () => {
+      const res = await updateCategory(categories[0]);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('Category Title is absent');
+    });
+
+    it('Should Return Null when category not passed', async () => {
+      const res = await updateCategory(undefined, 'str');
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Category');
+    });
+
+    it('Should Return Null when category passed as empty object', async () => {
+      const res = await updateCategory({}, 'str');
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith('No Category');
     });
   });
 

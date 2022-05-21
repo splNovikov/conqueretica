@@ -1,4 +1,10 @@
-import { doc, Timestamp, setDoc, deleteDoc } from 'firebase/firestore';
+import {
+  doc,
+  Timestamp,
+  setDoc,
+  deleteDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
@@ -33,6 +39,32 @@ export const addCategory = async (
 
     await setDoc(categoryRef, category);
     return category;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const updateCategory = async (
+  category: ICategory,
+  newTitle: string,
+): Promise<ICategory | null> => {
+  if (!category?.id) {
+    defaultErrorHandler('No Category');
+    return null;
+  }
+
+  if (!newTitle) {
+    defaultErrorHandler('Category Title is absent');
+    return null;
+  }
+
+  const updatedCategory = { ...category, title: newTitle };
+  try {
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
+
+    await updateDoc(categoryRef, updatedCategory);
+    return updatedCategory;
   } catch (e) {
     httpErrorHandler(e);
     return null;
