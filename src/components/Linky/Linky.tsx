@@ -14,10 +14,8 @@ const { Link } = Typography;
 
 const Linky: FC<{
   link: ILink;
-  /* eslint-disable react/require-default-props */
   iconSize?: IconSize;
   ellipsis?: boolean;
-  /* eslint-enable */
 }> = ({ link, iconSize, ellipsis }) => {
   const iconType = identifyLink(link.href);
 

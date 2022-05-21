@@ -6,10 +6,8 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import './SingleInputForm.scss';
 
 const SingleInputForm: FC<{
-  /* eslint-disable react/require-default-props */
   value?: string | undefined;
   layout?: 'vertical' | 'inline';
-  /* eslint-enable */
   placeholder: string;
   formSubmitHandler: (value: string) => void;
   abortHandler: () => void;

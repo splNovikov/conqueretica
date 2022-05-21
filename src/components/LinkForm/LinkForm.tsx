@@ -10,12 +10,10 @@ import {
 import './LinkForm.scss';
 
 const LinkForm: FC<{
-  /* eslint-disable react/require-default-props */
   outsideClickIgnoreElement?: RefObject<HTMLElement>;
   href?: string | undefined;
   title?: string | undefined;
   deleteHandler?: () => void;
-  /* eslint-enable */
   formSubmitHandler: (title: string, href: string) => void;
   abortHandler: () => void;
 }> = ({

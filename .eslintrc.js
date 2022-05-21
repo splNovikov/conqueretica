@@ -19,7 +19,8 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
-    'react/prop-types': 0,
+    'react/prop-types': 'off',
+    'react/require-default-props': 'off',
     'react/forbid-prop-types': 0,
     'no-debugger': 'warn',
     'react-hooks/rules-of-hooks': 'error',
