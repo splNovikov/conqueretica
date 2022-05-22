@@ -13,11 +13,13 @@ import { ICategory, ILink } from '../../interfaces';
 // Components
 import CategoryLinky from '../CategoryLinky';
 import LinkForm from '../LinkForm';
+import SingleInputForm from '../SingleInputForm';
 // Utils
 import { defaultConfirmModal } from '../../utils';
+// Constants
+import maxCharacters from '../../constants/maxLengthCharacters';
 // Styles
 import './Category.scss';
-import SingleInputForm from '../SingleInputForm';
 
 const { Text } = Typography;
 
@@ -152,6 +154,7 @@ const Category: FC<{
           formSubmitHandler={handleCategoryFormSubmit}
           abortHandler={disableEditCategoryMode}
           layout="vertical"
+          maxCharacters={maxCharacters.categoryTitle}
         />
       )}
 

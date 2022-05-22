@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react';
 import { Button, Col, Tooltip } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
+// Constants
+import maxCharacters from '../../constants/maxLengthCharacters';
 // Components
 import SingleInputForm from '../SingleInputForm';
 
@@ -29,6 +31,7 @@ const ColumnsAddCategory: FC<{
           formSubmitHandler={handleCategoryFormSubmit}
           abortHandler={disableAddCategoryMode}
           layout="vertical"
+          maxCharacters={maxCharacters.categoryTitle}
         />
       ) : (
         <Tooltip title="Add New Category">

@@ -7,11 +7,13 @@ import './SingleInputForm.scss';
 
 const SingleInputForm: FC<{
   value?: string | undefined;
+  maxCharacters?: number;
   layout?: 'vertical' | 'inline';
   placeholder: string;
   formSubmitHandler: (value: string) => void;
   abortHandler: () => void;
 }> = ({
+  maxCharacters = 20,
   value = '',
   layout = 'vertical',
   placeholder,
@@ -62,8 +64,8 @@ const SingleInputForm: FC<{
               message: 'Can not be empty',
             },
             {
-              max: 20,
-              message: 'Max 20 characters',
+              max: maxCharacters,
+              message: `Max ${maxCharacters} characters`,
             },
           ]}
         >

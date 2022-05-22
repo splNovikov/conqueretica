@@ -8,6 +8,8 @@ import { ITab } from '../../interfaces';
 import SingleInputForm from '../SingleInputForm';
 // Utils
 import { defaultConfirmModal } from '../../utils';
+// Constants
+import maxCharacters from '../../constants/maxLengthCharacters';
 // Styles
 import './Tab.scss';
 
@@ -127,6 +129,7 @@ const Tab: FC<{
             formSubmitHandler={handleTabUpdate}
             abortHandler={handleCancelEdit}
             layout="inline"
+            maxCharacters={maxCharacters.tabTitle}
           />
         )}
       </div>

@@ -6,6 +6,8 @@ import { ITab } from '../../interfaces';
 // Components
 import Tab from '../Tab';
 import SingleInputForm from '../SingleInputForm';
+// Constants
+import maxCharacters from '../../constants/maxLengthCharacters';
 // Styles
 import './Tabs.scss';
 
@@ -66,6 +68,7 @@ const Tabs: FC<{
             formSubmitHandler={handleTabSubmit}
             abortHandler={disableDisplayForm}
             layout="inline"
+            maxCharacters={maxCharacters.tabTitle}
           />
         </div>
       )}

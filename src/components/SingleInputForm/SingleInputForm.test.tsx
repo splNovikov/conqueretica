@@ -13,6 +13,7 @@ describe('SingleInputForm Component', () => {
   const inputSelector = 'input[type="text"]';
   const submitButtonSelector =
     'button[type="submit"].single-input-form-submit-btn';
+  const formItemErrorSelector = 'div.ant-form-item-explain-error';
   const cancelButtonSelector = 'button.single-input-form-cancel-btn';
   const formSelector = 'form.single-input-form';
   // Wrappers
@@ -22,6 +23,7 @@ describe('SingleInputForm Component', () => {
     form: w.find(formSelector),
     input: w.find(inputSelector),
     submitButton: w.find(submitButtonSelector),
+    formItemError: w.find(formItemErrorSelector),
     cancelButton: w.find(cancelButtonSelector),
   });
 
@@ -41,7 +43,8 @@ describe('SingleInputForm Component', () => {
     });
 
     it('SingleInputForm is rendering', () => {
-      const { form, input, submitButton, cancelButton } = getWrappers(wrapper);
+      const { form, input, submitButton, formItemError, cancelButton } =
+        getWrappers(wrapper);
 
       expect(wrapper.exists()).toBe(true);
       expect(form.exists()).toBe(true);
@@ -49,12 +52,17 @@ describe('SingleInputForm Component', () => {
       expect(input.prop('placeholder')).toBe('place-holder');
       expect(getInputValue(input)).toBe('');
       expect(submitButton.exists()).toBe(true);
+      expect(formItemError.exists()).toBe(false);
       expect(cancelButton.exists()).toBe(true);
     });
   });
 
   describe('SingleInputForm Component Interactions', () => {
+    const origConsoleError = console.warn;
+
     beforeEach(() => {
+      console.warn = jest.fn();
+
       wrapper = mount(
         <SingleInputForm
           formSubmitHandler={formSubmitHandler}
@@ -62,6 +70,10 @@ describe('SingleInputForm Component', () => {
           abortHandler={abortHandler}
         />,
       );
+    });
+
+    afterEach(() => {
+      console.warn = origConsoleError;
     });
 
     it('Input is able to receive text', async () => {
@@ -76,6 +88,48 @@ describe('SingleInputForm Component', () => {
       const inputValue = getInputValue(getWrappers(wrapper).input);
 
       expect(inputValue).toEqual('somenew');
+    });
+
+    it('Input max characters default value shows error', async () => {
+      const { input } = getWrappers(wrapper);
+
+      await act(async () => {
+        updateInputValue(input, '12345678901234567890');
+      });
+      wrapper.update();
+      await act(async () => {
+        updateInputValue(input, '123456789012345678901');
+      });
+      wrapper.update();
+
+      const { formItemError } = getWrappers(wrapper);
+      expect(formItemError.exists()).toBe(true);
+      expect(formItemError.text()).toBe('Max 20 characters');
+    });
+
+    it('Input max characters prop value shows error', async () => {
+      wrapper = mount(
+        <SingleInputForm
+          formSubmitHandler={formSubmitHandler}
+          placeholder="placeholder"
+          abortHandler={abortHandler}
+          maxCharacters={30}
+        />,
+      );
+      const { input } = getWrappers(wrapper);
+
+      await act(async () => {
+        updateInputValue(input, '123456789012345678901234567890');
+      });
+      wrapper.update();
+      await act(async () => {
+        updateInputValue(input, '1234567890123456789012345678901');
+      });
+      wrapper.update();
+
+      const { formItemError } = getWrappers(wrapper);
+      expect(formItemError.exists()).toBe(true);
+      expect(formItemError.text()).toBe('Max 30 characters');
     });
   });
 

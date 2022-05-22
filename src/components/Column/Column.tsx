@@ -11,6 +11,8 @@ import Category from '../Category';
 import SingleInputForm from '../SingleInputForm';
 // Utils
 import { httpErrorHandler } from '../../utils';
+// Constants
+import maxCharacters from '../../constants/maxLengthCharacters';
 // Styles
 import './Column.scss';
 
@@ -83,6 +85,7 @@ const Column: FC<{
           formSubmitHandler={handleCategoryFormSubmit}
           abortHandler={disableAddCategoryMode}
           layout="vertical"
+          maxCharacters={maxCharacters.categoryTitle}
         />
       )}
     </Col>
