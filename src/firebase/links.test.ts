@@ -1,4 +1,5 @@
 import * as firestore from '@firebase/firestore';
+
 import {
   addLink,
   addLinkToCategory,
@@ -22,11 +23,10 @@ describe('Links "Utils" Test', () => {
 
   it('Should Add Link To Category', () => {
     const link: ILink = {
-      id: 'id',
-      href: 'href',
-      title: 'title',
-      // @ts-ignore
-      createdAt: 'date',
+      ...category.links[2],
+      id: 'new-id',
+      href: 'new-href',
+      title: 'new-title',
     };
 
     const res = addLinkToCategory(category, link);
@@ -35,11 +35,9 @@ describe('Links "Utils" Test', () => {
 
   it('Should Update Link In Category', () => {
     const link: ILink = {
-      id: 'link-2',
+      ...category.links[1],
       href: 'href',
       title: 'title',
-      // @ts-ignore
-      createdAt: 'date',
     };
 
     const res = updateLinkInCategory(category, link);
@@ -50,13 +48,7 @@ describe('Links "Utils" Test', () => {
   });
 
   it('Should Delete Link From Category', () => {
-    const link: ILink = {
-      id: 'link-2',
-      href: 'href',
-      title: 'title',
-      // @ts-ignore
-      createdAt: 'date',
-    };
+    const link: ILink = category.links[1];
 
     const res = deleteLinkFromCategory(category, link);
     expect(res).toEqual({
@@ -148,13 +140,7 @@ describe('Firebase Links Test', () => {
   describe('Update Link', () => {
     const updatedTitle = 'new-title';
     const updatedHref = 'https://ya.ru';
-    const linkToUpdate: ILink = {
-      id: 'link-2',
-      href: 'old-href',
-      title: 'old-titletitle',
-      // @ts-ignore
-      createdAt: 'date',
-    };
+    const linkToUpdate: ILink = category.links[1];
 
     it('Should Update Link', async () => {
       const updatedLink = {
@@ -280,7 +266,6 @@ describe('Firebase Links Test', () => {
       id: 'link-2',
       href: 'old-href',
       title: 'old-titletitle',
-      // @ts-ignore
       createdAt: 'date',
     };
 

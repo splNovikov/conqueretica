@@ -44,11 +44,13 @@ export const addLink = async (
     return null;
   }
 
+  const today = Timestamp.now();
   const link: ILink = {
     id: uuidv4(),
     title,
     href,
-    createdAt: Timestamp.now(),
+    createdAt: today,
+    lastUsed: today,
   };
   const updatedCategory = addLinkToCategory(category, link);
   try {

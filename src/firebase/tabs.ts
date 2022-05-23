@@ -1,8 +1,8 @@
 import {
   deleteDoc,
   doc,
-  serverTimestamp,
   setDoc,
+  Timestamp,
   updateDoc,
 } from 'firebase/firestore';
 import { UserInfo } from 'firebase/auth';
@@ -26,7 +26,7 @@ export const addTab = async (
   const tab: ITab = {
     id: uuidv4(),
     title,
-    createdAt: serverTimestamp(),
+    createdAt: Timestamp.now(),
     ownerId: user.uid,
   };
   try {

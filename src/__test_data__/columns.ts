@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 import { IColumn } from '../interfaces';
 
 export const columns: IColumn[] = [
@@ -5,14 +7,12 @@ export const columns: IColumn[] = [
   {
     id: 'column-id-1',
     tabId: 'tab-id-1',
-    // @ts-ignore
-    createdAt: '2021-10-01T13:13:45.115Z',
+    createdAt: { seconds: 1653305669, nanoseconds: 120000000 } as Timestamp,
   },
   // col - 2
   {
     id: 'column-id-2',
     tabId: 'tab-id-1',
-    // @ts-ignore
-    createdAt: '2021-10-01T13:13:45.115Z',
+    createdAt: { seconds: 1653305669, nanoseconds: 120000000 } as Timestamp,
   },
 ];

@@ -1,4 +1,4 @@
-import { setDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { setDoc, doc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 // Firebase
 import firebase from './index';
@@ -15,7 +15,7 @@ export const addColumn = async (tab: ITab): Promise<IColumn | null> => {
 
   const column: IColumn = {
     id: uuidv4(),
-    createdAt: serverTimestamp(),
+    createdAt: Timestamp.now(),
     tabId: tab.id,
   };
   try {
