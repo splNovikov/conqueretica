@@ -1,3 +1,5 @@
+@import '../../styles/theme';
+
 .category-linky {
   display: flex;
   flex-direction: column;
@@ -7,9 +9,20 @@
     align-items: center;
 
     & > .ant-btn-icon-only {
+    }
+
+    & > .linky-actions-menu-trigger {
       height: auto;
       width: auto;
       padding: 0;
+
+      .menu-trigger-icon {
+        font-size: $category-linky-actions-menu-trigger-icon-size;
+
+        svg {
+          transition: transform 200ms ease-in-out;
+        }
+      }
     }
   }
 

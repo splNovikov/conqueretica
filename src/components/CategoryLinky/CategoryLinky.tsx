@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
-import { MoreOutlined } from '@ant-design/icons';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import classNames from 'classnames';
 // Interfaces
@@ -49,7 +49,12 @@ const CategoryLinky: FC<{
           onClick={toggleEditMode}
           type="text"
           ref={editTriggerRef}
-          icon={<MoreOutlined />}
+          icon={
+            <CaretRightOutlined
+              className="menu-trigger-icon"
+              rotate={!isEditMode ? 0 : 90}
+            />
+          }
           className="linky-actions-menu-trigger"
         />
         <Linky link={link} ellipsis iconSize="xx-small" />
