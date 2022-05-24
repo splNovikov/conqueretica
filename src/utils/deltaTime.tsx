@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import moment from 'moment';
+import { unix, utc } from 'moment';
 
 const minute = 60;
 const hour = minute * 60;
@@ -16,8 +16,8 @@ export const deltaSeconds = (
     return undefined;
   }
 
-  const createdUTC = moment.unix(date.seconds);
-  const todayUTC = moment.utc(today);
+  const createdUTC = unix(date.seconds);
+  const todayUTC = utc(today);
 
   return todayUTC.diff(createdUTC, 'seconds');
 };
