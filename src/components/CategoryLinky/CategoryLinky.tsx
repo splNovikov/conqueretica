@@ -1,11 +1,12 @@
 import React, { FC, useRef, useState } from 'react';
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { CaretRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Popover } from 'antd';
 import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
 // Components
 import Linky from '../Linky';
+import LinkyInfo from '../LinkyInfo';
 import LinkForm from '../LinkForm';
 // Styles
 import './CategoryLinky.scss';
@@ -57,6 +58,9 @@ const CategoryLinky: FC<{
           }
           className="linky-actions-menu-trigger"
         />
+        <Popover content={<LinkyInfo link={link} />} placement="right">
+          <InfoCircleOutlined className="category-linky-info-icon" />
+        </Popover>
         <Linky link={link} ellipsis iconSize="xx-small" />
       </div>
       <div

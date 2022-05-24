@@ -1,0 +1,18 @@
+@import '../../styles/theme';
+
+.linky-info {
+  max-width: $linky-info-max-width;
+
+  &.ant-list {
+    .ant-list-item {
+      &:not(.linky-info-title-wrapper) {
+        padding: $linky-info-list-item-padding;
+        font-size: $linky-info-font-size;
+      }
+
+      &.linky-info-title-wrapper {
+        padding: $linky-info-title-list-item-padding;
+      }
+    }
+  }
+}
