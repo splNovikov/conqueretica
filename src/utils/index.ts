@@ -4,6 +4,7 @@ import { getNextSibling } from './getNextSibling';
 import { urlValidation } from './urlValidation';
 import { acronym } from './acronym';
 import { defaultConfirmModal } from './defaultConfirmModal';
+import { deltaSeconds, deltaHumanTime } from './deltaTime';
 
 export {
   httpErrorHandler,
@@ -13,4 +14,6 @@ export {
   urlValidation,
   acronym,
   defaultConfirmModal,
+  deltaSeconds,
+  deltaHumanTime,
 };
