@@ -9,6 +9,7 @@ describe('LinkyInfo Component', () => {
   // Selectors
   const linkyInfoSelector = 'div.linky-info';
   const linkyInfoTitleSelector = 'li.linky-info-title-wrapper';
+  const linkyInfoLastUsedSelector = 'li.linky-info-last-used-wrapper';
 
   // Wrappers
   let wrapper: ReactWrapper;
@@ -16,6 +17,7 @@ describe('LinkyInfo Component', () => {
   const getWrappers = (w: ReactWrapper) => ({
     linkyInfo: w.find(linkyInfoSelector),
     linkyInfoTitle: w.find(linkyInfoTitleSelector),
+    linkyInfoLastUsed: w.find(linkyInfoLastUsedSelector),
   });
 
   afterEach(() => {
@@ -29,10 +31,19 @@ describe('LinkyInfo Component', () => {
     });
 
     it('LinkyInfo is rendering elements correctly', () => {
-      const { linkyInfo, linkyInfoTitle } = getWrappers(wrapper);
+      const { linkyInfo, linkyInfoTitle, linkyInfoLastUsed } =
+        getWrappers(wrapper);
       expect(linkyInfo.exists()).toBe(true);
       expect(linkyInfoTitle.exists()).toBe(true);
       expect(linkyInfoTitle.text()).toBe(link.title);
+      expect(linkyInfoLastUsed.exists()).toBe(true);
+    });
+
+    it('LinkyInfo is handle incorrect last used data', () => {
+      const link2 = { ...link, lastUsed: undefined };
+      wrapper = mount(<LinkyInfo link={link2} />);
+      const { linkyInfoLastUsed } = getWrappers(wrapper);
+      expect(linkyInfoLastUsed.text()).toBe('Last Used: not specified');
     });
   });
 });

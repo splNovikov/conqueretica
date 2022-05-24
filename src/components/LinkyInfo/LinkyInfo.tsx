@@ -29,9 +29,9 @@ const LinkyInfo: FC<{
         <Text strong>Created: </Text>
         {created} ago
       </List.Item>
-      <List.Item>
+      <List.Item className="linky-info-last-used-wrapper">
         <Text strong>Last Used: </Text>
-        {used ? `${used} ago` : 'Used Date not specified'}
+        {used ? `${used} ago` : 'not specified'}
       </List.Item>
     </List>
   );
