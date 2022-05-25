@@ -22,8 +22,34 @@ export const deltaSeconds = (
   return todayUTC.diff(createdUTC, 'seconds');
 };
 
+export const getDeltaSecondsClassName = (
+  seconds?: number | undefined,
+): string | undefined => {
+  if (!seconds || typeof seconds !== 'number') {
+    return 'color-1-year';
+  }
+
+  if (seconds >= year) {
+    return 'color-1-year';
+  }
+  if (seconds >= month * 6) {
+    return 'color-6-month';
+  }
+  if (seconds >= month * 3) {
+    return 'color-3-month';
+  }
+  if (seconds >= month) {
+    return 'color-1-month';
+  }
+  if (seconds >= week * 2) {
+    return 'color-2-weeks';
+  }
+
+  return undefined;
+};
+
 export const deltaHumanTime = (
-  seconds: number | undefined,
+  seconds?: number | undefined,
 ): string | undefined => {
   if (!seconds || typeof seconds !== 'number') {
     return undefined;

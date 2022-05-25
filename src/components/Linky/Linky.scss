@@ -12,4 +12,20 @@
   & > &-icon-wrapper {
     vertical-align: middle;
   }
+
+  &.color-2-weeks {
+    color: $linky-text-2-weeks;
+  }
+  &.color-1-month {
+    color: $linky-text-1-month;
+  }
+  &.color-3-month {
+    color: $linky-text-3-month;
+  }
+  &.color-6-month {
+    color: $linky-text-6-month;
+  }
+  &.color-1-year {
+    color: $linky-text-1-year;
+  }
 }
