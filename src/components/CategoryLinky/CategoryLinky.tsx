@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
-import { CaretRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { Button, Popover } from 'antd';
 import classNames from 'classnames';
 // Interfaces
@@ -45,24 +45,28 @@ const CategoryLinky: FC<{
 
   return (
     <div className="category-linky">
-      <div className="category-linky-title-wrapper">
-        <Button
-          onClick={toggleEditMode}
-          type="text"
-          ref={editTriggerRef}
-          icon={
-            <CaretRightOutlined
-              className="menu-trigger-icon"
-              rotate={!isEditMode ? 0 : 90}
-            />
-          }
-          className="linky-actions-menu-trigger"
-        />
-        <Popover content={<LinkyInfo link={link} />} placement="right">
-          <InfoCircleOutlined className="category-linky-info-icon" />
-        </Popover>
-        <Linky link={link} ellipsis iconSize="xx-small" />
-      </div>
+      <Popover
+        content={<LinkyInfo link={link} />}
+        placement="topLeft"
+        mouseEnterDelay={0.5}
+        autoAdjustOverflow={false}
+      >
+        <div className="category-linky-title-wrapper">
+          <Button
+            onClick={toggleEditMode}
+            type="text"
+            ref={editTriggerRef}
+            icon={
+              <CaretRightOutlined
+                className="menu-trigger-icon"
+                rotate={!isEditMode ? 0 : 90}
+              />
+            }
+            className="linky-actions-menu-trigger"
+          />
+          <Linky link={link} ellipsis iconSize="xx-small" />
+        </div>
+      </Popover>
       <div
         className={classNames('category-linky-form-wrapper', {
           'category-linky-form-wrapper-expand': isEditMode,
