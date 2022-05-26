@@ -44,11 +44,13 @@ export const addLink = async (
     return null;
   }
 
+  const today = Timestamp.now();
   const link: ILink = {
     id: uuidv4(),
     title,
     href,
-    createdAt: Timestamp.now(),
+    createdAt: today,
+    lastUsed: today,
   };
   const updatedCategory = addLinkToCategory(category, link);
   try {
@@ -74,6 +76,28 @@ export const updateLink = async (
   }
 
   const updatedLink = { ...link, title, href };
+  const updatedCategory = updateLinkInCategory(category, updatedLink);
+  try {
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
+
+    await updateDoc(categoryRef, updatedCategory);
+    return updatedLink;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
+export const updateLinkLastUsed = async (
+  link: ILink,
+  category: ICategory,
+): Promise<ILink | null> => {
+  if (!link?.id || !category?.id) {
+    defaultErrorHandler('Invalid Parameters Passed to Update a link');
+    return null;
+  }
+
+  const updatedLink = { ...link, lastUsed: Timestamp.now() };
   const updatedCategory = updateLinkInCategory(category, updatedLink);
   try {
     const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);

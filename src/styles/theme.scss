@@ -8,6 +8,8 @@ $claret: #951f40;
 // -------- Colors -----------
 // >>> Primary
 $primary-color: $claret;
+$primary-n5: lighten($primary-color, 56%);
+$primary-n6: lighten($primary-color, 48%);
 $primary-1: lighten($primary-color, 40%);
 $primary-2: lighten($primary-color, 32%);
 $primary-3: lighten($primary-color, 24%);
@@ -29,6 +31,9 @@ $skeleton-paragraph-li-margin-top: 10px;
 
 // Ant Form
 $ant-form-item-margin: 0 0 0 5px;
+
+// Ant Popover
+$ant-popover-padding: 5px;
 
 // === Custom Components
 
@@ -71,6 +76,11 @@ $column-btn-enable-add-category-font-size: small;
 
 // Linky
 $linky-font-size: small;
+$linky-text-2-weeks: $primary-4;
+$linky-text-1-month: $primary-2;
+$linky-text-3-month: $primary-1;
+$linky-text-6-month: $primary-n6;
+$linky-text-1-year: $primary-n5;
 
 // Category
 $category-btn-enable-add-link-font-size: small;
@@ -90,3 +100,9 @@ $user-avatar-bg: $primary-color;
 $quick-access-links-menu-width: 365px;
 $quick-access-links-menu-padding: 10px;
 $quick-access-links-menu-card-padding: 10px;
+
+// LinkyInfo
+$linky-info-max-width: 300px;
+$linky-info-font-size: small;
+$linky-info-list-item-padding: 2px;
+$linky-info-title-list-item-padding: 5px;

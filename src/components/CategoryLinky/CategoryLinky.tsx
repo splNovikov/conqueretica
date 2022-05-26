@@ -1,20 +1,27 @@
 import React, { FC, useRef, useState } from 'react';
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, Popover } from 'antd';
 import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
 // Components
 import Linky from '../Linky';
+import LinkyInfo from '../LinkyInfo';
 import LinkForm from '../LinkForm';
 // Styles
 import './CategoryLinky.scss';
 
 const CategoryLinky: FC<{
   link: ILink;
+  updateLinkLastUsedHandler: (link: ILink) => void;
   formSubmitHandler: (title: string, href: string, link: ILink) => void;
   deleteLinkHandler: (link: ILink) => void;
-}> = ({ link, formSubmitHandler, deleteLinkHandler }) => {
+}> = ({
+  link,
+  updateLinkLastUsedHandler,
+  formSubmitHandler,
+  deleteLinkHandler,
+}) => {
   const [isEditMode, setIsEditMode] = useState(false);
   // in case when we are trying to turn off editMode by clicking on Trigger - it would not be clicked because of
   // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
@@ -44,21 +51,33 @@ const CategoryLinky: FC<{
 
   return (
     <div className="category-linky">
-      <div className="category-linky-title-wrapper">
-        <Button
-          onClick={toggleEditMode}
-          type="text"
-          ref={editTriggerRef}
-          icon={
-            <CaretRightOutlined
-              className="menu-trigger-icon"
-              rotate={!isEditMode ? 0 : 90}
-            />
-          }
-          className="linky-actions-menu-trigger"
-        />
-        <Linky link={link} ellipsis iconSize="xx-small" />
-      </div>
+      <Popover
+        content={<LinkyInfo link={link} />}
+        placement="topLeft"
+        mouseEnterDelay={0.5}
+        autoAdjustOverflow={false}
+      >
+        <div className="category-linky-title-wrapper">
+          <Button
+            onClick={toggleEditMode}
+            type="text"
+            ref={editTriggerRef}
+            icon={
+              <CaretRightOutlined
+                className="menu-trigger-icon"
+                rotate={!isEditMode ? 0 : 90}
+              />
+            }
+            className="linky-actions-menu-trigger"
+          />
+          <Linky
+            link={link}
+            ellipsis
+            iconSize="xx-small"
+            updateLinkLastUsedHandler={updateLinkLastUsedHandler}
+          />
+        </div>
+      </Popover>
       <div
         className={classNames('category-linky-form-wrapper', {
           'category-linky-form-wrapper-expand': isEditMode,

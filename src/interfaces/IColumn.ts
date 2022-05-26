@@ -1,7 +1,7 @@
-import { FieldValue } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 
 export interface IColumn {
   id: string;
   tabId: string;
-  createdAt: FieldValue;
+  createdAt: Timestamp;
 }

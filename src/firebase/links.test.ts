@@ -1,4 +1,5 @@
 import * as firestore from '@firebase/firestore';
+
 import {
   addLink,
   addLinkToCategory,
@@ -6,6 +7,7 @@ import {
   updateLinkInCategory,
   deleteLink,
   deleteLinkFromCategory,
+  updateLinkLastUsed,
 } from './links';
 // Interfaces
 import { ILink } from '../interfaces';
@@ -22,11 +24,10 @@ describe('Links "Utils" Test', () => {
 
   it('Should Add Link To Category', () => {
     const link: ILink = {
-      id: 'id',
-      href: 'href',
-      title: 'title',
-      // @ts-ignore
-      createdAt: 'date',
+      ...category.links[2],
+      id: 'new-id',
+      href: 'new-href',
+      title: 'new-title',
     };
 
     const res = addLinkToCategory(category, link);
@@ -35,11 +36,9 @@ describe('Links "Utils" Test', () => {
 
   it('Should Update Link In Category', () => {
     const link: ILink = {
-      id: 'link-2',
+      ...category.links[1],
       href: 'href',
       title: 'title',
-      // @ts-ignore
-      createdAt: 'date',
     };
 
     const res = updateLinkInCategory(category, link);
@@ -50,13 +49,7 @@ describe('Links "Utils" Test', () => {
   });
 
   it('Should Delete Link From Category', () => {
-    const link: ILink = {
-      id: 'link-2',
-      href: 'href',
-      title: 'title',
-      // @ts-ignore
-      createdAt: 'date',
-    };
+    const link: ILink = category.links[1];
 
     const res = deleteLinkFromCategory(category, link);
     expect(res).toEqual({
@@ -148,13 +141,7 @@ describe('Firebase Links Test', () => {
   describe('Update Link', () => {
     const updatedTitle = 'new-title';
     const updatedHref = 'https://ya.ru';
-    const linkToUpdate: ILink = {
-      id: 'link-2',
-      href: 'old-href',
-      title: 'old-titletitle',
-      // @ts-ignore
-      createdAt: 'date',
-    };
+    const linkToUpdate: ILink = category.links[1];
 
     it('Should Update Link', async () => {
       const updatedLink = {
@@ -275,12 +262,71 @@ describe('Firebase Links Test', () => {
     });
   });
 
+  describe('Update Link Last Used', () => {
+    const linkToUpdate: ILink = category.links[1];
+
+    it('Should Update Link Last Used', async () => {
+      const res = await updateLinkLastUsed(linkToUpdate, category);
+
+      expect(firestore.updateDoc).toHaveBeenCalled();
+      expect(res?.lastUsed).not.toBe(linkToUpdate.lastUsed);
+    });
+
+    it('Should Handle updateDoc Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.updateDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await updateLinkLastUsed(linkToUpdate, category);
+
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when Link not passed', async () => {
+      const res = await updateLinkLastUsed(undefined, category);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when Link passed as an empty Object', async () => {
+      const res = await updateLinkLastUsed({}, category);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when Category not passed', async () => {
+      const res = await updateLinkLastUsed(linkToUpdate, undefined);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when Category passed as an empty Object', async () => {
+      const res = await updateLinkLastUsed(linkToUpdate, {});
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+  });
+
   describe('Delete Link', () => {
     const linkToDelete: ILink = {
       id: 'link-2',
       href: 'old-href',
       title: 'old-titletitle',
-      // @ts-ignore
       createdAt: 'date',
     };
 

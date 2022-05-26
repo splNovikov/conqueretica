@@ -10,6 +10,7 @@ import { categories } from '../../__test_data__';
 import { act } from 'react-dom/test-utils';
 
 describe('CategoryLinky Component', () => {
+  const updateLinkLastUsedHandler = jest.fn();
   const formSubmitHandler = jest.fn();
   const deleteLinkHandler = jest.fn();
   // Selectors
@@ -29,6 +30,7 @@ describe('CategoryLinky Component', () => {
     wrapper = mount(
       <CategoryLinky
         link={link}
+        updateLinkLastUsedHandler={updateLinkLastUsedHandler}
         formSubmitHandler={formSubmitHandler}
         deleteLinkHandler={deleteLinkHandler}
       />,
