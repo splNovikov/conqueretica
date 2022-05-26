@@ -8,6 +8,8 @@ import { ILink } from '../../interfaces';
 import Linky from '../Linky';
 import LinkyInfo from '../LinkyInfo';
 import LinkForm from '../LinkForm';
+// Utils
+import { deltaSeconds, getDeltaSecondsClassName } from '../../utils';
 // Styles
 import './CategoryLinky.scss';
 
@@ -27,6 +29,7 @@ const CategoryLinky: FC<{
   // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
   // turn off edit mode:
   const editTriggerRef = useRef<HTMLElement>(null);
+  const lastUsedDeltaSeconds = deltaSeconds(link.lastUsed);
 
   const handleDelete = () => {
     deleteLinkHandler(link);
@@ -57,7 +60,12 @@ const CategoryLinky: FC<{
         mouseEnterDelay={0.5}
         autoAdjustOverflow={false}
       >
-        <div className="category-linky-title-wrapper">
+        <div
+          className={classNames(
+            'category-linky-title-wrapper',
+            getDeltaSecondsClassName(lastUsedDeltaSeconds),
+          )}
+        >
           <Button
             onClick={toggleEditMode}
             type="text"

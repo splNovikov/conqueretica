@@ -7,6 +7,29 @@
   &-title-wrapper {
     display: flex;
     align-items: center;
+    transition: opacity, font-weight 200ms ease-in-out;
+
+    &:hover {
+      font-weight: $category-linky-title-weight-on-hover;
+    }
+
+    &:not(:hover) {
+      &.color-2-weeks {
+        opacity: $category-linky-title-wrapper-opacity-2-weeks;
+      }
+      &.color-1-month {
+        opacity: $category-linky-title-wrapper-opacity-1-month;
+      }
+      &.color-3-month {
+        opacity: $category-linky-title-wrapper-opacity-3-month;
+      }
+      &.color-6-month {
+        opacity: $category-linky-title-wrapper-opacity-6-month;
+      }
+      &.color-1-year {
+        opacity: $category-linky-title-wrapper-opacity-1-year;
+      }
+    }
 
     & > .linky-actions-menu-trigger {
       height: auto;

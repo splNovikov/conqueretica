@@ -8,8 +8,6 @@ $claret: #951f40;
 // -------- Colors -----------
 // >>> Primary
 $primary-color: $claret;
-$primary-n5: lighten($primary-color, 56%);
-$primary-n6: lighten($primary-color, 48%);
 $primary-1: lighten($primary-color, 40%);
 $primary-2: lighten($primary-color, 32%);
 $primary-3: lighten($primary-color, 24%);
@@ -76,11 +74,6 @@ $column-btn-enable-add-category-font-size: small;
 
 // Linky
 $linky-font-size: small;
-$linky-text-2-weeks: $primary-4;
-$linky-text-1-month: $primary-2;
-$linky-text-3-month: $primary-1;
-$linky-text-6-month: $primary-n6;
-$linky-text-1-year: $primary-n5;
 
 // Category
 $category-btn-enable-add-link-font-size: small;
@@ -89,6 +82,12 @@ $category-padding: 0 0 5px 0;
 
 // CategoryLinky
 $category-linky-actions-menu-trigger-icon-size: 12px;
+$category-linky-title-weight-on-hover: 600;
+$category-linky-title-wrapper-opacity-2-weeks: 0.8;
+$category-linky-title-wrapper-opacity-1-month: 0.6;
+$category-linky-title-wrapper-opacity-3-month: 0.4;
+$category-linky-title-wrapper-opacity-6-month: 0.2;
+$category-linky-title-wrapper-opacity-1-year: 0.1;
 
 // UserAvatar - it should be a component but it doesn't work for Ant's Dropdown as a trigger
 $user-avatar-bg: $primary-color;
