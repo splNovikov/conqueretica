@@ -103,6 +103,10 @@ const Category: FC<{
     await firebase.updateLink(title, href, link, category);
   };
 
+  const handleLinkLastUsedUpdate = async (link: ILink) => {
+    await firebase.updateLinkLastUsed(link, category);
+  };
+
   const handleDeleteLink = async (link: ILink) => {
     await firebase.deleteLink(link, category);
   };
@@ -163,6 +167,7 @@ const Category: FC<{
           <CategoryLinky
             key={l.id}
             link={l}
+            updateLinkLastUsedHandler={handleLinkLastUsedUpdate}
             formSubmitHandler={handleLinkUpdate}
             deleteLinkHandler={handleDeleteLink}
           />

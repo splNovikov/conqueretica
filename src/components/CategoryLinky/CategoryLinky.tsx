@@ -13,9 +13,15 @@ import './CategoryLinky.scss';
 
 const CategoryLinky: FC<{
   link: ILink;
+  updateLinkLastUsedHandler: (link: ILink) => void;
   formSubmitHandler: (title: string, href: string, link: ILink) => void;
   deleteLinkHandler: (link: ILink) => void;
-}> = ({ link, formSubmitHandler, deleteLinkHandler }) => {
+}> = ({
+  link,
+  updateLinkLastUsedHandler,
+  formSubmitHandler,
+  deleteLinkHandler,
+}) => {
   const [isEditMode, setIsEditMode] = useState(false);
   // in case when we are trying to turn off editMode by clicking on Trigger - it would not be clicked because of
   // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
@@ -64,7 +70,12 @@ const CategoryLinky: FC<{
             }
             className="linky-actions-menu-trigger"
           />
-          <Linky link={link} ellipsis iconSize="xx-small" />
+          <Linky
+            link={link}
+            ellipsis
+            iconSize="xx-small"
+            updateLinkLastUsedHandler={updateLinkLastUsedHandler}
+          />
         </div>
       </Popover>
       <div

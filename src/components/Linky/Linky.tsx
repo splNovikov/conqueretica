@@ -21,9 +21,15 @@ const Linky: FC<{
   link: ILink;
   iconSize?: IconSize;
   ellipsis?: boolean;
-}> = ({ link, iconSize, ellipsis }) => {
+  // todo: tests for this handler
+  updateLinkLastUsedHandler: (link: ILink) => void;
+}> = ({ link, iconSize, ellipsis, updateLinkLastUsedHandler }) => {
   const iconType = identifyLink(link.href);
   const lastUsedDeltaSeconds = deltaSeconds(link.lastUsed);
+
+  const handleLinkClick = () => {
+    updateLinkLastUsedHandler(link);
+  };
 
   return (
     <Link
@@ -34,6 +40,7 @@ const Linky: FC<{
       href={link.href}
       ellipsis={ellipsis}
       underline
+      onClick={handleLinkClick}
     >
       <div className="linky-icon-wrapper">
         {iconType && <GoogleIcon icon={iconType} size={iconSize} />}

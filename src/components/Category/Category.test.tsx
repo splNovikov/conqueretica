@@ -156,6 +156,26 @@ describe('Category Component', () => {
       expect(deleteCategoryHandler).toHaveBeenCalledWith(category);
     });
 
+    it('Should invoke "Update Linky Last Used Handler"', async () => {
+      firebase.updateLinkLastUsed = jest.fn();
+
+      const { categoryLinky } = getWrappers(wrapper);
+
+      const updateLinkLastUsedHandler = categoryLinky
+        .at(0)
+        .prop('updateLinkLastUsedHandler');
+
+      await act(async () => {
+        updateLinkLastUsedHandler &&
+          updateLinkLastUsedHandler(category.links[0]);
+      });
+
+      expect(firebase.updateLinkLastUsed).toHaveBeenCalledWith(
+        category.links[0],
+        category,
+      );
+    });
+
     it('Should invoke "Edit Category Handler"', async () => {
       firebase.updateCategory = jest.fn();
 
