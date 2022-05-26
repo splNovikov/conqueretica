@@ -58,11 +58,19 @@ describe('Delta Seconds ClassName', () => {
   it('Should return undefined when less then 2 weeks passed', () => {
     expect(getDeltaSecondsClassName(week * 2 - 1)).toBe(undefined);
   });
+
+  it('Should return undefined when 0 passed', () => {
+    expect(getDeltaSecondsClassName(0)).toBe(undefined);
+  });
 });
 
 describe('Time Ago Human String', () => {
   it('Should return Less A Minute', () => {
     expect(deltaHumanTime(minute - 1)).toBe('less then a minute');
+  });
+
+  it('Should return Less A Minute when value is 0', () => {
+    expect(deltaHumanTime(0)).toBe('less then a minute');
   });
 
   it('Should return Minutes', () => {

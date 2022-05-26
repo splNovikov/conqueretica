@@ -25,7 +25,7 @@ export const deltaSeconds = (
 export const getDeltaSecondsClassName = (
   seconds?: number | undefined,
 ): string | undefined => {
-  if (!seconds || typeof seconds !== 'number') {
+  if (typeof seconds !== 'number') {
     return 'color-1-year';
   }
 
@@ -51,7 +51,7 @@ export const getDeltaSecondsClassName = (
 export const deltaHumanTime = (
   seconds?: number | undefined,
 ): string | undefined => {
-  if (!seconds || typeof seconds !== 'number') {
+  if (typeof seconds !== 'number') {
     return undefined;
   }
 
