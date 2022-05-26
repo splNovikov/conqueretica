@@ -7,6 +7,7 @@ import {
   updateLinkInCategory,
   deleteLink,
   deleteLinkFromCategory,
+  updateLinkLastUsed,
 } from './links';
 // Interfaces
 import { ILink } from '../interfaces';
@@ -253,6 +254,66 @@ describe('Firebase Links Test', () => {
 
     it('Should Return Null when Category passed as an empty Object', async () => {
       const res = await updateLink(updatedTitle, updatedHref, linkToUpdate, {});
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Update Link Last Used', () => {
+    const linkToUpdate: ILink = category.links[1];
+
+    it('Should Update Link Last Used', async () => {
+      const res = await updateLinkLastUsed(linkToUpdate, category);
+
+      expect(firestore.updateDoc).toHaveBeenCalled();
+      expect(res?.lastUsed).not.toBe(linkToUpdate.lastUsed);
+    });
+
+    it('Should Handle updateDoc Exception', async () => {
+      const err = new Error('Mocked error');
+
+      firestore.updateDoc = jest.fn(() => {
+        throw err;
+      });
+
+      const res = await updateLinkLastUsed(linkToUpdate, category);
+
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(err);
+    });
+
+    it('Should Return Null when Link not passed', async () => {
+      const res = await updateLinkLastUsed(undefined, category);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when Link passed as an empty Object', async () => {
+      const res = await updateLinkLastUsed({}, category);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when Category not passed', async () => {
+      const res = await updateLinkLastUsed(linkToUpdate, undefined);
+      expect(res).toBeNull();
+      expect(console.error).toHaveBeenCalledWith(
+        'Invalid Parameters Passed to Update a link',
+      );
+      expect(firestore.updateDoc).not.toHaveBeenCalled();
+    });
+
+    it('Should Return Null when Category passed as an empty Object', async () => {
+      const res = await updateLinkLastUsed(linkToUpdate, {});
       expect(res).toBeNull();
       expect(console.error).toHaveBeenCalledWith(
         'Invalid Parameters Passed to Update a link',

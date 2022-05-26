@@ -88,6 +88,28 @@ export const updateLink = async (
   }
 };
 
+export const updateLinkLastUsed = async (
+  link: ILink,
+  category: ICategory,
+): Promise<ILink | null> => {
+  if (!link?.id || !category?.id) {
+    defaultErrorHandler('Invalid Parameters Passed to Update a link');
+    return null;
+  }
+
+  const updatedLink = { ...link, lastUsed: Timestamp.now() };
+  const updatedCategory = updateLinkInCategory(category, updatedLink);
+  try {
+    const categoryRef = doc(firebase.firestoreDB, 'categories', category.id);
+
+    await updateDoc(categoryRef, updatedCategory);
+    return updatedLink;
+  } catch (e) {
+    httpErrorHandler(e);
+    return null;
+  }
+};
+
 export const deleteLink = async (
   link: ILink,
   category: ICategory,

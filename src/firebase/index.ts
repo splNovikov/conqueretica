@@ -7,7 +7,7 @@ import { signInWithGoogle, signOut } from './auth';
 import { createUser } from './user';
 import { addTab, updateTab } from './tabs';
 import { addCategory, updateCategory, deleteCategory } from './categories';
-import { addLink, updateLink, deleteLink } from './links';
+import { addLink, updateLink, updateLinkLastUsed, deleteLink } from './links';
 import {
   addCategoryWithColumnScenario,
   deleteColumnScenario,
@@ -40,6 +40,7 @@ export default {
   // links
   addLink,
   updateLink,
+  updateLinkLastUsed,
   deleteLink,
   // scenarios
   addCategoryWithColumnScenario,
