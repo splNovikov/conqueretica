@@ -136,6 +136,32 @@ describe('Identify Links', () => {
     expect(res).toBe('trello');
   });
 
+  it('Should return "zoom"', () => {
+    const res = identifyLink(
+      'https://us02web.zoom.us/j/86838519608?pwd=VFdzY1M0TmpTbUM0WUg1a2IzYmVRQT09',
+    );
+    expect(res).toBe('zoom');
+  });
+
+  it('Should return "slack"', () => {
+    const res = identifyLink(
+      'https://jaxel.slack.com/archives/D03092EHMCJ/p1653663930113379?thread_ts=1653636079.224889&cid=D03092EHMCJ',
+    );
+    expect(res).toBe('slack');
+  });
+
+  it('Should return "slack-2"', () => {
+    const res = identifyLink(
+      'https://join.slack.com/share/enQtMzU4NTYyMTg4NjExNy05ODBjNzgzMDVkODAyODQ4NjUzYmU0MzhlYzFkZDkyMjUxZTNkYzNiZjRlZmRkOGRkZDBiNmI4N2RkN2M1YWQ4?cdn_fallback=1',
+    );
+    expect(res).toBe('slack');
+  });
+
+  it('Should return "telegram"', () => {
+    const res = identifyLink('https://t.me/Katty_nphotos');
+    expect(res).toBe('telegram');
+  });
+
   it('Should return "empty string"', () => {
     const res = identifyLink(blablaHref);
     expect(res).toBe(undefined);

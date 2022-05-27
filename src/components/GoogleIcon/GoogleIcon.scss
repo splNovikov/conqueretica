@@ -67,7 +67,10 @@
     'gitlab',
     'code-commit',
     'drawings',
-    'trello'
+    'trello',
+    'zoom',
+    'slack',
+    'telegram'
   );
   @include generate-icons($icons);
 }

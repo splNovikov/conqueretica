@@ -23,6 +23,9 @@ const rules = {
   codeCommit: 'codesuite/codecommit',
   drawings: 'docs.google.com/drawings',
   trello: 'trello.com',
+  zoom: 'zoom.us',
+  slack: 'slack.com',
+  telegram: 't.me',
 };
 
 export const identifyLink = (href: string): IconName | undefined => {
@@ -82,6 +85,15 @@ export const identifyLink = (href: string): IconName | undefined => {
   }
   if (href.includes(rules.trello)) {
     return 'trello';
+  }
+  if (href.includes(rules.zoom)) {
+    return 'zoom';
+  }
+  if (href.includes(rules.slack)) {
+    return 'slack';
+  }
+  if (href.includes(rules.telegram)) {
+    return 'telegram';
   }
 
   return undefined;

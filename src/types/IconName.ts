@@ -15,4 +15,7 @@ export declare type IconName =
   | 'gitlab'
   | 'code-commit'
   | 'drawings'
-  | 'trello';
+  | 'trello'
+  | 'zoom'
+  | 'slack'
+  | 'telegram';
