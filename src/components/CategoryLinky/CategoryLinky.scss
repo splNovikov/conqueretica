@@ -7,10 +7,10 @@
   &-title-wrapper {
     display: flex;
     align-items: center;
-    transition: opacity, font-weight 200ms ease-in-out;
+    transition: opacity 200ms ease-in-out;
 
     &:hover {
-      font-weight: $category-linky-title-weight-on-hover;
+      text-decoration: underline;
     }
 
     &:not(:hover) {
