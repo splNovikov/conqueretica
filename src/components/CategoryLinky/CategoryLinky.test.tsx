@@ -20,11 +20,20 @@ describe('CategoryLinky Component', () => {
   const link = categories[0].links[0];
   // Wrappers
   let wrapper: ReactWrapper;
-  let categoryLinkyTitleWrapper: ReactWrapper;
-  let categoryLinkyActionMenuTrigger: ReactWrapper<any>;
-  let linky: ReactWrapper<any>;
-  let categoryLinkyFormWrapper: ReactWrapper;
-  let linkForm: ReactWrapper<any>;
+
+  const getWrappers = (w: ReactWrapper) => {
+    const categoryLinkyTitleWrapper = wrapper.find(
+      categoryLinkyTitleWrapperSelector,
+    );
+
+    return {
+      categoryLinkyTitleWrapper,
+      categoryLinkyActionMenuTrigger: categoryLinkyTitleWrapper.find(Button),
+      linky: categoryLinkyTitleWrapper.find(Linky),
+      categoryLinkyFormWrapper: wrapper.find(categoryLinkyFormWrapperSelector),
+      linkForm: wrapper.find(LinkForm),
+    };
+  };
 
   beforeEach(() => {
     wrapper = mount(
@@ -35,11 +44,6 @@ describe('CategoryLinky Component', () => {
         deleteLinkHandler={deleteLinkHandler}
       />,
     );
-    categoryLinkyTitleWrapper = wrapper.find(categoryLinkyTitleWrapperSelector);
-    categoryLinkyActionMenuTrigger = categoryLinkyTitleWrapper.find(Button);
-    linky = categoryLinkyTitleWrapper.find(Linky);
-    categoryLinkyFormWrapper = wrapper.find(categoryLinkyFormWrapperSelector);
-    linkForm = wrapper.find(LinkForm);
   });
 
   afterEach(() => {
@@ -48,6 +52,15 @@ describe('CategoryLinky Component', () => {
 
   it('CategoryLinky Component is rendering', () => {
     expect(wrapper.exists()).toBe(true);
+
+    const {
+      categoryLinkyTitleWrapper,
+      categoryLinkyActionMenuTrigger,
+      linky,
+      categoryLinkyFormWrapper,
+      linkForm,
+    } = getWrappers(wrapper);
+
     expect(categoryLinkyTitleWrapper.exists()).toBe(true);
     expect(categoryLinkyActionMenuTrigger.exists()).toBe(true);
     expect(linky.exists()).toBe(true);
@@ -57,13 +70,7 @@ describe('CategoryLinky Component', () => {
 
   describe('CategoryLinky Component Interactions', () => {
     it('Should show/hide LinkForm Component', async () => {
-      await act(async () => {
-        categoryLinkyActionMenuTrigger.simulate('click');
-      });
-
-      wrapper.update();
-
-      expect(wrapper.find(LinkForm).exists()).toBe(true);
+      const { categoryLinkyActionMenuTrigger } = getWrappers(wrapper);
 
       await act(async () => {
         categoryLinkyActionMenuTrigger.simulate('click');
@@ -71,33 +78,43 @@ describe('CategoryLinky Component', () => {
 
       wrapper.update();
 
-      expect(wrapper.find(LinkForm).exists()).toBe(false);
+      expect(getWrappers(wrapper).linkForm.exists()).toBe(true);
+
+      await act(async () => {
+        categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      expect(getWrappers(wrapper).linkForm.exists()).toBe(false);
     });
   });
 
   describe('CategoryLinky Component -> LinkForm Component Handlers', () => {
     it('Should invoke "Delete Link handler"', async () => {
       await act(async () => {
-        categoryLinkyActionMenuTrigger.simulate('click');
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
       });
 
       wrapper.update();
 
-      const deleteHandler = wrapper.find(LinkForm).prop('deleteHandler');
+      const deleteHandler = getWrappers(wrapper).linkForm.prop('deleteHandler');
 
-      deleteHandler && deleteHandler();
+      await act(async () => {
+        deleteHandler && deleteHandler();
+      });
 
       expect(deleteLinkHandler).toHaveBeenCalledWith(link);
     });
 
     it('Should invoke "Abort Link handler"', async () => {
       await act(async () => {
-        categoryLinkyActionMenuTrigger.simulate('click');
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
       });
 
       wrapper.update();
 
-      const abortHandler = wrapper.find(LinkForm).prop('abortHandler');
+      const abortHandler = getWrappers(wrapper).linkForm.prop('abortHandler');
 
       await act(async () => {
         abortHandler && abortHandler();
@@ -105,17 +122,18 @@ describe('CategoryLinky Component', () => {
 
       wrapper.update();
 
-      expect(wrapper.find(LinkForm).exists()).toBe(false);
+      expect(getWrappers(wrapper).linkForm.exists()).toBe(false);
     });
 
     it('Should invoke "Save Link handler"', async () => {
       await act(async () => {
-        categoryLinkyActionMenuTrigger.simulate('click');
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
       });
 
       wrapper.update();
 
-      const submitHandler = wrapper.find(LinkForm).prop('formSubmitHandler');
+      const submitHandler =
+        getWrappers(wrapper).linkForm.prop('formSubmitHandler');
 
       await act(async () => {
         submitHandler && submitHandler('title', 'href');
@@ -125,17 +143,18 @@ describe('CategoryLinky Component', () => {
 
       wrapper.update();
 
-      expect(wrapper.find(LinkForm).exists()).toBe(false);
+      expect(getWrappers(wrapper).linkForm.exists()).toBe(false);
     });
 
     it('Should not invoke "Save Link handler" when title and href is the same', async () => {
       await act(async () => {
-        categoryLinkyActionMenuTrigger.simulate('click');
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
       });
 
       wrapper.update();
 
-      const submitHandler = wrapper.find(LinkForm).prop('formSubmitHandler');
+      const submitHandler =
+        getWrappers(wrapper).linkForm.prop('formSubmitHandler');
 
       await act(async () => {
         // @ts-ignore
@@ -146,7 +165,31 @@ describe('CategoryLinky Component', () => {
 
       wrapper.update();
 
-      expect(wrapper.find(LinkForm).exists()).toBe(false);
+      expect(getWrappers(wrapper).linkForm.exists()).toBe(false);
+    });
+
+    it('Should update state when Form changed woth error', async () => {
+      await act(async () => {
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const formErrorsHandler =
+        getWrappers(wrapper).linkForm.prop('formErrorsHandler');
+
+      await act(async () => {
+        // @ts-ignore
+        formErrorsHandler && formErrorsHandler(1);
+      });
+
+      wrapper.update();
+
+      expect(
+        getWrappers(wrapper).categoryLinkyFormWrapper.hasClass(
+          'link-form-errors-1',
+        ),
+      ).toBe(true);
     });
   });
 });

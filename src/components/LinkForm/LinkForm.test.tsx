@@ -274,6 +274,59 @@ describe('LinkForm Component', () => {
     });
   });
 
+  describe('LinkForm Component - Error Handlers', () => {
+    const formErrorsHandler = jest.fn();
+
+    beforeEach(() => {
+      wrapper = mount(
+        <LinkForm
+          formSubmitHandler={handleSubmit}
+          formErrorsHandler={formErrorsHandler}
+          abortHandler={abortHandler}
+        />,
+      );
+    });
+
+    it('Typing should NOT invoke formErrorsHandler if formErrorsHandler has NOT been passed as a parameter', async () => {
+      wrapper.unmount();
+      wrapper = mount(
+        <LinkForm
+          formSubmitHandler={handleSubmit}
+          formErrorsHandler={undefined}
+          abortHandler={abortHandler}
+        />,
+      );
+
+      const { titleInput } = getWrappers(wrapper);
+
+      await act(async () => {
+        updateInputValue(titleInput, 'somenew');
+      });
+
+      expect(formErrorsHandler).not.toHaveBeenCalled();
+    });
+
+    it('Typing should invoke formErrorsHandler if formErrorsHandler has been passed as a parameter', async () => {
+      const { titleInput } = getWrappers(wrapper);
+
+      await act(async () => {
+        updateInputValue(titleInput, 'somenew');
+      });
+
+      expect(formErrorsHandler).toHaveBeenCalledWith(0);
+    });
+
+    it('Typing should invoke formErrorsHandler with 1 as param', async () => {
+      const { linkInput } = getWrappers(wrapper);
+
+      await act(async () => {
+        updateInputValue(linkInput, 'somenew');
+      });
+
+      expect(formErrorsHandler).toHaveBeenCalledWith(1);
+    });
+  });
+
   describe('LinkForm Component - Outside click', () => {
     const TestLinkForm = () => {
       const ref = useRef<HTMLElement>(null);
@@ -288,6 +341,7 @@ describe('LinkForm Component', () => {
             outsideClickIgnoreElement={ref}
             formSubmitHandler={handleSubmit}
             abortHandler={abortHandler}
+            formErrorsHandler={undefined}
           />
         </div>
       );

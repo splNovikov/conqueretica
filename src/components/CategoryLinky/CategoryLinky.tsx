@@ -30,6 +30,7 @@ const CategoryLinky: FC<{
   // turn off edit mode:
   const editTriggerRef = useRef<HTMLElement>(null);
   const lastUsedDeltaSeconds = deltaSeconds(link.lastUsed);
+  const [linkFormErrors, setLinkFormErrors] = useState(0);
 
   const handleDelete = () => {
     deleteLinkHandler(link);
@@ -50,6 +51,10 @@ const CategoryLinky: FC<{
       formSubmitHandler(title, href, link);
     }
     disableEditMode();
+  };
+
+  const handleLinkFormErrors = (count: number) => {
+    setLinkFormErrors(count);
   };
 
   return (
@@ -87,9 +92,13 @@ const CategoryLinky: FC<{
         </div>
       </Popover>
       <div
-        className={classNames('category-linky-form-wrapper', {
-          'category-linky-form-wrapper-expand': isEditMode,
-        })}
+        className={classNames(
+          'category-linky-form-wrapper',
+          `link-form-errors-${linkFormErrors}`,
+          {
+            'category-linky-form-wrapper-expand': isEditMode,
+          },
+        )}
       >
         {isEditMode && (
           <LinkForm
@@ -99,6 +108,7 @@ const CategoryLinky: FC<{
             formSubmitHandler={handleSubmit}
             abortHandler={abortHandler}
             deleteHandler={handleDelete}
+            formErrorsHandler={handleLinkFormErrors}
           />
         )}
       </div>

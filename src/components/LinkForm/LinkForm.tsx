@@ -15,6 +15,7 @@ const LinkForm: FC<{
   title?: string | undefined;
   deleteHandler?: () => void;
   formSubmitHandler: (title: string, href: string) => void;
+  formErrorsHandler?: (count: number) => void;
   abortHandler: () => void;
 }> = ({
   outsideClickIgnoreElement,
@@ -22,6 +23,7 @@ const LinkForm: FC<{
   title = '',
   deleteHandler,
   formSubmitHandler,
+  formErrorsHandler,
   abortHandler,
 }) => {
   const [form] = Form.useForm();
@@ -61,6 +63,19 @@ const LinkForm: FC<{
     abortHandler();
   };
 
+  const handleFormValuesChange = () => {
+    if (!formErrorsHandler) {
+      return;
+    }
+
+    const [{ errors: tErrs }, { errors: lErrs }] = form.getFieldsError([
+      'titleInput',
+      'linkInput',
+    ]);
+
+    formErrorsHandler(tErrs.length + lErrs.length);
+  };
+
   // todo: common esc handler
   const handleKeyboardEvent = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Escape') {
@@ -76,6 +91,7 @@ const LinkForm: FC<{
         layout="vertical"
         onFinish={handleFormSubmit}
         className="link-form custom-ant-form"
+        onFieldsChange={handleFormValuesChange}
       >
         <Form.Item
           name="titleInput"

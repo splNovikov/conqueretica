@@ -57,6 +57,14 @@
   }
 
   &-form-wrapper-expand {
-    height: 96px;
+    height: 24 * 4px;
+
+    &.link-form-errors-1 {
+      height: 24 * 5px;
+    }
+
+    &.link-form-errors-2 {
+      height: 24 * 6px;
+    }
   }
 }
