@@ -87,6 +87,11 @@ $category-linky-title-wrapper-opacity-1-month: 0.6;
 $category-linky-title-wrapper-opacity-3-month: 0.4;
 $category-linky-title-wrapper-opacity-6-month: 0.2;
 $category-linky-title-wrapper-opacity-1-year: 0.1;
+$category-linky-delete-confirmation-color: $white;
+$category-linky-delete-confirmation-padding: 10px 5px;
+$category-linky-delete-confirmation-font-size: small;
+$category-linky-delete-confirmation-opacity: 1;
+$category-linky-delete-confirmation-footer-btn-margin: 5px;
 
 // UserAvatar - it should be a component but it doesn't work for Ant's Dropdown as a trigger
 $user-avatar-bg: $primary-color;

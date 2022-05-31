@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button } from 'antd';
 import { mount, ReactWrapper } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 // Components
 import CategoryLinky from './CategoryLinky';
 import Linky from '../Linky';
 import LinkForm from '../LinkForm';
 // Test Data
 import { categories } from '../../__test_data__';
-import { act } from 'react-dom/test-utils';
 
 describe('CategoryLinky Component', () => {
   const updateLinkLastUsedHandler = jest.fn();
@@ -16,22 +16,38 @@ describe('CategoryLinky Component', () => {
   // Selectors
   const categoryLinkyTitleWrapperSelector = 'div.category-linky-title-wrapper';
   const categoryLinkyFormWrapperSelector = 'div.category-linky-form-wrapper';
+  const categoryLinkyDeleteConfirmationSelector =
+    'div.category-linky-delete-confirmation';
+  const categoryLinkyDeleteConfirmationBtnConfirmSelector =
+    'button.category-linky-delete-confirmation-btn-confirm';
+  const categoryLinkyDeleteConfirmationBtnCancelSelector =
+    'button.category-linky-delete-confirmation-btn-cancel';
   // Test Data
   const link = categories[0].links[0];
   // Wrappers
   let wrapper: ReactWrapper;
 
   const getWrappers = (w: ReactWrapper) => {
-    const categoryLinkyTitleWrapper = wrapper.find(
-      categoryLinkyTitleWrapperSelector,
+    const categoryLinkyTitleWrapper = w.find(categoryLinkyTitleWrapperSelector);
+    const categoryLinkyDeleteConfirmation = w.find(
+      categoryLinkyDeleteConfirmationSelector,
     );
 
     return {
       categoryLinkyTitleWrapper,
       categoryLinkyActionMenuTrigger: categoryLinkyTitleWrapper.find(Button),
       linky: categoryLinkyTitleWrapper.find(Linky),
-      categoryLinkyFormWrapper: wrapper.find(categoryLinkyFormWrapperSelector),
-      linkForm: wrapper.find(LinkForm),
+      categoryLinkyFormWrapper: w.find(categoryLinkyFormWrapperSelector),
+      categoryLinkyDeleteConfirmation,
+      categoryLinkyDeleteConfirmationBtnConfirm:
+        categoryLinkyDeleteConfirmation.find(
+          categoryLinkyDeleteConfirmationBtnConfirmSelector,
+        ),
+      categoryLinkyDeleteConfirmationBtnCancel:
+        categoryLinkyDeleteConfirmation.find(
+          categoryLinkyDeleteConfirmationBtnCancelSelector,
+        ),
+      linkForm: w.find(LinkForm),
     };
   };
 
@@ -58,6 +74,9 @@ describe('CategoryLinky Component', () => {
       categoryLinkyActionMenuTrigger,
       linky,
       categoryLinkyFormWrapper,
+      categoryLinkyDeleteConfirmation,
+      categoryLinkyDeleteConfirmationBtnConfirm,
+      categoryLinkyDeleteConfirmationBtnCancel,
       linkForm,
     } = getWrappers(wrapper);
 
@@ -65,6 +84,9 @@ describe('CategoryLinky Component', () => {
     expect(categoryLinkyActionMenuTrigger.exists()).toBe(true);
     expect(linky.exists()).toBe(true);
     expect(categoryLinkyFormWrapper.exists()).toBe(true);
+    expect(categoryLinkyDeleteConfirmation.exists()).toBe(false);
+    expect(categoryLinkyDeleteConfirmationBtnConfirm.exists()).toBe(false);
+    expect(categoryLinkyDeleteConfirmationBtnCancel.exists()).toBe(false);
     expect(linkForm.exists()).toBe(false);
   });
 
@@ -91,6 +113,65 @@ describe('CategoryLinky Component', () => {
   });
 
   describe('CategoryLinky Component -> LinkForm Component Handlers', () => {
+    it('Should display "Delete Link Confirmation" Layer', async () => {
+      await act(async () => {
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const deleteHandler = getWrappers(wrapper).linkForm.prop('deleteHandler');
+
+      await act(async () => {
+        deleteHandler && deleteHandler();
+      });
+
+      wrapper.update();
+
+      expect(
+        getWrappers(wrapper).categoryLinkyDeleteConfirmation.exists(),
+      ).toBe(true);
+      expect(
+        getWrappers(wrapper).categoryLinkyDeleteConfirmationBtnConfirm.exists(),
+      ).toBe(true);
+      expect(
+        getWrappers(wrapper).categoryLinkyDeleteConfirmationBtnCancel.exists(),
+      ).toBe(true);
+      expect(deleteLinkHandler).not.toHaveBeenCalled();
+    });
+
+    it('Should hide "Delete Link Confirmation" Layer when click Cancel', async () => {
+      await act(async () => {
+        getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
+      });
+
+      wrapper.update();
+
+      const deleteHandler = getWrappers(wrapper).linkForm.prop('deleteHandler');
+
+      await act(async () => {
+        deleteHandler && deleteHandler();
+      });
+
+      wrapper.update();
+
+      expect(
+        getWrappers(wrapper).categoryLinkyDeleteConfirmation.exists(),
+      ).toBe(true);
+
+      await act(async () => {
+        getWrappers(wrapper).categoryLinkyDeleteConfirmationBtnCancel.simulate(
+          'click',
+        );
+      });
+
+      wrapper.update();
+
+      expect(
+        getWrappers(wrapper).categoryLinkyDeleteConfirmation.exists(),
+      ).toBe(false);
+    });
+
     it('Should invoke "Delete Link handler"', async () => {
       await act(async () => {
         getWrappers(wrapper).categoryLinkyActionMenuTrigger.simulate('click');
@@ -102,6 +183,18 @@ describe('CategoryLinky Component', () => {
 
       await act(async () => {
         deleteHandler && deleteHandler();
+      });
+
+      wrapper.update();
+
+      expect(
+        getWrappers(wrapper).categoryLinkyDeleteConfirmation.exists(),
+      ).toBe(true);
+
+      await act(async () => {
+        getWrappers(wrapper).categoryLinkyDeleteConfirmationBtnConfirm.simulate(
+          'click',
+        );
       });
 
       expect(deleteLinkHandler).toHaveBeenCalledWith(link);

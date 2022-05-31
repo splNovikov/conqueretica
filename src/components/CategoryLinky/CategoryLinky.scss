@@ -3,6 +3,34 @@
 .category-linky {
   display: flex;
   flex-direction: column;
+  position: relative;
+
+  & &-delete-confirmation {
+    background-color: $category-linky-delete-confirmation-color;
+    padding: $category-linky-delete-confirmation-padding;
+    font-size: $category-linky-delete-confirmation-font-size;
+    opacity: $category-linky-delete-confirmation-opacity;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &-footer {
+      button {
+        font-size: $category-linky-delete-confirmation-font-size;
+      }
+
+      button:not(:first-child) {
+        margin-left: $category-linky-delete-confirmation-footer-btn-margin;
+      }
+    }
+  }
 
   &-title-wrapper {
     display: flex;
