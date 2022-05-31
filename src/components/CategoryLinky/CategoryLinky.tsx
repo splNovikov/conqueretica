@@ -1,12 +1,11 @@
 import React, { FC, useRef, useState } from 'react';
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Button, Popover } from 'antd';
+import { Button } from 'antd';
 import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
 // Components
 import Linky from '../Linky';
-import LinkyInfo from '../LinkyInfo';
 import LinkForm from '../LinkForm';
 // Utils
 import { deltaSeconds, getDeltaSecondsClassName } from '../../utils';
@@ -112,38 +111,32 @@ const CategoryLinky: FC<{
           </div>
         </div>
       ) : null}
-      <Popover
-        content={<LinkyInfo link={link} />}
-        placement="topLeft"
-        mouseEnterDelay={0.7}
-        autoAdjustOverflow={false}
+      <div
+        className={classNames(
+          'category-linky-title-wrapper',
+          getDeltaSecondsClassName(lastUsedDeltaSeconds),
+        )}
       >
-        <div
-          className={classNames(
-            'category-linky-title-wrapper',
-            getDeltaSecondsClassName(lastUsedDeltaSeconds),
-          )}
-        >
-          <Button
-            onClick={toggleEditMode}
-            type="text"
-            ref={editTriggerRef}
-            icon={
-              <CaretRightOutlined
-                className="menu-trigger-icon"
-                rotate={!isEditMode ? 0 : 90}
-              />
-            }
-            className="linky-actions-menu-trigger"
-          />
-          <Linky
-            link={link}
-            ellipsis
-            iconSize="xx-small"
-            updateLinkLastUsedHandler={updateLinkLastUsedHandler}
-          />
-        </div>
-      </Popover>
+        <Button
+          onClick={toggleEditMode}
+          type="text"
+          ref={editTriggerRef}
+          icon={
+            <CaretRightOutlined
+              className="menu-trigger-icon"
+              rotate={!isEditMode ? 0 : 90}
+            />
+          }
+          className="linky-actions-menu-trigger"
+        />
+        <Linky
+          link={link}
+          ellipsis
+          iconSize="xx-small"
+          updateLinkLastUsedHandler={updateLinkLastUsedHandler}
+        />
+      </div>
+
       <div
         className={classNames(
           'category-linky-form-wrapper',
