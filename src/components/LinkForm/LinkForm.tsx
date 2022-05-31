@@ -1,5 +1,5 @@
 import React, { FC, KeyboardEvent, RefObject } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Tooltip } from 'antd';
 import OutsideClickHandler from 'react-outside-click-handler';
 import {
   CheckOutlined,
@@ -10,7 +10,7 @@ import {
 import './LinkForm.scss';
 
 const LinkForm: FC<{
-  outsideClickIgnoreElement?: RefObject<HTMLElement>;
+  outsideClickIgnoreElements?: RefObject<HTMLElement>[];
   href?: string | undefined;
   title?: string | undefined;
   deleteHandler?: () => void;
@@ -18,7 +18,7 @@ const LinkForm: FC<{
   formErrorsHandler?: (count: number) => void;
   abortHandler: () => void;
 }> = ({
-  outsideClickIgnoreElement,
+  outsideClickIgnoreElements,
   href = '',
   title = '',
   deleteHandler,
@@ -54,8 +54,10 @@ const LinkForm: FC<{
 
   const handleOutsideClick = (e: MouseEvent) => {
     if (
-      e.target instanceof Element &&
-      outsideClickIgnoreElement?.current?.contains(e.target)
+      outsideClickIgnoreElements?.length &&
+      outsideClickIgnoreElements.some((el) =>
+        el.current?.contains(e.target as Node),
+      )
     ) {
       return;
     }
@@ -137,32 +139,38 @@ const LinkForm: FC<{
         <div className="custom-ant-form-buttons-wrapper">
           {deleteHandler ? (
             <Form.Item>
-              <Button
-                htmlType="button"
-                icon={<DeleteOutlined />}
-                onClick={handleDeleteClick}
-                size="small"
-                className="link-form-btn-delete"
-              />
+              <Tooltip title="Delete">
+                <Button
+                  htmlType="button"
+                  icon={<DeleteOutlined />}
+                  onClick={handleDeleteClick}
+                  size="small"
+                  className="link-form-btn-delete"
+                />
+              </Tooltip>
             </Form.Item>
           ) : null}
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              icon={<CheckOutlined />}
-              size="small"
-              className="link-form-btn-submit"
-            />
+            <Tooltip title="Save">
+              <Button
+                type="primary"
+                htmlType="submit"
+                icon={<CheckOutlined />}
+                size="small"
+                className="link-form-btn-submit"
+              />
+            </Tooltip>
           </Form.Item>
           <Form.Item>
-            <Button
-              htmlType="button"
-              icon={<CloseOutlined />}
-              onClick={handleCancelClick}
-              size="small"
-              className="link-form-btn-cancel"
-            />
+            <Tooltip title="Cancel">
+              <Button
+                htmlType="button"
+                icon={<CloseOutlined />}
+                onClick={handleCancelClick}
+                size="small"
+                className="link-form-btn-cancel"
+              />
+            </Tooltip>
           </Form.Item>
         </div>
       </Form>

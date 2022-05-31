@@ -1,12 +1,11 @@
 import React, { FC, useRef, useState } from 'react';
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Button, Popover } from 'antd';
+import { Button } from 'antd';
 import classNames from 'classnames';
 // Interfaces
 import { ILink } from '../../interfaces';
 // Components
 import Linky from '../Linky';
-import LinkyInfo from '../LinkyInfo';
 import LinkForm from '../LinkForm';
 // Utils
 import { deltaSeconds, getDeltaSecondsClassName } from '../../utils';
@@ -29,11 +28,30 @@ const CategoryLinky: FC<{
   // outside-click handlers. That is why we should put this element in "outsideClickIgnoreElement" to make us able to
   // turn off edit mode:
   const editTriggerRef = useRef<HTMLElement>(null);
+  const deleteCategoryLayerRef = useRef<HTMLElement>(null);
   const lastUsedDeltaSeconds = deltaSeconds(link.lastUsed);
   const [linkFormErrors, setLinkFormErrors] = useState(0);
+  const [isDeleteConfirmationDisplayed, setDeleteConfirmationDisplayed] =
+    useState(false);
 
   const handleDelete = () => {
+    enableDeleteMode();
+  };
+
+  const handleCancelDelete = () => {
+    disableDeleteMode();
+  };
+
+  const handleDeleteConfirmed = () => {
     deleteLinkHandler(link);
+  };
+
+  const enableDeleteMode = () => {
+    setDeleteConfirmationDisplayed(true);
+  };
+
+  const disableDeleteMode = () => {
+    setDeleteConfirmationDisplayed(false);
   };
 
   const toggleEditMode = () => {
@@ -44,7 +62,10 @@ const CategoryLinky: FC<{
     setIsEditMode(false);
   };
 
-  const abortHandler = () => disableEditMode();
+  const abortHandler = () => {
+    disableDeleteMode();
+    disableEditMode();
+  };
 
   const handleSubmit = (title: string, href: string) => {
     if (title !== link.title || href !== link.href) {
@@ -59,38 +80,63 @@ const CategoryLinky: FC<{
 
   return (
     <div className="category-linky">
-      <Popover
-        content={<LinkyInfo link={link} />}
-        placement="topLeft"
-        mouseEnterDelay={0.5}
-        autoAdjustOverflow={false}
-      >
+      {isDeleteConfirmationDisplayed ? (
         <div
-          className={classNames(
-            'category-linky-title-wrapper',
-            getDeltaSecondsClassName(lastUsedDeltaSeconds),
-          )}
+          className="category-linky-delete-confirmation"
+          ref={deleteCategoryLayerRef as React.RefObject<HTMLDivElement>}
         >
-          <Button
-            onClick={toggleEditMode}
-            type="text"
-            ref={editTriggerRef}
-            icon={
-              <CaretRightOutlined
-                className="menu-trigger-icon"
-                rotate={!isEditMode ? 0 : 90}
-              />
-            }
-            className="linky-actions-menu-trigger"
-          />
+          <div>Confirm Delete Link:</div>
           <Linky
             link={link}
             ellipsis
             iconSize="xx-small"
             updateLinkLastUsedHandler={updateLinkLastUsedHandler}
           />
+          <div className="category-linky-delete-confirmation-footer">
+            <Button
+              type="primary"
+              size="small"
+              onClick={handleDeleteConfirmed}
+              className="category-linky-delete-confirmation-btn-confirm"
+            >
+              Confirm
+            </Button>
+            <Button
+              size="small"
+              onClick={handleCancelDelete}
+              className="category-linky-delete-confirmation-btn-cancel"
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
-      </Popover>
+      ) : null}
+      <div
+        className={classNames(
+          'category-linky-title-wrapper',
+          getDeltaSecondsClassName(lastUsedDeltaSeconds),
+        )}
+      >
+        <Button
+          onClick={toggleEditMode}
+          type="text"
+          ref={editTriggerRef}
+          icon={
+            <CaretRightOutlined
+              className="menu-trigger-icon"
+              rotate={!isEditMode ? 0 : 90}
+            />
+          }
+          className="linky-actions-menu-trigger"
+        />
+        <Linky
+          link={link}
+          ellipsis
+          iconSize="xx-small"
+          updateLinkLastUsedHandler={updateLinkLastUsedHandler}
+        />
+      </div>
+
       <div
         className={classNames(
           'category-linky-form-wrapper',
@@ -102,7 +148,10 @@ const CategoryLinky: FC<{
       >
         {isEditMode && (
           <LinkForm
-            outsideClickIgnoreElement={editTriggerRef}
+            outsideClickIgnoreElements={[
+              editTriggerRef,
+              deleteCategoryLayerRef,
+            ]}
             href={link.href}
             title={link.title}
             formSubmitHandler={handleSubmit}

@@ -90,7 +90,7 @@
       "global": {
         "statements": 97,
         "branches": 97,
-        "functions": 94,
+        "functions": 95,
         "lines": 97
       }
     }

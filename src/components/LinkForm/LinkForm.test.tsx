@@ -338,7 +338,7 @@ describe('LinkForm Component', () => {
             Outside El
           </div>
           <LinkForm
-            outsideClickIgnoreElement={ref}
+            outsideClickIgnoreElements={[ref]}
             formSubmitHandler={handleSubmit}
             abortHandler={abortHandler}
             formErrorsHandler={undefined}

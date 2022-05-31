@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { Typography } from 'antd';
+import { Popover, Typography } from 'antd';
 // Interfaces, Types
 import { ILink } from '../../interfaces';
 import { IconSize } from '../../types';
 // Components
 import GoogleIcon from '../GoogleIcon';
+import LinkyInfo from '../LinkyInfo';
 // Utils
 import { identifyLink } from '../../utils';
 // Styles
@@ -35,7 +36,14 @@ const Linky: FC<{
         {iconType && <GoogleIcon icon={iconType} size={iconSize} />}
       </div>
 
-      <span className="linky-title">{link.title || link.href}</span>
+      <Popover
+        content={<LinkyInfo link={link} />}
+        placement="topLeft"
+        mouseEnterDelay={0.7}
+        autoAdjustOverflow={false}
+      >
+        <span className="linky-title">{link.title || link.href}</span>
+      </Popover>
     </Link>
   );
 };
