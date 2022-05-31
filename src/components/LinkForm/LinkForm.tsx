@@ -10,7 +10,7 @@ import {
 import './LinkForm.scss';
 
 const LinkForm: FC<{
-  outsideClickIgnoreElement?: RefObject<HTMLElement>;
+  outsideClickIgnoreElements?: RefObject<HTMLElement>[];
   href?: string | undefined;
   title?: string | undefined;
   deleteHandler?: () => void;
@@ -18,7 +18,7 @@ const LinkForm: FC<{
   formErrorsHandler?: (count: number) => void;
   abortHandler: () => void;
 }> = ({
-  outsideClickIgnoreElement,
+  outsideClickIgnoreElements,
   href = '',
   title = '',
   deleteHandler,
@@ -54,8 +54,10 @@ const LinkForm: FC<{
 
   const handleOutsideClick = (e: MouseEvent) => {
     if (
-      e.target instanceof Element &&
-      outsideClickIgnoreElement?.current?.contains(e.target)
+      outsideClickIgnoreElements?.length &&
+      outsideClickIgnoreElements.some((el) =>
+        el.current?.contains(e.target as Node),
+      )
     ) {
       return;
     }
