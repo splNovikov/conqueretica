@@ -142,6 +142,7 @@ const LinkForm: FC<{
               <Tooltip title="Delete">
                 <Button
                   htmlType="button"
+                  danger
                   icon={<DeleteOutlined />}
                   onClick={handleDeleteClick}
                   size="small"
