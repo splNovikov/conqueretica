@@ -60,9 +60,15 @@ describe('SingleInputForm Component', () => {
   describe('SingleInputForm Component Interactions', () => {
     const origConsoleError = console.warn;
 
-    beforeEach(() => {
+    beforeAll(() => {
       console.warn = jest.fn();
+    });
 
+    afterAll(() => {
+      console.warn = origConsoleError;
+    });
+
+    beforeEach(() => {
       wrapper = mount(
         <SingleInputForm
           formSubmitHandler={formSubmitHandler}
@@ -70,10 +76,6 @@ describe('SingleInputForm Component', () => {
           abortHandler={abortHandler}
         />,
       );
-    });
-
-    afterEach(() => {
-      console.warn = origConsoleError;
     });
 
     it('Input is able to receive text', async () => {
