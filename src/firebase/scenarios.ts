@@ -19,11 +19,17 @@ export const addCategoryWithColumnScenario = async (
 ): Promise<ICategory | null> => {
   const column = await addColumn(tab);
 
-  if (column?.id) {
-    return addCategory(categoryTitle, column);
+  if (!column?.id) {
+    return null;
   }
 
-  return null;
+  const category = await addCategory(categoryTitle, column);
+
+  if (!category) {
+    await deleteColumn(column);
+  }
+
+  return category;
 };
 
 export const deleteCategoriesScenario = async (

@@ -75,6 +75,37 @@ describe('Firebase Scenarios', () => {
       expect(res).toBe(null);
       expect(firestore.setDoc).toHaveBeenCalledTimes(1);
     });
+
+    it('Should return null and delete column if category has not been created', async () => {
+      firestore.setDoc = jest.fn((ref) => {
+        if (ref === fsMock.categoryDoc) {
+          throw new Error();
+        }
+      });
+      firestore.deleteDoc = jest.fn();
+
+      const res = await addCategoryWithColumnScenario(newCategoryTitle, tab);
+
+      // add column
+      expect(firestore.setDoc).toHaveBeenCalledWith(
+        fsMock.columnDoc,
+        expect.objectContaining({
+          tabId: tab.id,
+        }),
+      );
+      // add category
+      expect(firestore.setDoc).toHaveBeenCalledWith(
+        fsMock.categoryDoc,
+        expect.objectContaining({
+          title: newCategoryTitle,
+        }),
+      );
+
+      expect(res).toBe(null);
+      expect(firestore.setDoc).toHaveBeenCalledTimes(2);
+      expect(firestore.deleteDoc).toHaveBeenCalledTimes(1);
+      expect(firestore.deleteDoc).toHaveBeenCalledWith(fsMock.columnDoc);
+    });
   });
 
   describe('Delete CategorIES Scenario', () => {
