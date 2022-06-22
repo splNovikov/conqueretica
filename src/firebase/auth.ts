@@ -8,17 +8,34 @@ import { getDoc, doc } from 'firebase/firestore';
 import firebase from './index';
 
 // todo: tests
-const getToken = (): Promise<string> => {
+const getToken = (userInfo: chrome.identity.UserInfo): Promise<string> => {
   return new Promise((resolve) => {
-    chrome.identity.getAuthToken({ interactive: true }, (token: string) => {
-      resolve(token);
-    });
+    chrome.identity.getAuthToken(
+      { account: { id: userInfo.id }, interactive: true },
+      (token: string) => {
+        resolve(token);
+      },
+    );
+  });
+};
+
+// todo: tests
+const getProfileUserInfo = (): Promise<chrome.identity.UserInfo> => {
+  return new Promise((resolve) => {
+    chrome.identity.getProfileUserInfo(
+      { accountStatus: chrome.identity.AccountStatus.ANY },
+      (userInfo) => {
+        resolve(userInfo);
+      },
+    );
   });
 };
 
 // todo: update tests
 const signInWithGoogle = async (): Promise<UserInfo | null> => {
-  const token = await getToken();
+  const profile = await getProfileUserInfo();
+
+  const token = await getToken(profile);
 
   const credential = GoogleAuthProvider.credential(null, token);
 
