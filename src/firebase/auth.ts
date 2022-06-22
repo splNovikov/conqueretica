@@ -1,13 +1,47 @@
-import { UserInfo, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  UserInfo,
+  GoogleAuthProvider,
+  signInWithCredential,
+} from 'firebase/auth';
 import { getDoc, doc } from 'firebase/firestore';
 
 import firebase from './index';
 
-const googleProvider = new GoogleAuthProvider();
+// todo: tests
+const getToken = (userInfo: chrome.identity.UserInfo): Promise<string> => {
+  return new Promise((resolve) => {
+    chrome.identity.getAuthToken(
+      { account: { id: userInfo.id }, interactive: true },
+      (token: string) => {
+        resolve(token);
+      },
+    );
+  });
+};
 
+// todo: tests
+const getProfileUserInfo = (): Promise<chrome.identity.UserInfo> => {
+  return new Promise((resolve) => {
+    chrome.identity.getProfileUserInfo(
+      { accountStatus: chrome.identity.AccountStatus.ANY },
+      (userInfo) => {
+        resolve(userInfo);
+      },
+    );
+  });
+};
+
+// todo: update tests
 const signInWithGoogle = async (): Promise<UserInfo | null> => {
-  const { user } = await signInWithPopup(firebase.auth, googleProvider);
+  const profile = await getProfileUserInfo();
 
+  const token = await getToken(profile);
+
+  const credential = GoogleAuthProvider.credential(null, token);
+
+  const { user } = await signInWithCredential(firebase.auth, credential);
+
+  // todo: move to getUser
   const userRef = doc(firebase.firestoreDB, 'users', user.uid);
 
   const userDoc = await getDoc(userRef);
