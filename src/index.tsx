@@ -6,6 +6,7 @@ import { ConfigProvider } from 'antd';
 import App from './components/App';
 
 import './styles/index.scss';
+import { AuthContextProvider } from './context/authContext';
 
 ConfigProvider.config({
   prefixCls: 'ant',
@@ -20,7 +21,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <ConfigProvider prefixCls="ant">
-        <App />
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
       </ConfigProvider>
     </Router>
   </React.StrictMode>,
