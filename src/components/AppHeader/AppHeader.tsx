@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { UserInfo } from 'firebase/auth';
 // Components
 import UserMenu from '../UserMenu';
-import Login from '../Login';
 import QuickAccessLinksMenu from '../QuickAccessLinksMenu';
 // Utils
 import { acronym } from '../../utils';
@@ -72,9 +71,7 @@ const AppHeader: FC<{
                 {acronym(user.displayName)}
               </Avatar>
             </Dropdown>
-          ) : (
-            <Login key="login" />
-          )}
+          ) : null}
         </Skeleton>
       </div>
     </Header>
