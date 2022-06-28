@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 import { getFirebaseConfig } from './config';
-import { signInWithGoogle, signOut } from './auth';
+import { signIn, signOut } from './auth';
 import { createUser } from './user';
 import { addTab, updateTab } from './tabs';
 import { addCategory, updateCategory, deleteCategory } from './categories';
@@ -26,7 +26,7 @@ const firestoreDB = getFirestore(app);
 
 export default {
   // auth
-  signInWithGoogle,
+  signIn,
   signOut,
   // user
   createUser,
