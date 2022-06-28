@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 // Firebase
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from '../../firebase';
 // Interfaces
 import { ITab } from '../../interfaces';
+// Context
+import { UserAuth } from '../../context/authContext';
 // Components
 import LinksPageView from './LinksPageView';
 // Utils
 import { getNextSibling, httpErrorHandler } from '../../utils';
 
 const LinksPage = () => {
-  const [user] = useAuthState(firebase.auth);
+  const { user } = UserAuth();
   const [selectedTab, selectTab] = useState({} as ITab);
 
   let qTabs;
+  console.log(`user: ${user?.uid}`);
   if (user) {
     qTabs = firebase.getTabsQuery(user);
   }
