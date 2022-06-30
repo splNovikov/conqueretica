@@ -5,8 +5,9 @@ import {
   DashboardOutlined,
   HomeOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import { UserInfo } from 'firebase/auth';
+import { Link, useLocation } from 'react-router-dom';
+// Context
+import { UserAuth } from '../../context/authContext';
 // Components
 import UserMenu from '../UserMenu';
 import QuickAccessLinksMenu from '../QuickAccessLinksMenu';
@@ -17,16 +18,17 @@ import './AppHeader.scss';
 
 const { Header } = Layout;
 
-const AppHeader: FC<{
-  user: UserInfo | null | undefined;
-  authInProgress: boolean;
-  pathname: string;
-}> = ({ user, authInProgress, pathname }) => {
+const AppHeader: FC = () => {
+  const { user } = UserAuth();
+  const location = useLocation();
+  // todo: fix it:
+  const authInProgress = false;
+
   return (
     <Header className="app-header">
       <div className="left-wrapper">
         <Menu
-          selectedKeys={[pathname]}
+          selectedKeys={[location.pathname]}
           mode="horizontal"
           className="navigation"
         >
