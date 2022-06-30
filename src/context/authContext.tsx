@@ -28,16 +28,12 @@ export const AuthContextProvider = ({
     };
   }, []);
 
-  return (
-    <UserContext.Provider
-      value={{
-        ...contextDefault,
-        user,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
-  );
+  const value = {
+    ...contextDefault,
+    user,
+  };
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export const UserAuth = () => {

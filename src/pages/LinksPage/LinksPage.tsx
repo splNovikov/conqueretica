@@ -16,7 +16,6 @@ const LinksPage = () => {
   const [selectedTab, selectTab] = useState({} as ITab);
 
   let qTabs;
-  console.log(`user: ${user?.uid}`);
   if (user) {
     qTabs = firebase.getTabsQuery(user);
   }

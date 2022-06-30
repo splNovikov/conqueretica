@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
-
-import App from './components/App';
-
-import './styles/index.scss';
+// Context
 import { AuthContextProvider } from './context/authContext';
+// Components
+import App from './components/App';
+// Styles
+import './styles/index.scss';
 
 ConfigProvider.config({
   prefixCls: 'ant',

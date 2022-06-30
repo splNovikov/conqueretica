@@ -5,7 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 // Firebase
 import firebase from '../../firebase';
 // Components
-import AppRoutes from '../AppRoutes';
+import AppRoutes from '../../router/AppRoutes';
 import AppHeader from '../AppHeader';
 import AppFooter from '../AppFooter';
 // Styles
