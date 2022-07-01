@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+// Routes
+import { appRoutes } from '../routes';
 // Layouts
 import CleanPageLayout from '../../layouts/CleanPageLayout';
 import DefaultPageLayout from '../../layouts/DefaultPageLayout';
@@ -14,17 +16,23 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<Navigate to="/links" />} />
+        <Route
+          path="*"
+          element={<Navigate to={`/${appRoutes.default.path}`} />}
+        />
 
         <Route element={<CleanPageLayout />}>
-          <Route path="/signin" element={<SignInPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path={appRoutes.signIn.path} element={<SignInPage />} />
+          <Route path={appRoutes.signUp.path} element={<SignUpPage />} />
         </Route>
 
         <Route element={<ProtectedRoute />}>
           <Route element={<DefaultPageLayout />}>
-            <Route path="/links" element={<LinksPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path={appRoutes.links.path} element={<LinksPage />} />
+            <Route
+              path={appRoutes.dashboard.path}
+              element={<DashboardPage />}
+            />
           </Route>
         </Route>
       </Routes>

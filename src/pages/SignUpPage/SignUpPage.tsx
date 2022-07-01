@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // Firebase
+// Routes
+import { appRoutes } from '../../router/routes';
 // Context
 import { UserAuth } from '../../context/authContext';
 // Interfaces
@@ -20,7 +22,7 @@ const SignUpPage = () => {
 
     try {
       await createUser(email, password);
-      navigate('/links');
+      navigate(`/${appRoutes.links.path}`);
     } catch (err: any) {
       setError(err.message);
       console.log(err.message);
