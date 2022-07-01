@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // Layouts
 import CleanPageLayout from '../../layouts/CleanPageLayout';
 import DefaultPageLayout from '../../layouts/DefaultPageLayout';
@@ -12,21 +12,23 @@ import ProtectedRoute from '../ProtectedRoute';
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path="*" element={<Navigate to="/links" />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<Navigate to="/links" />} />
 
-      <Route element={<CleanPageLayout />}>
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Route>
-
-      <Route element={<ProtectedRoute />}>
-        <Route element={<DefaultPageLayout />}>
-          <Route path="/links" element={<LinksPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+        <Route element={<CleanPageLayout />}>
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Route>
-      </Route>
-    </Routes>
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DefaultPageLayout />}>
+            <Route path="/links" element={<LinksPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
