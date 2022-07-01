@@ -3,7 +3,7 @@ import { ConfigProvider, Layout } from 'antd';
 // Context
 import { AuthContextProvider } from '../../context/authContext';
 // Components
-import AppRoutes from '../../router/AppRoutes';
+import Router from '../../router/Router';
 // Styles
 import './App.scss';
 
@@ -19,7 +19,7 @@ const App = () => {
     <ConfigProvider prefixCls="ant">
       <AuthContextProvider>
         <Layout className="app">
-          <AppRoutes />
+          <Router />
         </Layout>
       </AuthContextProvider>
     </ConfigProvider>
