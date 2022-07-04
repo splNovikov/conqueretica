@@ -1,0 +1,9 @@
+@import '../../styles/theme';
+
+.auth-form {
+  width: $auth-form-width;
+
+  .auth-form-submit-button {
+    width: 100%;
+  }
+}

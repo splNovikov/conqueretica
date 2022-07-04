@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Form, Input, Typography } from 'antd';
+import { Typography } from 'antd';
 // Routes
 import { appRoutes } from '../../router/routes';
 // Context
 import { UserAuth } from '../../context/authContext';
+// Components
+import AuthForm from '../../components/AuthForm';
 // Utils
 import { httpErrorHandler } from '../../utils';
 // Styles
@@ -13,17 +15,13 @@ import './SignInPage.scss';
 const { Text } = Typography;
 
 const SignInPage = () => {
-  const [form] = Form.useForm();
   const [error, setError] = useState('');
-  const [isSubmitIsDisabled, setIsSubmitIsDisabled] = useState(true);
   const { signIn } = UserAuth();
   const navigate = useNavigate();
 
-  const handleFormSubmit = async () => {
-    const login = form.getFieldValue('loginInput');
-    const password = form.getFieldValue('passwordInput');
-
+  const handleFormSubmit = async (login: string, password: string) => {
     setError('');
+
     try {
       await signIn(login, password);
       navigate(`/${appRoutes.links.path}`);
@@ -32,16 +30,6 @@ const SignInPage = () => {
       setError(err.message);
       httpErrorHandler(err);
     }
-  };
-
-  const onFormChange = (): void => {
-    const hasErrors = form.getFieldsError().some(({ errors }) => errors.length);
-    const fieldsValues = form.getFieldsValue();
-    const isAnyFieldIsEmpty = Object.values(fieldsValues).some(
-      (item) => item === undefined,
-    );
-
-    setIsSubmitIsDisabled(hasErrors || isAnyFieldIsEmpty);
   };
 
   return (
@@ -53,47 +41,7 @@ const SignInPage = () => {
       <h1>Conqueretica</h1>
       <h2>Sign in to your account</h2>
 
-      <Form
-        form={form}
-        layout="horizontal"
-        onFinish={handleFormSubmit}
-        onFieldsChange={onFormChange}
-        size="large"
-        className="sign-in-form"
-      >
-        <Form.Item
-          name="loginInput"
-          rules={[
-            {
-              required: true,
-              message: 'Can not be empty',
-            },
-          ]}
-        >
-          <Input placeholder="Login" autoFocus />
-        </Form.Item>
-        <Form.Item
-          name="passwordInput"
-          rules={[
-            {
-              required: true,
-              message: 'Can not be empty',
-            },
-          ]}
-        >
-          <Input placeholder="Password" type="password" />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="sign-in-button"
-            disabled={isSubmitIsDisabled}
-          >
-            Sign In
-          </Button>
-        </Form.Item>
-      </Form>
+      <AuthForm submitHandler={handleFormSubmit} />
 
       <div>
         Don&apos;t have an account yet?{' '}
