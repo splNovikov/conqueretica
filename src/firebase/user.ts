@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, UserCredential } from 'firebase/auth';
 // Firebase
 import firebase from './index';
 // Utils
-import { defaultErrorHandler, httpErrorHandler } from '../utils';
+import { defaultErrorHandler } from '../utils';
 
 const createUser = async (
   email: string,
@@ -13,12 +13,7 @@ const createUser = async (
     return null;
   }
 
-  try {
-    return await createUserWithEmailAndPassword(firebase.auth, email, password);
-  } catch (e) {
-    httpErrorHandler(e);
-    return null;
-  }
+  return createUserWithEmailAndPassword(firebase.auth, email, password);
 };
 
 export { createUser };
