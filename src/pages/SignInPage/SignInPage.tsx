@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 // Routes
 import { appRoutes } from '../../router/routes';
 // Context
 import { UserAuth } from '../../context/authContext';
+// Utils
+import { httpErrorHandler } from '../../utils';
 // Styles
 import './SignInPage.scss';
 
+const { Text } = Typography;
+
 const SignInPage = () => {
   const [form] = Form.useForm();
-
   const [error, setError] = useState('');
+  const [isSubmitIsDisabled, setIsSubmitIsDisabled] = useState(true);
   const { signIn } = UserAuth();
   const navigate = useNavigate();
 
@@ -23,22 +27,37 @@ const SignInPage = () => {
     try {
       await signIn(login, password);
       navigate(`/${appRoutes.links.path}`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
-      console.log(err.message);
+      httpErrorHandler(err);
     }
+  };
+
+  const onFormChange = (): void => {
+    const hasErrors = form.getFieldsError().some(({ errors }) => errors.length);
+    const fieldsValues = form.getFieldsValue();
+    const isAnyFieldIsEmpty = Object.values(fieldsValues).some(
+      (item) => item === undefined,
+    );
+
+    setIsSubmitIsDisabled(hasErrors || isAnyFieldIsEmpty);
   };
 
   return (
     <div className="sign-in-page">
+      <div className="error-wrapper">
+        <Text type="danger">{error}</Text>
+      </div>
+
       <h1>Conqueretica</h1>
       <h2>Sign in to your account</h2>
-      <div>{error}</div>
 
       <Form
         form={form}
         layout="horizontal"
         onFinish={handleFormSubmit}
+        onFieldsChange={onFormChange}
         size="large"
         className="sign-in-form"
       >
@@ -65,7 +84,12 @@ const SignInPage = () => {
           <Input placeholder="Password" type="password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="sign-in-button">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="sign-in-button"
+            disabled={isSubmitIsDisabled}
+          >
             Sign In
           </Button>
         </Form.Item>
