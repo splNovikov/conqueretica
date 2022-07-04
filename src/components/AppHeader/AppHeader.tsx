@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Avatar, Button, Dropdown, Layout, Menu, Skeleton } from 'antd';
+import { Avatar, Button, Dropdown, Layout, Menu } from 'antd';
 import {
   AppstoreOutlined,
   DashboardOutlined,
@@ -21,8 +21,6 @@ const { Header } = Layout;
 const AppHeader: FC = () => {
   const { user } = UserAuth();
   const location = useLocation();
-  // todo: fix it:
-  const authInProgress = false;
 
   return (
     <Header className="app-header">
@@ -52,29 +50,21 @@ const AppHeader: FC = () => {
             className="app-header-google-links-trigger"
           />
         </Dropdown>
-        <Skeleton
-          loading={authInProgress}
-          active
-          round
-          paragraph={false}
-          className="user-skeleton"
-        >
-          {user ? (
-            <Dropdown
-              key="user-menu"
-              overlay={<UserMenu user={user} />}
-              trigger={['click']}
+        {user ? (
+          <Dropdown
+            key="user-menu"
+            overlay={<UserMenu user={user} />}
+            trigger={['click']}
+          >
+            <Avatar
+              className="user-avatar app-header-user-avatar"
+              gap={1}
+              src={user.photoURL}
             >
-              <Avatar
-                className="user-avatar app-header-user-avatar"
-                gap={1}
-                src={user.photoURL}
-              >
-                {acronym(user.displayName)}
-              </Avatar>
-            </Dropdown>
-          ) : null}
-        </Skeleton>
+              {acronym(user.displayName)}
+            </Avatar>
+          </Dropdown>
+        ) : null}
       </div>
     </Header>
   );
