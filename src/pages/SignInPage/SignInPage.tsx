@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
-// Firebase
 // Routes
 import { appRoutes } from '../../router/routes';
 // Context
 import { UserAuth } from '../../context/authContext';
-// Interfaces
-// Components
-// Utils
 // Styles
 import './SignInPage.scss';
 
