@@ -6,7 +6,11 @@ import { appRoutes } from '../routes';
 import { UserAuth } from '../../context/authContext';
 
 const ProtectedRoute = () => {
-  const { user } = UserAuth();
+  const { user, isLoading } = UserAuth();
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
 
   return user ? <Outlet /> : <Navigate to={`/${appRoutes.signIn.path}`} />;
 };

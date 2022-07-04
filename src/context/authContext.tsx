@@ -8,6 +8,7 @@ const contextDefault = {
   signOut: firebase.signOut,
   signIn: firebase.signIn,
   user: null as UserInfo | null,
+  isLoading: true,
 };
 
 const UserContext = createContext(contextDefault);
@@ -18,10 +19,12 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState(null as UserInfo | null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebase.auth, (currentUser) => {
       setUser(currentUser);
+      setIsLoading(false);
     });
     return () => {
       unsubscribe();
@@ -31,6 +34,7 @@ export const AuthContextProvider = ({
   const value = {
     ...contextDefault,
     user,
+    isLoading,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
