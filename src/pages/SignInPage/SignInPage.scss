@@ -1,0 +1,17 @@
+@import '../../styles/theme';
+
+.sign-in-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: $sign-in-page-padding-top;
+
+  .sign-in-form {
+    width: $sign-in-page-form-width;
+  }
+
+  .sign-in-button {
+    width: 100%;
+  }
+}
