@@ -1,57 +1,52 @@
 import React, { useState } from 'react';
+import { Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-// Firebase
 // Routes
 import { appRoutes } from '../../router/routes';
 // Context
 import { UserAuth } from '../../context/authContext';
-// Interfaces
 // Components
+import AuthForm from '../../components/AuthForm';
 // Utils
+import { httpErrorHandler } from '../../utils';
+// Styles
+import './SignUpPage.scss';
+
+const { Text } = Typography;
 
 const SignUpPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { createUser } = UserAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleFormSubmit = async (login: string, password: string) => {
     setError('');
 
     try {
-      await createUser(email, password);
+      await createUser(login, password);
       navigate(`/${appRoutes.links.path}`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
-      console.log(err.message);
+      httpErrorHandler(err);
     }
   };
 
   return (
-    <div>
-      <h1>Sign up for a free</h1>
+    <div className="sign-up-page">
+      <div className="error-wrapper">
+        <Text type="danger">{error}</Text>
+      </div>
+
+      <h1>Conqueretica</h1>
+      <h2>Sign up for a free</h2>
+
+      <AuthForm submitHandler={handleFormSubmit} />
+
       <div>
         Already have an account?{' '}
         <Link to={`/${appRoutes.signIn.path}`}>Sign In</Link>
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <span>Email Address</span>
-          <input type="email" onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div>
-          <span>Password</span>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
-      <div>{error}</div>
     </div>
   );
 };

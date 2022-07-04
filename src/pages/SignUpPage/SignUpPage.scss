@@ -1,0 +1,15 @@
+@import '../../styles/theme';
+
+.sign-up-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .error-wrapper {
+    display: flex;
+    height: $sign-up-page-error-wrapper-height;
+    padding: $sign-up-page-error-wrapper-padding;
+    max-width: $sign-up-page-error-wrapper-max-width;
+  }
+}
