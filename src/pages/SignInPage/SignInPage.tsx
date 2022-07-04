@@ -41,7 +41,7 @@ const SignInPage = () => {
       <h1>Conqueretica</h1>
       <h2>Sign in to your account</h2>
 
-      <AuthForm submitHandler={handleFormSubmit} />
+      <AuthForm submitHandler={handleFormSubmit} submitButtonText="Sign In" />
 
       <div>
         Don&apos;t have an account yet?{' '}

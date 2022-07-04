@@ -41,7 +41,7 @@ const SignUpPage = () => {
       <h1>Conqueretica</h1>
       <h2>Sign up for a free</h2>
 
-      <AuthForm submitHandler={handleFormSubmit} />
+      <AuthForm submitHandler={handleFormSubmit} submitButtonText="Sign Up" />
 
       <div>
         Already have an account?{' '}

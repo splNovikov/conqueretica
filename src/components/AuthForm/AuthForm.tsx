@@ -4,8 +4,9 @@ import { Button, Form, Input } from 'antd';
 import './AuthForm.scss';
 
 const AuthForm: FC<{
+  submitButtonText: string;
   submitHandler: (login: string, password: string) => void;
-}> = ({ submitHandler }) => {
+}> = ({ submitButtonText, submitHandler }) => {
   const [form] = Form.useForm();
   const [isSubmitIsDisabled, setIsSubmitIsDisabled] = useState(true);
 
@@ -45,7 +46,7 @@ const AuthForm: FC<{
           },
         ]}
       >
-        <Input placeholder="Login" autoFocus />
+        <Input placeholder="Login" autoFocus type="email" />
       </Form.Item>
       <Form.Item
         name="passwordInput"
@@ -65,7 +66,7 @@ const AuthForm: FC<{
           className="auth-form-submit-button"
           disabled={isSubmitIsDisabled}
         >
-          Sign In
+          {submitButtonText}
         </Button>
       </Form.Item>
     </Form>
