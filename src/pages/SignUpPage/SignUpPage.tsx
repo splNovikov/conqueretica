@@ -33,7 +33,8 @@ const SignUpPage = () => {
     <div>
       <h1>Sign up for a free</h1>
       <div>
-        Already have an account? <Link to="/signin">Sign in</Link>
+        Already have an account?{' '}
+        <Link to={`/${appRoutes.signIn.path}`}>Sign In</Link>
       </div>
 
       <form onSubmit={handleSubmit}>
