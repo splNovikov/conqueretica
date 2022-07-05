@@ -20,13 +20,11 @@ const Router = () => {
           path="*"
           element={<Navigate to={`/${appRoutes.default.path}`} />}
         />
-
-        <Route element={<CleanPageLayout />}>
-          <Route path={appRoutes.signIn.path} element={<SignInPage />} />
-          <Route path={appRoutes.signUp.path} element={<SignUpPage />} />
-        </Route>
-
         <Route element={<ProtectedRoute />}>
+          <Route element={<CleanPageLayout />}>
+            <Route path={appRoutes.signIn.path} element={<SignInPage />} />
+            <Route path={appRoutes.signUp.path} element={<SignUpPage />} />
+          </Route>
           <Route element={<DefaultPageLayout />}>
             <Route path={appRoutes.links.path} element={<LinksPage />} />
             <Route
