@@ -2,7 +2,7 @@ import { httpErrorHandler, defaultErrorHandler } from './errorHandler';
 import { identifyLink } from './identifyLink';
 import { getNextSibling } from './getNextSibling';
 import { urlValidation } from './urlValidation';
-import { acronym } from './acronym';
+import { acronym, userAcronym } from './acronym';
 import { defaultConfirmModal } from './defaultConfirmModal';
 import {
   deltaSeconds,
@@ -17,6 +17,7 @@ export {
   getNextSibling,
   urlValidation,
   acronym,
+  userAcronym,
   defaultConfirmModal,
   deltaSeconds,
   deltaHumanTime,

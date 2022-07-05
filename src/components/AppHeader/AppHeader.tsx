@@ -12,7 +12,7 @@ import { UserAuth } from '../../context/authContext';
 import UserMenu from '../UserMenu';
 import QuickAccessLinksMenu from '../QuickAccessLinksMenu';
 // Utils
-import { acronym } from '../../utils';
+import { userAcronym } from '../../utils';
 // Styles
 import './AppHeader.scss';
 
@@ -61,7 +61,7 @@ const AppHeader: FC = () => {
               gap={1}
               src={user.photoURL}
             >
-              {acronym(user.displayName)}
+              {userAcronym(user)}
             </Avatar>
           </Dropdown>
         ) : null}

@@ -4,7 +4,7 @@ import { Avatar, Card, Divider } from 'antd';
 // Components
 import SignOut from '../SignOut';
 // Utils
-import { acronym } from '../../utils';
+import { userAcronym } from '../../utils';
 // Styles
 import './UserMenu.scss';
 
@@ -22,7 +22,7 @@ const UserMenu: FC<{
           gap={1}
           src={user.photoURL}
         >
-          {acronym(user.displayName)}
+          {userAcronym(user)}
         </Avatar>
       }
       title={user.displayName}
