@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Button, Form, Input } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 // Styles
 import './AuthForm.scss';
 
@@ -57,7 +58,12 @@ const AuthForm: FC<{
           },
         ]}
       >
-        <Input placeholder="Password" type="password" />
+        <Input.Password
+          placeholder="Password"
+          iconRender={(visible) =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
+        />
       </Form.Item>
       <Form.Item>
         <Button
