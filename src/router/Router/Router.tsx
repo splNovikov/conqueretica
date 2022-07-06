@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 // Routes
 import { appRoutes } from '../routes';
+import ProtectedRoute from '../ProtectedRoute';
 // Layouts
 import CleanPageLayout from '../../layouts/CleanPageLayout';
 import DefaultPageLayout from '../../layouts/DefaultPageLayout';
@@ -10,7 +11,6 @@ import SignInPage from '../../pages/SignInPage';
 import SignUpPage from '../../pages/SignUpPage';
 import LinksPage from '../../pages/LinksPage';
 import DashboardPage from '../../pages/DashboardPage';
-import ProtectedRoute from '../ProtectedRoute';
 
 const Router = () => {
   return (

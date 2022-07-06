@@ -4,13 +4,15 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { appRoutes } from '../routes';
 // Context
 import { UserAuth } from '../../context/authContext';
+// Pages
+import LoadingPage from '../../pages/LoadingPage';
 
 const ProtectedRoute = () => {
   const { user, isLoading } = UserAuth();
   const location = useLocation();
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return <LoadingPage />;
   }
 
   const isAuthPage =
