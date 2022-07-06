@@ -21,11 +21,11 @@ const AuthForm: FC<{
   const onFormChange = (): void => {
     const hasErrors = form.getFieldsError().some(({ errors }) => errors.length);
     const fieldsValues = form.getFieldsValue();
-    const isAnyFieldIsEmpty = Object.values(fieldsValues).some(
+    const isAnyFieldEmpty = Object.values(fieldsValues).some(
       (item) => item === undefined,
     );
 
-    setIsSubmitIsDisabled(hasErrors || isAnyFieldIsEmpty);
+    setIsSubmitIsDisabled(hasErrors || isAnyFieldEmpty);
   };
 
   return (
