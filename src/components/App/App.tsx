@@ -1,11 +1,9 @@
 import React from 'react';
-import { ConfigProvider, Layout } from 'antd';
+import { ConfigProvider } from 'antd';
 // Context
 import { AuthContextProvider } from '../../context/authContext';
 // Components
 import Router from '../../router/Router';
-// Styles
-import './App.scss';
 
 ConfigProvider.config({
   prefixCls: 'ant',
@@ -18,9 +16,7 @@ const App = () => {
   return (
     <ConfigProvider prefixCls="ant">
       <AuthContextProvider>
-        <Layout className="app">
-          <Router />
-        </Layout>
+        <Router />
       </AuthContextProvider>
     </ConfigProvider>
   );

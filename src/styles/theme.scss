@@ -16,7 +16,9 @@ $primary-5: lighten($primary-color, 8%);
 $primary-6: $primary-color;
 $primary-7: darken($primary-color, 8%);
 
+// ===================== // ===================== // =====================
 // === Ant Components
+// ===================== // ===================== // =====================
 
 // Ant Layout
 $layout-body-background: transparent;
@@ -33,10 +35,12 @@ $ant-form-item-margin: 0 0 0 5px;
 // Ant Popover
 $ant-popover-padding: 5px;
 
+// ===================== // ===================== // =====================
 // === Custom Components
+// =====================// ===================== // =====================
 
-// App
-$app-height: 100vh;
+// Default Page Layout
+$default-page-layout-min-height: 100vh;
 
 // AuthForm
 $auth-form-width: 300px;

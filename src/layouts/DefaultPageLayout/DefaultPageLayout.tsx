@@ -4,12 +4,14 @@ import { Layout } from 'antd';
 // Components
 import AppHeader from '../../components/AppHeader';
 import AppFooter from '../../components/AppFooter';
+// Styles
+import './DefaultPageLayout.scss';
 
 const { Content } = Layout;
 
 const DefaultPageLayout = () => {
   return (
-    <>
+    <Layout className="default-page-layout">
       <AppHeader />
 
       <Content>
@@ -17,7 +19,7 @@ const DefaultPageLayout = () => {
       </Content>
 
       <AppFooter />
-    </>
+    </Layout>
   );
 };
 

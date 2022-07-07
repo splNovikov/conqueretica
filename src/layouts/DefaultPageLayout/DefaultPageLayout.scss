@@ -1,0 +1,7 @@
+@import '../../styles/theme';
+
+.default-page-layout {
+  &.ant-layout {
+    min-height: $default-page-layout-min-height;
+  }
+}
