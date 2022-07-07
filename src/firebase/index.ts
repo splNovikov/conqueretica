@@ -3,8 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 import { getFirebaseConfig } from './config';
-import { signIn, signOut } from './auth';
-import { createUser } from './user';
+import { signIn, signOut, createUser } from './auth';
 import { addTab, updateTab } from './tabs';
 import { addCategory, updateCategory, deleteCategory } from './categories';
 import { addLink, updateLink, updateLinkLastUsed, deleteLink } from './links';
@@ -28,7 +27,6 @@ export default {
   // auth
   signIn,
   signOut,
-  // user
   createUser,
   // tabs
   addTab,

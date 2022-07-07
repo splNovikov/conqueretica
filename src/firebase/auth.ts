@@ -1,10 +1,17 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  UserCredential,
+} from 'firebase/auth';
 // Firebase
 import firebase from './index';
 // Utils
 import { defaultErrorHandler } from '../utils';
 
-const signIn = (email: string, password: string) => {
+const signIn = async (
+  email: string,
+  password: string,
+): Promise<UserCredential | null> => {
   if (!email || !password) {
     defaultErrorHandler('No email or Password');
     return null;
@@ -15,4 +22,16 @@ const signIn = (email: string, password: string) => {
 
 const signOut = () => firebase.auth.signOut();
 
-export { signIn, signOut };
+const createUser = async (
+  email: string,
+  password: string,
+): Promise<UserCredential | null> => {
+  if (!email || !password) {
+    defaultErrorHandler('No email or Password');
+    return null;
+  }
+
+  return createUserWithEmailAndPassword(firebase.auth, email, password);
+};
+
+export { signIn, signOut, createUser };
