@@ -1,24 +1,17 @@
 import React from 'react';
-import { ConfigProvider } from 'antd';
 // Context
 import { AuthContextProvider } from '../../context/authContext';
 // Components
 import Router from '../../router/Router';
-
-ConfigProvider.config({
-  prefixCls: 'ant',
-  theme: {
-    primaryColor: '#951f40',
-  },
-});
+import UIConfigProvider from '../UIConfigProvider';
 
 const App = () => {
   return (
-    <ConfigProvider prefixCls="ant">
+    <UIConfigProvider>
       <AuthContextProvider>
         <Router />
       </AuthContextProvider>
-    </ConfigProvider>
+    </UIConfigProvider>
   );
 };
 
