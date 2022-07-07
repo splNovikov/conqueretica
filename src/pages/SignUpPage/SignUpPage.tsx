@@ -7,6 +7,7 @@ import { appRoutes } from '../../router/routes';
 import { UserAuth } from '../../context/authContext';
 // Components
 import AuthForm from '../../components/AuthForm';
+import AppLogo from '../../components/AppLogo';
 // Utils
 import { httpErrorHandler } from '../../utils';
 // Styles
@@ -38,8 +39,9 @@ const SignUpPage = () => {
         <Text type="danger">{error}</Text>
       </div>
 
-      <h1>Conqueretica</h1>
-      <h2>Sign up for a free</h2>
+      <AppLogo width={150} />
+      <h2>Conqueretica</h2>
+      <h3>Sign up for a free</h3>
 
       <AuthForm submitHandler={handleFormSubmit} submitButtonText="Sign Up" />
 
