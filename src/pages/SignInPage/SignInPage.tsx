@@ -40,7 +40,7 @@ const SignInPage = () => {
       </div>
 
       <AppLogo width={150} />
-      <h2>Conqueretica</h2>
+      <h2>{process.env.REACT_APP_WEBSITE_NAME}</h2>
       <h3>Sign in to your account</h3>
 
       <AuthForm submitHandler={handleFormSubmit} submitButtonText="Sign In" />

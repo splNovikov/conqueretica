@@ -1,20 +1,19 @@
-// todo: this is a temporary solution - store it somewhere
 const FIREBASE_CONFIG_PROD = {
-  apiKey: 'dummy-prod-api-key',
+  apiKey: process.env.REACT_APP_FIREBASE_PROD_API_KEY,
   authDomain: 'conqueretica.firebaseapp.com',
   projectId: 'conqueretica',
   storageBucket: 'conqueretica.appspot.com',
-  messagingSenderId: 'dummy-prod-messaging-sender-id',
-  appId: 'dummy-prod-app-id',
+  messagingSenderId: process.env.REACT_APP_FIREBASE_PROD_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_PROD_APP_ID,
 };
 
 const FIREBASE_CONFIG_DEV = {
-  apiKey: 'dummy-dev-api-key',
+  apiKey: process.env.REACT_APP_FIREBASE_DEV_API_KEY,
   authDomain: 'conqueretica-dev.firebaseapp.com',
   projectId: 'conqueretica-dev',
   storageBucket: 'conqueretica-dev.appspot.com',
-  messagingSenderId: 'dummy-dev-messaging-sender-id',
-  appId: 'dummy-dev-app-id',
+  messagingSenderId: process.env.REACT_APP_FIREBASE_DEV_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_DEV_APP_ID,
 };
 
 export const getFirebaseConfig = (env: string) => {
