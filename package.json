@@ -27,7 +27,7 @@
   "scripts": {
     "start": "PORT=6198 react-scripts start",
     "build": "react-scripts build",
-    "build extension": "INLINE_RUNTIME_CHUNK=false REACT_APP_WEBSITE_NAME='New Tab' yarn run build",
+    "build extension": "INLINE_RUNTIME_CHUNK=false REACT_APP_WEBSITE_TITLE='New Tab' yarn run build",
     "test": "react-scripts test",
     "coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
