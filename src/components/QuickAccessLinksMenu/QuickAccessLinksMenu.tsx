@@ -35,6 +35,11 @@ const googleLinks = [
     href: 'https://meet.google.com/',
     title: 'Google Meet',
   },
+  {
+    id: '6',
+    href: 'https://docs.google.com/drawings',
+    title: 'Google Draw',
+  },
 ];
 
 const QuickAccessLinksMenu: FC = () => (

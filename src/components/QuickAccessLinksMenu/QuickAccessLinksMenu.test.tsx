@@ -29,7 +29,7 @@ describe('QuickAccessLinksMenu Component', () => {
         getWrappers(wrapper);
 
       expect(quickAccessLinksMenu.exists()).toBe(true);
-      expect(quickAccessLinksMenuCard.length).toBe(5);
+      expect(quickAccessLinksMenuCard.length).toBe(6);
     });
   });
 });
