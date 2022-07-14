@@ -4,7 +4,7 @@ import { Image } from 'antd';
 import logo from './conqueretica_main.png';
 
 const AppLogo: FC<{ width: number }> = ({ width }) => {
-  return <Image width={width} src={logo} />;
+  return <Image width={width} src={logo} preview={false} />;
 };
 
 export default AppLogo;
