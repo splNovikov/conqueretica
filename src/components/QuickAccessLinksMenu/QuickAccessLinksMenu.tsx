@@ -13,37 +13,37 @@ const googleLinks = [
   {
     id: '1',
     href: 'https://docs.google.com/spreadsheets',
-    title: 'Google Sheets',
+    title: 'Sheets',
   },
   {
     id: '2',
     href: 'https://docs.google.com/document',
-    title: 'Google Docs',
+    title: 'Docs',
   },
   {
     id: '3',
     href: 'https://docs.google.com/presentation',
-    title: 'Google Slides',
+    title: 'Slides',
   },
   {
     id: '4',
     href: 'https://drive.google.com/drive',
-    title: 'Google Drive',
+    title: 'Drive',
   },
   {
     id: '5',
     href: 'https://meet.google.com/',
-    title: 'Google Meet',
+    title: 'Meet',
   },
   {
     id: '6',
     href: 'https://docs.google.com/drawings',
-    title: 'Google Draw',
+    title: 'Draw',
   },
   {
     id: '7',
     href: 'https://docs.google.com/forms',
-    title: 'Google Forms',
+    title: 'Forms',
   },
 ];
 
