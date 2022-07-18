@@ -11,7 +11,7 @@ const contextDefault = {
   isLoading: true,
 };
 
-const UserContext = createContext(contextDefault);
+export const UserContext = createContext(contextDefault);
 
 export const AuthContextProvider = ({
   children,

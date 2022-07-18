@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { mount, ReactWrapper } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+// Context
+import { UserContext } from '../../context/authContext';
 // Components
 import AppHeader from './AppHeader';
 // Test Data
@@ -24,14 +26,17 @@ describe('AppHeader Component', () => {
   beforeEach(async () => {
     await act(async () => {
       wrapper = mount(
-        <BrowserRouter>
-          <AppHeader user={user} pathname="/links" authInProgress={false} />
-        </BrowserRouter>,
+        <UserContext.Provider value={{ user }}>
+          <BrowserRouter>
+            <AppHeader />
+          </BrowserRouter>
+        </UserContext.Provider>,
       );
     });
   });
 
   afterEach(() => {
+    jest.resetAllMocks();
     wrapper.unmount();
   });
 
@@ -56,9 +61,11 @@ describe('AppHeader Component', () => {
       const user2 = { displayName: 'Pavel Novikov' };
       await act(async () => {
         wrapper = mount(
-          <BrowserRouter>
-            <AppHeader user={user2} pathname="/links" authInProgress={false} />
-          </BrowserRouter>,
+          <UserContext.Provider value={{ user: user2 }}>
+            <BrowserRouter>
+              <AppHeader />
+            </BrowserRouter>
+          </UserContext.Provider>,
         );
       });
 
@@ -72,7 +79,7 @@ describe('AppHeader Component', () => {
       await act(async () => {
         wrapper = mount(
           <BrowserRouter>
-            <AppHeader user={null} pathname="/links" authInProgress={false} />
+            <AppHeader />
           </BrowserRouter>,
         );
       });
@@ -81,21 +88,6 @@ describe('AppHeader Component', () => {
 
       expect(userAvatar.exists()).toBe(false);
       expect(userSkeleton.exists()).toEqual(false);
-    });
-
-    it('Spinner is showed', async () => {
-      await act(async () => {
-        wrapper = mount(
-          <BrowserRouter>
-            <AppHeader user={null} pathname="/links" authInProgress />
-          </BrowserRouter>,
-        );
-      });
-
-      const { userAvatar, userSkeleton } = getWrappers(wrapper);
-
-      expect(userAvatar.exists()).toBe(false);
-      expect(userSkeleton.exists()).toEqual(true);
     });
   });
 });
