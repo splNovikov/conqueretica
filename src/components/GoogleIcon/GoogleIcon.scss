@@ -70,7 +70,8 @@
     'trello',
     'zoom',
     'slack',
-    'telegram'
+    'telegram',
+    'forms'
   );
   @include generate-icons($icons);
 }

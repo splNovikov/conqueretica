@@ -26,6 +26,7 @@ const rules = {
   zoom: 'zoom.us',
   slack: 'slack.com',
   telegram: 't.me',
+  forms: 'docs.google.com/forms',
 };
 
 export const identifyLink = (href: string): IconName | undefined => {
@@ -94,6 +95,9 @@ export const identifyLink = (href: string): IconName | undefined => {
   }
   if (href.includes(rules.telegram)) {
     return 'telegram';
+  }
+  if (href.includes(rules.forms)) {
+    return 'forms';
   }
 
   return undefined;

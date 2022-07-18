@@ -40,6 +40,11 @@ const googleLinks = [
     href: 'https://docs.google.com/drawings',
     title: 'Google Draw',
   },
+  {
+    id: '7',
+    href: 'https://docs.google.com/forms',
+    title: 'Google Forms',
+  },
 ];
 
 const QuickAccessLinksMenu: FC = () => (

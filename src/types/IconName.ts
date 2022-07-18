@@ -18,4 +18,5 @@ export declare type IconName =
   | 'trello'
   | 'zoom'
   | 'slack'
-  | 'telegram';
+  | 'telegram'
+  | 'forms';
